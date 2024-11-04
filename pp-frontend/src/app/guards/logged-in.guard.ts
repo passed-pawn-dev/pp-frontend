@@ -1,14 +1,16 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
 
-export const keycloakGuardGuard: CanActivateFn = (route, state) => {
+export const loggedInGuard: CanActivateFn = (_route, _state) => {
   const authService = inject(AuthService);
-  const router = inject(Router);
+  
   if (authService.isLoggedIn()) {
+    console.log("True");
     return true;
   } else {
-    // router.navigate(['/login']);
+    console.log("False")
+    authService.redirectToLoginPage();
     return false;
   }
 };
