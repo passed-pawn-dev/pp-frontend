@@ -6,7 +6,22 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npx eslint",
+      "prettier --write"
+    ],
+    "*.html": [
+      "npx eslint",
+      "prettier --write"
+    ],
+    "*.scss": [
+      "npx stylelint",
+      "prettier --write"
+    ]
   },
   "private": true,
   "dependencies": {
@@ -29,12 +44,18 @@
     "@angular/cli": "^18.2.11",
     "@angular/compiler-cli": "^18.2.0",
     "@types/jasmine": "~5.1.0",
+    "husky": "^9.1.6",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "lint-staged": "^15.2.10",
+    "postcss-scss": "^4.0.9",
+    "prettier": "^3.3.3",
+    "stylelint": "^16.10.0",
+    "stylelint-order": "^6.0.4",
     "typescript": "~5.5.2"
   }
 }
