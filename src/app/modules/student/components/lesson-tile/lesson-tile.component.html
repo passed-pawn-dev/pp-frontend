@@ -1,0 +1,9 @@
+<li>
+  <a
+    class="button"
+    [routerLink]="'lessons/' + lesson.lessonNumber"
+    [state]="{ isLast: isLast }"
+  >
+    Lesson {{ lesson.lessonNumber + ': ' + lesson.title }}
+  </a>
+</li>

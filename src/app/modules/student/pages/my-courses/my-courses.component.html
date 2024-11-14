@@ -1,0 +1,10 @@
+<h2>My Courses</h2>
+<ul>
+  @for (course of courses; track $index) {
+    <li>
+      <div>
+        <a class="button" [routerLink]="course.id">{{ course.title }}</a>
+      </div>
+    </li>
+  }
+</ul>
