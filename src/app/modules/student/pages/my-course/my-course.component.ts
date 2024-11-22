@@ -11,5 +11,5 @@ import { MyCourseDetails } from '../../models/MyCourseDetails';
   styleUrl: './my-course.component.scss'
 })
 export class MyCourseComponent {
-  public course: MyCourseDetails = course;
+  protected course: MyCourseDetails = course;
 }

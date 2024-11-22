@@ -10,6 +10,5 @@ import { Lesson } from '../../models/Lesson';
   styleUrl: './lesson-tile.component.scss'
 })
 export class LessonTileComponent {
-  @Input() public lesson!: Lesson;
-  @Input() public isLast!: boolean;
+  @Input({ required: true }) public lesson!: Lesson;
 }

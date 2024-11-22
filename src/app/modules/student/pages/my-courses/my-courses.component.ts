@@ -11,5 +11,5 @@ import { courses } from '../../example-data';
   styleUrl: './my-courses.component.scss'
 })
 export class MyCoursesComponent {
-  public courses: MyCourse[] = courses;
+  protected courses: MyCourse[] = courses;
 }

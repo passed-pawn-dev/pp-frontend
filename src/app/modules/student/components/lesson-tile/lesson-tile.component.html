@@ -1,9 +1,5 @@
 <li>
-  <a
-    class="button"
-    [routerLink]="'lessons/' + lesson.lessonNumber"
-    [state]="{ isLast: isLast }"
-  >
+  <a class="button" [routerLink]="'lessons/' + lesson.lessonNumber">
     Lesson {{ lesson.lessonNumber + ': ' + lesson.title }}
   </a>
 </li>

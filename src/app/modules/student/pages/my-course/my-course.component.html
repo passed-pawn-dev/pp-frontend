@@ -4,9 +4,6 @@
   <div>{{ course.description }}</div>
   <div>{{ course.coachName }}</div>
   @for (lesson of course.lessons; track $index) {
-    <app-lesson-tile
-      [lesson]="lesson"
-      [isLast]="$index === course.lessons.length - 1"
-    />
+    <app-lesson-tile [lesson]="lesson" />
   }
 </div>

@@ -1,4 +1,6 @@
-export const NAV_LINKS: { name: string; path: string }[] = [
+import { NavLink } from '../models/NavLink';
+
+export const NAV_LINKS: NavLink[] = [
   {
     name: 'Courses',
     path: 'my-courses'

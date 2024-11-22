@@ -5,6 +5,7 @@ import { MyCoursesComponent } from './pages/my-courses/my-courses.component';
 import { MyGamesComponent } from './pages/my-games/my-games.component';
 import { MyCourseComponent } from './pages/my-course/my-course.component';
 import { LessonDetailsComponent } from './pages/lesson-details/lesson-details.component';
+import { LessonsComponent } from './pages/lessons/lessons.component';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -29,8 +30,19 @@ export const STUDENT_ROUTES: Route[] = [
         component: MyCourseComponent
       },
       {
-        path: 'my-courses/:id/lessons/:id',
-        component: LessonDetailsComponent
+        path: 'my-courses/:id/lessons',
+        component: LessonsComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: '1',
+            pathMatch: 'full'
+          },
+          {
+            path: ':id',
+            component: LessonDetailsComponent
+          }
+        ]
       },
       {
         path: 'my-games',

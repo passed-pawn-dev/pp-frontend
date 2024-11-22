@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NAV_LINKS } from '../../constants/nav-links';
 import { RouterLink } from '@angular/router';
+import { NavLink } from '../../models/NavLink';
 
 @Component({
   selector: 'app-navbar',
@@ -10,5 +11,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  public navLinks: { name: string; path: string }[] = NAV_LINKS;
+  protected navLinks: NavLink[] = NAV_LINKS;
 }
