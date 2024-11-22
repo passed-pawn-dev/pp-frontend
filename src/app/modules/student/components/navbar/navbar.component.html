@@ -1,0 +1,9 @@
+<div class="navbar">
+  <ul class="navigation">
+    @for (link of navLinks; track $index) {
+      <li class="nav-link">
+        <a class="button" [routerLink]="link.path">{{ link.name }}</a>
+      </li>
+    }
+  </ul>
+</div>

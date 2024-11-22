@@ -1,0 +1,9 @@
+<ul>
+  @for (lesson of course.lessons; track $index) {
+    <li>
+      <a class="button" [routerLink]="[lesson.lessonNumber]">
+        Lesson {{ lesson.lessonNumber + ': ' + lesson.title }}
+      </a>
+    </li>
+  }
+</ul>
