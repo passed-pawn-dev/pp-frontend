@@ -6,8 +6,7 @@ import { loggedInGuard } from './guards/logged-in.guard';
 export const routes: Routes = [
   {
     path: '',
-    component: HomePageComponent,
-    
+    component: HomePageComponent
   },
   {
     path: '404',

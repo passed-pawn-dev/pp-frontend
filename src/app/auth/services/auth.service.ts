@@ -6,21 +6,21 @@ import { environment } from '../../../../environment/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private readonly keycloakService: KeycloakService) {}
+  private constructor(private readonly keycloakService: KeycloakService) {}
 
-  redirectToLoginPage(): Promise<void> {
-    return this.keycloakService.login();
-  }
-
-  get userName(): string {
+  public get userName(): string {
     return this.keycloakService.getUsername();
   }
 
-  isLoggedIn(): boolean {
+  public redirectToLoginPage(): Promise<void> {
+    return this.keycloakService.login();
+  }
+
+  public isLoggedIn(): boolean {
     return this.keycloakService.isLoggedIn();
   }
 
-  logout(): void {
+  public logout(): void {
     this.keycloakService.logout(environment.keycloak.postLogoutRedirectUri);
   }
 }
