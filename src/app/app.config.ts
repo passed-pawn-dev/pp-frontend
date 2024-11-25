@@ -8,9 +8,11 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { KeycloakService } from 'keycloak-angular';
 import { initializeKeycloak } from './keycloak-init';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimations(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     {

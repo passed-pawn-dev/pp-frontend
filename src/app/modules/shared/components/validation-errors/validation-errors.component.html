@@ -1,0 +1,19 @@
+@if (markedForCheck) {
+  <div class="validation-errors">
+    @if (requiredError) {
+      <div>This field is required</div>
+    }
+    @if (maxlengthError) {
+      <div>Too many characters</div>
+    }
+    @if (minLengthError) {
+      <div>Not enough characters</div>
+    }
+    @if (emailError) {
+      <div>The email format is incorrect</div>
+    }
+    @if (minValueError) {
+      <div>The provided value is too small</div>
+    }
+  </div>
+}
