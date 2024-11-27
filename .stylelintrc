@@ -29,7 +29,10 @@
     "no-unknown-custom-properties": true,
     "property-no-unknown": true,
     "selector-pseudo-class-no-unknown": true,
-    "selector-pseudo-element-no-unknown": [true, { "ignorePseudoElements": ["ng-deep"] }],
+    "selector-pseudo-element-no-unknown": [
+      true,
+      { "ignorePseudoElements": ["ng-deep"] }
+    ],
     "selector-type-no-unknown": true,
     "unit-no-unknown": true,
     "at-rule-no-vendor-prefix": true,
@@ -46,7 +49,6 @@
     "at-rule-empty-line-before": "always",
     "comment-empty-line-before": "always",
     "declaration-empty-line-before": "never",
-    "rule-empty-line-before": "always-multi-line",
     "declaration-block-single-line-max-declarations": 0,
     "alpha-value-notation": "number",
     "color-function-notation": "modern",
