@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { Component, computed, input } from '@angular/core';
+import { FormErrors } from '../../models/formErrors';
 
 @Component({
   selector: 'app-validation-errors',
@@ -9,30 +9,26 @@ import { AbstractControl } from '@angular/forms';
   styleUrl: './validation-errors.component.scss'
 })
 export class ValidationErrorsComponent {
-  @Input({ required: true }) public control!: AbstractControl | null;
+  public errors = input.required<FormErrors | null>();
+  public touched = input.required<boolean>();
+  public dirty = input.required<boolean>();
 
-  protected get markedForCheck(): boolean {
-    return (
-      this.control!.touched && this.control!.dirty && this.control!.errors !== null
-    );
-  }
-  protected get requiredError(): boolean {
-    return this.control!.hasError('required');
-  }
+  private markedForCheck = computed(() => {
+    return this.touched() && this.dirty() && this.errors() !== null;
+  });
 
-  protected get maxlengthError(): boolean {
-    return this.control!.hasError('maxlength');
-  }
+  private requiredError = computed(() => this.errors()?.required);
+  private emailError = computed(() => this.errors()?.email);
+  private maxlengthError = computed(() => this.errors()?.maxlength);
+  private minLengthError = computed(() => this.errors()?.minlength);
+  private minValueError = computed(() => this.errors()?.min);
 
-  protected get minLengthError(): boolean {
-    return this.control!.hasError('minlength');
-  }
-
-  protected get emailError(): boolean {
-    return this.control!.hasError('email');
-  }
-
-  protected get minValueError(): boolean {
-    return this.control!.hasError('min');
-  }
+  protected state = {
+    markedForCheck: this.markedForCheck,
+    requiredError: this.requiredError,
+    emailError: this.emailError,
+    maxlengthError: this.maxlengthError,
+    minLengthError: this.minLengthError,
+    minValueError: this.minValueError
+  };
 }

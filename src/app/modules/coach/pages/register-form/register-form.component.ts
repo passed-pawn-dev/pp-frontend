@@ -1,10 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChessTitle } from '../../../shared/enums/chess-titles.enum';
 import { Gender, genderToLabelMapping } from '../../../shared/enums/gender.enum';
 import { chessTitleToLabelMapping } from '../../../shared/enums/chess-titles.enum';
@@ -38,7 +33,7 @@ export class RegisterFormComponent {
 
   protected chessTitles = enumToObjectArray(ChessTitle, chessTitleToLabelMapping);
   protected genders = enumToObjectArray(Gender, genderToLabelMapping);
-
+  public test = {};
   protected filteredCountries: string[] = [];
 
   protected registerForm = this.fb.group({
@@ -52,26 +47,6 @@ export class RegisterFormComponent {
     gender: [Gender.NOT_SPECIFIED],
     nationality: ['']
   });
-
-  protected get lastName(): AbstractControl<string | null> | null {
-    return this.registerForm.get('lastName');
-  }
-
-  protected get firstName(): AbstractControl<string | null> | null {
-    return this.registerForm.get('firstName');
-  }
-
-  protected get email(): AbstractControl<string | null> | null {
-    return this.registerForm.get('email');
-  }
-
-  protected get phoneNumber(): AbstractControl<string | null> | null {
-    return this.registerForm.get('phoneNumber');
-  }
-
-  protected get elo(): AbstractControl<string | null> | null {
-    return this.registerForm.get('elo');
-  }
 
   protected filterCountries(event: AutoCompleteCompleteEvent): void {
     const countries = ['POLSKA GÓRĄ'];

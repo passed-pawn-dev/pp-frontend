@@ -1,18 +1,18 @@
-@if (markedForCheck) {
+@if (state.markedForCheck()) {
   <div class="validation-errors">
-    @if (requiredError) {
+    @if (state.requiredError()) {
       <div>This field is required</div>
     }
-    @if (maxlengthError) {
+    @if (state.maxlengthError()) {
       <div>Too many characters</div>
     }
-    @if (minLengthError) {
+    @if (state.minLengthError()) {
       <div>Not enough characters</div>
     }
-    @if (emailError) {
+    @if (state.emailError()) {
       <div>The email format is incorrect</div>
     }
-    @if (minValueError) {
+    @if (state.minValueError()) {
       <div>The provided value is too small</div>
     }
   </div>
