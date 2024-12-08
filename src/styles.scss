@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+
+.form-control-field {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 15rem;
+}
+
+.vertical-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.buttons-box {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+}
