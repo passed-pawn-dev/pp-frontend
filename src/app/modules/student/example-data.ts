@@ -2,6 +2,8 @@ import { Lesson } from './models/Lesson';
 import { LessonDetails } from './models/LessonDetails';
 import { MyCourseDetails } from './models/MyCourseDetails';
 import { MyCourse } from './models/MyCourse';
+import { Coach } from './models/Coach';
+import { Title } from "./models/Title";
 
 export const lessonDetails: LessonDetails = {
   id: '1',
@@ -78,4 +80,57 @@ export const courses: MyCourse[] = [
     coachName: 'Grandmaster Victor Ivanov',
     thumbnail: 'https://example.com/thumbnails/attacking-chess.jpg'
   }
+];
+
+export const coaches: Coach[] = [
+  {
+    id: "1",
+    firstName: "Magnus",
+    lastName: "Carlsen",
+    photoId: "photo_1",
+    dateOfBirth: new Date("1990-11-30"),
+    ELO: 2850,
+    title: Title.GM,
+    countryId: "NOR",
+  },
+  {
+    id: "2",
+    firstName: "Hou",
+    lastName: "Yifan",
+    photoId: "photo_2",
+    dateOfBirth: new Date("1994-02-27"),
+    ELO: 2650,
+    title: Title.WGM,
+    countryId: "CHN",
+  },
+  {
+    id: "3",
+    firstName: "Anish",
+    lastName: "Giri",
+    photoId: "photo_3",
+    dateOfBirth: new Date("1994-06-28"),
+    ELO: 2760,
+    title: Title.GM,
+    countryId: "NED",
+  },
+  {
+    id: "4",
+    firstName: "Judith",
+    lastName: "Polgar",
+    photoId: "photo_4",
+    dateOfBirth: new Date("1976-07-23"),
+    ELO: 2735,
+    title: Title.GM,
+    countryId: "HUN",
+  },
+  {
+    id: "5",
+    firstName: "Viswanathan",
+    lastName: "Anand",
+    photoId: "photo_5",
+    dateOfBirth: new Date("1969-12-11"),
+    ELO: 2750,
+    title: Title.GM,
+    countryId: "IND",
+  },
 ];

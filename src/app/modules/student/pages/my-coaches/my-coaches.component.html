@@ -1,1 +1,10 @@
-<p>my-coaches works!</p>
+<h2>My Coaches</h2>
+<ul>
+  @for (coach of coaches; track $index) {
+    <li>
+      <div>
+        <a class="button" [routerLink]="coach.id">{{ coach.title + ' ' + coach.firstName + ' ' + coach.lastName }}</a>
+      </div>
+    </li>
+  }
+</ul>
