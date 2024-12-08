@@ -1,9 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Lesson } from '../../models/Lesson';
-import { course, courses, lessonDetails } from '../../example-data';
+import { myCourse } from '../../example-data';
 import { Router, RouterLink } from '@angular/router';
 import { MyCourseDetails } from '../../models/MyCourseDetails';
-import { LessonTileComponent } from '../lesson-tile/lesson-tile.component';
 
 @Component({
   selector: 'app-lesson-side-list',
@@ -13,7 +11,7 @@ import { LessonTileComponent } from '../lesson-tile/lesson-tile.component';
   styleUrl: './lesson-side-list.component.scss'
 })
 export class LessonSideListComponent {
-  protected course: MyCourseDetails = course;
+  protected course: MyCourseDetails = myCourse;
   protected router: Router = inject(Router);
 
   protected redirect(lessonNumber: number): void {

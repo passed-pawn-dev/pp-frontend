@@ -22,6 +22,7 @@ export class ValidationErrorsComponent {
   private maxlengthError = computed(() => this.errors()?.maxlength);
   private minLengthError = computed(() => this.errors()?.minlength);
   private minValueError = computed(() => this.errors()?.min);
+  private maxValueError = computed(() => this.errors()?.max);
 
   protected state = {
     markedForCheck: this.markedForCheck,
@@ -29,6 +30,7 @@ export class ValidationErrorsComponent {
     emailError: this.emailError,
     maxlengthError: this.maxlengthError,
     minLengthError: this.minLengthError,
-    minValueError: this.minValueError
+    minValueError: this.minValueError,
+    maxValueError: this.maxValueError
   };
 }
