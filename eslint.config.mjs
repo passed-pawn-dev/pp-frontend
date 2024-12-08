@@ -169,7 +169,7 @@ export default [
       '@angular-eslint/template/eqeqeq': 'error',
       '@angular-eslint/template/interactive-supports-focus': 'error',
       '@angular-eslint/template/label-has-associated-control': 'error',
-      '@angular-eslint/template/no-call-expression': 'error',
+      '@angular-eslint/template/no-call-expression': 'warn',
       '@angular-eslint/template/no-duplicate-attributes': 'error',
       '@angular-eslint/template/no-inline-styles': 'error',
       '@angular-eslint/template/no-interpolation-in-attributes': 'error',

@@ -13,7 +13,8 @@ export const initializeKeycloak =
       loadUserProfileAtStartUp: true,
       initOptions: {
         onLoad: 'check-sso',
-        silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html',
         checkLoginIframe: false,
         redirectUri: environment.keycloak.redirectUri
       }
