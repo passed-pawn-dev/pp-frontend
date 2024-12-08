@@ -1,0 +1,25 @@
+<form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="value">Stars</label>
+    <p-inputNumber id="value" formControlName="value" type="number" required />
+    <app-validation-errors
+      [errors]="reviewForm.controls.value.errors"
+      [dirty]="reviewForm.controls.value.dirty"
+      [touched]="reviewForm.controls.value.touched"
+    />
+  </div>
+
+  <div>
+    <label for="content">Review</label>
+    <input pInputText id="content" formControlName="content" type="text" />
+    <app-validation-errors
+      [errors]="reviewForm.controls.content.errors"
+      [dirty]="reviewForm.controls.content.dirty"
+      [touched]="reviewForm.controls.content.touched"
+    />
+  </div>
+
+  <div>
+    <p-button type="submit" [disabled]="reviewForm.invalid">Submit</p-button>
+  </div>
+</form>
