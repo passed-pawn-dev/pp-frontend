@@ -7,6 +7,8 @@ import { MyCourseComponent } from './pages/my-course/my-course.component';
 import { LessonDetailsComponent } from './pages/lesson-details/lesson-details.component';
 import { LessonsComponent } from './pages/lessons/lessons.component';
 import { MyCoachComponent } from './pages/my-coach/my-coach.component';
+import { CoursesComponent } from './pages/courses/courses.component';
+import { CourseComponent } from './pages/course/course.component';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -52,6 +54,14 @@ export const STUDENT_ROUTES: Route[] = [
       {
         path: 'my-games',
         component: MyGamesComponent
+      },
+      {
+        path: 'courses',
+        component: CoursesComponent
+      },
+      {
+        path: 'courses/:id',
+        component: CourseComponent
       }
     ]
   }
