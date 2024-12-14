@@ -1,14 +1,14 @@
 import { Route } from '@angular/router';
 import { StudentComponent } from './student/student.component';
-import { MyCoachesComponent } from './pages/my-coaches/my-coaches.component';
-import { MyCoursesComponent } from './pages/my-courses/my-courses.component';
-import { MyGamesComponent } from './pages/my-games/my-games.component';
-import { MyCourseComponent } from './pages/my-course/my-course.component';
-import { LessonDetailsComponent } from './pages/lesson-details/lesson-details.component';
-import { LessonsComponent } from './pages/lessons/lessons.component';
-import { MyCoachComponent } from './pages/my-coach/my-coach.component';
-import { CoursesComponent } from './pages/courses/courses.component';
-import { CourseComponent } from './pages/course/course.component';
+import { StudentMyCoachesComponent } from './pages/student-my-coaches/student-my-coaches.component';
+import { StudentMyCoursesComponent } from './pages/student-my-courses/student-my-courses.component';
+import { StudentMyGamesComponent } from './pages/student-my-games/student-my-games.component';
+import { StudentMyCourseComponent } from './pages/student-my-course/student-my-course.component';
+import { StudentLessonDetailsComponent } from './pages/student-lesson-details/student-lesson-details.component';
+import { StudentLessonsComponent } from './pages/student-lessons/student-lessons.component';
+import { StudentMyCoachComponent } from './pages/student-my-coach/student-my-coach.component';
+import { StudentCoursesComponent } from './pages/student-courses/student-courses.component';
+import { StudentCourseComponent } from './pages/student-course/student-course.component';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -22,23 +22,23 @@ export const STUDENT_ROUTES: Route[] = [
       },
       {
         path: 'my-coaches',
-        component: MyCoachesComponent
+        component: StudentMyCoachesComponent
       },
       {
         path: 'my-coaches/:id',
-        component: MyCoachComponent
+        component: StudentMyCoachComponent
       },
       {
         path: 'my-courses',
-        component: MyCoursesComponent
+        component: StudentMyCoursesComponent
       },
       {
         path: 'my-courses/:id',
-        component: MyCourseComponent
+        component: StudentMyCourseComponent
       },
       {
         path: 'my-courses/:id/lessons',
-        component: LessonsComponent,
+        component: StudentLessonsComponent,
         children: [
           {
             path: '',
@@ -47,21 +47,21 @@ export const STUDENT_ROUTES: Route[] = [
           },
           {
             path: ':id',
-            component: LessonDetailsComponent
+            component: StudentLessonDetailsComponent
           }
         ]
       },
       {
         path: 'my-games',
-        component: MyGamesComponent
+        component: StudentMyGamesComponent
       },
       {
         path: 'courses',
-        component: CoursesComponent
+        component: StudentCoursesComponent
       },
       {
         path: 'courses/:id',
-        component: CourseComponent
+        component: StudentCourseComponent
       }
     ]
   }
