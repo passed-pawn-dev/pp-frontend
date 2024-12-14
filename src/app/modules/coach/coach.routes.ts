@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { CoachComponent } from './coach/coach.component';
-import { MyStudentsListComponent } from './pages/my-students-list/my-students-list.component';
+import { CoachCoursesListComponent } from './pages/coach-courses-list/coach-courses-list.component';
+import { CoachRegisterFormComponent } from './pages/coach-register-form/coach-register-form.component';
 
 export const COACH_ROUTES: Route[] = [
   {
@@ -9,12 +10,16 @@ export const COACH_ROUTES: Route[] = [
     children: [
       {
         path: '',
-        redirectTo: 'my-students',
+        redirectTo: 'courses',
         pathMatch: 'full'
       },
       {
-        path: 'my-students',
-        component: MyStudentsListComponent
+        path: 'courses',
+        component: CoachCoursesListComponent
+      },
+      {
+        path: 'register',
+        component: CoachRegisterFormComponent
       }
     ]
   }

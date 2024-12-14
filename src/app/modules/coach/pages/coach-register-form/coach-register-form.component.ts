@@ -11,9 +11,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { enumToObjectArray } from '../../../shared/utils/enum-to-object-array';
 import { CalendarModule } from 'primeng/calendar';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
+import countries from '../../../../../assets/countries.json';
 
 @Component({
-  selector: 'app-register-form',
+  selector: 'app-coach-register-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -25,23 +26,23 @@ import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocompl
     CalendarModule,
     ValidationErrorsComponent
   ],
-  templateUrl: './register-form.component.html',
-  styleUrl: './register-form.component.scss'
+  templateUrl: './coach-register-form.component.html',
+  styleUrl: './coach-register-form.component.scss'
 })
-export class RegisterFormComponent {
+export class CoachRegisterFormComponent {
   private fb: FormBuilder = inject(FormBuilder);
 
   protected chessTitles = enumToObjectArray(ChessTitle, chessTitleToLabelMapping);
   protected genders = enumToObjectArray(Gender, genderToLabelMapping);
-  public test = {};
   protected filteredCountries: string[] = [];
+  protected maxDate = new Date();
 
   protected registerForm = this.fb.group({
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     phoneNumber: ['', [Validators.required]],
-    dateOfBirth: [null],
+    dateOfBirth: [],
     elo: [null, [Validators.min(1000)]],
     chessTitle: [ChessTitle.NO_TITLE],
     gender: [Gender.NOT_SPECIFIED],
@@ -49,10 +50,10 @@ export class RegisterFormComponent {
   });
 
   protected filterCountries(event: AutoCompleteCompleteEvent): void {
-    const countries = ['POLSKA GÓRĄ'];
+    const countryNames = Object.keys(countries);
     const query = event.query;
 
-    const filteredCountries = countries.filter((country) =>
+    const filteredCountries = countryNames.filter((country) =>
       country.toLowerCase().startsWith(query.toLowerCase())
     );
 
