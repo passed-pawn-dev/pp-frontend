@@ -1,4 +1,4 @@
-import { Component, Input, computed } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { Course } from '../../models/Course';
 import { RouterLink } from '@angular/router';
 
@@ -10,6 +10,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './student-course-tile.component.scss'
 })
 export class StudentCourseTileComponent {
-  @Input({ required: true }) public course!: Course;
-  protected formattedPrice = computed(() => `${this.course.price.toFixed(2)} PLN`);
+  public course = input.required<Course>();
+  protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
 }

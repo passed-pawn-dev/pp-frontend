@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CourseReview } from '../../models/CourseReview';
 
 @Component({
@@ -9,5 +9,5 @@ import { CourseReview } from '../../models/CourseReview';
   styleUrl: './student-course-review.component.scss'
 })
 export class StudentCourseReviewComponent {
-  @Input({ required: true }) public review!: CourseReview;
+  public review = input.required<CourseReview>();
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Lesson } from '../../models/Lesson';
 
@@ -10,5 +10,5 @@ import { Lesson } from '../../models/Lesson';
   styleUrl: './student-lesson-tile.component.scss'
 })
 export class StudentLessonTileComponent {
-  @Input({ required: true }) public lesson!: Lesson;
+  public lesson = input.required<Lesson>();
 }
