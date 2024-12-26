@@ -1,9 +1,0 @@
-<div>
-  <div>{{ course.id }}</div>
-  <div>{{ course.title }}</div>
-  <div>{{ course.description }}</div>
-  <div>{{ course.coachName }}</div>
-  @for (lesson of course.lessons; track $index) {
-    <app-lesson-tile [lesson]="lesson" />
-  }
-</div>
