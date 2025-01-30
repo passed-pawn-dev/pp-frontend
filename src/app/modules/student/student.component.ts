@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StudentNavbarComponent } from '../components/student-navbar/student-navbar.component';
+import { StudentNavbarComponent } from './components/student-navbar/student-navbar.component';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
