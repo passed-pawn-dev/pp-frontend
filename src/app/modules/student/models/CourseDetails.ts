@@ -1,13 +1,12 @@
 import { CourseReview } from './CourseReview';
+import { Lesson } from './Lesson';
 
 export interface CourseDetails {
   id: string;
   title: string;
   description: string;
-  coachName: string;
   thumbnail: string;
   price: number;
-  lessons: number;
-  reviewScore: number;
+  lessons: Lesson[];
   reviews: CourseReview[];
 }

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Course } from '../../models/Course';
-import { courses } from '../../example-data';
 import { StudentCourseTileComponent } from '../../components/student-course-tile/student-course-tile.component';
+import { CourseService } from '../../service/course.service';
 
 @Component({
   selector: 'app-student-courses',
@@ -10,6 +10,14 @@ import { StudentCourseTileComponent } from '../../components/student-course-tile
   templateUrl: './student-courses.component.html',
   styleUrl: './student-courses.component.scss'
 })
-export class StudentCoursesComponent {
-  protected courses: Course[] = courses;
+export class StudentCoursesComponent implements OnInit {
+  protected courses: Course[] = [];
+
+  public constructor(private courseService: CourseService) {}
+
+  public ngOnInit(): void {
+    this.courseService.getAll().subscribe((res) => {
+      this.courses = res;
+    });
+  }
 }
