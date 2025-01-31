@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { StudentComponent } from './student/student.component';
+import { StudentComponent } from './student.component';
 import { StudentMyCoachesComponent } from './pages/student-my-coaches/student-my-coaches.component';
 import { StudentMyCoursesComponent } from './pages/student-my-courses/student-my-courses.component';
 import { StudentMyGamesComponent } from './pages/student-my-games/student-my-games.component';
