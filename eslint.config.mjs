@@ -123,7 +123,7 @@ export default [
         },
         {
           selector: 'enumMember',
-          format: ['UPPER_CASE']
+          format: ['StrictPascalCase']
         },
         {
           selector: ['class', 'enum', 'typeParameter'],
