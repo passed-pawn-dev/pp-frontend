@@ -1,23 +1,25 @@
 export enum ChessTitle {
-  FIDE_CANDIDATE_MASTER = 'FIDE_CANDIDATE_MASTER',
-  WOMAN_FIDE_CANDIDATE_MASTER = 'WOMAN_FIDE_CANDIDATE_MASTER',
-  FIDE_MASTER = 'FIDE_MASTER',
-  WOMAN_FIDE_MASTER = 'WOMAN_FIDE_MASTER',
-  INTERNATIONAL_MASTER = 'INTERNATIONAL_MASTER',
-  WOMAN_INTERNATIONAL_MASTER = 'WOMAN_INTERNATIONAL_MASTER',
-  GRANDMASTER = 'GRANDMASTER',
-  WOMAN_GRANDMASTER = 'WOMAN_GRANDMASTER',
-  NO_TITLE = 'NO_TITLE'
+  NationalMaster = 'NationalMaster',
+  WomanNationalMaster = 'WomanNationalMaster',
+  CandidateMaster = 'CandidateMaster',
+  WomanCandidateMaster = 'WomanCandidateMaster',
+  FideMaster = 'FideMaster',
+  WomanFideMaster = 'WomanFideMaster',
+  InternationalMaster = 'InternationalMaster',
+  WomanInternationalMaster = 'WomanInternationalMaster',
+  GrandMaster = 'GrandMaster',
+  WomanGrandMaster = 'WomanGrandMaster'
 }
 
 export const chessTitleToLabelMapping: Record<ChessTitle, string> = {
-  [ChessTitle.FIDE_CANDIDATE_MASTER]: 'CM',
-  [ChessTitle.WOMAN_FIDE_CANDIDATE_MASTER]: 'WCM',
-  [ChessTitle.FIDE_MASTER]: 'FM',
-  [ChessTitle.WOMAN_FIDE_MASTER]: 'WFM',
-  [ChessTitle.INTERNATIONAL_MASTER]: 'IM',
-  [ChessTitle.WOMAN_INTERNATIONAL_MASTER]: 'WIM',
-  [ChessTitle.GRANDMASTER]: 'GM',
-  [ChessTitle.WOMAN_GRANDMASTER]: 'WGM',
-  [ChessTitle.NO_TITLE]: 'No title'
+  [ChessTitle.NationalMaster]: 'NM',
+  [ChessTitle.WomanNationalMaster]: 'WNM',
+  [ChessTitle.CandidateMaster]: 'CM',
+  [ChessTitle.WomanCandidateMaster]: 'WCM',
+  [ChessTitle.FideMaster]: 'FM',
+  [ChessTitle.WomanFideMaster]: 'WFM',
+  [ChessTitle.InternationalMaster]: 'IM',
+  [ChessTitle.WomanInternationalMaster]: 'WIM',
+  [ChessTitle.GrandMaster]: 'GM',
+  [ChessTitle.WomanGrandMaster]: 'WGM'
 };

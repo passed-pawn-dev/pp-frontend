@@ -9,6 +9,7 @@ import { StudentLessonsComponent } from './pages/student-lessons/student-lessons
 import { StudentMyCoachComponent } from './pages/student-my-coach/student-my-coach.component';
 import { StudentCoursesComponent } from './pages/student-courses/student-courses.component';
 import { StudentCourseComponent } from './pages/student-course/student-course.component';
+import { StudentRegisterFormComponent } from './pages/student-register-form/student-register-form.component';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -19,6 +20,10 @@ export const STUDENT_ROUTES: Route[] = [
         path: '',
         redirectTo: 'my-courses',
         pathMatch: 'full'
+      },
+      {
+        path: 'register',
+        component: StudentRegisterFormComponent
       },
       {
         path: 'my-coaches',
