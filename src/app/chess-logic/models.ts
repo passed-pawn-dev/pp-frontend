@@ -26,18 +26,18 @@ export enum FenChar {
 }
 
 export const pieceImagePaths: Readonly<Record<FenChar, string>> = {
-  [FenChar.WhitePawn]: 'assets/pieces/white-pawn.svg',
-  [FenChar.WhiteKnight]: 'assets/pieces/white-knight.svg',
-  [FenChar.WhiteBishop]: 'assets/pieces/white-bishop.svg',
-  [FenChar.WhiteRook]: 'assets/pieces/white-rook.svg',
-  [FenChar.WhiteQueen]: 'assets/pieces/white-queen.svg',
-  [FenChar.WhiteKing]: 'assets/pieces/white-king.svg',
-  [FenChar.BlackPawn]: 'assets/pieces/black-pawn.svg',
-  [FenChar.BlackKnight]: 'assets/pieces/black-knight.svg',
-  [FenChar.BlackBishop]: 'assets/pieces/black-bishop.svg',
-  [FenChar.BlackRook]: 'assets/pieces/black-rook.svg',
-  [FenChar.BlackQueen]: 'assets/pieces/black-queen.svg',
-  [FenChar.BlackKing]: 'assets/pieces/black-king.svg'
+  [FenChar.WhitePawn]: 'assets/pieces/white_pawn_45.svg',
+  [FenChar.WhiteKnight]: 'assets/pieces/white_knight_45.svg',
+  [FenChar.WhiteBishop]: 'assets/pieces/white_bishop_45.svg',
+  [FenChar.WhiteRook]: 'assets/pieces/white_rook_45.svg',
+  [FenChar.WhiteQueen]: 'assets/pieces/white_queen_45.svg',
+  [FenChar.WhiteKing]: 'assets/pieces/white_king_45.svg',
+  [FenChar.BlackPawn]: 'assets/pieces/black_pawn_45.svg',
+  [FenChar.BlackKnight]: 'assets/pieces/black_knight_45.svg',
+  [FenChar.BlackBishop]: 'assets/pieces/black_bishop_45.svg',
+  [FenChar.BlackRook]: 'assets/pieces/black_rook_45.svg',
+  [FenChar.BlackQueen]: 'assets/pieces/black_queen_45.svg',
+  [FenChar.BlackKing]: 'assets/pieces/black_king_45.svg'
 };
 
 export type TSafeSquares = Map<string, TCoords[]>;
