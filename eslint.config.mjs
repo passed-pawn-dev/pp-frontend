@@ -123,7 +123,7 @@ export default [
         },
         {
           selector: 'enumMember',
-          format: ['UPPER_CASE']
+          format: ['StrictPascalCase']
         },
         {
           selector: ['class', 'enum', 'typeParameter'],
@@ -174,7 +174,6 @@ export default [
       '@angular-eslint/template/no-inline-styles': 'error',
       '@angular-eslint/template/no-interpolation-in-attributes': 'error',
       '@angular-eslint/template/no-negated-async': 'error',
-      '@angular-eslint/template/prefer-self-closing-tags': 'error',
       '@angular-eslint/template/role-has-required-aria': 'error',
       '@angular-eslint/template/table-scope': 'warn',
       '@angular-eslint/template/valid-aria': 'error'

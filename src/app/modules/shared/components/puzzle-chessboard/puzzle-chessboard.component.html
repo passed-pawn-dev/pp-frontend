@@ -1,1 +1,15 @@
 <p>puzzle-chessboard works!</p>
+<div class="chessboard">
+  @for (field of chessboard.entries(); track $index) {
+    <div class="chessboard-field">
+      @if ($index % 8 === 0) {
+        <div class="chessboard-file">{{ field[0][1] }}</div>
+      }
+
+      @if ($index > 55) {
+        <div class="chessboard-rank">{{ field[0][0] }}</div>
+      }
+      <div class="chessboard-field-content" [appChessPiece]="field[1]"></div>
+    </div>
+  }
+</div>

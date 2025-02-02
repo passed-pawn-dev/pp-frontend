@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ChessTitle } from '../../../shared/enums/chess-titles.enum';
+import { ChessTitle } from '../../../shared/enums/chess-title.enum';
 import { Gender, genderToLabelMapping } from '../../../shared/enums/gender.enum';
-import { chessTitleToLabelMapping } from '../../../shared/enums/chess-titles.enum';
+import { chessTitleToLabelMapping } from '../../../shared/enums/chess-title.enum';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
