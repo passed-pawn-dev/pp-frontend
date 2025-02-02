@@ -103,19 +103,24 @@ export default [
       ],
       '@typescript-eslint/naming-convention': [
         'error',
-        {
-          selector: [
-            'function',
-            'classProperty',
-            'typeProperty',
-            'parameterProperty',
-            'classMethod',
-            'objectLiteralMethod',
-            'typeMethod',
-            'accessor'
-          ],
-          format: ['strictCamelCase', 'StrictPascalCase', 'UPPER_CASE']
-        },
+        // {
+        //   selector: [
+        //     'function',
+        //     'classProperty',
+        //     'typeProperty',
+        //     'parameterProperty',
+        //     'classMethod',
+        //     'objectLiteralMethod',
+        //     'typeMethod',
+        //     'accessor'
+        //   ],
+        //   format: [
+        //     'strictCamelCase',
+        //     'StrictPascalCase',
+        //     'UPPER_CASE',
+        //     '_strictCamelCase'
+        //   ]
+        // },
         {
           selector: 'variable',
           format: ['strictCamelCase', 'UPPER_CASE'],

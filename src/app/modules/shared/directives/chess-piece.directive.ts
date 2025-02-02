@@ -16,6 +16,7 @@ export class ChessPieceDirective implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    console.log('setting piece');
     if (this.appChessPiece) {
       const imagePath = `assets/${this.pieceImageString.transform(this.appChessPiece)}.svg`;
       const img = this.renderer.createElement('img');

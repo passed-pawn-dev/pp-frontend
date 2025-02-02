@@ -3,19 +3,22 @@ import { ChessboardSide } from '../../enums/chessboard-side.enum';
 import { TChessPieceFen } from '../../types/chess-piece-fen.type';
 import { ChessPieceDirective } from '../../directives/chess-piece.directive';
 import { PieceImageString } from '../../pipes/piece-image-string.pipe';
+import { Button } from 'primeng/button';
+import cloneDeep from 'lodash/cloneDeep';
 
 @Component({
   selector: 'app-puzzle-chessboard',
   standalone: true,
-  imports: [ChessPieceDirective],
+  imports: [ChessPieceDirective, Button, PieceImageString],
   templateUrl: './puzzle-chessboard.component.html',
   styleUrl: './puzzle-chessboard.component.scss'
 })
 export class PuzzleChessboardComponent implements OnInit {
   protected FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   protected RANKS = [8, 7, 6, 5, 4, 3, 2, 1];
-  protected side = ChessboardSide.White;
+  protected side = ChessboardSide.Black;
   // protected ChessboardSide = ChessboardSide;
+  protected ChessboardSide = ChessboardSide;
   protected chessboard: Map<string, string | null> = new Map(
     this.RANKS.flatMap((RANK) => this.FILES.map((FILE) => [`${FILE}${RANK}`, null]))
   );
@@ -78,4 +81,10 @@ export class PuzzleChessboardComponent implements OnInit {
       this.chessboard.set(square, piece);
     });
   }
+
+  protected reverseChessboard(): void {
+    this.chessboard = new Map(Array.from(this.chessboard).reverse());
+  }
+
+  protected movePiece(): void {}
 }

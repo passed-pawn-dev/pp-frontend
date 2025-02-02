@@ -11,7 +11,6 @@ export class PieceImageString implements PipeTransform {
     }
 
     const color = piece === piece.toUpperCase() ? 'white' : 'black';
-    console.log(piece, color);
 
     return `${color}_${piece}_45`;
   }

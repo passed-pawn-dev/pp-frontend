@@ -44,7 +44,7 @@ export class CoachRegisterFormComponent {
     phoneNumber: ['', [Validators.required]],
     dateOfBirth: [],
     elo: [null, [Validators.min(1000)]],
-    chessTitle: [ChessTitle.NO_TITLE],
+    chessTitle: [ChessTitle.NoTitle],
     gender: [Gender.NOT_SPECIFIED],
     nationality: ['']
   });
