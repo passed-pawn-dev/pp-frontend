@@ -38,6 +38,10 @@ $white-square-background: #ebecd0;
     padding-bottom: 0.25rem;
     place-content: center;
 
+    .chessboard-chess-piece {
+      cursor: pointer;
+    }
+
     img {
       transform: scale(1.5);
     }

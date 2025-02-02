@@ -14,7 +14,7 @@
 
       <div class="chessboard-field-content">
         @if (field[1] !== null) {
-          <div (click)="move(field[0])">
+          <div class="chessboard-chess-piece" (click)="move(field[0])">
             <img [alt]="'chess-piece-' + field[1]" [src]="pieceImagePaths[field[1]]" />
           </div>
         }
