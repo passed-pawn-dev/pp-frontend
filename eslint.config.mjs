@@ -103,19 +103,24 @@ export default [
       ],
       '@typescript-eslint/naming-convention': [
         'error',
-        {
-          selector: [
-            'function',
-            'classProperty',
-            'typeProperty',
-            'parameterProperty',
-            'classMethod',
-            'objectLiteralMethod',
-            'typeMethod',
-            'accessor'
-          ],
-          format: ['strictCamelCase', 'StrictPascalCase', 'UPPER_CASE']
-        },
+        // {
+        //   selector: [
+        //     'function',
+        //     'classProperty',
+        //     'typeProperty',
+        //     'parameterProperty',
+        //     'classMethod',
+        //     'objectLiteralMethod',
+        //     'typeMethod',
+        //     'accessor'
+        //   ],
+        //   format: [
+        //     'strictCamelCase',
+        //     'StrictPascalCase',
+        //     'UPPER_CASE',
+        //     '_strictCamelCase'
+        //   ]
+        // },
         {
           selector: 'variable',
           format: ['strictCamelCase', 'UPPER_CASE'],
@@ -174,7 +179,6 @@ export default [
       '@angular-eslint/template/no-inline-styles': 'error',
       '@angular-eslint/template/no-interpolation-in-attributes': 'error',
       '@angular-eslint/template/no-negated-async': 'error',
-      '@angular-eslint/template/prefer-self-closing-tags': 'error',
       '@angular-eslint/template/role-has-required-aria': 'error',
       '@angular-eslint/template/table-scope': 'warn',
       '@angular-eslint/template/valid-aria': 'error'
