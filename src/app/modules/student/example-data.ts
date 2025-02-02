@@ -31,12 +31,10 @@ export const myCourse: MyCourseDetails = {
   lessons: [
     {
       id: 'abc',
-      title: 'Introduction',
       lessonNumber: 1
     },
     {
       id: 'def',
-      title: 'Piece movement',
       lessonNumber: 2
     }
   ]
