@@ -55,6 +55,7 @@ export type TLastMove = {
   piece: Piece;
   prevSquare: string;
   currentSquare: string;
+  moveType: Set<MoveType>;
 };
 
 type TKingChecked = {
@@ -73,5 +74,5 @@ export type TMoveList = [string, string?][];
 export type TGameHistory = {
   lastMove: TLastMove | undefined;
   checkState: TCheckState;
-  board: (FenChar | null)[][];
+  board: Map<string, FenChar | null>;
 }[];

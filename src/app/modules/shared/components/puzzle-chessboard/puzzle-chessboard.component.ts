@@ -7,7 +7,9 @@ import {
   FenChar,
   TCheckState,
   TCoords,
+  TGameHistory,
   TLastMove,
+  TMoveList,
   TSafeSquares
 } from '../../../../chess-logic/models';
 import { Rook } from '../../../../chess-logic/pieces/rook';
@@ -21,11 +23,12 @@ import { pieceImagePaths } from '../../../../chess-logic/models';
 import { ChessBoard } from '../../../../chess-logic/board';
 import { TSelectedSquare } from '../../models/chessboardViewModels';
 import { CommonModule } from '@angular/common';
+import { MoveListComponent } from '../move-list/move-list.component';
 
 @Component({
   selector: 'app-puzzle-chessboard',
   standalone: true,
-  imports: [Button, CommonModule],
+  imports: [Button, CommonModule, MoveListComponent],
   templateUrl: './puzzle-chessboard.component.html',
   styleUrl: './puzzle-chessboard.component.scss'
 })
@@ -41,10 +44,19 @@ export class PuzzleChessboardComponent implements OnInit {
   private lastMove: TLastMove | undefined = this.chessboard.lastMove;
   private checkState: TCheckState = this.chessboard.checkState;
 
+  public get moveList(): TMoveList {
+    return this.chessboard.moveList;
+  }
+  public get gameHistory(): TGameHistory {
+    return this.chessboard.gameHistory;
+  }
+  public gameHistoryPointer: number = 0;
+
   // promotion properties
   public isPromotionActive: boolean = false;
   private promotionCoords: TCoords | null = null;
   private promotedPiece: FenChar | null = null;
+
   public promotionPieces(): FenChar[] {
     return this.playerColor === Color.White
       ? [
@@ -71,6 +83,7 @@ export class PuzzleChessboardComponent implements OnInit {
     this.checkState = this.chessboard.checkState;
     this.lastMove = this.chessboard.lastMove;
     this.unmarkingPreviouslySelectedAndSafeSquares();
+    this.gameHistoryPointer++;
   }
 
   public promotePiece(piece: FenChar): void {
@@ -195,5 +208,13 @@ export class PuzzleChessboardComponent implements OnInit {
 
     this.selectedSquare = { piece, square };
     this.pieceSafeSquares = this.safeSquares.get(square) || [];
+  }
+
+  public showPreviousPosition(moveIndex: number): void {
+    const { board, checkState, lastMove } = this.gameHistory[moveIndex];
+    this.chessboardView = board;
+    this.checkState = checkState;
+    this.lastMove = lastMove;
+    this.gameHistoryPointer = moveIndex;
   }
 }
