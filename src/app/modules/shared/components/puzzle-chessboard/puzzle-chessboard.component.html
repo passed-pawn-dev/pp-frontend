@@ -1,7 +1,7 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <p>puzzle-chessboard works!</p>
 <p-button (onClick)="reverseChessboard()">Reverse side</p-button>
-<div class="chessboard" [class.black-view]="side === Color.Black">
+<div class="chessboard" [class.black-view]="playerColor === Color.Black">
   @for (field of chessboardView; track $index) {
     <div class="chessboard-field">
       @if ($index % 8 === 0) {
@@ -12,9 +12,18 @@
         <div class="chessboard-rank">{{ field[0][0] }}</div>
       }
 
-      <div class="chessboard-field-content">
+      <div
+        class="chessboard-field-content"
+        [ngClass]="{
+          'selected-square': isSquareSelected(field[0]),
+          'piece-square': field[1] !== null
+        }"
+      >
+        <div
+          [ngClass]="{ 'safe-square': isSquareSafeForSelectedPiece(field[0]) }"
+        ></div>
         @if (field[1] !== null) {
-          <div class="chessboard-chess-piece" (click)="move(field[0])">
+          <div class="chessboard-chess-piece" (click)="selectingPiece(field[0])">
             <img [alt]="'chess-piece-' + field[1]" [src]="pieceImagePaths[field[1]]" />
           </div>
         }
