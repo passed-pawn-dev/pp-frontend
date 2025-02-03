@@ -2,7 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ChessboardSide } from '../../enums/chessboard-side.enum';
 import { TChessPieceFen } from '../../types/chess-piece-fen.type';
 import { Button } from 'primeng/button';
-import { Color, FenChar, TSafeSquares } from '../../../../chess-logic/models';
+import {
+  Color,
+  FenChar,
+  TCheckState,
+  TLastMove,
+  TSafeSquares
+} from '../../../../chess-logic/models';
 import { Rook } from '../../../../chess-logic/pieces/rook';
 import { Pawn } from '../../../../chess-logic/pieces/pawn';
 import { Knight } from '../../../../chess-logic/pieces/knight';
@@ -31,6 +37,9 @@ export class PuzzleChessboardComponent implements OnInit {
     this.chessboard.chessboardView;
   private selectedSquare: TSelectedSquare = { piece: null };
   private pieceSafeSquares: string[] = [];
+  private lastMove: TLastMove | undefined = this.chessboard.lastMove;
+  private checkState: TCheckState = this.chessboard.checkState;
+
   protected get playerColor(): Color {
     return this.chessboard.playerColor;
   }
@@ -53,12 +62,19 @@ export class PuzzleChessboardComponent implements OnInit {
     return this.pieceSafeSquares.some((square) => square === targetSquare);
   }
 
-  protected selectingPiece(square: string): void {
-    const piece = this.chessboardView.get(square) as FenChar | null;
-    if (piece === null) return;
+  public isSquareLastMove(square: string): boolean {
+    if (!this.lastMove) return false;
+    const { prevSquare, currentSquare } = this.lastMove;
+    return square === prevSquare || square === currentSquare;
+  }
 
-    this.selectedSquare = { piece, square };
-    this.pieceSafeSquares = this.safeSquares.get(square) || [];
+  public isSquareChecked(square: string): boolean {
+    return this.checkState.isInCheck && this.checkState.square === square;
+  }
+
+  private unmarkingPreviouslySelectedAndSafeSquares(): void {
+    this.selectedSquare = { piece: null };
+    this.pieceSafeSquares = [];
   }
 
   protected reverseChessboard(): void {
@@ -68,8 +84,21 @@ export class PuzzleChessboardComponent implements OnInit {
     this.selectedSquare = { piece: null };
   }
 
+  private placingPiece(targetSquare: string): void {
+    if (!this.selectedSquare.piece) return;
+    if (!this.isSquareSafeForSelectedPiece(targetSquare)) return;
+
+    const { square: currentSquare } = this.selectedSquare;
+    this.chessboard.move(currentSquare, targetSquare);
+    this.chessboardView = this.chessboard.chessboardView;
+    this.checkState = this.chessboard.checkState;
+    this.lastMove = this.chessboard.lastMove;
+    this.unmarkingPreviouslySelectedAndSafeSquares();
+  }
+
   protected move(square: string): void {
-    this.isWrongPieceSelected(this.chessboardView.get(square)!);
+    this.selectingPiece(square);
+    this.placingPiece(square);
   }
 
   private isWrongPieceSelected(piece: FenChar): boolean {
@@ -78,5 +107,19 @@ export class PuzzleChessboardComponent implements OnInit {
       (isWhitePieceSelected && this.playerColor === Color.Black) ||
       (!isWhitePieceSelected && this.playerColor === Color.White)
     );
+  }
+
+  protected selectingPiece(square: string): void {
+    const piece = this.chessboardView.get(square) as FenChar | null;
+    if (piece === null) return;
+    if (this.isWrongPieceSelected(piece)) return;
+
+    const isSameSquareClicked: boolean =
+      !!this.selectedSquare.piece && this.selectedSquare.square === square;
+    this.unmarkingPreviouslySelectedAndSafeSquares();
+    if (isSameSquareClicked) return;
+
+    this.selectedSquare = { piece, square };
+    this.pieceSafeSquares = this.safeSquares.get(square) || [];
   }
 }
