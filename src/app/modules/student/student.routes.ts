@@ -10,6 +10,7 @@ import { StudentMyCoachComponent } from './pages/student-my-coach/student-my-coa
 import { StudentCoursesComponent } from './pages/student-courses/student-courses.component';
 import { StudentCourseComponent } from './pages/student-course/student-course.component';
 import { StudentRegisterFormComponent } from './pages/student-register-form/student-register-form.component';
+import { StudentMyProfileComponent } from './pages/student-my-profile/student-my-profile.component';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -67,6 +68,10 @@ export const STUDENT_ROUTES: Route[] = [
       {
         path: 'courses/:id',
         component: StudentCourseComponent
+      },
+      {
+        path: 'profile',
+        component: StudentMyProfileComponent
       }
     ]
   }
