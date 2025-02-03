@@ -19,8 +19,8 @@ import {
 import { Student } from '../../models/Student';
 import { StudentService } from '../../service/student.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NationalityService } from '../../service/nationality.service';
-import { Nationality } from '../../models/Nationality';
+import { NationalityService } from '../../../shared/service/nationality.service';
+import { Nationality } from '../../../shared/models/Nationality';
 
 @Component({
   selector: 'app-student-register-form',
@@ -82,13 +82,6 @@ export class StudentRegisterFormComponent implements OnInit {
     this.filteredCountries = filteredCountries;
   }
 
-  protected onNationalitySelect(event: AutoCompleteSelectEvent): void {
-    const nationality = this.nationalities.find((n) => n.fullName === event.value);
-    if (nationality) {
-      this.registerForm.patchValue({ nationalityId: nationality.id });
-    }
-  }
-
   private parseDate(isoDate: number): string {
     const date = new Date(isoDate);
     const year = date.getFullYear();
@@ -99,13 +92,16 @@ export class StudentRegisterFormComponent implements OnInit {
 
   protected onSubmit(): void {
     if (this.registerForm.valid) {
+      const dateOfBirth = this.parseDate(this.registerForm.value.dateOfBirth!);
+      const nationalityId = this.nationalities.find(
+        (n) => n.fullName === this.registerForm.getRawValue().nationalityId
+      )!.id;
       const registerData: Student = {
         ...this.registerForm.getRawValue(),
-        dateOfBirth: this.parseDate(this.registerForm.value.dateOfBirth!)
+        dateOfBirth: dateOfBirth,
+        nationalityId: nationalityId
       };
-      console.log(registerData);
       this.studentService.register(registerData).subscribe((res) => {
-        console.log(res);
         this.router.navigate(['/student']);
       });
     }
