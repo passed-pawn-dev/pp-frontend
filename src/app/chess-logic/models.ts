@@ -1,8 +1,8 @@
 import { Piece } from './pieces/piece';
 
 export enum Color {
-  White,
-  Black
+  White = 'White',
+  Black = 'Black'
 }
 
 export type TCoords = {
@@ -40,15 +40,15 @@ export const pieceImagePaths: Readonly<Record<FenChar, string>> = {
   [FenChar.BlackKing]: 'assets/pieces/black_king_45.svg'
 };
 
-export type TSafeSquares = Map<string, TCoords[]>;
+export type TSafeSquares = Map<string, string[]>; // Map<square that a piece is on, for example "a2" (pawn)>, <squares the piece can go to without putting ally king in check>
 
 export enum MoveType {
-  Capture,
-  Castling,
-  Promotion,
-  Check,
-  CheckMate,
-  BasicMove
+  Capture = 'Capture',
+  Castling = 'Castling',
+  Promotion = 'Promotion',
+  Check = 'Check',
+  CheckMate = 'CheckMate',
+  BasicMove = 'BasicMove'
 }
 
 export type TLastMove = {
