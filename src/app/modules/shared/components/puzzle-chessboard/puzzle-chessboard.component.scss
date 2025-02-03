@@ -6,6 +6,7 @@ $black-square-valid-move-circle-color: #4b4b4b4f;
 $white-square-selected-background: #f5f580;
 $white-square-valid-move-circle-color: #7272724f;
 $white-square-background: #ebecd0;
+$king-in-check-background: #ff240057;
 
 .chessboard {
   aspect-ratio: 1/1;
@@ -60,6 +61,10 @@ $white-square-background: #ebecd0;
       transform: scale(1.5);
     }
   }
+
+  .king-in-check {
+    background-color: $king-in-check-background;
+  }
 }
 
 .safe-square {
@@ -83,7 +88,8 @@ $white-square-background: #ebecd0;
           $black-square-background
         );
 
-        .selected-square {
+        .selected-square,
+        .last-move {
           background-color: if(
             ($row + $col) % 2 == 0,
             $white-square-selected-background,
