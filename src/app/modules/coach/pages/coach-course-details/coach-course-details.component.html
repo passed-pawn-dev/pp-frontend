@@ -1,1 +1,19 @@
-<p>coach-course-details works!</p>
+<div>
+  <h2>{{ course().title }}</h2>
+  <div>{{ course().description }}</div>
+  <div>{{ lessonCount() }} lessons</div>
+  <div>price: {{ formattedPrice() }}</div>
+  <div>
+    Average review score: {{ averageReviewScore() }} with {{ reviewCount() }} reviews
+  </div>
+  <!-- @for (review of course().reviews; track $index) {
+      <app-student-course-review [review]="review" />
+    } -->
+
+  <div>
+    <a [routerLink]="'lessons/new'">Add lesson</a>
+  </div>
+  <div>
+    <a [routerLink]="'/coach/courses'">Back to courses</a>
+  </div>
+</div>

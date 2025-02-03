@@ -16,8 +16,18 @@ export class CoachCoursesListComponent implements OnInit {
   public constructor(private courseService: CourseService) {}
 
   public ngOnInit(): void {
+    this.getAll();
+  }
+
+  protected getAll(): void {
     this.courseService.getAll().subscribe((res) => {
       this.courses = res;
+    });
+  }
+
+  protected deleteCourse(id: string): void {
+    this.courseService.delete(id).subscribe(() => {
+      this.getAll();
     });
   }
 }
