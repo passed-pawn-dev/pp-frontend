@@ -1,3 +1,4 @@
+import { FenConverter } from './FenConverter';
 import {
   Color,
   TCoords,
@@ -21,8 +22,8 @@ import { Rook } from './pieces/rook';
 // TODO - SWAP X WITH Y, FOR SOME REASON X MEANS RANK AND Y MEANS FILE RIGHT NOW IM SORRY
 export class ChessBoard {
   protected chessboard: Map<string, Piece | null>;
-  protected FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-  protected RANKS = [8, 7, 6, 5, 4, 3, 2, 1];
+  public static FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+  public static RANKS = [8, 7, 6, 5, 4, 3, 2, 1];
   private _playerColor: Color = Color.White;
   private _safeSquares: TSafeSquares;
   private _lastMove: TLastMove | undefined;
@@ -37,11 +38,13 @@ export class ChessBoard {
 
   public constructor() {
     this.chessboard = new Map(
-      this.RANKS.flatMap((RANK) => this.FILES.map((FILE) => [`${FILE}${RANK}`, null]))
+      ChessBoard.RANKS.flatMap((RANK) =>
+        ChessBoard.FILES.map((FILE) => [`${FILE}${RANK}`, null])
+      )
     );
 
-    this.FILES.forEach((file) => {
-      this.RANKS.forEach((rank) => {
+    ChessBoard.FILES.forEach((file) => {
+      ChessBoard.RANKS.forEach((rank) => {
         this.chessboard.set(`${file}${rank}`, null);
       });
     });
@@ -120,19 +123,19 @@ export class ChessBoard {
     return chessboardView;
   }
 
-  private squareToCoords(square: string): TCoords {
+  public static squareToCoords(square: string): TCoords {
     if (square.length !== 2) {
       throw new Error('Square length should be equal to 2! Example: b4');
     }
-    return { x: parseInt(square[1]) - 1, y: this.FILES.indexOf(square[0]) };
+    return { x: parseInt(square[1]) - 1, y: ChessBoard.FILES.indexOf(square[0]) };
   }
 
-  private coordsToSquare(coords: TCoords): string {
-    return `${this.FILES[coords.y]}${coords.x + 1}`;
+  public static coordsToSquare(coords: TCoords): string {
+    return `${ChessBoard.FILES[coords.y]}${coords.x + 1}`;
   }
 
   private isSquareDark(square: string): boolean {
-    const coords = this.squareToCoords(square);
+    const coords = ChessBoard.squareToCoords(square);
 
     return (
       (coords.x % 2 === 0 && coords.y % 2 === 0) ||
@@ -159,14 +162,14 @@ export class ChessBoard {
       // skipping ally pieces - they cant attack ally king
       // const piece: Piece | null = this.chessboard.get(square) as Piece | null;
       if (piece === null || piece.color === playerColor) continue;
-      const { x, y } = this.squareToCoords(square);
+      const { x, y } = ChessBoard.squareToCoords(square);
 
       for (const { x: dx, y: dy } of piece.directions) {
         if (!this.areCoordsValid({ x: x + dx, y: y + dy })) continue;
 
         let targetX: number = x + dx;
         let targetY: number = y + dy;
-        const targetSquare = this.coordsToSquare({ x: x + dx, y: y + dy });
+        const targetSquare = ChessBoard.coordsToSquare({ x: x + dx, y: y + dy });
 
         // pieces that don't move across the whole board
         if (piece instanceof Pawn || piece instanceof Knight || piece instanceof King) {
@@ -183,7 +186,7 @@ export class ChessBoard {
           // pieces that move across the whole board
         } else {
           while (this.areCoordsValid({ x: targetX, y: targetY })) {
-            const targetSquare = this.coordsToSquare({ x: targetX, y: targetY });
+            const targetSquare = ChessBoard.coordsToSquare({ x: targetX, y: targetY });
             const blockingPiece: Piece | null = this.chessboard.get(
               targetSquare
             ) as Piece | null;
@@ -208,10 +211,12 @@ export class ChessBoard {
   }
 
   private isPositionSafeAfterMove(
-    piece: Piece,
     currentSquare: string,
     targetSquare: string
   ): boolean {
+    const piece: Piece | null = this.chessboard.get(currentSquare) as Piece | null;
+
+    if (piece === null) return false;
     const targetSquarePiece: Piece | null = this.chessboard.get(
       targetSquare
     ) as Piece | null;
@@ -237,7 +242,7 @@ export class ChessBoard {
       // skipping enemy pieces
 
       if (piece === null || piece.color !== this._playerColor) continue;
-      const { x, y } = this.squareToCoords(square);
+      const { x, y } = ChessBoard.squareToCoords(square);
       const piecesSafeSquares: string[] = [];
 
       for (const { x: dx, y: dy } of piece.directions) {
@@ -245,7 +250,7 @@ export class ChessBoard {
 
         let targetX: number = x + dx;
         let targetY: number = y + dy;
-        const targetSquare = this.coordsToSquare({ x: targetX, y: targetY });
+        const targetSquare = ChessBoard.coordsToSquare({ x: targetX, y: targetY });
         let blockingPiece: Piece | null = this.chessboard.get(
           targetSquare
         ) as Piece | null;
@@ -262,7 +267,7 @@ export class ChessBoard {
 
             if (
               this.chessboard.get(
-                this.coordsToSquare({ x: targetX + (dx === 2 ? -1 : 1), y: y })
+                ChessBoard.coordsToSquare({ x: targetX + (dx === 2 ? -1 : 1), y: y })
               ) !== null
             )
               continue;
@@ -280,11 +285,11 @@ export class ChessBoard {
         }
 
         if (piece instanceof Pawn || piece instanceof Knight || piece instanceof King) {
-          if (this.isPositionSafeAfterMove(piece, square, targetSquare))
+          if (this.isPositionSafeAfterMove(square, targetSquare))
             piecesSafeSquares.push(targetSquare);
         } else {
           while (this.areCoordsValid({ x: targetX, y: targetY })) {
-            const targetSquare = this.coordsToSquare({
+            const targetSquare = ChessBoard.coordsToSquare({
               x: targetX,
               y: targetY
             });
@@ -292,7 +297,7 @@ export class ChessBoard {
             // direction blocked by an ally piece
             if (blockingPiece !== null && blockingPiece.color === piece.color) break;
 
-            if (this.isPositionSafeAfterMove(piece, square, targetSquare))
+            if (this.isPositionSafeAfterMove(square, targetSquare))
               piecesSafeSquares.push(targetSquare);
 
             if (blockingPiece !== null) break;
@@ -304,12 +309,19 @@ export class ChessBoard {
       }
       if (piece instanceof King) {
         if (this.canCastle(piece, true)) {
-          piecesSafeSquares.push(this.coordsToSquare({ x, y: 6 }));
+          piecesSafeSquares.push(ChessBoard.coordsToSquare({ x, y: 6 }));
         }
 
         if (this.canCastle(piece, false)) {
-          piecesSafeSquares.push(this.coordsToSquare({ x, y: 2 }));
+          piecesSafeSquares.push(ChessBoard.coordsToSquare({ x, y: 2 }));
         }
+      } else if (piece instanceof Pawn && this.canCaptureEnPassant(piece, square)) {
+        piecesSafeSquares.push(
+          ChessBoard.coordsToSquare({
+            x: x + (piece.color === Color.White ? 1 : -1),
+            y: ChessBoard.squareToCoords(this._lastMove!.prevSquare).y
+          })
+        );
       }
       if (piecesSafeSquares.length > 0) {
         safeSquares.set(square, piecesSafeSquares);
@@ -317,9 +329,13 @@ export class ChessBoard {
     }
     return safeSquares; // Map<square that a piece is on, for example "a2" (pawn)>, <squares the piece can go to without putting ally king in check>
   }
-  public move(currentSquare: string, targetSquare: string): void {
-    const { x: currentX, y: currentY } = this.squareToCoords(currentSquare);
-    const { x: targetX, y: targetY } = this.squareToCoords(targetSquare);
+  public move(
+    currentSquare: string,
+    targetSquare: string,
+    promotedPieceType: FenChar | null
+  ): void {
+    const { x: currentX, y: currentY } = ChessBoard.squareToCoords(currentSquare);
+    const { x: targetX, y: targetY } = ChessBoard.squareToCoords(targetSquare);
     if (
       !this.areCoordsValid({ x: currentX, y: currentY }) ||
       !this.areCoordsValid({ x: targetX, y: targetY })
@@ -343,8 +359,14 @@ export class ChessBoard {
       piece.hasMoved = true;
 
     this.handleSpecialMoves(piece, currentSquare, targetSquare);
+
+    if (promotedPieceType) {
+      this.chessboard.set(targetSquare, this.promotedPiece(promotedPieceType));
+    } else {
+      this.chessboard.set(targetSquare, piece);
+    }
+
     this.chessboard.set(currentSquare, null);
-    this.chessboard.set(targetSquare, piece);
 
     this._lastMove = { prevSquare: currentSquare, currentSquare: targetSquare, piece };
     this._playerColor = this._playerColor === Color.White ? Color.Black : Color.White;
@@ -357,14 +379,14 @@ export class ChessBoard {
 
     const kingPositionX: number = king.color === Color.White ? 0 : 7;
     const kingPositionY: number = 4;
-    const kingSquare: string = this.coordsToSquare({
+    const kingSquare: string = ChessBoard.coordsToSquare({
       x: kingPositionX,
       y: kingPositionY
     });
 
     const rookPositionX: number = kingPositionX;
     const rookPositionY: number = kingSideCastle ? 7 : 0;
-    const rookSquare: string = this.coordsToSquare({
+    const rookSquare: string = ChessBoard.coordsToSquare({
       x: rookPositionX,
       y: rookPositionY
     });
@@ -376,11 +398,11 @@ export class ChessBoard {
 
     const firstNextKingPositionY: number = kingPositionY + (kingSideCastle ? 1 : -1);
     const secondNextKingPositionY: number = kingPositionY + (kingSideCastle ? 2 : -2);
-    const firstNextKingSquare: string = this.coordsToSquare({
+    const firstNextKingSquare: string = ChessBoard.coordsToSquare({
       x: kingPositionX,
       y: firstNextKingPositionY
     });
-    const secondNextKingSquare: string = this.coordsToSquare({
+    const secondNextKingSquare: string = ChessBoard.coordsToSquare({
       x: kingPositionX,
       y: secondNextKingPositionY
     });
@@ -393,14 +415,45 @@ export class ChessBoard {
 
     if (
       !kingSideCastle &&
-      this.chessboard.get(this.coordsToSquare({ x: kingPositionX, y: 1 }))
+      this.chessboard.get(ChessBoard.coordsToSquare({ x: kingPositionX, y: 1 }))
     )
       return false;
 
     return (
-      this.isPositionSafeAfterMove(king, kingSquare, firstNextKingSquare) &&
-      this.isPositionSafeAfterMove(king, kingSquare, secondNextKingSquare)
+      this.isPositionSafeAfterMove(kingSquare, firstNextKingSquare) &&
+      this.isPositionSafeAfterMove(kingSquare, secondNextKingSquare)
     );
+  }
+
+  private canCaptureEnPassant(pawn: Pawn, pawnSquare: string): boolean {
+    if (!this._lastMove) return false;
+    const { piece, prevSquare, currentSquare } = this._lastMove;
+    const { x: pawnX, y: pawnY } = ChessBoard.squareToCoords(pawnSquare);
+    const { x: prevX } = ChessBoard.squareToCoords(prevSquare);
+    const { x: currX, y: currY } = ChessBoard.squareToCoords(currentSquare);
+
+    if (
+      !(piece instanceof Pawn) ||
+      pawn.color !== this._playerColor ||
+      Math.abs(currX - prevX) !== 2 ||
+      pawnX !== currX ||
+      Math.abs(pawnY - currY) !== 1
+    )
+      return false;
+
+    const pawnNewPositionX: number = pawnX + (pawn.color === Color.White ? 1 : -1);
+    const pawnNewPositionY: number = currY;
+
+    this.chessboard.set(ChessBoard.coordsToSquare({ x: currX, y: currY }), null);
+
+    const isPositionSafe: boolean = this.isPositionSafeAfterMove(
+      ChessBoard.coordsToSquare({ x: pawnX, y: pawnY }),
+      ChessBoard.coordsToSquare({ x: pawnNewPositionX, y: pawnNewPositionY })
+    );
+
+    this.chessboard.set(ChessBoard.coordsToSquare({ x: currX, y: currY }), piece);
+
+    return isPositionSafe;
   }
 
   private handleSpecialMoves(
@@ -408,25 +461,65 @@ export class ChessBoard {
     currentSquare: string,
     targetSquare: string
   ): void {
-    const { x: currentX, y: currentY } = this.squareToCoords(currentSquare);
-    const { x: targetX, y: targetY } = this.squareToCoords(targetSquare);
-    if (piece instanceof King && Math.abs(targetY - currentY)) {
+    const { x: currentX, y: currentY } = ChessBoard.squareToCoords(currentSquare);
+    const { x: targetX, y: targetY } = ChessBoard.squareToCoords(targetSquare);
+
+    if (piece instanceof King && Math.abs(targetY - currentY) === 2) {
       // targetY > currentY === king side castle
       const rookPositionX: number = currentX;
       const rookPositionY: number = targetY > currentY ? 7 : 0;
       const rook = this.chessboard.get(
-        this.coordsToSquare({ x: rookPositionX, y: rookPositionY })
+        ChessBoard.coordsToSquare({ x: rookPositionX, y: rookPositionY })
       ) as Rook;
       const rookNewPositionY: number = targetY > currentY ? 5 : 3;
       this.chessboard.set(
-        this.coordsToSquare({ x: rookPositionX, y: rookPositionY }),
+        ChessBoard.coordsToSquare({ x: rookPositionX, y: rookPositionY }),
         null
       );
       this.chessboard.set(
-        this.coordsToSquare({ x: rookPositionX, y: rookNewPositionY }),
+        ChessBoard.coordsToSquare({ x: rookPositionX, y: rookNewPositionY }),
         rook
       );
       rook.hasMoved = true;
+    } else {
+      if (!this._lastMove) return;
+      const { x: lastMovePrevX, y: lastMovePrevY } = ChessBoard.squareToCoords(
+        this._lastMove.prevSquare
+      );
+      const { x: lastMoveCurrX, y: lastMoveCurrY } = ChessBoard.squareToCoords(
+        this._lastMove.currentSquare
+      );
+
+      if (
+        (piece instanceof Pawn && this._lastMove.piece instanceof Pawn,
+        Math.abs(lastMoveCurrX - lastMovePrevX) === 2 &&
+          currentX === lastMoveCurrX &&
+          targetY === lastMoveCurrY)
+      ) {
+        this.chessboard.set(this._lastMove.currentSquare, null);
+      }
     }
+  }
+
+  private promotedPiece(promotedPieceType: FenChar): Knight | Bishop | Rook | Queen {
+    if (
+      promotedPieceType === FenChar.WhiteKnight ||
+      promotedPieceType === FenChar.BlackKnight
+    )
+      return new Knight(this._playerColor);
+
+    if (
+      promotedPieceType === FenChar.WhiteBishop ||
+      promotedPieceType === FenChar.BlackBishop
+    )
+      return new Bishop(this._playerColor);
+
+    if (
+      promotedPieceType === FenChar.WhiteRook ||
+      promotedPieceType === FenChar.BlackRook
+    )
+      return new Rook(this._playerColor);
+
+    return new Queen(this._playerColor);
   }
 }

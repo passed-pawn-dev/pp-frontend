@@ -6,6 +6,7 @@ import {
   Color,
   FenChar,
   TCheckState,
+  TCoords,
   TLastMove,
   TSafeSquares
 } from '../../../../chess-logic/models';
@@ -40,6 +41,53 @@ export class PuzzleChessboardComponent implements OnInit {
   private lastMove: TLastMove | undefined = this.chessboard.lastMove;
   private checkState: TCheckState = this.chessboard.checkState;
 
+  // promotion properties
+  public isPromotionActive: boolean = false;
+  private promotionCoords: TCoords | null = null;
+  private promotedPiece: FenChar | null = null;
+  public promotionPieces(): FenChar[] {
+    return this.playerColor === Color.White
+      ? [
+          FenChar.WhiteKnight,
+          FenChar.WhiteBishop,
+          FenChar.WhiteRook,
+          FenChar.WhiteQueen
+        ]
+      : [
+          FenChar.BlackKnight,
+          FenChar.BlackBishop,
+          FenChar.BlackRook,
+          FenChar.BlackQueen
+        ];
+  }
+
+  protected updateBoard(
+    currentSquare: string,
+    targetSquare: string,
+    promotedPiece: FenChar | null
+  ): void {
+    this.chessboard.move(currentSquare, targetSquare, promotedPiece);
+    this.chessboardView = this.chessboard.chessboardView;
+    this.checkState = this.chessboard.checkState;
+    this.lastMove = this.chessboard.lastMove;
+    this.unmarkingPreviouslySelectedAndSafeSquares();
+  }
+
+  public promotePiece(piece: FenChar): void {
+    if (!this.promotionCoords || !this.selectedSquare.piece) return;
+    this.promotedPiece = piece;
+
+    this.updateBoard(
+      this.selectedSquare.square,
+      ChessBoard.coordsToSquare(this.promotionCoords),
+      this.promotedPiece
+    );
+  }
+
+  public closePawnPromotionDialog(): void {
+    this.unmarkingPreviouslySelectedAndSafeSquares();
+  }
+
   protected get playerColor(): Color {
     return this.chessboard.playerColor;
   }
@@ -51,6 +99,12 @@ export class PuzzleChessboardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.chessboardView = this.chessboard.chessboardView;
+  }
+
+  public isSquarePromotionSquare(square: string): boolean {
+    const { x, y } = ChessBoard.squareToCoords(square);
+    if (!this.promotionCoords) return false;
+    return this.promotionCoords.x === x && this.promotionCoords.y === y;
   }
 
   public isSquareSelected(square: string): boolean {
@@ -75,6 +129,12 @@ export class PuzzleChessboardComponent implements OnInit {
   private unmarkingPreviouslySelectedAndSafeSquares(): void {
     this.selectedSquare = { piece: null };
     this.pieceSafeSquares = [];
+
+    if (this.isPromotionActive) {
+      this.isPromotionActive = false;
+      this.promotedPiece = null;
+      this.promotionCoords = null;
+    }
   }
 
   protected reverseChessboard(): void {
@@ -87,13 +147,27 @@ export class PuzzleChessboardComponent implements OnInit {
   private placingPiece(targetSquare: string): void {
     if (!this.selectedSquare.piece) return;
     if (!this.isSquareSafeForSelectedPiece(targetSquare)) return;
+    const { x: targetX, y: targetY } = ChessBoard.squareToCoords(targetSquare);
+
+    // pawn promotion
+    const isPawnSelected: boolean =
+      this.selectedSquare.piece === FenChar.WhitePawn ||
+      this.selectedSquare.piece === FenChar.BlackPawn;
+    const isPawnOnlastRank: boolean =
+      isPawnSelected && (targetX === 7 || targetY === 0);
+    const shouldOpenPromotionDialog: boolean =
+      !this.isPromotionActive && isPawnOnlastRank;
+
+    if (shouldOpenPromotionDialog) {
+      this.pieceSafeSquares = [];
+      this.isPromotionActive = true;
+      this.promotionCoords = { x: targetX, y: targetY };
+      // because now we wait for player to choose promoted piece
+      return;
+    }
 
     const { square: currentSquare } = this.selectedSquare;
-    this.chessboard.move(currentSquare, targetSquare);
-    this.chessboardView = this.chessboard.chessboardView;
-    this.checkState = this.chessboard.checkState;
-    this.lastMove = this.chessboard.lastMove;
-    this.unmarkingPreviouslySelectedAndSafeSquares();
+    this.updateBoard(currentSquare, targetSquare, this.promotedPiece);
   }
 
   protected move(square: string): void {
