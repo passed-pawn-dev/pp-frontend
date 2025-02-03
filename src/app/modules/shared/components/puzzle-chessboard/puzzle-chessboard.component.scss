@@ -43,7 +43,11 @@ $white-square-background: #ebecd0;
     padding-bottom: 0.25rem;
     place-content: center;
 
-    .chessboard-chess-piece {
+    &:has(.safe-square) {
+      cursor: pointer;
+    }
+
+    &:has(.chessboard-chess-piece) {
       cursor: pointer;
     }
 
