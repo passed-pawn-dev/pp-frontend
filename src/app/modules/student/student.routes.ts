@@ -23,10 +23,6 @@ export const STUDENT_ROUTES: Route[] = [
         pathMatch: 'full'
       },
       {
-        path: 'register',
-        component: StudentRegisterFormComponent
-      },
-      {
         path: 'my-coaches',
         component: StudentMyCoachesComponent
       },

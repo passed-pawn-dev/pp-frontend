@@ -4,6 +4,16 @@
   (ngSubmit)="onSubmit()"
 >
   <div class="form-control-field">
+    <label for="username">Username</label>
+    <input pInputText="username" formControlName="username" type="text" required />
+    <app-validation-errors
+      [errors]="registerForm.controls.username.errors"
+      [dirty]="registerForm.controls.username.dirty"
+      [touched]="registerForm.controls.username.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
     <label for="firstName">First name</label>
     <input pInputText="firstName" formControlName="firstName" type="text" required />
     <app-validation-errors
@@ -30,6 +40,22 @@
       [errors]="registerForm.controls.email.errors"
       [dirty]="registerForm.controls.email.dirty"
       [touched]="registerForm.controls.email.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
+    <label for="password">Password</label>
+    <input
+      pInputText
+      id="password"
+      formControlName="password"
+      type="password"
+      required
+    />
+    <app-validation-errors
+      [errors]="registerForm.controls.password.errors"
+      [dirty]="registerForm.controls.password.dirty"
+      [touched]="registerForm.controls.password.touched"
     />
   </div>
 
@@ -83,23 +109,41 @@
   </div>
 
   <div class="form-control-field">
-    <label for="gender">Gender</label>
-    <p-dropdown
-      formControlName="gender"
-      optionLabel="label"
-      optionValue="enumValue"
-      placeholder="Select gender"
-      [options]="genders"
+    <label for="nationalityId">Nationality</label>
+    <p-autoComplete
+      formControlName="nationalityId"
+      [dropdown]="true"
+      [suggestions]="filteredCountries"
+      (completeMethod)="filterCountries($event)"
     />
   </div>
 
   <div class="form-control-field">
-    <label for="nationality">Nationality</label>
-    <p-autoComplete
-      formControlName="nationality"
-      [dropdown]="true"
-      [suggestions]="filteredCountries"
-      (completeMethod)="filterCountries($event)"
+    <label for="shortDescription">Short description</label>
+    <input
+      pInputText="shortDescription"
+      formControlName="shortDescription"
+      type="text"
+      required
+    />
+    <app-validation-errors
+      [errors]="registerForm.controls.shortDescription.errors"
+      [dirty]="registerForm.controls.shortDescription.dirty"
+      [touched]="registerForm.controls.shortDescription.touched"
+    />
+  </div>
+  <div class="form-control-field">
+    <label for="detailedDescription">Detailed description</label>
+    <input
+      pInputText="detailedDescription"
+      formControlName="detailedDescription"
+      type="text"
+      required
+    />
+    <app-validation-errors
+      [errors]="registerForm.controls.detailedDescription.errors"
+      [dirty]="registerForm.controls.detailedDescription.dirty"
+      [touched]="registerForm.controls.detailedDescription.touched"
     />
   </div>
 
