@@ -1,4 +1,5 @@
 import { FenChar } from '../../../chess-logic/models';
+import { Piece } from '../../../chess-logic/pieces/piece';
 
 type TSquareWithPiece = {
   piece: FenChar;

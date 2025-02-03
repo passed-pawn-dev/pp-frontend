@@ -53,17 +53,13 @@ export enum MoveType {
 
 export type TLastMove = {
   piece: Piece;
-  prevX: number;
-  prevY: number;
-  currX: number;
-  currY: number;
-  moveType: Set<MoveType>;
+  prevSquare: string;
+  currentSquare: string;
 };
 
 type TKingChecked = {
   isInCheck: true;
-  x: number;
-  y: number;
+  square: string;
 };
 
 type TKingNotChecked = {
