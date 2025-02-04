@@ -1,7 +1,6 @@
 import { Excercise } from './Excercise';
 
-export interface Lesson {
-  id: string | null;
+export interface NewLesson {
   lessonNumber: number | null;
-  excersises: Excercise[];
+  excercises: Excercise[];
 }

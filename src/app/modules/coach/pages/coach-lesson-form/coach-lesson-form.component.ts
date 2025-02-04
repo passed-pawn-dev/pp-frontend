@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { CourseService } from '../../service/course.service';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-coach-lesson-form',
@@ -22,12 +22,20 @@ import { RouterLink } from '@angular/router';
 export class CoachLessonFormComponent {
   private fb: FormBuilder = inject(FormBuilder);
   private courseService: CourseService = inject(CourseService);
+  private route = inject(ActivatedRoute);
 
   protected lessonForm = this.fb.group({
     lessonNumber: [0, [Validators.required]]
   });
 
   protected onSubmit(): void {
-    console.log(this.lessonForm.getRawValue());
+    this.route.paramMap.subscribe((params) => {
+      this.courseService
+        .addLesson(params.get('id')!, {
+          ...this.lessonForm.getRawValue(),
+          excercises: []
+        })
+        .subscribe(() => {});
+    });
   }
 }
