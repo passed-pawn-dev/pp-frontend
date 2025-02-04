@@ -1,0 +1,21 @@
+<form
+  class="vertical-form lesson-form"
+  [formGroup]="lessonForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="form-control-field">
+    <label for="lessonNumber">Lesson number</label>
+    <p-inputNumber id="lessonNumber" formControlName="lessonNumber" type="number" />
+    <app-validation-errors
+      [errors]="lessonForm.controls.lessonNumber.errors"
+      [dirty]="lessonForm.controls.lessonNumber.dirty"
+      [touched]="lessonForm.controls.lessonNumber.touched"
+    />
+  </div>
+
+  <a [routerLink]="'../'">Cancel</a>
+
+  <div class="buttons-box">
+    <p-button type="submit" [disabled]="lessonForm.invalid">Submit</p-button>
+  </div>
+</form>

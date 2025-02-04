@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MyCourseDetails } from '../../models/MyCourseDetails';
 import { CourseDetails } from '../../models/CourseDetails';
 import { CourseService } from '../../service/course.service';
+import { Lesson } from '../../models/Lesson';
 
 @Component({
   selector: 'app-student-lesson-side-list',
@@ -13,15 +14,7 @@ import { CourseService } from '../../service/course.service';
   styleUrl: './student-lesson-side-list.component.scss'
 })
 export class StudentLessonSideListComponent implements OnInit {
-  protected course = signal<CourseDetails>({
-    id: '',
-    title: '',
-    description: '',
-    thumbnail: '',
-    price: 0,
-    lessons: [],
-    reviews: []
-  });
+  protected lessons: Lesson[] = [];
 
   public constructor(
     private courseService: CourseService,
@@ -30,8 +23,8 @@ export class StudentLessonSideListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.courseService.getById(params.get('id')!).subscribe((res) => {
-        this.course.set(res);
+      this.courseService.getLessons(params.get('id')!).subscribe((res) => {
+        this.lessons = res;
       });
     });
   }

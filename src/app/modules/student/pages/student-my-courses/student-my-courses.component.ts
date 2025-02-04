@@ -13,12 +13,12 @@ import { Course } from '../../models/Course';
   styleUrl: './student-my-courses.component.scss'
 })
 export class StudentMyCoursesComponent implements OnInit {
-  protected courses: Course[] = [];
+  protected courses: MyCourse[] = [];
 
   public constructor(private courseService: CourseService) {}
 
   public ngOnInit(): void {
-    this.courseService.getAll().subscribe((res) => {
+    this.courseService.getAllBought().subscribe((res) => {
       this.courses = res;
     });
   }

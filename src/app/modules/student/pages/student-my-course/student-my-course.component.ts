@@ -4,37 +4,59 @@ import { myCourse } from '../../example-data';
 import { MyCourseDetails } from '../../models/MyCourseDetails';
 import { StudentCourseReviewFormComponent } from '../../components/student-course-review-form/student-course-review-form.component';
 import { CourseService } from '../../service/course.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CourseDetails } from '../../models/CourseDetails';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-student-my-course',
   standalone: true,
-  imports: [StudentLessonTileComponent, StudentCourseReviewFormComponent],
+  imports: [
+    StudentLessonTileComponent,
+    StudentCourseReviewFormComponent,
+    RouterLink,
+    ConfirmDialogModule
+  ],
+  providers: [ConfirmationService],
   templateUrl: './student-my-course.component.html',
   styleUrl: './student-my-course.component.scss'
 })
 export class StudentMyCourseComponent implements OnInit {
-  protected course = signal<CourseDetails>({
+  protected course = signal<MyCourseDetails>({
     id: '',
     title: '',
     description: '',
+    coachName: '',
     thumbnail: '',
-    price: 0,
-    lessons: [],
-    reviews: []
+    lessons: []
   });
 
   public constructor(
     private courseService: CourseService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private confirmationService: ConfirmationService,
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.courseService.getById(params.get('id')!).subscribe((res) => {
+      this.courseService.getBoughtById(params.get('id')!).subscribe((res) => {
         this.course.set(res);
       });
+    });
+  }
+
+  protected signOut(): void {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to sign out from this course?',
+      header: 'Confirm',
+      accept: () => {
+        // TODO
+        console.log('sign out');
+        this.router.navigate(['../']);
+      },
+      reject: () => {}
     });
   }
 }

@@ -5,7 +5,11 @@
     <li>
       <div>
         <a class="button" [routerLink]="course.id">{{ course.title }}</a>
+        <button type="button" (click)="deleteCourse(course.id)">Delete</button>
+        <a [routerLink]="course.id + '/edit'">Edit</a>
       </div>
     </li>
   }
 </ul>
+
+<p-confirmDialog></p-confirmDialog>
