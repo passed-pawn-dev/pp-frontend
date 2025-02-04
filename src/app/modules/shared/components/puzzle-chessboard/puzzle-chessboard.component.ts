@@ -111,8 +111,11 @@ export class PuzzleChessboardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.chessboardView = this.chessboard.chessboardView;
-    const fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-    console.log(FenConverter.convertFenToBoard(fen));
+    const fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w K - 0 1';
+    const boardFromFen = FenConverter.convertFenToBoard(fen);
+    console.log(boardFromFen);
+    this.chessboard.setBoard(boardFromFen, Color.White, undefined);
+    this.chessboardView = this.chessboard.chessboardView;
   }
 
   public isSquarePromotionSquare(square: string): boolean {

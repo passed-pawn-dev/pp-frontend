@@ -1,4 +1,4 @@
-import { reverse } from 'lodash';
+import { cloneDeep, reverse } from 'lodash';
 import { ChessBoard, fenCharToPiece } from './board';
 import { Color, FenChar, TChessboard, TLastMove } from './models';
 import { King } from './pieces/king';
@@ -8,7 +8,7 @@ import { Rook } from './pieces/rook';
 
 export class FenConverter {
   public static readonly initalPosition: string =
-    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - KQkq 0 1';
 
   private static isNumeric(str: unknown): boolean {
     return !isNaN(str as number) && !isNaN(parseFloat(str as string));
@@ -18,9 +18,10 @@ export class FenConverter {
     const board = new Map();
     const [fenBoard, playerToMove, castlingAvailability, enPassantSquare] =
       fen.split(' ');
-    const files = ChessBoard.FILES.slice().reverse();
+    const files = ChessBoard.FILES;
+    // this is mixed up - should be the other way around
     let currentRow = 0;
-    let currentColumn = 0;
+    let currentColumn = 7;
     let currentFile = ChessBoard.FILES[currentRow];
 
     for (let char of fenBoard) {
@@ -28,7 +29,7 @@ export class FenConverter {
 
       if (char === '/') {
         currentRow = 0;
-        currentColumn++;
+        currentColumn--;
         continue;
       }
 
@@ -39,10 +40,26 @@ export class FenConverter {
           currentRow++;
         }
       } else {
-        board.set(
-          `${currentFile}${currentColumn + 1}`,
-          fenCharToPiece[char as FenChar]
-        );
+        const piece = fenCharToPiece[char as FenChar]();
+
+        switch (char) {
+          case 'R':
+            if (!castlingAvailability.includes('Q') && currentFile === 'a') {
+              (piece as Rook).hasMoved = true;
+            } else if (!castlingAvailability.includes('K') && currentFile === 'h') {
+              (piece as Rook).hasMoved = true;
+            }
+            break;
+          case 'r':
+            if (!castlingAvailability.includes('q') && currentFile === 'a') {
+              (piece as Rook).hasMoved = true;
+            } else if (!castlingAvailability.includes('k') && currentFile === 'h') {
+              (piece as Rook).hasMoved = true;
+            }
+            break;
+          default:
+        }
+        board.set(`${currentFile}${currentColumn + 1}`, piece);
         currentRow++;
       }
     }
