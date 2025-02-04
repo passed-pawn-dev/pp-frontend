@@ -1,3 +1,7 @@
+.navbar {
+  border-bottom: 1px solid gray;
+}
+
 .navigation {
   display: flex;
 }
@@ -5,4 +9,17 @@
 .nav-link {
   list-style-type: none;
   margin: 1em;
+}
+
+.button {
+  color: black;
+  text-decoration: none;
+  &:hover {
+    color: gray;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
 }

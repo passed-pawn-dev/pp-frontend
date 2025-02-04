@@ -27,4 +27,8 @@ export class AuthService {
   public getToken(): Promise<string> {
     return this.keycloakService.getToken();
   }
+
+  public getUsername(): string {
+    return this.keycloakService.getUsername();
+  }
 }
