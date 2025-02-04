@@ -84,7 +84,15 @@
       <input pInputText type="text" [(ngModel)]="fen" />
       <div *ngIf="!fenValid()" class="p-error">Please enter a valid FEN string.</div>
     </div>
-    <p-button [disabled]="!fenValid()" (onClick)="setBoardFromFen()">Load fen</p-button>
-    <p-button (onClick)="savePuzzle()">Save puzzle</p-button>
+    <div>
+      <p-button [disabled]="!fenValid()" (onClick)="setBoardFromFen()"
+        >Load fen</p-button
+      >
+    </div>
+  </div>
+  <div>
+    <p-button [disabled]="gameHistory.length === 0" (onClick)="savePuzzle()"
+      >Save puzzle</p-button
+    >
   </div>
 </div>
