@@ -8,6 +8,10 @@ $white-square-valid-move-circle-color: #7272724f;
 $white-square-background: #ebecd0;
 $king-in-check-background: #ff240057;
 
+.chess-fen-load-input {
+  margin: 0.5rem;
+}
+
 .chessboard {
   aspect-ratio: 1/1;
   display: grid;

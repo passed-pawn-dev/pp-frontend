@@ -6,6 +6,11 @@
   (onClick)="setCurrentPositionAsStartingPosition()"
   >Start from this move</p-button
 >
+
+<div class="chess-fen-load-input">
+  <input pInputText type="text" [(ngModel)]="fen" />
+  <p-button (onClick)="setBoardFromFen()">Load fen</p-button>
+</div>
 @if (gameOverMessage) {
   <h2 class="game-over-message">{{ gameOverMessage }}</h2>
 }

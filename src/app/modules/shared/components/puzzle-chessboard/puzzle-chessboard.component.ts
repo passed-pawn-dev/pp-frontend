@@ -17,11 +17,12 @@ import { TSelectedSquare } from '../../models/chessboardViewModels';
 import { CommonModule } from '@angular/common';
 import { MoveListComponent } from '../move-list/move-list.component';
 import { FenConverter } from '../../../../chess-logic/FenConverter';
-
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-puzzle-chessboard',
   standalone: true,
-  imports: [Button, CommonModule, MoveListComponent],
+  imports: [Button, CommonModule, MoveListComponent, InputTextModule, FormsModule],
   templateUrl: './puzzle-chessboard.component.html',
   styleUrl: './puzzle-chessboard.component.scss'
 })
@@ -35,6 +36,7 @@ export class PuzzleChessboardComponent implements OnInit {
   private pieceSafeSquares: string[] = [];
   private lastMove: TLastMove | undefined = this.chessboard.lastMove;
   private checkState: TCheckState = this.chessboard.checkState;
+  public fen: string = '';
 
   public get moveList(): TMoveList {
     return this.chessboard.moveList;
@@ -115,6 +117,14 @@ export class PuzzleChessboardComponent implements OnInit {
     const boardFromFen = FenConverter.convertFenToBoard(fen);
     console.log(boardFromFen);
     this.chessboard.setBoard(boardFromFen, Color.White, undefined);
+    this.chessboardView = this.chessboard.chessboardView;
+  }
+
+  protected setBoardFromFen(): void {
+    const boardFromFen = FenConverter.convertFenToBoard(this.fen);
+    const lastMove = FenConverter.createLastMoveFromFEN(this.fen);
+    this.lastMove = lastMove;
+    this.chessboard.setBoard(boardFromFen, Color.White, lastMove);
     this.chessboardView = this.chessboard.chessboardView;
   }
 
@@ -217,7 +227,6 @@ export class PuzzleChessboardComponent implements OnInit {
   }
 
   public showPreviousPosition(moveIndex: number): void {
-    console.log(moveIndex);
     const { board, checkState, lastMove } = this.gameHistory[moveIndex];
     this.chessboardView = board;
     this.checkState = checkState;
@@ -234,11 +243,9 @@ export class PuzzleChessboardComponent implements OnInit {
     } else {
       this.displayingStartingMove = false;
     }
-    console.log(this.showingPastPosition, this.gameHistory.length);
   }
 
   public setCurrentPositionAsStartingPosition(): void {
-    console.log('postition pointer', this.gameHistoryPointer);
     this.chessboard.startFromMove(this.gameHistoryPointer);
     this.showingPastPosition = false;
     this.displayingStartingMove = true;

@@ -1,6 +1,6 @@
 import { cloneDeep, reverse } from 'lodash';
 import { ChessBoard, fenCharToPiece } from './board';
-import { Color, FenChar, TChessboard, TLastMove } from './models';
+import { Color, FenChar, MoveType, TChessboard, TLastMove } from './models';
 import { King } from './pieces/king';
 import { Pawn } from './pieces/pawn';
 import { Piece } from './pieces/piece';
@@ -8,10 +8,55 @@ import { Rook } from './pieces/rook';
 
 export class FenConverter {
   public static readonly initalPosition: string =
-    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - KQkq 0 1';
+    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
   private static isNumeric(str: unknown): boolean {
     return !isNaN(str as number) && !isNaN(parseFloat(str as string));
+  }
+
+  public static createLastMoveFromFEN(fen: string): TLastMove | undefined {
+    // Split the FEN string into its components
+    const [
+      position,
+      activeColor,
+      castling,
+      enPassantSquare,
+      halfMoveClock,
+      fullMoveNumber
+    ] = fen.split(' ');
+
+    // If there's no en passant square, return null
+    if (enPassantSquare === '-') {
+      return undefined;
+    }
+
+    // Determine the piece that moved (pawn)
+    const piece: Pawn =
+      activeColor === 'w' ? new Pawn(Color.Black) : new Pawn(Color.White);
+
+    piece.hasMoved = true;
+
+    // Determine the previous and current squares
+    const prevSquare =
+      activeColor === 'w'
+        ? enPassantSquare[0] + (parseInt(enPassantSquare[1]) + 1)
+        : enPassantSquare[0] + (parseInt(enPassantSquare[1]) - 1);
+    const currentSquare =
+      activeColor === 'w'
+        ? enPassantSquare[0] + (parseInt(enPassantSquare[1]) - 1)
+        : enPassantSquare[0] + (parseInt(enPassantSquare[1]) + 1);
+
+    // Create the move type set
+    const moveType = new Set<MoveType>();
+    moveType.add(MoveType.BasicMove);
+
+    // Return the TLastMove object
+    return {
+      piece,
+      prevSquare,
+      currentSquare,
+      moveType
+    };
   }
 
   public static convertFenToBoard(fen: string): TChessboard {
