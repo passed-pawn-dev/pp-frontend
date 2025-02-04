@@ -1,4 +1,6 @@
-<li>
-  <a class="button" [routerLink]="course().id">{{ course().title }}</a>
-  <span> price: {{ formattedPrice() }}</span>
+<li class="tile">
+  <a class="container" [routerLink]="course().id">
+    {{ course().title }}
+    <span> price: {{ formattedPrice() }}</span>
+  </a>
 </li>

@@ -31,12 +31,10 @@ export const myCourse: MyCourseDetails = {
   lessons: [
     {
       id: 'abc',
-      title: 'Introduction',
       lessonNumber: 1
     },
     {
       id: 'def',
-      title: 'Piece movement',
       lessonNumber: 2
     }
   ]
@@ -181,51 +179,51 @@ export const courses: Course[] = [
   }
 ];
 
-export const course: CourseDetails = {
-  id: '1',
-  title: 'Mastering the Opening: Strategies for Success',
-  description:
-    'Learn the essential opening strategies to gain an early advantage in the game. This course covers popular openings, traps, and tactics to help you control the board from the very first move.',
-  coachName: 'Grandmaster John Doe',
-  thumbnail: 'https://example.com/thumbnails/opening-strategies.jpg',
-  price: 4.99,
-  lessons: 5,
-  reviewScore: 4.5,
-  reviews: [
-    {
-      id: '1',
-      value: 4.5,
-      content:
-        'The course was excellent! The explanations were clear, and the exercises helped me improve my strategy significantly.',
-      studentId: '1'
-    },
-    {
-      id: '2',
-      value: 3.0,
-      content:
-        'Decent course, but some of the lessons were too advanced for beginners. Could use better pacing.',
-      studentId: '2'
-    },
-    {
-      id: '3',
-      value: 5.0,
-      content:
-        'Absolutely fantastic! Learned so much about openings and tactics. Highly recommended for intermediate players.',
-      studentId: '3'
-    },
-    {
-      id: '4',
-      value: 2.5,
-      content:
-        "The content was okay, but the instructor's explanations were sometimes confusing, and there were no live examples.",
-      studentId: '4'
-    },
-    {
-      id: '5',
-      value: 4.0,
-      content:
-        'Great course! The puzzles were very challenging and enjoyable, but I wish there were more endgame lessons.',
-      studentId: '5'
-    }
-  ]
-};
+// export const course: CourseDetails = {
+//   id: '1',
+//   title: 'Mastering the Opening: Strategies for Success',
+//   description:
+//     'Learn the essential opening strategies to gain an early advantage in the game. This course covers popular openings, traps, and tactics to help you control the board from the very first move.',
+//   coachName: 'Grandmaster John Doe',
+//   thumbnail: 'https://example.com/thumbnails/opening-strategies.jpg',
+//   price: 4.99,
+//   lessons: 5,
+//   reviewScore: 4.5,
+//   reviews: [
+//     {
+//       id: '1',
+//       value: 4.5,
+//       content:
+//         'The course was excellent! The explanations were clear, and the exercises helped me improve my strategy significantly.',
+//       studentId: '1'
+//     },
+//     {
+//       id: '2',
+//       value: 3.0,
+//       content:
+//         'Decent course, but some of the lessons were too advanced for beginners. Could use better pacing.',
+//       studentId: '2'
+//     },
+//     {
+//       id: '3',
+//       value: 5.0,
+//       content:
+//         'Absolutely fantastic! Learned so much about openings and tactics. Highly recommended for intermediate players.',
+//       studentId: '3'
+//     },
+//     {
+//       id: '4',
+//       value: 2.5,
+//       content:
+//         "The content was okay, but the instructor's explanations were sometimes confusing, and there were no live examples.",
+//       studentId: '4'
+//     },
+//     {
+//       id: '5',
+//       value: 4.0,
+//       content:
+//         'Great course! The puzzles were very challenging and enjoyable, but I wish there were more endgame lessons.',
+//       studentId: '5'
+//     }
+//   ]
+// };

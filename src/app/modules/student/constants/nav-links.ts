@@ -6,20 +6,8 @@ export const NAV_LINKS: NavLink[] = [
     path: 'my-courses'
   },
   {
-    name: 'My Coaches',
-    path: 'my-coaches'
-  },
-  {
-    name: 'Games',
-    path: 'my-games'
-  },
-  {
     name: 'Courses',
     path: 'courses'
-  },
-  {
-    name: 'Coaches',
-    path: 'coaches'
   },
   {
     name: 'My profile',

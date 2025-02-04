@@ -1,11 +1,13 @@
 <div>
-  <h2>{{ course.title }}</h2>
-  <div>{{ course.description }}</div>
-  <div>Created by: {{ course.coachName }}</div>
-  <div>{{ course.lessons }} lessons</div>
-  <button type="submit">Buy for {{ formattedPrice() }}</button>
-  <div>Average review score: {{ course.reviewScore }}</div>
-  @for (review of course.reviews; track $index) {
+  <h2>{{ course().title }}</h2>
+  <div>{{ course().description }}</div>
+  <div>{{ course().lessonNumber }} lessons</div>
+  <button type="submit" (click)="buyCourse()">Buy for {{ formattedPrice() }}</button>
+  <div>
+    Average review score: {{ averageReviewScore() }} with {{ reviewCount() }} reviews
+  </div>
+  @for (review of course().reviews; track $index) {
     <app-student-course-review [review]="review" />
   }
+  <a [routerLink]="'/student/courses'">Back to courses</a>
 </div>

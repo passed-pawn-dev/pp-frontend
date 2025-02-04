@@ -1,10 +1,12 @@
 <div>
-  <div>{{ course.id }}</div>
-  <div>{{ course.title }}</div>
-  <div>{{ course.description }}</div>
-  <div>{{ course.coachName }}</div>
-  @for (lesson of course.lessons; track $index) {
+  <h2>{{ course().title }}</h2>
+  <div>{{ course().description }}</div>
+  @for (lesson of course().lessons; track $index) {
     <app-student-lesson-tile [lesson]="lesson" />
   }
+  <button pButton type="button" (click)="signOut()">Sign out from course</button>
   <app-student-course-review-form />
+  <a [routerLink]="'../'">Back to courses</a>
 </div>
+
+<p-confirmDialog></p-confirmDialog>

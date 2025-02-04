@@ -1,0 +1,124 @@
+<form
+  class="vertical-form register-form"
+  [formGroup]="registerForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="form-control-field">
+    <label for="username">Username</label>
+    <input pInputText="username" formControlName="username" type="text" required />
+    <app-validation-errors
+      [errors]="registerForm.controls.username.errors"
+      [dirty]="registerForm.controls.username.dirty"
+      [touched]="registerForm.controls.username.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
+    <label for="firstName">First name</label>
+    <input pInputText="firstName" formControlName="firstName" type="text" required />
+    <app-validation-errors
+      [errors]="registerForm.controls.firstName.errors"
+      [dirty]="registerForm.controls.firstName.dirty"
+      [touched]="registerForm.controls.firstName.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
+    <label for="lastName">Last name</label>
+    <input pInputText id="lastName" formControlName="lastName" type="text" required />
+    <app-validation-errors
+      [errors]="registerForm.controls.lastName.errors"
+      [dirty]="registerForm.controls.lastName.dirty"
+      [touched]="registerForm.controls.lastName.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
+    <label for="email">Email</label>
+    <input pInputText id="email" formControlName="email" type="email" required />
+    <app-validation-errors
+      [errors]="registerForm.controls.email.errors"
+      [dirty]="registerForm.controls.email.dirty"
+      [touched]="registerForm.controls.email.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
+    <label for="password">Password</label>
+    <input
+      pInputText
+      id="password"
+      formControlName="password"
+      type="password"
+      required
+    />
+    <app-validation-errors
+      [errors]="registerForm.controls.password.errors"
+      [dirty]="registerForm.controls.password.dirty"
+      [touched]="registerForm.controls.password.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
+    <label for="phoneNumber">Phone number</label>
+    <input
+      pInputText
+      id="phoneNumber"
+      formControlName="phoneNumber"
+      type="text"
+      required
+    />
+    <app-validation-errors
+      [errors]="registerForm.controls.phoneNumber.errors"
+      [dirty]="registerForm.controls.phoneNumber.dirty"
+      [touched]="registerForm.controls.phoneNumber.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
+    <label for="dateOfBirth">Date of birth</label>
+    <p-calendar
+      id="dateOfBirth"
+      formControlName="dateOfBirth"
+      type="date"
+      showIcon="true"
+      [iconDisplay]="'input'"
+      [maxDate]="maxDate"
+    />
+  </div>
+
+  <div class="form-control-field">
+    <label for="elo">Fide rating</label>
+    <p-inputNumber id="elo" formControlName="elo" type="number" />
+    <app-validation-errors
+      [errors]="registerForm.controls.elo.errors"
+      [dirty]="registerForm.controls.elo.dirty"
+      [touched]="registerForm.controls.elo.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
+    <label for="chessTitle">Chess title</label>
+    <p-dropdown
+      formControlName="chessTitle"
+      optionLabel="label"
+      optionValue="enumValue"
+      placeholder="Select title"
+      [options]="chessTitles"
+    />
+  </div>
+
+  <div class="form-control-field">
+    <label for="nationalityId">Nationality</label>
+    <p-autoComplete
+      formControlName="nationalityId"
+      [dropdown]="true"
+      [suggestions]="filteredCountries"
+      (completeMethod)="filterCountries($event)"
+    />
+  </div>
+
+  <div class="buttons-box">
+    <p-button type="submit" [disabled]="registerForm.invalid">Register</p-button>
+  </div>
+</form>

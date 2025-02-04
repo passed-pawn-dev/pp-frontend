@@ -23,4 +23,8 @@ export class AuthService {
   public logout(): void {
     this.keycloakService.logout(environment.keycloak.postLogoutRedirectUri);
   }
+
+  public getToken(): Promise<string> {
+    return this.keycloakService.getToken();
+  }
 }

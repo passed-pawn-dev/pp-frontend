@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MyCourse } from '../../models/MyCourse';
-import { myCourses } from '../../example-data';
-import { HttpClient } from '@angular/common/http';
+
+import { CourseService } from '../../service/course.service';
+import { Course } from '../../models/Course';
 
 @Component({
   selector: 'app-student-my-courses',
@@ -13,11 +14,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class StudentMyCoursesComponent implements OnInit {
   protected courses: MyCourse[] = [];
-  protected httpClient: HttpClient = inject(HttpClient);
+
+  public constructor(private courseService: CourseService) {}
 
   public ngOnInit(): void {
-    this.httpClient.get('http://localhost:5500/api/course').subscribe((res) => {
-      console.log(res);
+    this.courseService.getAllBought().subscribe((res) => {
+      this.courses = res;
     });
   }
 }
