@@ -1,0 +1,22 @@
+.top-container {
+    align-items: end;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.page {
+    margin: auto;
+    margin-bottom: 3rem;
+    width: 62.5rem;
+}
+
+.dsc {
+    font-size: 0.75rem;
+    font-weight: 700;
+}

@@ -1,7 +1,15 @@
-<form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+<h4>Add course review</h4>
+<form class="form" [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
   <div>
-    <label for="value">Stars</label>
-    <p-inputNumber id="value" formControlName="value" type="number" required />
+    <p-inputNumber
+      class="score-input"
+      id="value"
+      formControlName="value"
+      type="number"
+      showButtons="true"
+      [min]="1"
+      [max]="5"
+    />
     <app-validation-errors
       [errors]="reviewForm.controls.value.errors"
       [dirty]="reviewForm.controls.value.dirty"
@@ -10,8 +18,12 @@
   </div>
 
   <div>
-    <label for="content">Review</label>
-    <input pInputText id="content" formControlName="content" type="text" />
+    <textarea
+      pInputTextarea
+      id="content"
+      formControlName="content"
+      placeholder="Your review"
+    ></textarea>
     <app-validation-errors
       [errors]="reviewForm.controls.content.errors"
       [dirty]="reviewForm.controls.content.dirty"
