@@ -9,5 +9,5 @@
   @for (review of course().reviews; track $index) {
     <app-course-review [review]="review" />
   }
-  <a [routerLink]="'../'">Back to courses</a>
+  <a pButton [routerLink]="'../'">Back to courses</a>
 </div>

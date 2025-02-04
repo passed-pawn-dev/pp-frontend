@@ -1,0 +1,26 @@
+.container {
+  margin: 1rem;
+}
+
+.top-container {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.lesson-list {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.review-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.back-button {
+  text-decoration: none;
+}

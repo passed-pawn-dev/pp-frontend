@@ -1,11 +1,12 @@
-<div>
-  <a [routerLink]="'/student/register'">Register as student</a>
+<div class="container">
+  <h2>Welcome to PassedPawn</h2>
+  <div>
+    <a pButton class="button" [routerLink]="'/student/register'">Register as student</a>
+  </div>
+  <div>
+    <a pButton class="button" [routerLink]="'/coach/register'">Register as coach</a>
+  </div>
+  <div>
+    <button pButton type="button" (click)="logIn()">Log In</button>
+  </div>
 </div>
-<div>
-  <a [routerLink]="'/coach/register'">Register as coach</a>
-</div>
-<div>
-  <button type="button" (click)="logIn()">Log In</button>
-</div>
-
-<app-puzzle-chessboard />
