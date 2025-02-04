@@ -1,6 +1,11 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <p>puzzle-chessboard works!</p>
 <p-button (onClick)="reverseChessboard()">Reverse side</p-button>
+<p-button
+  [disabled]="displayingStartingMove"
+  (onClick)="setCurrentPositionAsStartingPosition()"
+  >Start from this move</p-button
+>
 @if (gameOverMessage) {
   <h2 class="game-over-message">{{ gameOverMessage }}</h2>
 }

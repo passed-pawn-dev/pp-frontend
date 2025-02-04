@@ -16,6 +16,7 @@ import { ChessBoard } from '../../../../chess-logic/board';
 import { TSelectedSquare } from '../../models/chessboardViewModels';
 import { CommonModule } from '@angular/common';
 import { MoveListComponent } from '../move-list/move-list.component';
+import { FenConverter } from '../../../../chess-logic/FenConverter';
 
 @Component({
   selector: 'app-puzzle-chessboard',
@@ -47,7 +48,8 @@ export class PuzzleChessboardComponent implements OnInit {
   public isPromotionActive: boolean = false;
   private promotionCoords: TCoords | null = null;
   private promotedPiece: FenChar | null = null;
-  private showingPastPosition: boolean = false;
+  protected showingPastPosition: boolean = false;
+  protected displayingStartingMove: boolean = true;
 
   public promotionPieces(): FenChar[] {
     return this.playerColor === Color.White
@@ -109,6 +111,8 @@ export class PuzzleChessboardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.chessboardView = this.chessboard.chessboardView;
+    const fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+    console.log(FenConverter.convertFenToBoard(fen));
   }
 
   public isSquarePromotionSquare(square: string): boolean {
@@ -210,13 +214,33 @@ export class PuzzleChessboardComponent implements OnInit {
   }
 
   public showPreviousPosition(moveIndex: number): void {
+    console.log(moveIndex);
     const { board, checkState, lastMove } = this.gameHistory[moveIndex];
     this.chessboardView = board;
     this.checkState = checkState;
     this.lastMove = lastMove;
     this.gameHistoryPointer = moveIndex;
-    // if (moveindex !==)
-    this.showingPastPosition = true;
-    console.log(this.gameHistoryPointer);
+    if (moveIndex !== this.gameHistory.length - 1) {
+      this.showingPastPosition = true;
+    } else {
+      this.showingPastPosition = false;
+    }
+
+    if (moveIndex === 0) {
+      this.displayingStartingMove = true;
+    } else {
+      this.displayingStartingMove = false;
+    }
+    console.log(this.showingPastPosition, this.gameHistory.length);
   }
+
+  public setCurrentPositionAsStartingPosition(): void {
+    console.log('postition pointer', this.gameHistoryPointer);
+    this.chessboard.startFromMove(this.gameHistoryPointer);
+    this.showingPastPosition = false;
+    this.displayingStartingMove = true;
+    this.gameHistoryPointer = 0;
+  }
+
+  public rollbackToPosition(): void {}
 }

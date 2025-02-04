@@ -22,7 +22,7 @@ import { Queen } from './pieces/queen';
 import { Rook } from './pieces/rook';
 
 // like this so that reference is different every time
-const fenCharToPiece = {
+export const fenCharToPiece = {
   P: (() => new Pawn(Color.White))(),
   Q: (() => new Queen(Color.White))(),
   R: (() => new Rook(Color.White))(),
@@ -51,7 +51,7 @@ export class ChessBoard {
   private _isGameOver: boolean = false;
   private _gameOverMessage: string | undefined;
   private fiftyMoveRuleCounter: number = 0;
-  private fullNumberOfMoves: number = 1;
+  private fullNumberOfMoves: number = 0;
   private threeFoldRepetitionDictionary = new Map<string, number>();
   private threeFoldRepetitionFlag: boolean = false;
   private readonly chessBoardSize: number = 8;
@@ -122,13 +122,7 @@ export class ChessBoard {
     });
 
     this._safeSquares = this.findSafeSquares();
-    this._gameHistory = [
-      {
-        board: this.chessboardView,
-        lastMove: this._lastMove,
-        checkState: this._checkState
-      }
-    ];
+    this._gameHistory = [];
   }
 
   // section - getters
@@ -660,10 +654,10 @@ export class ChessBoard {
     if (moveType.has(MoveType.Check)) move += '+';
     else if (moveType.has(MoveType.CheckMate)) move += '#';
 
-    if (!this._moveList[this.fullNumberOfMoves - 1]) {
-      this._moveList[this.fullNumberOfMoves - 1] = [move];
+    if (!this._moveList[Math.floor(this.gameHistory.length / 2)]) {
+      this._moveList[Math.floor(this.gameHistory.length / 2)] = [move];
     } else {
-      this._moveList[this.fullNumberOfMoves - 1].push(move);
+      this._moveList[Math.floor(this.gameHistory.length / 2)].push(move);
     }
   }
 
@@ -783,12 +777,60 @@ export class ChessBoard {
     return false;
   }
 
+  public rollbackToPosition(moveIndex: number): void {}
+
+  public startFromMove(moveIndex: number): void {
+    console.log('MOVE INDEX', moveIndex);
+    if (moveIndex + 1 > this.gameHistory.length)
+      throw new Error(
+        'Cannot start from move number thats bigget than gamehistory length'
+      );
+    const fullMoveIndex = Math.floor(moveIndex / 2);
+    const moveSideIndex = moveIndex - fullMoveIndex * 2;
+
+    if (moveSideIndex === 1) {
+      const moveList = this._moveList.slice(fullMoveIndex);
+      console.log('MOVE LIST', moveList);
+
+      this._moveList = moveList
+        .map((move, index) => {
+          if (index === moveList.length - 1) {
+            return [move[1]];
+          } else {
+            return [move[1], moveList[index + 1][0]];
+          }
+        })
+        .filter((move) => move[0] !== undefined) as TMoveList;
+      this._playerColor = Color.White;
+    } else {
+      this._moveList = this._moveList.slice(fullMoveIndex);
+      this._playerColor = Color.Black;
+    }
+
+    this._gameHistory = this._gameHistory.slice(moveIndex);
+    this.fullNumberOfMoves = 0;
+    this.fiftyMoveRuleCounter = 0;
+    this.threeFoldRepetitionDictionary = new Map();
+    this._safeSquares = this.findSafeSquares();
+
+    console.log(
+      'STARTING FROM MOVE',
+      this._moveList,
+      this._gameHistory,
+      moveIndex,
+      fullMoveIndex,
+      moveSideIndex,
+      this.chessboard
+    );
+  }
+
   private updateGameHistory(): void {
     this._gameHistory.push({
       board: cloneDeep(this.chessboardView),
       checkState: cloneDeep(this._checkState),
       lastMove: this._lastMove ? cloneDeep(this._lastMove) : undefined
     });
+    console.log(this._moveList, this.gameHistory);
   }
 
   private isGameFinished(): boolean {

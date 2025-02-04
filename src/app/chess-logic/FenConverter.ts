@@ -1,5 +1,6 @@
-import { ChessBoard } from './board';
-import { Color, TChessboard, TLastMove } from './models';
+import { reverse } from 'lodash';
+import { ChessBoard, fenCharToPiece } from './board';
+import { Color, FenChar, TChessboard, TLastMove } from './models';
 import { King } from './pieces/king';
 import { Pawn } from './pieces/pawn';
 import { Piece } from './pieces/piece';
@@ -9,7 +10,45 @@ export class FenConverter {
   public static readonly initalPosition: string =
     'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
-  // public static convertFenToBoard(fen: string) {}
+  private static isNumeric(str: unknown): boolean {
+    return !isNaN(str as number) && !isNaN(parseFloat(str as string));
+  }
+
+  public static convertFenToBoard(fen: string): TChessboard {
+    const board = new Map();
+    const [fenBoard, playerToMove, castlingAvailability, enPassantSquare] =
+      fen.split(' ');
+    const files = ChessBoard.FILES.slice().reverse();
+    let currentRow = 0;
+    let currentColumn = 0;
+    let currentFile = ChessBoard.FILES[currentRow];
+
+    for (let char of fenBoard) {
+      currentFile = files[currentRow];
+
+      if (char === '/') {
+        currentRow = 0;
+        currentColumn++;
+        continue;
+      }
+
+      if (this.isNumeric(char)) {
+        for (let i = 0; i < parseInt(char, 10); i++) {
+          currentFile = files[currentRow];
+          board.set(`${currentFile}${currentColumn + 1}`, null);
+          currentRow++;
+        }
+      } else {
+        board.set(
+          `${currentFile}${currentColumn + 1}`,
+          fenCharToPiece[char as FenChar]
+        );
+        currentRow++;
+      }
+    }
+
+    return board;
+  }
 
   public static convertBoardToFen(
     board: TChessboard,
