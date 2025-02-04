@@ -39,10 +39,18 @@ export class CourseService {
     return this.httpClient.post<Lesson>(`api/Course/${id}/lesson`, lesson);
   }
 
-  public addPuzzle(lessonId: string, title: string, description: string,
-                   fen: string, solution: string): Observable<Object>{
+  public addPuzzle(
+    lessonId: string,
+    title: string,
+    description: string,
+    fen: string,
+    solution: string
+  ): Observable<Object> {
     return this.httpClient.post(`api/Lesson/${lessonId}/exercise`, {
-      title, description, fen, solution
+      title,
+      description,
+      fen,
+      solution
     });
   }
 }
