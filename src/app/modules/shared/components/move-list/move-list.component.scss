@@ -1,0 +1,38 @@
+.move-list {
+  display: flex;
+  flex-direction: column-reverse;
+  max-height: 20rem;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.move-list::-webkit-scrollbar {
+  display: none;
+}
+
+.row {
+  align-items: center;
+  color: black;
+  display: grid;
+  font-size: 0.875rem;
+  grid-template-columns: 2.5rem 5rem 5rem;
+  padding-bottom: 0.25rem;
+  width: 12rem;
+}
+
+.move-number {
+  width: 2.5rem;
+}
+
+.current-move {
+  background-color: #d6d6d6;
+}
+
+.move {
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.25rem;
+  width: fit-content;
+}

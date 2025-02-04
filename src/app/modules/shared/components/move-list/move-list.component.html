@@ -1,0 +1,29 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<div class="move-list">
+  <div>
+    @for (move of moveList; track $index) {
+      <div class="row">
+        <!-- {{ move | json }} {{ moveList | json }} -->
+        <div class="move-number">{{ $index + 1 }}.</div>
+
+        <div
+          class="move"
+          [ngClass]="{ 'current-move': $index * 2 === gameHistoryPointer }"
+          (click)="showPreviousPosition($index * 2)"
+        >
+          {{ move[0] }}
+        </div>
+
+        @if (move[1]) {
+          <div
+            class="move"
+            [ngClass]="{ 'current-move': $index * 2 + 1 === gameHistoryPointer }"
+            (click)="showPreviousPosition($index * 2 + 1)"
+          >
+            {{ move[1] }}
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { ChessboardSide } from '../../enums/chessboard-side.enum';
-import { TChessPieceFen } from '../../types/chess-piece-fen.type';
 import { Button } from 'primeng/button';
 import {
   Color,
   FenChar,
   TCheckState,
+  TChessboardView,
+  TCoords,
+  TGameHistory,
   TLastMove,
+  TMoveList,
   TSafeSquares
 } from '../../../../chess-logic/models';
-import { Rook } from '../../../../chess-logic/pieces/rook';
-import { Pawn } from '../../../../chess-logic/pieces/pawn';
-import { Knight } from '../../../../chess-logic/pieces/knight';
-import { Bishop } from '../../../../chess-logic/pieces/bishop';
-import { King } from '../../../../chess-logic/pieces/king';
-import { Queen } from '../../../../chess-logic/pieces/queen';
-import { Piece } from '../../../../chess-logic/pieces/piece';
 import { pieceImagePaths } from '../../../../chess-logic/models';
 import { ChessBoard } from '../../../../chess-logic/board';
 import { TSelectedSquare } from '../../models/chessboardViewModels';
 import { CommonModule } from '@angular/common';
+import { MoveListComponent } from '../move-list/move-list.component';
+import { FenConverter } from '../../../../chess-logic/FenConverter';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
+import validateFEN from 'fen-validator';
 
 @Component({
   selector: 'app-puzzle-chessboard',
   standalone: true,
-  imports: [Button, CommonModule],
+  imports: [Button, CommonModule, MoveListComponent, InputTextModule, FormsModule],
   templateUrl: './puzzle-chessboard.component.html',
   styleUrl: './puzzle-chessboard.component.scss'
 })
@@ -33,12 +33,75 @@ export class PuzzleChessboardComponent implements OnInit {
   protected RANKS = [8, 7, 6, 5, 4, 3, 2, 1];
   protected Color = Color;
   private chessboard = new ChessBoard();
-  protected chessboardView: Map<string, FenChar | null> =
-    this.chessboard.chessboardView;
+  protected chessboardView: TChessboardView = this.chessboard.chessboardView;
   private selectedSquare: TSelectedSquare = { piece: null };
   private pieceSafeSquares: string[] = [];
   private lastMove: TLastMove | undefined = this.chessboard.lastMove;
   private checkState: TCheckState = this.chessboard.checkState;
+  public fen: string = '';
+
+  public get moveList(): TMoveList {
+    return this.chessboard.moveList;
+  }
+  public get gameHistory(): TGameHistory {
+    return this.chessboard.gameHistory;
+  }
+  public gameHistoryPointer: number = 0;
+
+  // promotion properties
+  public isPromotionActive: boolean = false;
+  private promotionCoords: TCoords | null = null;
+  private promotedPiece: FenChar | null = null;
+  protected showingPastPosition: boolean = false;
+  protected displayingStartingMove: boolean = true;
+
+  public promotionPieces(): FenChar[] {
+    return this.playerColor === Color.White
+      ? [
+          FenChar.WhiteKnight,
+          FenChar.WhiteBishop,
+          FenChar.WhiteRook,
+          FenChar.WhiteQueen
+        ]
+      : [
+          FenChar.BlackKnight,
+          FenChar.BlackBishop,
+          FenChar.BlackRook,
+          FenChar.BlackQueen
+        ];
+  }
+
+  protected updateBoard(
+    currentSquare: string,
+    targetSquare: string,
+    promotedPiece: FenChar | null
+  ): void {
+    this.chessboard.move(currentSquare, targetSquare, promotedPiece);
+    this.chessboardView = this.chessboard.chessboardView;
+    this.checkState = this.chessboard.checkState;
+    this.lastMove = this.chessboard.lastMove;
+    this.unmarkingPreviouslySelectedAndSafeSquares();
+    this.gameHistoryPointer++;
+  }
+
+  public promotePiece(piece: FenChar): void {
+    if (!this.promotionCoords || !this.selectedSquare.piece) return;
+    this.promotedPiece = piece;
+
+    this.updateBoard(
+      this.selectedSquare.square,
+      ChessBoard.coordsToSquare(this.promotionCoords),
+      this.promotedPiece
+    );
+  }
+
+  public closePawnPromotionDialog(): void {
+    this.unmarkingPreviouslySelectedAndSafeSquares();
+  }
+
+  protected get gameOverMessage(): string | undefined {
+    return this.chessboard.gameOverMessage;
+  }
 
   protected get playerColor(): Color {
     return this.chessboard.playerColor;
@@ -47,10 +110,35 @@ export class PuzzleChessboardComponent implements OnInit {
   protected get safeSquares(): TSafeSquares {
     return this.chessboard.safeSquares;
   }
+
   protected pieceImagePaths = pieceImagePaths;
 
   public ngOnInit(): void {
     this.chessboardView = this.chessboard.chessboardView;
+    const fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w K - 0 1';
+    const boardFromFen = FenConverter.convertFenToBoard(fen);
+    this.chessboard.setBoard(boardFromFen, Color.White, undefined);
+    this.chessboardView = this.chessboard.chessboardView;
+  }
+
+  protected fenValid(): boolean {
+    return validateFEN(this.fen);
+  }
+
+  protected setBoardFromFen(): void {
+    if (validateFEN(this.fen)) {
+      const boardFromFen = FenConverter.convertFenToBoard(this.fen);
+      const lastMove = FenConverter.createLastMoveFromFEN(this.fen);
+      this.lastMove = lastMove;
+      this.chessboard.setBoard(boardFromFen, Color.White, lastMove);
+      this.chessboardView = this.chessboard.chessboardView;
+    }
+  }
+
+  public isSquarePromotionSquare(square: string): boolean {
+    const { x, y } = ChessBoard.squareToCoords(square);
+    if (!this.promotionCoords) return false;
+    return this.promotionCoords.x === x && this.promotionCoords.y === y;
   }
 
   public isSquareSelected(square: string): boolean {
@@ -75,6 +163,12 @@ export class PuzzleChessboardComponent implements OnInit {
   private unmarkingPreviouslySelectedAndSafeSquares(): void {
     this.selectedSquare = { piece: null };
     this.pieceSafeSquares = [];
+
+    if (this.isPromotionActive) {
+      this.isPromotionActive = false;
+      this.promotedPiece = null;
+      this.promotionCoords = null;
+    }
   }
 
   protected reverseChessboard(): void {
@@ -87,16 +181,32 @@ export class PuzzleChessboardComponent implements OnInit {
   private placingPiece(targetSquare: string): void {
     if (!this.selectedSquare.piece) return;
     if (!this.isSquareSafeForSelectedPiece(targetSquare)) return;
+    const { x: targetX, y: targetY } = ChessBoard.squareToCoords(targetSquare);
+
+    // pawn promotion
+    const isPawnSelected: boolean =
+      this.selectedSquare.piece === FenChar.WhitePawn ||
+      this.selectedSquare.piece === FenChar.BlackPawn;
+    const isPawnOnlastRank: boolean =
+      isPawnSelected && (targetX === 7 || targetY === 0);
+    const shouldOpenPromotionDialog: boolean =
+      !this.isPromotionActive && isPawnOnlastRank;
+
+    if (shouldOpenPromotionDialog) {
+      this.pieceSafeSquares = [];
+      this.isPromotionActive = true;
+      this.promotionCoords = { x: targetX, y: targetY };
+      // because now we wait for player to choose promoted piece
+      return;
+    }
 
     const { square: currentSquare } = this.selectedSquare;
-    this.chessboard.move(currentSquare, targetSquare);
-    this.chessboardView = this.chessboard.chessboardView;
-    this.checkState = this.chessboard.checkState;
-    this.lastMove = this.chessboard.lastMove;
-    this.unmarkingPreviouslySelectedAndSafeSquares();
+    this.updateBoard(currentSquare, targetSquare, this.promotedPiece);
   }
 
   protected move(square: string): void {
+    if (this.gameOverMessage !== undefined) return;
+    if (this.showingPastPosition) return;
     this.selectingPiece(square);
     this.placingPiece(square);
   }
@@ -121,5 +231,45 @@ export class PuzzleChessboardComponent implements OnInit {
 
     this.selectedSquare = { piece, square };
     this.pieceSafeSquares = this.safeSquares.get(square) || [];
+  }
+
+  public showPreviousPosition(moveIndex: number): void {
+    const { board, checkState, lastMove } = this.gameHistory[moveIndex];
+    this.chessboardView = board;
+    this.checkState = checkState;
+    this.lastMove = lastMove;
+    this.gameHistoryPointer = moveIndex;
+    if (moveIndex !== this.gameHistory.length - 1) {
+      this.showingPastPosition = true;
+    } else {
+      this.showingPastPosition = false;
+    }
+
+    if (moveIndex === 0) {
+      this.displayingStartingMove = true;
+    } else {
+      this.displayingStartingMove = false;
+    }
+  }
+
+  public setCurrentPositionAsStartingPosition(): void {
+    this.chessboard.startFromMove(this.gameHistoryPointer);
+    this.showingPastPosition = false;
+    this.displayingStartingMove = true;
+    this.gameHistoryPointer = 0;
+  }
+
+  protected savePuzzle(): void {
+    const fenBoard = FenConverter.convertBoardToFen(
+      ChessBoard.boardViewToBoard(this.chessboard.gameHistory[0].board),
+      this.playerColor,
+      this.lastMove,
+      0,
+      0
+    );
+
+    const moveListString = this.moveList.flatMap((move) => move).join(',');
+
+    console.log(moveListString);
   }
 }
