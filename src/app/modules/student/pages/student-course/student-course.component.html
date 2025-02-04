@@ -7,7 +7,7 @@
     Average review score: {{ averageReviewScore() }} with {{ reviewCount() }} reviews
   </div>
   @for (review of course().reviews; track $index) {
-    <app-student-course-review [review]="review" />
+    <app-course-review [review]="review" />
   }
   <a [routerLink]="'../'">Back to courses</a>
 </div>

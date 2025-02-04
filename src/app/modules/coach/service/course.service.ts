@@ -12,7 +12,7 @@ export class CourseService {
   public constructor(private httpClient: HttpClient) {}
 
   public getAll(): Observable<Course[]> {
-    return this.httpClient.get<Course[]>('/api/Course');
+    return this.httpClient.get<Course[]>('/api/Course/created');
   }
 
   public getById(id: string): Observable<CourseDetails> {

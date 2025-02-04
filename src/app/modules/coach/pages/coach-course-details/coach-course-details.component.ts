@@ -2,11 +2,12 @@ import { Component, OnInit, computed, signal } from '@angular/core';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CourseDetails } from '../../models/CourseDetails';
+import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
 
 @Component({
   selector: 'app-coach-course-details',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CourseReviewComponent],
   templateUrl: './coach-course-details.component.html',
   styleUrl: './coach-course-details.component.scss'
 })
@@ -15,9 +16,9 @@ export class CoachCourseDetailsComponent implements OnInit {
     id: '',
     title: '',
     description: '',
-    thumbnail: '',
+    studentNumber: 0,
+    lessonNumber: 0,
     price: 0,
-    lessons: [],
     reviews: []
   });
 
@@ -27,8 +28,6 @@ export class CoachCourseDetailsComponent implements OnInit {
   ) {}
 
   protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
-
-  protected lessonCount = computed(() => this.course().lessons.length);
 
   protected reviewCount = computed(() => this.course().reviews.length);
 
@@ -42,6 +41,7 @@ export class CoachCourseDetailsComponent implements OnInit {
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.courseService.getById(params.get('id')!).subscribe((res) => {
+        console.log(res);
         this.course.set(res);
       });
     });

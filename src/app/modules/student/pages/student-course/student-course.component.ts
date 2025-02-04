@@ -1,13 +1,13 @@
 import { Component, Input, OnInit, computed, input, signal } from '@angular/core';
 import { CourseDetails } from '../../models/CourseDetails';
-import { StudentCourseReviewComponent } from '../../components/student-course-review/student-course-review.component';
+import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-student-course',
   standalone: true,
-  imports: [StudentCourseReviewComponent, RouterLink],
+  imports: [CourseReviewComponent, RouterLink],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
 })
