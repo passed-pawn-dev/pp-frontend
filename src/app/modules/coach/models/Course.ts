@@ -2,7 +2,8 @@ export interface Course {
   id: string;
   title: string;
   description: string;
-  thumbnail: string;
   price: number;
+  lessonNumber: number;
+  score: number;
   reviewScore: number;
 }

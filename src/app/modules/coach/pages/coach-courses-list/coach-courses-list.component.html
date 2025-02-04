@@ -5,6 +5,9 @@
     <li>
       <div>
         <a class="button" [routerLink]="course.id">{{ course.title }}</a>
+        <div>{{ course.lessonNumber }} lessons</div>
+        <div>price: {{ course.price }}</div>
+        <div>score: {{ course.score }}</div>
         <button type="button" (click)="deleteCourse(course.id)">Delete</button>
         <a [routerLink]="course.id + '/edit'">Edit</a>
       </div>

@@ -27,4 +27,16 @@ export class AuthService {
   public getToken(): Promise<string> {
     return this.keycloakService.getToken();
   }
+
+  public getUsername(): string {
+    return this.keycloakService.getUsername();
+  }
+
+  public isStudent(): boolean {
+    return this.keycloakService.isUserInRole('student');
+  }
+
+  public isCoach(): boolean {
+    return this.keycloakService.isUserInRole('coach');
+  }
 }

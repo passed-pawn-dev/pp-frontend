@@ -6,6 +6,8 @@ import { Course } from '../models/Course';
 import { CourseDetails } from '../models/CourseDetails';
 import { Lesson } from '../models/Lesson';
 import { MyCourseDetails } from '../models/MyCourseDetails';
+import { CourseReview } from '../models/CourseReview';
+import { NewCourseReview } from '../models/NewCourseReview';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +25,14 @@ export class CourseService {
 
   public buy(id: string): Observable<Object> {
     return this.httpClient.post(`/api/Course/${id}/course-list`, {});
+  }
+
+  public signOut(id: string): Observable<Object> {
+    return this.httpClient.delete(`/api/Course/${id}/course-list`);
+  }
+
+  public review(id: string, review: NewCourseReview): Observable<CourseReview> {
+    return this.httpClient.post<CourseReview>(`/api/Course/${id}/review`, review);
   }
 
   public getAllBought(): Observable<MyCourse[]> {

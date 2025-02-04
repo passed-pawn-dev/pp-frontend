@@ -52,9 +52,10 @@ export class StudentMyCourseComponent implements OnInit {
       message: 'Are you sure you want to sign out from this course?',
       header: 'Confirm',
       accept: () => {
-        // TODO
-        console.log('sign out');
-        this.router.navigate(['../']);
+        this.route.paramMap.subscribe((params) => {
+          this.courseService.signOut(params.get('id')!).subscribe((res) => {});
+        });
+        this.router.navigate(['../'], { relativeTo: this.route });
       },
       reject: () => {}
     });

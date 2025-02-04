@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Course } from '../models/Course';
 import { CourseDetails } from '../models/CourseDetails';
 import { NewCourse } from '../models/NewCourse';
+import { Lesson } from '../models/Lesson';
+import { NewLesson } from '../models/NewLesson';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class CourseService {
   public constructor(private httpClient: HttpClient) {}
 
   public getAll(): Observable<Course[]> {
-    return this.httpClient.get<Course[]>('/api/Course');
+    return this.httpClient.get<Course[]>('/api/Course/created');
   }
 
   public getById(id: string): Observable<CourseDetails> {
@@ -31,5 +33,9 @@ export class CourseService {
     return this.httpClient.delete(`/api/Course/${id}`, {
       responseType: 'text'
     });
+  }
+
+  public addLesson(id: string, lesson: NewLesson): Observable<Lesson> {
+    return this.httpClient.post<Lesson>(`api/Course/${id}/lesson`, lesson);
   }
 }

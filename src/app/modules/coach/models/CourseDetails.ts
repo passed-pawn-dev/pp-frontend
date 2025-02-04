@@ -5,8 +5,8 @@ export interface CourseDetails {
   id: string;
   title: string;
   description: string;
-  thumbnail: string;
+  studentNumber: number;
+  lessonNumber: number;
   price: number;
-  lessons: Lesson[];
   reviews: CourseReview[];
 }
