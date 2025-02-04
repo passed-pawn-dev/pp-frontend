@@ -20,6 +20,7 @@ import { FenConverter } from '../../../../chess-logic/FenConverter';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import validateFEN from 'fen-validator';
+import {CourseService} from '../../../coach/service/course.service';
 
 @Component({
   selector: 'app-puzzle-chessboard',
@@ -39,6 +40,8 @@ export class PuzzleChessboardComponent implements OnInit {
   private lastMove: TLastMove | undefined = this.chessboard.lastMove;
   private checkState: TCheckState = this.chessboard.checkState;
   public fen: string = '';
+
+  public constructor(private courseService: CourseService) { }
 
   public get moveList(): TMoveList {
     return this.chessboard.moveList;
@@ -270,6 +273,9 @@ export class PuzzleChessboardComponent implements OnInit {
 
     const moveListString = this.moveList.flatMap((move) => move).join(',');
 
-    console.log(moveListString);
+    this.courseService.addPuzzle('1', 'Test', 'Test', fenBoard, moveListString).subscribe({
+      next: (_) => console.log("Puzzle saved"),
+      error: (err) => console.error(err)
+    });
   }
 }
