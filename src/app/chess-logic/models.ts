@@ -74,5 +74,9 @@ export type TMoveList = [string, string?][];
 export type TGameHistory = {
   lastMove: TLastMove | undefined;
   checkState: TCheckState;
-  board: Map<string, FenChar | null>;
+  board: TChessboardView;
 }[];
+
+export type TChessboardView = Map<string, FenChar | null>;
+
+export type TChessboard = Map<string, Piece | null>;

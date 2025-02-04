@@ -1,5 +1,5 @@
 import { ChessBoard } from './board';
-import { Color, TLastMove } from './models';
+import { Color, TChessboard, TLastMove } from './models';
 import { King } from './pieces/king';
 import { Pawn } from './pieces/pawn';
 import { Piece } from './pieces/piece';
@@ -9,10 +9,14 @@ export class FenConverter {
   public static readonly initalPosition: string =
     'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
-  public static convertBoardToFEN(
-    board: Map<string, Piece | null>,
+  // public static convertFenToBoard(fen: string) {}
+
+  public static convertBoardToFen(
+    board: TChessboard,
     playerColor: Color,
-    lastMove: TLastMove | undefined
+    lastMove: TLastMove | undefined,
+    fiftyMoveRuleCounter: number,
+    numberOfFullMoves: number
   ): string {
     let fen: string = '';
     let index = 1;
@@ -42,12 +46,12 @@ export class FenConverter {
     fen += ' ' + player;
     fen += ' ' + this.castlingAvailability(board);
     fen += ' ' + this.enPassantPosibility(lastMove, playerColor);
-    // fen += ' ' + fiftyMoveRuleCounter * 2;
-    // fen += ' ' + numberOfFullMoves;
+    fen += ' ' + fiftyMoveRuleCounter * 2;
+    fen += ' ' + numberOfFullMoves;
     return fen;
   }
 
-  private static castlingAvailability(board: Map<string, Piece | null>): string {
+  private static castlingAvailability(board: TChessboard): string {
     const castlingPossibilities = (color: Color): string => {
       let castlingAvailability: string = '';
 

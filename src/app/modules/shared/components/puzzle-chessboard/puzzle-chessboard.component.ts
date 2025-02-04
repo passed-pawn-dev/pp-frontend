@@ -1,24 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ChessboardSide } from '../../enums/chessboard-side.enum';
-import { TChessPieceFen } from '../../types/chess-piece-fen.type';
 import { Button } from 'primeng/button';
 import {
   Color,
   FenChar,
   TCheckState,
+  TChessboardView,
   TCoords,
   TGameHistory,
   TLastMove,
   TMoveList,
   TSafeSquares
 } from '../../../../chess-logic/models';
-import { Rook } from '../../../../chess-logic/pieces/rook';
-import { Pawn } from '../../../../chess-logic/pieces/pawn';
-import { Knight } from '../../../../chess-logic/pieces/knight';
-import { Bishop } from '../../../../chess-logic/pieces/bishop';
-import { King } from '../../../../chess-logic/pieces/king';
-import { Queen } from '../../../../chess-logic/pieces/queen';
-import { Piece } from '../../../../chess-logic/pieces/piece';
 import { pieceImagePaths } from '../../../../chess-logic/models';
 import { ChessBoard } from '../../../../chess-logic/board';
 import { TSelectedSquare } from '../../models/chessboardViewModels';
@@ -37,8 +29,7 @@ export class PuzzleChessboardComponent implements OnInit {
   protected RANKS = [8, 7, 6, 5, 4, 3, 2, 1];
   protected Color = Color;
   private chessboard = new ChessBoard();
-  protected chessboardView: Map<string, FenChar | null> =
-    this.chessboard.chessboardView;
+  protected chessboardView: TChessboardView = this.chessboard.chessboardView;
   private selectedSquare: TSelectedSquare = { piece: null };
   private pieceSafeSquares: string[] = [];
   private lastMove: TLastMove | undefined = this.chessboard.lastMove;
@@ -56,6 +47,7 @@ export class PuzzleChessboardComponent implements OnInit {
   public isPromotionActive: boolean = false;
   private promotionCoords: TCoords | null = null;
   private promotedPiece: FenChar | null = null;
+  private showingPastPosition: boolean = false;
 
   public promotionPieces(): FenChar[] {
     return this.playerColor === Color.White
@@ -101,6 +93,10 @@ export class PuzzleChessboardComponent implements OnInit {
     this.unmarkingPreviouslySelectedAndSafeSquares();
   }
 
+  protected get gameOverMessage(): string | undefined {
+    return this.chessboard.gameOverMessage;
+  }
+
   protected get playerColor(): Color {
     return this.chessboard.playerColor;
   }
@@ -108,6 +104,7 @@ export class PuzzleChessboardComponent implements OnInit {
   protected get safeSquares(): TSafeSquares {
     return this.chessboard.safeSquares;
   }
+
   protected pieceImagePaths = pieceImagePaths;
 
   public ngOnInit(): void {
@@ -184,6 +181,8 @@ export class PuzzleChessboardComponent implements OnInit {
   }
 
   protected move(square: string): void {
+    if (this.gameOverMessage !== undefined) return;
+    if (this.showingPastPosition) return;
     this.selectingPiece(square);
     this.placingPiece(square);
   }
@@ -216,5 +215,8 @@ export class PuzzleChessboardComponent implements OnInit {
     this.checkState = checkState;
     this.lastMove = lastMove;
     this.gameHistoryPointer = moveIndex;
+    // if (moveindex !==)
+    this.showingPastPosition = true;
+    console.log(this.gameHistoryPointer);
   }
 }
