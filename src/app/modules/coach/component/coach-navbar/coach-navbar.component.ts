@@ -18,10 +18,6 @@ export class CoachNavbarComponent {
       name: 'My Courses',
       path: 'courses'
     },
-    {
-      name: 'My profile',
-      path: 'profile'
-    }
   ];
 
   protected userName: string = this.authService.getUsername();

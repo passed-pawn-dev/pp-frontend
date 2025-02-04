@@ -11,7 +11,7 @@
         <div class="info">
           <div>{{ course.lessonNumber }} lessons</div>
           <div>price: <span class="price">{{ course.price }}$</span></div>
-          <div>score: {{ course.score === 0 ? '-' : course.score }} / 5</div>
+          <div>score: {{ course.score === 0 ? '-' : course.score.toFixed(2) }} / 5</div>
         </div>
         <button class="danger-btn m-05" type="button" (click)="deleteCourse(course.id)">Delete</button>
         <a class="secondary-btn" [routerLink]="course.id + '/edit'">Edit</a>
