@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { CourseService } from '../../service/course.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-coach-lesson-form',
@@ -12,7 +13,8 @@ import { CourseService } from '../../service/course.service';
     ReactiveFormsModule,
     InputNumberModule,
     ButtonModule,
-    ValidationErrorsComponent
+    ValidationErrorsComponent,
+    RouterLink
   ],
   templateUrl: './coach-lesson-form.component.html',
   styleUrl: './coach-lesson-form.component.scss'
