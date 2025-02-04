@@ -31,4 +31,12 @@ export class AuthService {
   public getUsername(): string {
     return this.keycloakService.getUsername();
   }
+
+  public isStudent(): boolean {
+    return this.keycloakService.isUserInRole('student');
+  }
+
+  public isCoach(): boolean {
+    return this.keycloakService.isUserInRole('coach');
+  }
 }
