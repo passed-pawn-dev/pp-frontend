@@ -1,20 +1,27 @@
-<div>
-  <h2>{{ course().title }}</h2>
-  <div>{{ course().description }}</div>
-  <div>{{ course().lessonNumber }} lessons</div>
-  <div>price: {{ formattedPrice() }}</div>
-  <div>{{ course().studentNumber }} students</div>
+<div class="page">
+  <h1>{{ course().title }}</h1>
   <div>
-    Average review score: {{ averageReviewScore() }} with {{ reviewCount() }} reviews
+    <div class="dsc">Description</div>
+    <div>{{ course().description }}</div>
   </div>
+
+  <hr />
+
+  <div class="info">
+    <div>{{ course().lessonNumber }} lessons</div>
+    <div>price: <span class="price">{{ formattedPrice() }}</span></div>
+    <div>{{ course().studentNumber }} enrolled students</div>
+    <div>
+      Average review score: {{ averageReviewScore() }} ({{ reviewCount() }} reviews)
+    </div>
+  </div>
+
   @for (review of course().reviews; track $index) {
     <app-course-review [review]="review" />
   }
 
-  <div>
-    <a [routerLink]="'lessons/new'">Add lesson</a>
-  </div>
-  <div>
-    <a [routerLink]="'/coach/courses'">Back to courses</a>
+  <div class="btn-group">
+    <a class="primary-button" [routerLink]="'lessons/new'">Add lesson</a>
+    <a class="secondary-btn" [routerLink]="'/coach/courses'">Back to courses</a>
   </div>
 </div>

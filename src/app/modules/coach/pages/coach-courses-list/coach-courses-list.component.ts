@@ -4,11 +4,12 @@ import { Course } from '../../models/Course';
 import { CourseService } from '../../service/course.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-coach-courses-list',
   standalone: true,
-  imports: [RouterLink, ConfirmDialogModule],
+  imports: [RouterLink, ConfirmDialogModule, Button],
   providers: [ConfirmationService],
   templateUrl: './coach-courses-list.component.html',
   styleUrl: './coach-courses-list.component.scss'
