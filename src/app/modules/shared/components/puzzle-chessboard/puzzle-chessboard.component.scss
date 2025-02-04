@@ -8,10 +8,6 @@ $white-square-valid-move-circle-color: #7272724f;
 $white-square-background: #ebecd0;
 $king-in-check-background: #ff240057;
 
-.chess-content {
-  max-width: 40rem;
-}
-
 .chessboard {
   aspect-ratio: 1/1;
   display: grid;
@@ -95,6 +91,7 @@ $king-in-check-background: #ff240057;
   display: flex;
   height: 5rem;
   justify-content: space-between;
+  max-width: 40rem;
   padding-right: 0.25rem;
   padding-top: 2rem;
   position: relative;
@@ -117,6 +114,11 @@ $king-in-check-background: #ff240057;
 
 img {
   user-select: none;
+}
+
+.main-game-content {
+  display: flex;
+  gap: 1rem;
 }
 
 @for $row from 1 through 8 {
