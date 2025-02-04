@@ -23,14 +23,13 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   styleUrl: './student-my-course.component.scss'
 })
 export class StudentMyCourseComponent implements OnInit {
-  protected course = signal<CourseDetails>({
+  protected course = signal<MyCourseDetails>({
     id: '',
     title: '',
     description: '',
+    coachName: '',
     thumbnail: '',
-    price: 0,
-    lessons: [],
-    reviews: []
+    lessons: []
   });
 
   public constructor(
@@ -42,7 +41,7 @@ export class StudentMyCourseComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.courseService.getById(params.get('id')!).subscribe((res) => {
+      this.courseService.getBoughtById(params.get('id')!).subscribe((res) => {
         this.course.set(res);
       });
     });

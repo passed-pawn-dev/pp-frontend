@@ -9,7 +9,8 @@ import { routes } from './app.routes';
 import { KeycloakService } from 'keycloak-angular';
 import { initializeKeycloak } from './keycloak-init';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { tokenInterceptor } from './interceptors/token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,6 +24,6 @@ export const appConfig: ApplicationConfig = {
       deps: [KeycloakService]
     },
     KeycloakService,
-    provideHttpClient()
+    provideHttpClient(withInterceptors([tokenInterceptor]))
   ]
 };

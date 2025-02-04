@@ -16,9 +16,9 @@ export class StudentCourseComponent implements OnInit {
     id: '',
     title: '',
     description: '',
-    thumbnail: '',
     price: 0,
-    lessons: [],
+    lessonNumber: 0,
+    studentNumber: 0,
     reviews: []
   });
 
@@ -28,8 +28,6 @@ export class StudentCourseComponent implements OnInit {
   ) {}
 
   protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
-
-  protected lessonCount = computed(() => this.course().lessons.length);
 
   protected reviewCount = computed(() => this.course().reviews.length);
 
@@ -44,6 +42,14 @@ export class StudentCourseComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.courseService.getById(params.get('id')!).subscribe((res) => {
         this.course.set(res);
+      });
+    });
+  }
+
+  protected buyCourse(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.courseService.buy(params.get('id')!).subscribe((res) => {
+        console.log(res);
       });
     });
   }
