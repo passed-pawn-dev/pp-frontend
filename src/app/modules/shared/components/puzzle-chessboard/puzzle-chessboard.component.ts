@@ -19,6 +19,8 @@ import { MoveListComponent } from '../move-list/move-list.component';
 import { FenConverter } from '../../../../chess-logic/FenConverter';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import validateFEN from 'fen-validator';
+
 @Component({
   selector: 'app-puzzle-chessboard',
   standalone: true,
@@ -115,17 +117,22 @@ export class PuzzleChessboardComponent implements OnInit {
     this.chessboardView = this.chessboard.chessboardView;
     const fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w K - 0 1';
     const boardFromFen = FenConverter.convertFenToBoard(fen);
-    console.log(boardFromFen);
     this.chessboard.setBoard(boardFromFen, Color.White, undefined);
     this.chessboardView = this.chessboard.chessboardView;
   }
 
+  protected fenValid(): boolean {
+    return validateFEN(this.fen);
+  }
+
   protected setBoardFromFen(): void {
-    const boardFromFen = FenConverter.convertFenToBoard(this.fen);
-    const lastMove = FenConverter.createLastMoveFromFEN(this.fen);
-    this.lastMove = lastMove;
-    this.chessboard.setBoard(boardFromFen, Color.White, lastMove);
-    this.chessboardView = this.chessboard.chessboardView;
+    if (validateFEN(this.fen)) {
+      const boardFromFen = FenConverter.convertFenToBoard(this.fen);
+      const lastMove = FenConverter.createLastMoveFromFEN(this.fen);
+      this.lastMove = lastMove;
+      this.chessboard.setBoard(boardFromFen, Color.White, lastMove);
+      this.chessboardView = this.chessboard.chessboardView;
+    }
   }
 
   public isSquarePromotionSquare(square: string): boolean {
@@ -252,5 +259,17 @@ export class PuzzleChessboardComponent implements OnInit {
     this.gameHistoryPointer = 0;
   }
 
-  public rollbackToPosition(): void {}
+  protected savePuzzle(): void {
+    const fenBoard = FenConverter.convertBoardToFen(
+      ChessBoard.boardViewToBoard(this.chessboard.gameHistory[0].board),
+      this.playerColor,
+      this.lastMove,
+      0,
+      0
+    );
+
+    const moveListString = this.moveList.flatMap((move) => move).join(',');
+
+    console.log(moveListString);
+  }
 }

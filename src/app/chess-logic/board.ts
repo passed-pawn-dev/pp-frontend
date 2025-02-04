@@ -39,7 +39,7 @@ export const fenCharToPiece = {
 
 // TODO - SWAP X WITH Y, FOR SOME REASON X MEANS RANK AND Y MEANS FILE RIGHT NOW IM SORRY
 export class ChessBoard {
-  protected chessboard: TChessboard;
+  private _chessboard: TChessboard;
   public static FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   public static RANKS = [8, 7, 6, 5, 4, 3, 2, 1];
   private _playerColor: Color = Color.White;
@@ -57,13 +57,13 @@ export class ChessBoard {
   private readonly chessBoardSize: number = 8;
 
   public reverseChessboard(): void {
-    this.chessboard = new Map(Array.from(this.chessboard).reverse());
+    this._chessboard = new Map(Array.from(this._chessboard).reverse());
     // this._playerColor = this._playerColor === Color.Black ? Color.White : Color.Black;
     // this._safeSquares = this.findSafeSquares();
   }
 
   public constructor() {
-    this.chessboard = new Map(
+    this._chessboard = new Map(
       ChessBoard.RANKS.flatMap((RANK) =>
         ChessBoard.FILES.map((FILE) => [`${FILE}${RANK}`, null])
       )
@@ -151,6 +151,10 @@ export class ChessBoard {
     return chessboardView;
   }
 
+  public get chessboard(): TChessboard {
+    return this._chessboard;
+  }
+
   public get moveList(): TMoveList {
     return this._moveList;
   }
@@ -168,14 +172,6 @@ export class ChessBoard {
   }
   // end section - getters
 
-  // section - setters
-  // public setChessBoard(board: TChessboard) {
-  //   this.chessboard = board;
-  //   this._safeSquares = this.findSafeSquares();
-  //   this._checkState = this.isPlayerInCheck(this.playerColor.color)
-  // }
-  // end section - setters
-
   // sectiun - static methods
   public static squareToCoords(square: string): TCoords {
     if (square.length !== 2) {
@@ -192,7 +188,7 @@ export class ChessBoard {
     const chessboard = new Map();
     for (let [square, fenChar] of boardView) {
       if (fenChar) {
-        chessboard.set(square, fenCharToPiece[fenChar]);
+        chessboard.set(square, fenCharToPiece[fenChar]());
       } else {
         chessboard.set(square, null);
       }
@@ -208,7 +204,7 @@ export class ChessBoard {
     playerToMove: Color,
     lastMove: TLastMove | undefined
   ): void {
-    this.chessboard = board;
+    this._chessboard = board;
     this._playerColor = playerToMove;
     this._lastMove = lastMove;
     this._gameHistory = [];
@@ -221,7 +217,6 @@ export class ChessBoard {
     this._isGameOver = false;
     this.isPlayerInCheck(playerToMove, true);
     this._safeSquares = this.findSafeSquares();
-    // console.log(this.canCastle());
   }
 
   public move(

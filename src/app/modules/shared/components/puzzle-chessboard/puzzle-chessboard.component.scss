@@ -8,8 +8,17 @@ $white-square-valid-move-circle-color: #7272724f;
 $white-square-background: #ebecd0;
 $king-in-check-background: #ff240057;
 
-.chess-fen-load-input {
-  margin: 0.5rem;
+.chessboard-controls {
+  display: flex;
+  gap: 1rem;
+  margin-left: calc(50% - 27.625rem);
+  padding-top: 1rem;
+  width: fit-content;
+}
+
+.chessboard-fen-load-input {
+  align-items: flex-start;
+  display: flex;
 }
 
 .chessboard {
@@ -123,6 +132,13 @@ img {
 .main-game-content {
   display: flex;
   gap: 1rem;
+  margin-left: calc(50% - 26.5rem);
+  max-width: 53rem;
+  width: 100%;
+}
+
+.move-list {
+  width: 12rem;
 }
 
 @for $row from 1 through 8 {
