@@ -1,3 +1,21 @@
 .register-form {
   justify-content: center;
 }
+
+select {
+  width: 150rem;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+}
+
+form {
+  margin-top: 3rem;
+}
