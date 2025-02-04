@@ -1,0 +1,26 @@
+
+
+.page {
+  width: 62.5rem;
+  margin: auto;
+}
+
+.dsc {
+  font-size: 0.75rem;
+}
+
+.price {
+   font-size: 1.5rem;
+ }
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btn-group {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
