@@ -1,6 +1,4 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<p>puzzle-chessboard works!</p>
-<p-button (onClick)="reverseChessboard()">Reverse side</p-button>
 @if (gameOverMessage) {
   <h2 class="game-over-message">{{ gameOverMessage }}</h2>
 }
@@ -24,7 +22,7 @@
     }
   </div>
   <div class="main-game-content">
-    <div class="chessboard" [class.black-view]="playerColor === Color.Black">
+    <div class="chessboard">
       <!-- field[0] -> square, for example "b2"; field[1] -> Piece fen char, for example "P" -->
       @for (field of chessboardView; track $index) {
         <div class="chessboard-field" (click)="move(field[0])">
@@ -61,7 +59,7 @@
         </div>
       }
     </div>
-    <div>
+    <div class="move-list">
       <app-move-list
         [moveList]="moveList"
         [gameHistoryPointer]="gameHistoryPointer"
@@ -70,5 +68,23 @@
       >
       </app-move-list>
     </div>
+  </div>
+</div>
+<div class="chessboard-controls">
+  <div><p-button (onClick)="reverseChessboard()">Reverse side</p-button></div>
+  <div>
+    <p-button
+      [disabled]="displayingStartingMove"
+      (onClick)="setCurrentPositionAsStartingPosition()"
+      >Start from this move</p-button
+    >
+  </div>
+  <div class="chessboard-fen-load-input">
+    <div>
+      <input pInputText type="text" [(ngModel)]="fen" />
+      <div *ngIf="!fenValid()" class="p-error">Please enter a valid FEN string.</div>
+    </div>
+    <p-button [disabled]="!fenValid()" (onClick)="setBoardFromFen()">Load fen</p-button>
+    <p-button (onClick)="savePuzzle()">Save puzzle</p-button>
   </div>
 </div>

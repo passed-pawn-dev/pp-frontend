@@ -8,8 +8,8 @@
 
         <div
           class="move"
-          [ngClass]="{ 'current-move': $index * 2 + 1 === gameHistoryPointer }"
-          (click)="showPreviousPosition($index * 2 + 1)"
+          [ngClass]="{ 'current-move': $index * 2 === gameHistoryPointer }"
+          (click)="showPreviousPosition($index * 2)"
         >
           {{ move[0] }}
         </div>
@@ -17,8 +17,8 @@
         @if (move[1]) {
           <div
             class="move"
-            [ngClass]="{ 'current-move': $index * 2 + 2 === gameHistoryPointer }"
-            (click)="showPreviousPosition($index * 2 + 2)"
+            [ngClass]="{ 'current-move': $index * 2 + 1 === gameHistoryPointer }"
+            (click)="showPreviousPosition($index * 2 + 1)"
           >
             {{ move[1] }}
           </div>

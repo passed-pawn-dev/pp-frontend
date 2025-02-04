@@ -75,6 +75,7 @@ export type TGameHistory = {
   lastMove: TLastMove | undefined;
   checkState: TCheckState;
   board: TChessboardView;
+  playerColor: Color;
 }[];
 
 export type TChessboardView = Map<string, FenChar | null>;

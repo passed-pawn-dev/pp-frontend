@@ -13,7 +13,7 @@ import { TMoveList } from '../../../../chess-logic/models';
 export class MoveListComponent {
   @Input({ required: true }) public moveList!: TMoveList;
   @Input({ required: true }) public gameHistoryPointer: number = 0;
-  @Input({ required: true }) public gameHistoryLength: number = 1;
+  @Input({ required: true }) public gameHistoryLength: number = 0;
   @Output() public showPreviousPositionEvent = new EventEmitter<number>();
 
   public showPreviousPosition(moveIndex: number): void {

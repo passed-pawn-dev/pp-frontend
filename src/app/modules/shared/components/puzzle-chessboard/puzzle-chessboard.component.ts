@@ -16,11 +16,15 @@ import { ChessBoard } from '../../../../chess-logic/board';
 import { TSelectedSquare } from '../../models/chessboardViewModels';
 import { CommonModule } from '@angular/common';
 import { MoveListComponent } from '../move-list/move-list.component';
+import { FenConverter } from '../../../../chess-logic/FenConverter';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
+import validateFEN from 'fen-validator';
 
 @Component({
   selector: 'app-puzzle-chessboard',
   standalone: true,
-  imports: [Button, CommonModule, MoveListComponent],
+  imports: [Button, CommonModule, MoveListComponent, InputTextModule, FormsModule],
   templateUrl: './puzzle-chessboard.component.html',
   styleUrl: './puzzle-chessboard.component.scss'
 })
@@ -34,6 +38,7 @@ export class PuzzleChessboardComponent implements OnInit {
   private pieceSafeSquares: string[] = [];
   private lastMove: TLastMove | undefined = this.chessboard.lastMove;
   private checkState: TCheckState = this.chessboard.checkState;
+  public fen: string = '';
 
   public get moveList(): TMoveList {
     return this.chessboard.moveList;
@@ -47,7 +52,8 @@ export class PuzzleChessboardComponent implements OnInit {
   public isPromotionActive: boolean = false;
   private promotionCoords: TCoords | null = null;
   private promotedPiece: FenChar | null = null;
-  private showingPastPosition: boolean = false;
+  protected showingPastPosition: boolean = false;
+  protected displayingStartingMove: boolean = true;
 
   public promotionPieces(): FenChar[] {
     return this.playerColor === Color.White
@@ -109,6 +115,24 @@ export class PuzzleChessboardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.chessboardView = this.chessboard.chessboardView;
+    const fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w K - 0 1';
+    const boardFromFen = FenConverter.convertFenToBoard(fen);
+    this.chessboard.setBoard(boardFromFen, Color.White, undefined);
+    this.chessboardView = this.chessboard.chessboardView;
+  }
+
+  protected fenValid(): boolean {
+    return validateFEN(this.fen);
+  }
+
+  protected setBoardFromFen(): void {
+    if (validateFEN(this.fen)) {
+      const boardFromFen = FenConverter.convertFenToBoard(this.fen);
+      const lastMove = FenConverter.createLastMoveFromFEN(this.fen);
+      this.lastMove = lastMove;
+      this.chessboard.setBoard(boardFromFen, Color.White, lastMove);
+      this.chessboardView = this.chessboard.chessboardView;
+    }
   }
 
   public isSquarePromotionSquare(square: string): boolean {
@@ -215,8 +239,37 @@ export class PuzzleChessboardComponent implements OnInit {
     this.checkState = checkState;
     this.lastMove = lastMove;
     this.gameHistoryPointer = moveIndex;
-    // if (moveindex !==)
-    this.showingPastPosition = true;
-    console.log(this.gameHistoryPointer);
+    if (moveIndex !== this.gameHistory.length - 1) {
+      this.showingPastPosition = true;
+    } else {
+      this.showingPastPosition = false;
+    }
+
+    if (moveIndex === 0) {
+      this.displayingStartingMove = true;
+    } else {
+      this.displayingStartingMove = false;
+    }
+  }
+
+  public setCurrentPositionAsStartingPosition(): void {
+    this.chessboard.startFromMove(this.gameHistoryPointer);
+    this.showingPastPosition = false;
+    this.displayingStartingMove = true;
+    this.gameHistoryPointer = 0;
+  }
+
+  protected savePuzzle(): void {
+    const fenBoard = FenConverter.convertBoardToFen(
+      ChessBoard.boardViewToBoard(this.chessboard.gameHistory[0].board),
+      this.playerColor,
+      this.lastMove,
+      0,
+      0
+    );
+
+    const moveListString = this.moveList.flatMap((move) => move).join(',');
+
+    console.log(moveListString);
   }
 }

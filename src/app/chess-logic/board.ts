@@ -22,24 +22,24 @@ import { Queen } from './pieces/queen';
 import { Rook } from './pieces/rook';
 
 // like this so that reference is different every time
-const fenCharToPiece = {
-  P: (() => new Pawn(Color.White))(),
-  Q: (() => new Queen(Color.White))(),
-  R: (() => new Rook(Color.White))(),
-  K: (() => new King(Color.White))(),
-  N: (() => new Knight(Color.White))(),
-  B: (() => new Bishop(Color.White))(),
-  p: (() => new Pawn(Color.Black))(),
-  q: (() => new Queen(Color.Black))(),
-  r: (() => new Rook(Color.Black))(),
-  k: (() => new King(Color.Black))(),
-  n: (() => new Knight(Color.Black))(),
-  b: (() => new Bishop(Color.Black))()
+export const fenCharToPiece = {
+  P: (): Pawn => new Pawn(Color.White),
+  Q: (): Queen => new Queen(Color.White),
+  R: (): Rook => new Rook(Color.White),
+  K: (): King => new King(Color.White),
+  N: (): Knight => new Knight(Color.White),
+  B: (): Bishop => new Bishop(Color.White),
+  p: (): Pawn => new Pawn(Color.Black),
+  q: (): Queen => new Queen(Color.Black),
+  r: (): Rook => new Rook(Color.Black),
+  k: (): King => new King(Color.Black),
+  n: (): Knight => new Knight(Color.Black),
+  b: (): Bishop => new Bishop(Color.Black)
 };
 
 // TODO - SWAP X WITH Y, FOR SOME REASON X MEANS RANK AND Y MEANS FILE RIGHT NOW IM SORRY
 export class ChessBoard {
-  protected chessboard: TChessboard;
+  private _chessboard: TChessboard;
   public static FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   public static RANKS = [8, 7, 6, 5, 4, 3, 2, 1];
   private _playerColor: Color = Color.White;
@@ -51,19 +51,19 @@ export class ChessBoard {
   private _isGameOver: boolean = false;
   private _gameOverMessage: string | undefined;
   private fiftyMoveRuleCounter: number = 0;
-  private fullNumberOfMoves: number = 1;
+  private fullNumberOfMoves: number = 0;
   private threeFoldRepetitionDictionary = new Map<string, number>();
   private threeFoldRepetitionFlag: boolean = false;
   private readonly chessBoardSize: number = 8;
 
   public reverseChessboard(): void {
-    this.chessboard = new Map(Array.from(this.chessboard).reverse());
+    this._chessboard = new Map(Array.from(this._chessboard).reverse());
     // this._playerColor = this._playerColor === Color.Black ? Color.White : Color.Black;
     // this._safeSquares = this.findSafeSquares();
   }
 
   public constructor() {
-    this.chessboard = new Map(
+    this._chessboard = new Map(
       ChessBoard.RANKS.flatMap((RANK) =>
         ChessBoard.FILES.map((FILE) => [`${FILE}${RANK}`, null])
       )
@@ -122,13 +122,7 @@ export class ChessBoard {
     });
 
     this._safeSquares = this.findSafeSquares();
-    this._gameHistory = [
-      {
-        board: this.chessboardView,
-        lastMove: this._lastMove,
-        checkState: this._checkState
-      }
-    ];
+    this._gameHistory = [];
   }
 
   // section - getters
@@ -157,6 +151,10 @@ export class ChessBoard {
     return chessboardView;
   }
 
+  public get chessboard(): TChessboard {
+    return this._chessboard;
+  }
+
   public get moveList(): TMoveList {
     return this._moveList;
   }
@@ -174,14 +172,6 @@ export class ChessBoard {
   }
   // end section - getters
 
-  // section - setters
-  // public setChessBoard(board: TChessboard) {
-  //   this.chessboard = board;
-  //   this._safeSquares = this.findSafeSquares();
-  //   this._checkState = this.isPlayerInCheck(this.playerColor.color)
-  // }
-  // end section - setters
-
   // sectiun - static methods
   public static squareToCoords(square: string): TCoords {
     if (square.length !== 2) {
@@ -198,7 +188,7 @@ export class ChessBoard {
     const chessboard = new Map();
     for (let [square, fenChar] of boardView) {
       if (fenChar) {
-        chessboard.set(square, fenCharToPiece[fenChar]);
+        chessboard.set(square, fenCharToPiece[fenChar]());
       } else {
         chessboard.set(square, null);
       }
@@ -209,6 +199,26 @@ export class ChessBoard {
   // end section - static methods
 
   // section - public methods
+  public setBoard(
+    board: TChessboard,
+    playerToMove: Color,
+    lastMove: TLastMove | undefined
+  ): void {
+    this._chessboard = board;
+    this._playerColor = playerToMove;
+    this._lastMove = lastMove;
+    this._gameHistory = [];
+    this._moveList = [];
+    this.fullNumberOfMoves = 0;
+    this.fiftyMoveRuleCounter = 0;
+    this.threeFoldRepetitionDictionary = new Map();
+    this.threeFoldRepetitionFlag = false;
+    this._gameOverMessage = undefined;
+    this._isGameOver = false;
+    this.isPlayerInCheck(playerToMove, true);
+    this._safeSquares = this.findSafeSquares();
+  }
+
   public move(
     currentSquare: string,
     targetSquare: string,
@@ -314,7 +324,7 @@ export class ChessBoard {
   // check piece by piece if any enemy piece is attacking player's King, sets checkState
   private isPlayerInCheck(
     playerColor: Color,
-    checkingCurentPosition: boolean
+    checkingCurrentPosition: boolean
   ): boolean {
     for (let [square, piece] of this.chessboard) {
       // skipping ally pieces - they cant attack ally king
@@ -337,7 +347,7 @@ export class ChessBoard {
             targetSquare
           ) as Piece | null;
           if (this.isAllyKing(blockingPiece, playerColor)) {
-            if (checkingCurentPosition)
+            if (checkingCurrentPosition)
               this._checkState = { isInCheck: true, square: targetSquare };
             return true;
           }
@@ -350,7 +360,7 @@ export class ChessBoard {
             ) as Piece | null;
 
             if (this.isAllyKing(blockingPiece, playerColor)) {
-              if (checkingCurentPosition)
+              if (checkingCurrentPosition)
                 this._checkState = { isInCheck: true, square: targetSquare };
               return true;
             }
@@ -364,7 +374,7 @@ export class ChessBoard {
         }
       }
     }
-    if (checkingCurentPosition) this._checkState = { isInCheck: false };
+    if (checkingCurrentPosition) this._checkState = { isInCheck: false };
     return false;
   }
 
@@ -507,8 +517,9 @@ export class ChessBoard {
 
     const rook: Piece | null = this.chessboard.get(rookSquare) as Piece | null;
 
-    if (!(rook instanceof Rook) || rook.hasMoved || this._checkState.isInCheck)
+    if (!(rook instanceof Rook) || rook.hasMoved || this._checkState.isInCheck) {
       return false;
+    }
 
     const firstNextKingPositionY: number = kingPositionY + (kingSideCastle ? 1 : -1);
     const secondNextKingPositionY: number = kingPositionY + (kingSideCastle ? 2 : -2);
@@ -524,8 +535,9 @@ export class ChessBoard {
     if (
       this.chessboard.get(firstNextKingSquare) ||
       this.chessboard.get(secondNextKingSquare)
-    )
+    ) {
       return false;
+    }
 
     if (
       !kingSideCastle &&
@@ -660,10 +672,10 @@ export class ChessBoard {
     if (moveType.has(MoveType.Check)) move += '+';
     else if (moveType.has(MoveType.CheckMate)) move += '#';
 
-    if (!this._moveList[this.fullNumberOfMoves - 1]) {
-      this._moveList[this.fullNumberOfMoves - 1] = [move];
+    if (!this._moveList[Math.floor(this.gameHistory.length / 2)]) {
+      this._moveList[Math.floor(this.gameHistory.length / 2)] = [move];
     } else {
-      this._moveList[this.fullNumberOfMoves - 1].push(move);
+      this._moveList[Math.floor(this.gameHistory.length / 2)].push(move);
     }
   }
 
@@ -783,11 +795,44 @@ export class ChessBoard {
     return false;
   }
 
+  public rollbackToPosition(moveIndex: number): void {}
+
+  public startFromMove(moveIndex: number): void {
+    if (moveIndex + 1 > this.gameHistory.length)
+      throw new Error(
+        'Cannot start from move number thats bigger than game history length'
+      );
+    const fullMoveIndex = Math.floor(moveIndex / 2);
+    const moveSideIndex = moveIndex - fullMoveIndex * 2;
+    if (moveSideIndex === 1) {
+      const moveList = this._moveList.slice(fullMoveIndex);
+
+      this._moveList = moveList
+        .map((move, index) => {
+          if (index === moveList.length - 1) {
+            return [move[1]];
+          } else {
+            return [move[1], moveList[index + 1][0]];
+          }
+        })
+        .filter((move) => move[0] !== undefined) as TMoveList;
+    } else {
+      this._moveList = this._moveList.slice(fullMoveIndex);
+    }
+    this._playerColor = this._gameHistory[this._gameHistory.length - 1].playerColor;
+    this._gameHistory = this._gameHistory.slice(moveIndex);
+    this.fullNumberOfMoves = 0;
+    this.fiftyMoveRuleCounter = 0;
+    this.threeFoldRepetitionDictionary = new Map();
+    this._safeSquares = this.findSafeSquares();
+  }
+
   private updateGameHistory(): void {
     this._gameHistory.push({
       board: cloneDeep(this.chessboardView),
       checkState: cloneDeep(this._checkState),
-      lastMove: this._lastMove ? cloneDeep(this._lastMove) : undefined
+      lastMove: this._lastMove ? cloneDeep(this._lastMove) : undefined,
+      playerColor: this._playerColor
     });
   }
 

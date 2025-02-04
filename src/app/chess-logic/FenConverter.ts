@@ -1,5 +1,6 @@
-import { ChessBoard } from './board';
-import { Color, TChessboard, TLastMove } from './models';
+import { cloneDeep, reverse } from 'lodash';
+import { ChessBoard, fenCharToPiece } from './board';
+import { Color, FenChar, MoveType, TChessboard, TLastMove } from './models';
 import { King } from './pieces/king';
 import { Pawn } from './pieces/pawn';
 import { Piece } from './pieces/piece';
@@ -9,7 +10,107 @@ export class FenConverter {
   public static readonly initalPosition: string =
     'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
-  // public static convertFenToBoard(fen: string) {}
+  private static isNumeric(str: unknown): boolean {
+    return !isNaN(str as number) && !isNaN(parseFloat(str as string));
+  }
+
+  public static createLastMoveFromFEN(fen: string): TLastMove | undefined {
+    // Split the FEN string into its components
+    const [
+      position,
+      activeColor,
+      castling,
+      enPassantSquare,
+      halfMoveClock,
+      fullMoveNumber
+    ] = fen.split(' ');
+
+    // If there's no en passant square, return null
+    if (enPassantSquare === '-') {
+      return undefined;
+    }
+
+    // Determine the piece that moved (pawn)
+    const piece: Pawn =
+      activeColor === 'w' ? new Pawn(Color.Black) : new Pawn(Color.White);
+
+    piece.hasMoved = true;
+
+    // Determine the previous and current squares
+    const prevSquare =
+      activeColor === 'w'
+        ? enPassantSquare[0] + (parseInt(enPassantSquare[1]) + 1)
+        : enPassantSquare[0] + (parseInt(enPassantSquare[1]) - 1);
+    const currentSquare =
+      activeColor === 'w'
+        ? enPassantSquare[0] + (parseInt(enPassantSquare[1]) - 1)
+        : enPassantSquare[0] + (parseInt(enPassantSquare[1]) + 1);
+
+    // Create the move type set
+    const moveType = new Set<MoveType>();
+    moveType.add(MoveType.BasicMove);
+
+    // Return the TLastMove object
+    return {
+      piece,
+      prevSquare,
+      currentSquare,
+      moveType
+    };
+  }
+
+  public static convertFenToBoard(fen: string): TChessboard {
+    const board = new Map();
+    const [fenBoard, playerToMove, castlingAvailability, enPassantSquare] =
+      fen.split(' ');
+    const files = ChessBoard.FILES;
+    // this is mixed up - should be the other way around
+    let currentRow = 0;
+    let currentColumn = 7;
+    let currentFile = ChessBoard.FILES[currentRow];
+
+    for (let char of fenBoard) {
+      currentFile = files[currentRow];
+
+      if (char === '/') {
+        currentRow = 0;
+        currentColumn--;
+        continue;
+      }
+
+      if (this.isNumeric(char)) {
+        for (let i = 0; i < parseInt(char, 10); i++) {
+          currentFile = files[currentRow];
+          board.set(`${currentFile}${currentColumn + 1}`, null);
+          currentRow++;
+        }
+      } else {
+        const piece = fenCharToPiece[char as FenChar]();
+
+        switch (char) {
+          case 'R':
+            if (!castlingAvailability.includes('Q') && currentFile === 'a') {
+              (piece as Rook).hasMoved = true;
+            } else if (!castlingAvailability.includes('K') && currentFile === 'h') {
+              (piece as Rook).hasMoved = true;
+            }
+            break;
+          case 'r':
+            if (!castlingAvailability.includes('q') && currentFile === 'a') {
+              (piece as Rook).hasMoved = true;
+            } else if (!castlingAvailability.includes('k') && currentFile === 'h') {
+              (piece as Rook).hasMoved = true;
+            }
+            break;
+          default:
+        }
+        board.set(`${currentFile}${currentColumn + 1}`, piece);
+        currentRow++;
+      }
+    }
+
+    return board;
+  }
 
   public static convertBoardToFen(
     board: TChessboard,
