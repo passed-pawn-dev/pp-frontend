@@ -78,18 +78,12 @@ body {
 .logout-btn {
   background-color: transparent;
   color: red;
-  border: 1px solid red;
-  padding: 0.75rem 1.25rem;
+  border: none;
+  padding: 0;
   font-size: 1rem;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
   border-radius: 6px;
   outline-color: transparent;
   cursor: pointer;
   width: fit-content;
   text-decoration: none;
-
-  &:hover {
-    background-color: darken(red, 10%);
-    color: white;
-  }
 }
