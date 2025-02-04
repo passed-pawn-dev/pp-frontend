@@ -9,8 +9,10 @@
     </ul>
     <li class="nav-link">
       Logged in as
-      {{ userName }}
-      <button pButton type="button" (click)="logOut()">Log Out</button>
+      <span class="username">
+        {{ userName }}
+      </span>
+      <button class="logout-btn log" type="button" (click)="logOut()">Log Out</button>
     </li>
   </ul>
 </div>

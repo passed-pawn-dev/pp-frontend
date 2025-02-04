@@ -3,11 +3,12 @@ import { CourseDetails } from '../../models/CourseDetails';
 import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Button, ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-student-course',
   standalone: true,
-  imports: [CourseReviewComponent, RouterLink],
+  imports: [CourseReviewComponent, RouterLink, ButtonModule],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
 })
@@ -34,8 +35,10 @@ export class StudentCourseComponent implements OnInit {
   protected averageReviewScore = computed(() =>
     this.course().reviews.length == 0
       ? 0
-      : this.course().reviews.reduce((acc, curr) => acc + curr.value, 0) /
-        this.course().reviews.length
+      : (
+          this.course().reviews.reduce((acc, curr) => acc + curr.value, 0) /
+          this.course().reviews.length
+        ).toFixed(2)
   );
 
   public ngOnInit(): void {

@@ -1,18 +1,24 @@
-<h2>Courses</h2>
-<a [routerLink]="'new'">Add new course</a>
+<div class="page">
+  <h1>Courses</h1>
+  <a class="primary-button" [routerLink]="'new'">Add new course</a>
+</div>
 <ul>
   @for (course of courses; track $index) {
     <li>
-      <div>
-        <a class="button" [routerLink]="course.id">{{ course.title }}</a>
-        <div>{{ course.lessonNumber }} lessons</div>
-        <div>price: {{ course.price }}</div>
-        <div>score: {{ course.score }}</div>
-        <button type="button" (click)="deleteCourse(course.id)">Delete</button>
-        <a [routerLink]="course.id + '/edit'">Edit</a>
+      <div class="content">
+        <a class="link" [routerLink]="course.id">{{ course.title }}</a>
+        <hr />
+        <div class="info">
+          <div>{{ course.lessonNumber }} lessons</div>
+          <div>price: <span class="price">{{ course.price }}$</span></div>
+          <div>score: {{ course.score === 0 ? '-' : course.score.toFixed(2) }} / 5</div>
+        </div>
+        <button class="danger-btn m-05" type="button" (click)="deleteCourse(course.id)">Delete</button>
+        <a class="secondary-btn" [routerLink]="course.id + '/edit'">Edit</a>
       </div>
     </li>
   }
 </ul>
+
 
 <p-confirmDialog></p-confirmDialog>
