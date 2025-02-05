@@ -122,8 +122,20 @@ export class PuzzleChessboardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.chessboardView = this.chessboard.chessboardView;
+    const [
+      position,
+      activeColor,
+      castling,
+      enPassantSquare,
+      halfMoveClock,
+      fullMoveNumber
+    ] = this.startingFen.split(' ');
     const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
-    this.chessboard.setBoard(boardFromFen, Color.White, undefined);
+    this.chessboard.setBoard(
+      boardFromFen,
+      activeColor === 'w' ? Color.White : Color.Black,
+      undefined
+    );
     this.chessboardView = this.chessboard.chessboardView;
   }
 

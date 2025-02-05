@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { PuzzleChessboardComponent } from '../../../shared/components/puzzle-chessboard/puzzle-chessboard.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { PuzzleData } from '../../../shared/models/puzzleData';
 import { CourseService } from '../../service/course.service';
@@ -12,6 +12,7 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
+import { PreviewMode } from '../../../shared/enums/preview-mode.enum';
 
 @Component({
   selector: 'app-coach-add-exercise',
@@ -32,6 +33,7 @@ export class CoachAddExerciseComponent implements OnInit {
   private courseService = inject(CourseService);
   private fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
   protected lessonId: string | null = null;
+  protected PreviewMode = PreviewMode;
 
   protected exerciseForm = this.fb.group({
     title: ['', [Validators.required, Validators.maxLength(50)]],
@@ -58,7 +60,6 @@ export class CoachAddExerciseComponent implements OnInit {
       return;
     }
 
-    console.log('PUZZLEDATA', puzzleData);
     this.courseService
       .addExercise(
         this.lessonId,
@@ -68,7 +69,9 @@ export class CoachAddExerciseComponent implements OnInit {
         puzzleData.moveListString
       )
       .subscribe({
-        next: (_) => console.log('Puzzle saved'),
+        next: (_) => {
+          this.back();
+        },
         error: (err) => console.error(err)
       });
   }
