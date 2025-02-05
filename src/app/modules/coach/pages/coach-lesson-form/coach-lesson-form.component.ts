@@ -5,6 +5,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-coach-lesson-form',
@@ -23,6 +24,8 @@ export class CoachLessonFormComponent {
   private courseService: CourseService = inject(CourseService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private messageService = inject(MessageService);
+
   protected lessonId: string = '';
 
   protected lessonForm = this.fb.group({
@@ -37,8 +40,14 @@ export class CoachLessonFormComponent {
           ...this.lessonForm.getRawValue(),
           excercises: []
         })
-        .subscribe(() => {
-          this.router.navigate(['../..']);
+        .subscribe({
+          next: (_) => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Lesson created successfully' });
+            this.router.navigate(['../..']);
+          },
+          error: (_) => {
+            this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Lesson could not be created. Ensure lesson number is correct.' });
+          }
         });
     });
   }

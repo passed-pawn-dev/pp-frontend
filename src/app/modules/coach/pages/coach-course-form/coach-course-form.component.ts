@@ -6,6 +6,7 @@ import { ValidationErrorsComponent } from '../../../shared/components/validation
 import { ButtonModule } from 'primeng/button';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-coach-course-form',
@@ -26,6 +27,7 @@ export class CoachCourseFormComponent implements OnInit {
   private courseService = inject(CourseService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private messageService = inject(MessageService);
 
   private courseId: string | null = null;
 
@@ -49,14 +51,22 @@ export class CoachCourseFormComponent implements OnInit {
 
   protected onSubmit(): void {
     if (this.courseId === null) {
-      this.courseService.create(this.courseForm.getRawValue()).subscribe((res) => {
-        this.router.navigate(['coach/courses']);
+      this.courseService.create(this.courseForm.getRawValue()).subscribe({
+        next: (_) => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Course created successfully' })
+          this.router.navigate(['coach/courses']);
+        },
+        error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Failed to create course' })
       });
     } else {
       this.courseService
         .update(this.courseId, this.courseForm.getRawValue())
-        .subscribe((res) => {
-          this.router.navigate(['coach/courses']);
+        .subscribe({
+          next: (_) => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Course updated successfully' })
+            this.router.navigate(['coach/courses']);
+          },
+          error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Failed to update course' })
         });
     }
   }

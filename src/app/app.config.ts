@@ -1,6 +1,6 @@
 import {
   APP_INITIALIZER,
-  ApplicationConfig,
+  ApplicationConfig, importProvidersFrom,
   provideZoneChangeDetection
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
@@ -11,6 +11,7 @@ import { initializeKeycloak } from './keycloak-init';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { tokenInterceptor } from './interceptors/token.interceptor';
+import {MessageService} from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
       deps: [KeycloakService]
     },
     KeycloakService,
-    provideHttpClient(withInterceptors([tokenInterceptor]))
+    provideHttpClient(withInterceptors([tokenInterceptor])),
+    MessageService
   ]
 };

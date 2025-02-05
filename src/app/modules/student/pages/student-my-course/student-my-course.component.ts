@@ -3,7 +3,7 @@ import { MyCourseDetails } from '../../models/MyCourseDetails';
 import { StudentCourseReviewFormComponent } from '../../components/student-course-review-form/student-course-review-form.component';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Exercise } from '../../models/Exercise';
 
@@ -29,7 +29,8 @@ export class StudentMyCourseComponent implements OnInit {
     private courseService: CourseService,
     private readonly route: ActivatedRoute,
     private confirmationService: ConfirmationService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   public ngOnInit(): void {
@@ -50,7 +51,10 @@ export class StudentMyCourseComponent implements OnInit {
       header: 'Confirm',
       accept: () => {
         this.route.paramMap.subscribe((params) => {
-          this.courseService.signOut(params.get('id')!).subscribe((res) => {});
+          this.courseService.signOut(params.get('id')!).subscribe({
+            next: (_) => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Signed out successfully' }),
+            error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Could not sign out' })
+          });
         });
         this.router.navigate(['../'], { relativeTo: this.route });
       },

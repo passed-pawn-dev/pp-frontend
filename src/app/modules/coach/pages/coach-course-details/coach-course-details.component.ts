@@ -5,6 +5,8 @@ import { CourseDetails } from '../../models/CourseDetails';
 import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
 import { Exercise } from '../../models/Exercise';
 import { LessonDetails } from '../../models/LessonDetails';
+import {Messages} from 'primeng/messages';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-coach-course-details',
@@ -15,6 +17,7 @@ import { LessonDetails } from '../../models/LessonDetails';
 })
 export class CoachCourseDetailsComponent implements OnInit {
   private router = inject(Router);
+  private messageService = inject(MessageService);
   protected course = signal<CourseDetails>({
     id: '',
     title: '',
@@ -52,9 +55,12 @@ export class CoachCourseDetailsComponent implements OnInit {
         this.course.set(res);
       });
 
-      this.courseService.getDetailsById(courseId).subscribe((res) => {
-        console.log(res);
-        this.lessons.set(res.lessons);
+      this.courseService.getDetailsById(courseId).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.lessons.set(res.lessons);
+        },
+        error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Failed to fetch details' })
       });
     });
   }
@@ -67,8 +73,11 @@ export class CoachCourseDetailsComponent implements OnInit {
 
   protected deleteLesson(lessonNumber: string): void {
     this.courseService.deleteLesson(lessonNumber).subscribe({
-      next: (_) => this.lessons.set(this.lessons().filter(lesson => lesson.id !== lessonNumber)),
-      error: (err) => console.error(err)
+      next: (_) => {
+        this.lessons.set(this.lessons().filter(lesson => lesson.id !== lessonNumber));
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Lesson deleted successfully' });
+      },
+      error: (_) => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to delete lesson' })
     });
   }
 

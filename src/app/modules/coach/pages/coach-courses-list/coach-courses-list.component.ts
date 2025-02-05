@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { Course } from '../../models/Course';
 import { CourseService } from '../../service/course.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {Button} from 'primeng/button';
 
 @Component({
@@ -19,7 +19,8 @@ export class CoachCoursesListComponent implements OnInit {
 
   public constructor(
     private courseService: CourseService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {}
 
   public ngOnInit(): void {
@@ -27,8 +28,11 @@ export class CoachCoursesListComponent implements OnInit {
   }
 
   protected getAll(): void {
-    this.courseService.getAll().subscribe((res) => {
-      this.courses = res;
+    this.courseService.getAll().subscribe({
+      next: (res) => {
+        this.courses = res;
+      },
+      error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Courses could not be fetched' })
     });
   }
 
@@ -37,8 +41,12 @@ export class CoachCoursesListComponent implements OnInit {
       message: 'Are you sure you want to delete this course?',
       header: 'Confirm',
       accept: () => {
-        this.courseService.delete(id).subscribe(() => {
-          this.getAll();
+        this.courseService.delete(id).subscribe({
+          next: () => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Course deleted successfully' })
+            this.getAll();
+          },
+          error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Course failed to delete' })
         });
       },
       reject: () => {}
