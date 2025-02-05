@@ -13,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { PreviewMode } from '../../../shared/enums/preview-mode.enum';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-coach-add-exercise',
@@ -32,6 +33,8 @@ export class CoachAddExerciseComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private courseService = inject(CourseService);
   private fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
+  private messageService = inject(MessageService);
+
   protected lessonId: string | null = null;
   protected PreviewMode = PreviewMode;
 
@@ -70,9 +73,13 @@ export class CoachAddExerciseComponent implements OnInit {
       )
       .subscribe({
         next: (_) => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Puzzle created successfully' });
           this.back();
         },
-        error: (err) => console.error(err)
+        error: (err) => {
+          this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Puzzle could not be created' });
+          console.log(err);
+        }
       });
   }
 }

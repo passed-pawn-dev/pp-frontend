@@ -23,6 +23,7 @@ import {
   ChessTitle,
   chessTitleToLabelMapping
 } from '../../../shared/enums/chess-titles.enum';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-coach-register-form',
@@ -45,6 +46,7 @@ export class CoachRegisterFormComponent implements OnInit {
   private nationalityService = inject(NationalityService);
   private coachService = inject(CoachService);
   private router = inject(Router);
+  private messageService = inject(MessageService);
 
   protected chessTitles = enumToObjectArray(ChessTitle, chessTitleToLabelMapping);
   protected nationalities: Nationality[] = [];
@@ -67,8 +69,13 @@ export class CoachRegisterFormComponent implements OnInit {
   });
 
   public ngOnInit(): void {
-    this.nationalityService.getAll().subscribe((res) => {
-      this.nationalities = res;
+    this.nationalityService.getAll().subscribe({
+      next: (res) => {
+        this.nationalities = res;
+      },
+      error: (_) => {
+        this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Nationalities could not be fetched' });
+      }
     });
   }
 
@@ -106,8 +113,9 @@ export class CoachRegisterFormComponent implements OnInit {
         nationalityId: nationalityId
       };
 
-      this.coachService.register(registerData).subscribe((res) => {
-        this.router.navigate(['/coach']);
+      this.coachService.register(registerData).subscribe({
+        next: (_) => this.router.navigate(['/coach']),
+        error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Failed to register' })
       });
     }
   }
