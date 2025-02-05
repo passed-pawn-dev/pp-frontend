@@ -81,3 +81,20 @@ export type TGameHistory = {
 export type TChessboardView = Map<string, FenChar | null>;
 
 export type TChessboard = Map<string, Piece | null>;
+
+export type TGameState = {
+  board: TChessboard;
+  playerToMove: Color;
+  lastMove: TLastMove | undefined;
+  gameHistory: TGameHistory;
+  moveList: TMoveList;
+  fullNumberOfMoves: number;
+  fiftyMoveRuleCounter: number;
+  threeFoldRepetitionDictionary: Map<string, number>;
+  threeFoldRepetitionFlag: boolean;
+  isGameOver: boolean;
+  gameOverMessage: string | undefined;
+};
+
+export type TSetGameState = Pick<TGameState, 'board' | 'playerToMove' | 'lastMove'> &
+  Partial<Omit<TGameState, 'board' | 'playerToMove' | 'lastMove'>>;

@@ -11,7 +11,9 @@ import {
   TLastMove,
   TCheckState,
   TChessboardView,
-  TChessboard
+  TChessboard,
+  TGameState,
+  TSetGameState
 } from './models';
 import { Bishop } from './pieces/bishop';
 import { King } from './pieces/king';
@@ -170,6 +172,22 @@ export class ChessBoard {
   public get gameOverMessage(): string | undefined {
     return this._gameOverMessage;
   }
+
+  public get gameState(): TGameState {
+    return {
+      board: this._chessboard,
+      playerToMove: this._playerColor,
+      lastMove: this._lastMove,
+      gameHistory: this._gameHistory,
+      moveList: this._moveList,
+      fullNumberOfMoves: this.fullNumberOfMoves,
+      fiftyMoveRuleCounter: this.fiftyMoveRuleCounter,
+      threeFoldRepetitionDictionary: this.threeFoldRepetitionDictionary,
+      threeFoldRepetitionFlag: this.threeFoldRepetitionFlag,
+      isGameOver: this._isGameOver,
+      gameOverMessage: this.gameOverMessage
+    };
+  }
   // end section - getters
 
   // sectiun - static methods
@@ -199,23 +217,20 @@ export class ChessBoard {
   // end section - static methods
 
   // section - public methods
-  public setBoard(
-    board: TChessboard,
-    playerToMove: Color,
-    lastMove: TLastMove | undefined
-  ): void {
-    this._chessboard = board;
-    this._playerColor = playerToMove;
-    this._lastMove = lastMove;
-    this._gameHistory = [];
-    this._moveList = [];
-    this.fullNumberOfMoves = 0;
-    this.fiftyMoveRuleCounter = 0;
-    this.threeFoldRepetitionDictionary = new Map();
-    this.threeFoldRepetitionFlag = false;
-    this._gameOverMessage = undefined;
-    this._isGameOver = false;
-    this.isPlayerInCheck(playerToMove, true);
+  public setBoard(gameState: TSetGameState): void {
+    this._chessboard = gameState.board;
+    this._playerColor = gameState.playerToMove;
+    this._lastMove = gameState.lastMove;
+    this._gameHistory = gameState.gameHistory || [];
+    this._moveList = gameState.moveList || [];
+    this.fullNumberOfMoves = gameState.fullNumberOfMoves || 0;
+    this.fiftyMoveRuleCounter = gameState.fiftyMoveRuleCounter || 0;
+    this.threeFoldRepetitionDictionary =
+      gameState.threeFoldRepetitionDictionary || new Map();
+    this.threeFoldRepetitionFlag = gameState.threeFoldRepetitionFlag || false;
+    this._gameOverMessage = gameState.gameOverMessage;
+    this._isGameOver = gameState.isGameOver || false;
+    this.isPlayerInCheck(gameState.playerToMove, true);
     this._safeSquares = this.findSafeSquares();
   }
 

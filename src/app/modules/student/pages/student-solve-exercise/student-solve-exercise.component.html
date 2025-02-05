@@ -1,2 +1,6 @@
-<app-puzzle-chessboard [startingFen]="fen" [previewMode]="PreviewMode.Student">
+<app-puzzle-chessboard
+  [startingFen]="fen"
+  [previewMode]="PreviewMode.Student"
+  [expectedMoves]="solutionArray().slice(1)"
+>
 </app-puzzle-chessboard>

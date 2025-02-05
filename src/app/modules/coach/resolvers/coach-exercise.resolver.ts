@@ -13,6 +13,6 @@ export const coachExerciseResolver: ResolveFn<Exercise> = (
   state: RouterStateSnapshot
 ): Observable<Exercise> => {
   const courseService = inject(CourseService);
-  const exerciseId = route.paramMap.get('id') || '1';
+  const exerciseId = route.paramMap.get('exerciseId')!;
   return courseService.getExerciseById(exerciseId);
 };

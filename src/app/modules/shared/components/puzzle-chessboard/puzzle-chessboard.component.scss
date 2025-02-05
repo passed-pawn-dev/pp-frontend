@@ -197,3 +197,10 @@ img {
     }
   }
 }
+
+.loading-overlay {
+  height: calc(100vh - 13rem);
+  position: absolute;
+  width: 40rem;
+  z-index: 100;
+}
