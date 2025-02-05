@@ -58,8 +58,7 @@ export class StudentRegisterFormComponent implements OnInit {
     phoneNumber: ['', [Validators.required]],
     dateOfBirth: [Date.now()],
     elo: [0, [Validators.min(1000)]],
-    // chessTitle: [null],
-    chessTitle: [1],
+    chessTitle: [null],
     nationalityId: ['']
   });
 

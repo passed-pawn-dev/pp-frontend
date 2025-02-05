@@ -1,9 +1,23 @@
 .form {
   align-items: end;
+  gap: 0.5rem;
+  justify-content: center;
   display: flex;
   flex-direction: column;
 }
 
 .score-input {
   margin-bottom: 0.5rem;
+}
+
+.review-description-wrapper {
+  width: 100%;
+}
+
+.review-description {
+  width: 100%;
+}
+
+h4 {
+  margin-top: 0;
 }

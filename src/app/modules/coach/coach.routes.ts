@@ -5,6 +5,7 @@ import { CoachMyProfileComponent } from './pages/coach-my-profile/coach-my-profi
 import { CoachCourseDetailsComponent } from './pages/coach-course-details/coach-course-details.component';
 import { CoachCourseFormComponent } from './pages/coach-course-form/coach-course-form.component';
 import { CoachLessonFormComponent } from './pages/coach-lesson-form/coach-lesson-form.component';
+import { CoachAddExerciseComponent } from './views/coach-add-exercise/coach-add-exercise.component';
 
 export const COACH_ROUTES: Route[] = [
   {
@@ -27,6 +28,10 @@ export const COACH_ROUTES: Route[] = [
       {
         path: 'courses/:id',
         component: CoachCourseDetailsComponent
+      },
+      {
+        path: 'courses/:id/lesson/:lessonId/exercise/add',
+        component: CoachAddExerciseComponent
       },
       {
         path: 'courses/:id/lessons/new',

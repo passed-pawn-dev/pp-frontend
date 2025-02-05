@@ -1,5 +1,4 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { myCourse } from '../../example-data';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MyCourseDetails } from '../../models/MyCourseDetails';
 import { CourseDetails } from '../../models/CourseDetails';

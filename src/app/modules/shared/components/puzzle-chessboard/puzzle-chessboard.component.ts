@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Button } from 'primeng/button';
 import {
   Color,
@@ -20,7 +20,6 @@ import { FenConverter } from '../../../../chess-logic/FenConverter';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import validateFEN from 'fen-validator';
-import {CourseService} from '../../../coach/service/course.service';
 
 @Component({
   selector: 'app-puzzle-chessboard',
@@ -30,6 +29,10 @@ import {CourseService} from '../../../coach/service/course.service';
   styleUrl: './puzzle-chessboard.component.scss'
 })
 export class PuzzleChessboardComponent implements OnInit {
+  @Input({ required: true }) public startingFen!: string;
+  @Input({ required: false }) public lessonId: string | null = null;
+  @Output() public savePuzzle = new EventEmitter<any>();
+
   protected FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   protected RANKS = [8, 7, 6, 5, 4, 3, 2, 1];
   protected Color = Color;
@@ -40,8 +43,6 @@ export class PuzzleChessboardComponent implements OnInit {
   private lastMove: TLastMove | undefined = this.chessboard.lastMove;
   private checkState: TCheckState = this.chessboard.checkState;
   public fen: string = '';
-
-  public constructor(private courseService: CourseService) { }
 
   public get moveList(): TMoveList {
     return this.chessboard.moveList;
@@ -118,8 +119,7 @@ export class PuzzleChessboardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.chessboardView = this.chessboard.chessboardView;
-    const fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w K - 0 1';
-    const boardFromFen = FenConverter.convertFenToBoard(fen);
+    const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
     this.chessboard.setBoard(boardFromFen, Color.White, undefined);
     this.chessboardView = this.chessboard.chessboardView;
   }
@@ -262,7 +262,7 @@ export class PuzzleChessboardComponent implements OnInit {
     this.gameHistoryPointer = 0;
   }
 
-  protected savePuzzle(): void {
+  protected onSavePuzzle(): void {
     const fenBoard = FenConverter.convertBoardToFen(
       ChessBoard.boardViewToBoard(this.chessboard.gameHistory[0].board),
       this.playerColor,
@@ -273,9 +273,6 @@ export class PuzzleChessboardComponent implements OnInit {
 
     const moveListString = this.moveList.flatMap((move) => move).join(',');
 
-    this.courseService.addPuzzle('1', 'Test', 'Test', fenBoard, moveListString).subscribe({
-      next: (_) => console.log("Puzzle saved"),
-      error: (err) => console.error(err)
-    });
+    this.savePuzzle.emit({ fenBoard: fenBoard, moveListString });
   }
 }

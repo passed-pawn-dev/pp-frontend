@@ -10,6 +10,8 @@ export class StudentService {
   public constructor(private httpClient: HttpClient) {}
 
   public register(body: Student): Observable<Student> {
-    return this.httpClient.post<Student>('/api/Student/register', body);
+    return this.httpClient.post<Student>('/api/Student/register', body, {
+      responseType: 'json'
+    });
   }
 }

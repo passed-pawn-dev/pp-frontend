@@ -1,5 +1,4 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { lessonDetails } from '../../example-data';
 import { LessonDetails } from '../../models/LessonDetails';
 import { LessonService } from '../../service/lesson.service';
 import { ActivatedRoute } from '@angular/router';

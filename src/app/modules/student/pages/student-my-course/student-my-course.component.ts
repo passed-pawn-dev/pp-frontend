@@ -1,23 +1,16 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { StudentLessonTileComponent } from '../../components/student-lesson-tile/student-lesson-tile.component';
-import { myCourse } from '../../example-data';
 import { MyCourseDetails } from '../../models/MyCourseDetails';
 import { StudentCourseReviewFormComponent } from '../../components/student-course-review-form/student-course-review-form.component';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CourseDetails } from '../../models/CourseDetails';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Exercise } from '../../models/Exercise';
 
 @Component({
   selector: 'app-student-my-course',
   standalone: true,
-  imports: [
-    StudentLessonTileComponent,
-    StudentCourseReviewFormComponent,
-    RouterLink,
-    ConfirmDialogModule
-  ],
+  imports: [StudentCourseReviewFormComponent, RouterLink, ConfirmDialogModule],
   providers: [ConfirmationService],
   templateUrl: './student-my-course.component.html',
   styleUrl: './student-my-course.component.scss'
@@ -45,6 +38,10 @@ export class StudentMyCourseComponent implements OnInit {
         this.course.set(res);
       });
     });
+  }
+
+  protected getSortedExercises(exerciseList: Exercise[]): Exercise[] {
+    return exerciseList.sort((a, b) => (a.id > b.id ? 1 : -1));
   }
 
   protected signOut(): void {

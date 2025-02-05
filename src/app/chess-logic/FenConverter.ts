@@ -142,7 +142,7 @@ export class FenConverter {
       if (index % 8 === 0) fen += '/';
       index++;
     }
-
+    fen = fen.slice(0, -1);
     const player: string = playerColor === Color.White ? 'w' : 'b';
     fen += ' ' + player;
     fen += ' ' + this.castlingAvailability(board);

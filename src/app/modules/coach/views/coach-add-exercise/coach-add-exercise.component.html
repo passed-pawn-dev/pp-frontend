@@ -1,0 +1,33 @@
+<div class="chessboard-form-page">
+  <div class="form-controls" [formGroup]="exerciseForm">
+    <div class="button-box">
+      <button type="button" class="secondary-btn" (click)="back()">Back</button>
+    </div>
+    <div class="form-inputs">
+      <div>
+        <div>Title</div>
+        <input pInputText type="text" formControlName="title" />
+        <app-validation-errors
+          [errors]="exerciseForm.controls.title.errors"
+          [dirty]="exerciseForm.controls.title.dirty"
+          [touched]="exerciseForm.controls.title.touched"
+        />
+      </div>
+      <div>
+        <div>Description</div>
+        <textarea pInputTextarea formControlName="description"></textarea>
+        <app-validation-errors
+          [errors]="exerciseForm.controls.description.errors"
+          [dirty]="exerciseForm.controls.description.dirty"
+          [touched]="exerciseForm.controls.description.touched"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="chessboard-form">
+    <app-puzzle-chessboard
+      [startingFen]="'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'"
+      (savePuzzle)="savePuzzle($event)"
+    ></app-puzzle-chessboard>
+  </div>
+</div>

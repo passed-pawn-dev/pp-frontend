@@ -9,8 +9,8 @@ import { StudentLessonsComponent } from './pages/student-lessons/student-lessons
 import { StudentMyCoachComponent } from './pages/student-my-coach/student-my-coach.component';
 import { StudentCoursesComponent } from './pages/student-courses/student-courses.component';
 import { StudentCourseComponent } from './pages/student-course/student-course.component';
-import { StudentRegisterFormComponent } from './pages/student-register-form/student-register-form.component';
 import { StudentMyProfileComponent } from './pages/student-my-profile/student-my-profile.component';
+import { StudentSolveExerciseComponent } from './pages/student-solve-exercise/student-solve-exercise.component';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -52,6 +52,10 @@ export const STUDENT_ROUTES: Route[] = [
             component: StudentLessonDetailsComponent
           }
         ]
+      },
+      {
+        path: 'my-courses/:id/lesson/:lessonId/exercise/:exerciseId',
+        component: StudentSolveExerciseComponent
       },
       {
         path: 'my-games',

@@ -1,6 +1,7 @@
 <li class="tile">
   <a class="container" [routerLink]="course().id">
     {{ course().title }}
-    <span> price: {{ formattedPrice() }}</span>
+    <!-- <span> price: {{ formattedPrice() }}</span> -->
+    <span> price: {{ course().price }}$</span>
   </a>
 </li>

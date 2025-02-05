@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { coaches } from '../../example-data';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -10,5 +9,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './student-my-coaches.component.scss'
 })
 export class StudentMyCoachesComponent {
-  protected coaches = coaches;
+  // protected coaches = coaches;
 }
