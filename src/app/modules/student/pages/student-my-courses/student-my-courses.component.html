@@ -2,10 +2,8 @@
   <h2>My Courses</h2>
   <ul class="list">
     @for (course of courses; track $index) {
-      <li>
-        <div class="content">
-          <a class="link" [routerLink]="course.id">{{ course.title }}</a>
-        </div>
+      <li class="tile" >
+          <a [routerLink]="course.id"><span>{{ course.title }}</span></a>
       </li>
     }
   </ul>

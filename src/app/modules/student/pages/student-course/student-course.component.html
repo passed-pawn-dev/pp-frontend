@@ -20,6 +20,9 @@
   @for (review of course().reviews; track $index) {
     <app-course-review [review]="review" />
   }
+  @if (course().reviews.length === 0) {
+    <div class="no-rev" >No revies yet</div>
+  }
   <br />
   <a class="primary-button" [routerLink]="'../'">Back to courses</a>
 </div>

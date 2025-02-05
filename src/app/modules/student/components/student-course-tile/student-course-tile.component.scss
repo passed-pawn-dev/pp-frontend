@@ -2,10 +2,25 @@
   list-style-type: none;
 }
 
-.container {
-  border-bottom: 1px solid gray;
-  border-left: 1px solid gray;
-  border-right: 1px solid gray;
-  display: block;
+a {
+  background-color: darken(white, 5%);
   padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    background-color: darken(darken(white, 5%), 5%);
+  }
+}
+
+span {
+  font-size: 1.5rem;
+}
+
+.title {
+  font-weight: 700;
 }

@@ -11,5 +11,5 @@ import { RouterLink } from '@angular/router';
 })
 export class StudentCourseTileComponent {
   public course = input.required<Course>();
-  protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
+  protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} $`);
 }
