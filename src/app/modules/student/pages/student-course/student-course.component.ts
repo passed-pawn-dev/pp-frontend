@@ -4,6 +4,7 @@ import { CourseReviewComponent } from '../../../shared/components/course-review/
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Button, ButtonModule } from 'primeng/button';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-student-course',
@@ -25,7 +26,8 @@ export class StudentCourseComponent implements OnInit {
 
   public constructor(
     private courseService: CourseService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private messageService: MessageService
   ) {}
 
   protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
@@ -51,8 +53,9 @@ export class StudentCourseComponent implements OnInit {
 
   protected buyCourse(): void {
     this.route.paramMap.subscribe((params) => {
-      this.courseService.buy(params.get('id')!).subscribe((res) => {
-        console.log(res);
+      this.courseService.buy(params.get('id')!).subscribe({
+        next: (_) => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Course bought successfully' }),
+        error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Course could not be bought' })
       });
     });
   }
