@@ -65,6 +65,13 @@ export class CoachCourseDetailsComponent implements OnInit {
     ]);
   }
 
+  protected deleteLesson(lessonNumber: string): void {
+    this.courseService.deleteLesson(lessonNumber).subscribe({
+      next: (_) => this.lessons.set(this.lessons().filter(lesson => lesson.id !== lessonNumber)),
+      error: (err) => console.error(err)
+    });
+  }
+
   protected getSortedExercises(exerciseList: Exercise[]): Exercise[] {
     return exerciseList.sort((a, b) => (a.id > b.id ? 1 : -1));
   }

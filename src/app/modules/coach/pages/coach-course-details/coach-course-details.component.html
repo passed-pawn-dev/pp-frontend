@@ -44,6 +44,13 @@
           >
             Add exercise
           </button>
+          <button
+            type="button"
+            class="danger-btn button-small"
+            (click)="deleteLesson(lesson.id)"
+          >
+            Delete lesson
+          </button>
         </li>
         <div class="course-lesson-exercises">
           @for (exercise of getSortedExercises(lesson.exercises); track exercise) {
