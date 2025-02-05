@@ -1,22 +1,34 @@
 .page {
     margin: auto;
-    width: 57.5rem;
+    width: 62.5rem;
     padding-bottom: 2rem;
 }
 
-.content {
-    background-color: darken(white, 5%);
-    padding: 1rem;
-    border-radius: 1rem;
-}
-
-.link {
-    color: black;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1.2rem;
-  }
-
 .list {
     list-style-type: none;
+}
+
+a {
+    background-color: darken(white, 5%);
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: black;
+  
+    &:hover {
+      background-color: darken(darken(white, 5%), 5%);
+    }
+}
+
+span {
+    font-weight: 700;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }

@@ -7,7 +7,7 @@
 .info {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
 .page {
@@ -19,4 +19,8 @@
 .dsc {
     font-size: 0.75rem;
     font-weight: 700;
+}
+
+.no-rev {
+    margin: 1rem;
 }
