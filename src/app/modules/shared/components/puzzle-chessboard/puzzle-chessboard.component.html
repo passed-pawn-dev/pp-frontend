@@ -22,6 +22,9 @@
     }
   </div>
   <div class="main-game-content">
+    @if (loading) {
+      <div class="loading-overlay"></div>
+    }
     <div class="chessboard">
       <!-- field[0] -> square, for example "b2"; field[1] -> Piece fen char, for example "P" -->
       @for (field of chessboardView; track $index) {

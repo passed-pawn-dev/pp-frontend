@@ -52,7 +52,7 @@ export class CourseService {
   }
 
   public getExerciseById(id: string): Observable<Exercise> {
-    return this.httpClient.get<Exercise>(`api/CourseExercise/${1}`);
+    return this.httpClient.get<Exercise>(`api/CourseExercise/${id}`);
   }
 
   public addExercise(

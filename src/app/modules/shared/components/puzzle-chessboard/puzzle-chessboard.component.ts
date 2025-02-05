@@ -21,6 +21,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import validateFEN from 'fen-validator';
 import { PreviewMode } from '../../enums/preview-mode.enum';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'app-puzzle-chessboard',
@@ -33,6 +34,7 @@ export class PuzzleChessboardComponent implements OnInit {
   @Input({ required: true }) public startingFen!: string;
   // TODO - replace with enum
   @Input({ required: true }) public previewMode!: PreviewMode;
+  @Input({ required: false }) public expectedMoves: string[] | null = null;
   @Output() public savePuzzle = new EventEmitter<any>();
 
   protected PreviewMode = PreviewMode;
@@ -45,6 +47,7 @@ export class PuzzleChessboardComponent implements OnInit {
   private pieceSafeSquares: string[] = [];
   private lastMove: TLastMove | undefined = this.chessboard.lastMove;
   private checkState: TCheckState = this.chessboard.checkState;
+  protected loading = false;
   public fen: string = '';
 
   public get moveList(): TMoveList {
@@ -83,11 +86,26 @@ export class PuzzleChessboardComponent implements OnInit {
     targetSquare: string,
     promotedPiece: FenChar | null
   ): void {
+    const currentGameState = cloneDeep(this.chessboard.gameState);
     this.chessboard.move(currentSquare, targetSquare, promotedPiece);
     this.chessboardView = this.chessboard.chessboardView;
     this.checkState = this.chessboard.checkState;
     this.lastMove = this.chessboard.lastMove;
     this.unmarkingPreviouslySelectedAndSafeSquares();
+
+    if (this.expectedMoves) {
+      const moveList = this.moveList.flatMap((move) => move);
+      if (moveList[moveList.length - 1] === this.expectedMoves[moveList.length - 1]) {
+        this.expectedMoves = this.expectedMoves.slice(moveList.length);
+      } else {
+        this.loading = true;
+        setTimeout(() => {
+          this.chessboard.setBoard(currentGameState);
+          this.chessboardView = this.chessboard.chessboardView;
+          this.loading = false;
+        }, 1000);
+      }
+    }
     this.gameHistoryPointer++;
   }
 
@@ -131,11 +149,11 @@ export class PuzzleChessboardComponent implements OnInit {
       fullMoveNumber
     ] = this.startingFen.split(' ');
     const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
-    this.chessboard.setBoard(
-      boardFromFen,
-      activeColor === 'w' ? Color.White : Color.Black,
-      undefined
-    );
+    this.chessboard.setBoard({
+      board: boardFromFen,
+      playerToMove: activeColor === 'w' ? Color.White : Color.Black,
+      lastMove: undefined
+    });
     this.chessboardView = this.chessboard.chessboardView;
   }
 
@@ -148,7 +166,11 @@ export class PuzzleChessboardComponent implements OnInit {
       const boardFromFen = FenConverter.convertFenToBoard(this.fen);
       const lastMove = FenConverter.createLastMoveFromFEN(this.fen);
       this.lastMove = lastMove;
-      this.chessboard.setBoard(boardFromFen, Color.White, lastMove);
+      this.chessboard.setBoard({
+        board: boardFromFen,
+        playerToMove: Color.White,
+        lastMove
+      });
       this.chessboardView = this.chessboard.chessboardView;
     }
   }
