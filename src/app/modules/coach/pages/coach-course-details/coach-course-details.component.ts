@@ -73,8 +73,11 @@ export class CoachCourseDetailsComponent implements OnInit {
 
   protected deleteLesson(lessonNumber: string): void {
     this.courseService.deleteLesson(lessonNumber).subscribe({
-      next: (_) => this.lessons.set(this.lessons().filter(lesson => lesson.id !== lessonNumber)),
-      error: (err) => console.error(err)
+      next: (_) => {
+        this.lessons.set(this.lessons().filter(lesson => lesson.id !== lessonNumber));
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Lesson deleted successfully' });
+      },
+      error: (_) => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to delete lesson' })
     });
   }
 
