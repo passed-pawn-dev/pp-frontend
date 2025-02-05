@@ -20,6 +20,7 @@ import { FenConverter } from '../../../../chess-logic/FenConverter';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import validateFEN from 'fen-validator';
+import { PreviewMode } from '../../enums/preview-mode.enum';
 
 @Component({
   selector: 'app-puzzle-chessboard',
@@ -30,9 +31,11 @@ import validateFEN from 'fen-validator';
 })
 export class PuzzleChessboardComponent implements OnInit {
   @Input({ required: true }) public startingFen!: string;
-  @Input({ required: false }) public lessonId: string | null = null;
+  // TODO - replace with enum
+  @Input({ required: true }) public previewMode!: PreviewMode;
   @Output() public savePuzzle = new EventEmitter<any>();
 
+  protected PreviewMode = PreviewMode;
   protected FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   protected RANKS = [8, 7, 6, 5, 4, 3, 2, 1];
   protected Color = Color;

@@ -4,13 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { PreviewMode } from '../../../shared/enums/preview-mode.enum';
 
 @Component({
-  selector: 'app-student-solve-exercise',
+  selector: 'app-coach-exercise-preview',
   standalone: true,
   imports: [PuzzleChessboardComponent],
-  templateUrl: './student-solve-exercise.component.html',
-  styleUrl: './student-solve-exercise.component.scss'
+  templateUrl: './coach-exercise-preview.component.html',
+  styleUrl: './coach-exercise-preview.component.scss'
 })
-export class StudentSolveExerciseComponent implements OnInit {
+export class CoachExercisePreviewComponent implements OnInit {
   private route = inject(ActivatedRoute);
   protected fen: string = '';
   protected solution: string = '';

@@ -4,15 +4,15 @@ import {
   ResolveFn,
   RouterStateSnapshot
 } from '@angular/router';
+import { CourseService } from '../service/course.service';
 import { Observable } from 'rxjs';
 import { Exercise } from '../models/Exercise';
-import { CourseService } from '../service/course.service';
 
-export const exerciseResolver: ResolveFn<Exercise> = (
+export const coachExerciseResolver: ResolveFn<Exercise> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ): Observable<Exercise> => {
   const courseService = inject(CourseService);
-  const puzzleId = route.paramMap.get('id') || '1';
-  return courseService.getExerciseById(puzzleId); // Fetch the puzzle data
+  const exerciseId = route.paramMap.get('id') || '1';
+  return courseService.getExerciseById(exerciseId);
 };

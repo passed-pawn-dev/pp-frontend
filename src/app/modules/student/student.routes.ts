@@ -11,6 +11,7 @@ import { StudentCoursesComponent } from './pages/student-courses/student-courses
 import { StudentCourseComponent } from './pages/student-course/student-course.component';
 import { StudentMyProfileComponent } from './pages/student-my-profile/student-my-profile.component';
 import { StudentSolveExerciseComponent } from './pages/student-solve-exercise/student-solve-exercise.component';
+import { studentExerciseResolver } from './resolvers/student-exercise.resolver';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -55,7 +56,10 @@ export const STUDENT_ROUTES: Route[] = [
       },
       {
         path: 'my-courses/:id/lesson/:lessonId/exercise/:exerciseId',
-        component: StudentSolveExerciseComponent
+        component: StudentSolveExerciseComponent,
+        resolve: {
+          exercise: studentExerciseResolver
+        }
       },
       {
         path: 'my-games',

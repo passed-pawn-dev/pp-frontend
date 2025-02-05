@@ -26,6 +26,7 @@ $king-in-check-background: #ff240057;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   max-width: 40rem;
+  position: relative;
   width: 100%;
 }
 

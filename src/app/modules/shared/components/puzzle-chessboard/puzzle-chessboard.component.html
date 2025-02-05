@@ -70,29 +70,31 @@
     </div>
   </div>
 </div>
-<div class="chessboard-controls">
-  <div><p-button (onClick)="reverseChessboard()">Reverse side</p-button></div>
-  <div>
-    <p-button
-      [disabled]="displayingStartingMove"
-      (onClick)="setCurrentPositionAsStartingPosition()"
-      >Start from this move</p-button
-    >
-  </div>
-  <div class="chessboard-fen-load-input">
+@if (previewMode === PreviewMode.NoPreview) {
+  <div class="chessboard-controls">
+    <div><p-button (onClick)="reverseChessboard()">Reverse side</p-button></div>
     <div>
-      <input pInputText type="text" [(ngModel)]="fen" />
-      <div *ngIf="!fenValid()" class="p-error">Please enter a valid FEN string.</div>
+      <p-button
+        [disabled]="displayingStartingMove"
+        (onClick)="setCurrentPositionAsStartingPosition()"
+        >Start from this move</p-button
+      >
+    </div>
+    <div class="chessboard-fen-load-input">
+      <div>
+        <input pInputText type="text" [(ngModel)]="fen" />
+        <div *ngIf="!fenValid()" class="p-error">Please enter a valid FEN string.</div>
+      </div>
+      <div>
+        <p-button [disabled]="!fenValid()" (onClick)="setBoardFromFen()"
+          >Load fen</p-button
+        >
+      </div>
     </div>
     <div>
-      <p-button [disabled]="!fenValid()" (onClick)="setBoardFromFen()"
-        >Load fen</p-button
+      <p-button [disabled]="gameHistory.length === 0" (onClick)="onSavePuzzle()"
+        >Save puzzle</p-button
       >
     </div>
   </div>
-  <div>
-    <p-button [disabled]="gameHistory.length === 0" (onClick)="onSavePuzzle()"
-      >Save puzzle</p-button
-    >
-  </div>
-</div>
+}
