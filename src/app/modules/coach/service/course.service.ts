@@ -51,6 +51,10 @@ export class CourseService {
     return this.httpClient.post<Lesson>(`api/Course/${id}/lesson`, lesson);
   }
 
+  public deleteLesson(id: string): Observable<object> {
+    return this.httpClient.delete(`api/Lesson/${id}`);
+  }
+
   public getExerciseById(id: string): Observable<Exercise> {
     return this.httpClient.get<Exercise>(`api/CourseExercise/${1}`);
   }
