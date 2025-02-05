@@ -10,6 +10,8 @@ export class NationalityService {
   public constructor(private httpClient: HttpClient) {}
 
   public getAll(): Observable<Nationality[]> {
-    return this.httpClient.get<Nationality[]>('/api/Nationality');
+    return this.httpClient.get<Nationality[]>('/api/Nationality', {
+      responseType: 'json'
+    });
   }
 }

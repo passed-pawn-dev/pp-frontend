@@ -8,6 +8,7 @@ import { Lesson } from '../models/Lesson';
 import { MyCourseDetails } from '../models/MyCourseDetails';
 import { CourseReview } from '../models/CourseReview';
 import { NewCourseReview } from '../models/NewCourseReview';
+import { Exercise } from '../models/Exercise';
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +46,9 @@ export class CourseService {
 
   public getLessons(id: string): Observable<Lesson[]> {
     return this.httpClient.get<Lesson[]>(`/api/Course/${id}/lesson`);
+  }
+
+  public getExerciseById(id: string): Observable<Exercise> {
+    return this.httpClient.get<Exercise>(`/api/CourseExercise/${id}`);
   }
 }

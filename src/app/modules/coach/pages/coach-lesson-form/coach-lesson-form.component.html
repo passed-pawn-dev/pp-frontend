@@ -14,7 +14,9 @@
   </div>
 
   <div class="btn-group">
-    <a class="secondary-btn" [routerLink]="'../'">Cancel</a>
-    <button class="primary-button" type="submit" [disabled]="lessonForm.invalid">Submit</button>
+    <a class="secondary-btn" [routerLink]="'/coach/courses/' + lessonId">Cancel</a>
+    <button class="primary-button" type="submit" [disabled]="lessonForm.invalid">
+      Submit
+    </button>
   </div>
 </form>

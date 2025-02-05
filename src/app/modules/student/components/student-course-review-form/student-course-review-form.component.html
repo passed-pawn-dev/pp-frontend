@@ -17,12 +17,13 @@
     />
   </div>
 
-  <div>
+  <div class="review-description-wrapper">
     <textarea
       pInputTextarea
       id="content"
       formControlName="content"
       placeholder="Your review"
+      class="review-description"
     ></textarea>
     <app-validation-errors
       [errors]="reviewForm.controls.content.errors"

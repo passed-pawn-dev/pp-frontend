@@ -14,6 +14,7 @@ export const coachGuard: CanActivateFn = async (route, state) => {
   if (roles?.includes('coach')) {
     return true;
   } else {
+    alert('elo');
     authService.redirectToLoginPage();
     return false;
   }

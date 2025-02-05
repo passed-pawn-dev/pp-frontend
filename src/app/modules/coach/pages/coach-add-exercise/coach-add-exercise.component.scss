@@ -1,0 +1,20 @@
+.chessboard-form-page {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.chessboard-form {
+  max-width: 53rem;
+  width: 100%;
+}
+
+.form-controls {
+  margin-top: 7rem;
+}
+
+.form-inputs {
+  display: grid;
+  gap: 1rem;
+  padding-top: 4rem;
+}

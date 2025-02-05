@@ -2,8 +2,22 @@
   align-items: end;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 .score-input {
   margin-bottom: 0.5rem;
+}
+
+.review-description-wrapper {
+  width: 100%;
+}
+
+.review-description {
+  width: 100%;
+}
+
+h4 {
+  margin-top: 0;
 }

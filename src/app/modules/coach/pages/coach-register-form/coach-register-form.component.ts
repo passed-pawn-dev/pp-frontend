@@ -1,8 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ChessTitle } from '../../../shared/enums/chess-title.enum';
 import { Gender, genderToLabelMapping } from '../../../shared/enums/gender.enum';
-import { chessTitleToLabelMapping } from '../../../shared/enums/chess-title.enum';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
@@ -21,6 +19,10 @@ import { NationalityService } from '../../../shared/service/nationality.service'
 import { Coach } from '../../models/Coach';
 import { CoachService } from '../../service/coach.service';
 import { Router } from '@angular/router';
+import {
+  ChessTitle,
+  chessTitleToLabelMapping
+} from '../../../shared/enums/chess-titles.enum';
 
 @Component({
   selector: 'app-coach-register-form',
@@ -58,8 +60,7 @@ export class CoachRegisterFormComponent implements OnInit {
     phoneNumber: ['', [Validators.required]],
     dateOfBirth: [],
     elo: [null, [Validators.min(1000)]],
-    // chessTitle: [ChessTitle.NoTitle],
-    chessTitle: [1],
+    chessTitle: [null],
     nationalityId: [''],
     shortDescription: [''],
     detailedDescription: ['']
@@ -98,12 +99,13 @@ export class CoachRegisterFormComponent implements OnInit {
       const nationalityId = this.nationalities.find(
         (n) => n.fullName === this.registerForm.getRawValue().nationalityId
       )!.id;
+
       const registerData: Coach = {
         ...this.registerForm.getRawValue(),
         dateOfBirth: dateOfBirth,
         nationalityId: nationalityId
       };
-      console.log(registerData);
+
       this.coachService.register(registerData).subscribe((res) => {
         this.router.navigate(['/coach']);
       });

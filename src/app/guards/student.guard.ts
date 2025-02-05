@@ -12,8 +12,11 @@ export const studentGuard: CanActivateFn = async (route, state) => {
   const roles: string[] | undefined = decoded.resource_access['api-client']?.roles;
 
   if (roles?.includes('student')) {
+    console.log('test');
     return true;
   } else {
+    console.log(decoded);
+    alert(decoded);
     authService.redirectToLoginPage();
     return false;
   }

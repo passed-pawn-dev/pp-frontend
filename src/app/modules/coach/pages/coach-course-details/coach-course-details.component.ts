@@ -1,8 +1,10 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CourseService } from '../../service/course.service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CourseDetails } from '../../models/CourseDetails';
 import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
+import { Exercise } from '../../models/Exercise';
+import { LessonDetails } from '../../models/LessonDetails';
 
 @Component({
   selector: 'app-coach-course-details',
@@ -12,6 +14,7 @@ import { CourseReviewComponent } from '../../../shared/components/course-review/
   styleUrl: './coach-course-details.component.scss'
 })
 export class CoachCourseDetailsComponent implements OnInit {
+  private router = inject(Router);
   protected course = signal<CourseDetails>({
     id: '',
     title: '',
@@ -21,6 +24,8 @@ export class CoachCourseDetailsComponent implements OnInit {
     price: 0,
     reviews: []
   });
+
+  protected lessons = signal<LessonDetails[]>([]);
 
   public constructor(
     private courseService: CourseService,
@@ -38,12 +43,29 @@ export class CoachCourseDetailsComponent implements OnInit {
         this.course().reviews.length
   );
 
+  protected lessonCount = computed(() => new Array(this.course().lessonNumber));
+
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.courseService.getById(params.get('id')!).subscribe((res) => {
-        console.log(res);
+      const courseId = params.get('id')!;
+      this.courseService.getById(courseId).subscribe((res) => {
         this.course.set(res);
       });
+
+      this.courseService.getDetailsById(courseId).subscribe((res) => {
+        console.log(res);
+        this.lessons.set(res.lessons);
+      });
     });
+  }
+
+  protected navigateAddExercise(lessonNumber: string): void {
+    this.router.navigate([
+      `/coach/courses/${this.course().id}/lesson/${lessonNumber}/exercise/add`
+    ]);
+  }
+
+  protected getSortedExercises(exerciseList: Exercise[]): Exercise[] {
+    return exerciseList.sort((a, b) => (a.id > b.id ? 1 : -1));
   }
 }

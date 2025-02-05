@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Button } from 'primeng/button';
 import {
   Color,
@@ -20,6 +20,7 @@ import { FenConverter } from '../../../../chess-logic/FenConverter';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import validateFEN from 'fen-validator';
+import { PreviewMode } from '../../enums/preview-mode.enum';
 
 @Component({
   selector: 'app-puzzle-chessboard',
@@ -29,6 +30,12 @@ import validateFEN from 'fen-validator';
   styleUrl: './puzzle-chessboard.component.scss'
 })
 export class PuzzleChessboardComponent implements OnInit {
+  @Input({ required: true }) public startingFen!: string;
+  // TODO - replace with enum
+  @Input({ required: true }) public previewMode!: PreviewMode;
+  @Output() public savePuzzle = new EventEmitter<any>();
+
+  protected PreviewMode = PreviewMode;
   protected FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   protected RANKS = [8, 7, 6, 5, 4, 3, 2, 1];
   protected Color = Color;
@@ -115,9 +122,20 @@ export class PuzzleChessboardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.chessboardView = this.chessboard.chessboardView;
-    const fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w K - 0 1';
-    const boardFromFen = FenConverter.convertFenToBoard(fen);
-    this.chessboard.setBoard(boardFromFen, Color.White, undefined);
+    const [
+      position,
+      activeColor,
+      castling,
+      enPassantSquare,
+      halfMoveClock,
+      fullMoveNumber
+    ] = this.startingFen.split(' ');
+    const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
+    this.chessboard.setBoard(
+      boardFromFen,
+      activeColor === 'w' ? Color.White : Color.Black,
+      undefined
+    );
     this.chessboardView = this.chessboard.chessboardView;
   }
 
@@ -259,7 +277,7 @@ export class PuzzleChessboardComponent implements OnInit {
     this.gameHistoryPointer = 0;
   }
 
-  protected savePuzzle(): void {
+  protected onSavePuzzle(): void {
     const fenBoard = FenConverter.convertBoardToFen(
       ChessBoard.boardViewToBoard(this.chessboard.gameHistory[0].board),
       this.playerColor,
@@ -270,6 +288,6 @@ export class PuzzleChessboardComponent implements OnInit {
 
     const moveListString = this.moveList.flatMap((move) => move).join(',');
 
-    console.log(moveListString);
+    this.savePuzzle.emit({ fenBoard: fenBoard, moveListString });
   }
 }

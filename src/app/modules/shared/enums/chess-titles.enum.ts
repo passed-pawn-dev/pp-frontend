@@ -1,6 +1,4 @@
 export enum ChessTitle {
-  NationalMaster = 'NationalMaster',
-  WomanNationalMaster = 'WomanNationalMaster',
   CandidateMaster = 'CandidateMaster',
   WomanCandidateMaster = 'WomanCandidateMaster',
   FideMaster = 'FideMaster',
@@ -12,8 +10,6 @@ export enum ChessTitle {
 }
 
 export const chessTitleToLabelMapping: Record<ChessTitle, string> = {
-  [ChessTitle.NationalMaster]: 'NM',
-  [ChessTitle.WomanNationalMaster]: 'WNM',
   [ChessTitle.CandidateMaster]: 'CM',
   [ChessTitle.WomanCandidateMaster]: 'WCM',
   [ChessTitle.FideMaster]: 'FM',

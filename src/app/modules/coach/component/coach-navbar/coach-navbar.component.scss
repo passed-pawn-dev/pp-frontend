@@ -8,7 +8,8 @@
 
 .nav-link {
   list-style-type: none;
-  margin: 1em;
+  margin: 1rem;
+  padding-right: 2.5rem;
 }
 
 .button {
@@ -30,4 +31,5 @@
 
 .username {
   font-weight: 700;
+  text-decoration: underline;
 }
