@@ -2,15 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Course } from '../../models/Course';
 import { CourseService } from '../../service/course.service';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {Button} from 'primeng/button';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-coach-courses-list',
   standalone: true,
-  imports: [RouterLink, ConfirmDialogModule, Button],
-  providers: [ConfirmationService],
+  imports: [RouterLink, Button],
+  providers: [],
   templateUrl: './coach-courses-list.component.html',
   styleUrl: './coach-courses-list.component.scss'
 })
@@ -32,7 +31,12 @@ export class CoachCoursesListComponent implements OnInit {
       next: (res) => {
         this.courses = res;
       },
-      error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Courses could not be fetched' })
+      error: (_) =>
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Failure',
+          detail: 'Courses could not be fetched'
+        })
     });
   }
 
@@ -43,10 +47,19 @@ export class CoachCoursesListComponent implements OnInit {
       accept: () => {
         this.courseService.delete(id).subscribe({
           next: () => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Course deleted successfully' })
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Course deleted successfully'
+            });
             this.getAll();
           },
-          error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Course failed to delete' })
+          error: (_) =>
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Failure',
+              detail: 'Course failed to delete'
+            })
         });
       },
       reject: () => {}
