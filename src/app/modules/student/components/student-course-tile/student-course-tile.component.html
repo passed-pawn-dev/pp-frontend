@@ -1,6 +1,33 @@
 <li class="tile">
   <a [routerLink]="course().id">
-    <div class="title">{{ course().title }}</div>
-    <span>{{ formattedPrice() }}</span>
+    <img src="assets/images/chess-course-1.png" alt="" />
+    <!-- [course image] -->
+    <div class="content">
+      <div class="main">
+        <div class="header">
+          <h3>{{ course().title }}</h3>
+          <div class="desc">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora omnis enim
+            libero numquam dolore aperiam explicabo corporis eum at reiciendis.
+          </div>
+        </div>
+        @if (this.course().price > 0) {
+          <div class="price">{{ formattedPrice() }}</div>
+        } @else {
+          <div class="price free">Free</div>
+        }
+      </div>
+      <div class="footer">
+        <div>
+          <app-course-difficulty [difficulty]="2" />
+          <!-- [course difficulty 1-5] -->
+          <div class="coach">Galiano Italiano</div>
+          <!-- [coach name and surname] -->
+        </div>
+        <button type="button" class="primary-btn" (click)="buyCourse($event)">
+          Buy
+        </button>
+      </div>
+    </div>
   </a>
 </li>

@@ -1,4 +1,4 @@
-<div class="page">
+<!-- <div>
   <div class="top-container">
     <div class="info">
       <h2>{{ course().title }}</h2>
@@ -11,9 +11,9 @@
         Average review score: {{ averageReviewScore() }} ({{ reviewCount() }} reviews)
       </div>
     </div>
-    <!-- <button class="primary-button" type="submit" (click)="buyCourse()">Buy for {{ formattedPrice() }}</button> -->
+    <button class="primary-button" type="submit" (click)="buyCourse()">Buy for {{ formattedPrice() }}</button>
 
-    <button class="primary-button" type="submit" (click)="buyCourse()">
+    <button class="primary-btn" type="submit" (click)="buyCourse()">
       Buy for {{ course().price }}$
     </button>
   </div>
@@ -24,5 +24,82 @@
     <div class="no-rev">No revies yet</div>
   }
   <br />
-  <a class="primary-button" [routerLink]="'../'">Back to courses</a>
+  <a class="primary-btn" [routerLink]="'../'">Back to courses</a>
+</div> -->
+
+<div class="page">
+  <h2>Course Details</h2>
+  <section class="main-section">
+    <img class="course-img" src="assets/images/chess-course-1.png" alt="chess-course" />
+    <div class="right">
+      <div class="content">
+        <h2>{{ course().title }}</h2>
+        <div class="desc">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis architecto
+          voluptates labore repudiandae ipsam adipisci. Quia dolorum, ut deserunt modi
+          aut officia soluta possimus accusamus eveniet, dolorem perferendis placeat
+          architecto sit sequi aliquam beatae tempora facilis consequuntur vitae
+          recusandae ipsam!
+        </div>
+      </div>
+      <div class="footer">
+        <div class="date">
+          Released on 2025
+          <img src="assets/icons/calendar.png" alt="calendar" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="coach-section">
+    <div class="content">
+      <h3>Coach</h3>
+      <div class="header">
+        <div class="profile">
+          <div class="circle"><span>CA</span></div>
+          <div>Carlos Albinos</div>
+          <!-- [coach name and surname] -->
+        </div>
+        <div class="chess-title">GM</div>
+        <!-- [coach chess title] -->
+        <app-star-rating [rating]="4" [ratingsNumber]="123" />
+        <div class="created-courses">
+          <div>3</div>
+          <!-- [numebr of created courses by coach] -->
+          <img src="assets/icons/book.png" alt="book" />
+          <div>Created Courses</div>
+        </div>
+        <button type="button" class="toggle-btn" (click)="toggleCoachDetails()">
+          @if (showCoachDetails) {
+            <img src="assets/icons/purple-arrow-up.png" alt="arrow-up" />
+          } @else {
+            <img src="assets/icons/purple-arrow-down.png" alt="arrow-up" />
+          }
+        </button>
+      </div>
+    </div>
+    @if (showCoachDetails) {
+      <div class="details">
+        <!-- [coach description] -->
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi ex, numquam
+        ipsam nam praesentium vel! Neque error laudantium pariatur dolore consequuntur
+        quam quidem consectetur! Ad impedit blanditiis illum saepe ducimus quos quas! Et
+        vitae quas corrupti quidem. Culpa, soluta architecto.
+      </div>
+    }
+  </section>
+
+  <section class="inside-section">
+    <h3>What's inside</h3>
+    <div class="content">
+      <div class="diagrams"></div>
+      <div class="line"></div>
+      <div class="footer"></div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Inpact</h3>
+    <div class="content"></div>
+  </section>
 </div>

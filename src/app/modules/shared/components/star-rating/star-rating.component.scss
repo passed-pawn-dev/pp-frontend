@@ -1,0 +1,19 @@
+@import 'variables';
+
+.tile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .rating {
+    font-size: $font-L;
+    font-weight: 700;
+    color: $yello-star;
+  }
+
+  .stars-group {
+    .star {
+      height: $font-M;
+    }
+  }
+}

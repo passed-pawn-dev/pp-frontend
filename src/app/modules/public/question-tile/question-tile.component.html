@@ -1,0 +1,15 @@
+<button class="question-tile" type="button" (click)="toggleAnswer()">
+  <div class="header">
+    <div class="question">{{ question }}</div>
+    <div class="icon">
+      @if (showAnswer) {
+        <img src="assets/icons/minus.png" alt="plus" />
+      } @else {
+        <img src="assets/icons/plus.png" alt="plus" />
+      }
+    </div>
+  </div>
+  @if (showAnswer) {
+    <div class="answer">{{ answer }}</div>
+  }
+</button>

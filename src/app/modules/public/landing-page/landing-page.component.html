@@ -1,12 +1,136 @@
-<div class="container">
-  <h2>Welcome to PassedPawn</h2>
-  <div>
-    <a pButton class="button" [routerLink]="'/student/register'">Register as student</a>
+<app-navbar />
+<div class="content">
+  <div class="landing-page">
+    <div>
+      <img class="flying-pawns" src="assets/icons/flying-pawns-left.png" alt="pawns" />
+    </div>
+    <div class="center">
+      <div class="header">Start your chess journey</div>
+      <div class="sub-header">Your path to chess mastery begins here</div>
+      <div class="btn-group">
+        <a class="primary-btn" [routerLink]="'/student/register'"
+          >Register as student</a
+        >
+        <a class="secondary-btn" [routerLink]="'/coach/register'"
+          >Register as coach<img src="assets/icons/coach.png" alt="coach"
+        /></a>
+      </div>
+      <div class="learn-more">
+        Learn more<img src="assets/icons/arrow-down.png" alt="arrow down" />
+      </div>
+    </div>
+    <div>
+      <img class="flying-pawns" src="assets/icons/flying-pawns-right.png" alt="pawns" />
+    </div>
   </div>
-  <div>
-    <a pButton class="button" [routerLink]="'/coach/register'">Register as coach</a>
-  </div>
-  <div>
-    <button pButton type="button" (click)="logIn()">Log In</button>
+  <div class="sections">
+    <div class="content">
+      <section>
+        <h1>What We Offer</h1>
+        <div class="desc">
+          (Sth about courses) Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Officiis dolor iure odit libero eaque magni voluptates voluptatibus in quo!
+          Officia!
+        </div>
+        <div class="tiles-group">
+          <div class="tile">
+            <img src="assets/icons/student-hat.png" alt="student-hat" />
+            <h3>Theory</h3>
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, ratione.
+            </div>
+          </div>
+          <div class="tile">
+            <img src="assets/icons/puzzle.png" alt="student-hat" />
+            <h3>Puzzles</h3>
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, ratione.
+            </div>
+          </div>
+          <div class="tile">
+            <img src="assets/icons/live.png" alt="student-hat" />
+            <h3>Coach Interaction</h3>
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, ratione.
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h1>Best Way To Start</h1>
+        <div class="desc">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit pariatur velit
+          enim culpa qui id?
+        </div>
+
+        <div class="best-way-to-start-graphic">
+          <div class="sign-up-group">
+            <img src="assets/icons/star.png" alt="star" />
+            <a class="text" [routerLink]="'/student/register'">Create account</a>
+          </div>
+          <div class="line">
+            <div class="step-2">
+              <div class="text">Sign up for free course</div>
+            </div>
+            <div class="a">
+              <img src="assets/icons/arrow-right.png" alt="arrow-right" />
+            </div>
+            <div class="b">
+              <img src="assets/icons/arrow-right.png" alt="arrow-right" />
+            </div>
+          </div>
+          <div class="rec">
+            <div class="step-3">
+              <div class="text">
+                Collect XP <img src="assets/icons/coin.png" alt="coin" />
+              </div>
+            </div>
+            <div class="a">
+              <img src="assets/icons/arrow-right.png" alt="arrow-right" />
+            </div>
+            <div class="step-4">
+              <div class="text"><span>Redeem XP</span>&nbsp;for paid course</div>
+            </div>
+            <div class="b">
+              <img src="assets/icons/arrow-left.png" alt="arrow-right" />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h1>FQA</h1>
+        <div class="desc">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit pariatur velit
+          enim culpa qui id?
+        </div>
+        <div class="question-tile-group">
+          <app-question-tile
+            question="What skill levels do your courses cover?"
+            answer="We offer courses for all levels: Beginner, Intermediate, and Advanced. Whether you’re just starting or aiming to refine your strategy, we have a course for you."
+          />
+
+          <app-question-tile
+            question="Do I need prior experience to join?"
+            answer="No prior experience is needed! Our beginner-friendly courses start from the basics and guide you step by step."
+          />
+
+          <app-question-tile
+            question="How long does each course take?"
+            answer="Course durations vary, but most take between 4-12 weeks, depending on your pace and commitment."
+          />
+
+          <app-question-tile
+            question="Are the courses self-paced?"
+            answer="Yes! You can complete the lessons at your own pace, anytime, anywhere."
+          />
+
+          <app-question-tile
+            question="Do you provide a certificate?"
+            answer="Yes, upon completing a course, you will receive a certificate of achievement."
+          />
+        </div>
+      </section>
+    </div>
   </div>
 </div>
+<app-footer />
