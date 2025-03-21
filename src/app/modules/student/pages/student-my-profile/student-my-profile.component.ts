@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../../auth/services/auth.service';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-student-my-profile',
@@ -9,9 +9,9 @@ import { AuthService } from '../../../../auth/services/auth.service';
   styleUrl: './student-my-profile.component.scss'
 })
 export class StudentMyProfileComponent {
-  public constructor(private readonly authService: AuthService) {}
+  public constructor(private readonly keycloak: Keycloak) {}
 
   protected logOut(): void {
-    this.authService.logout();
+    this.keycloak.logout();
   }
 }

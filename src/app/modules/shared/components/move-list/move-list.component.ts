@@ -8,7 +8,7 @@ import { TMoveList } from '../../../../chess-logic/models';
   templateUrl: './move-list.component.html',
   styleUrls: ['./move-list.component.scss'],
   standalone: true,
-  imports: [CommonModule, Button]
+  imports: [CommonModule]
 })
 export class MoveListComponent {
   @Input({ required: true }) public moveList!: TMoveList;

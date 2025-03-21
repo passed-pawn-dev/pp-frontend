@@ -10,7 +10,7 @@ import {
   Validators
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { Textarea } from 'primeng/inputtextarea';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { PreviewMode } from '../../../shared/enums/preview-mode.enum';
 import {MessageService} from 'primeng/api';
@@ -22,7 +22,7 @@ import {MessageService} from 'primeng/api';
     PuzzleChessboardComponent,
     ReactiveFormsModule,
     InputTextModule,
-    InputTextareaModule,
+    Textarea,
     ValidationErrorsComponent
   ],
   templateUrl: './coach-add-exercise.component.html',

@@ -1,5 +1,7 @@
+@use "sass:color";
+
 .content {
-  background-color: darken(white, 5%);
+  background-color: color.adjust(white, $lightness: -5%);
   padding: 1rem;
   border-radius: 1rem;
   width: fit-content;

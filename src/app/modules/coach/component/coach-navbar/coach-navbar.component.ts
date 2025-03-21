@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavLink } from '../../../student/models/NavLink';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../../../auth/services/auth.service';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-coach-navbar',
@@ -10,8 +10,8 @@ import { AuthService } from '../../../../auth/services/auth.service';
   templateUrl: './coach-navbar.component.html',
   styleUrl: './coach-navbar.component.scss'
 })
-export class CoachNavbarComponent {
-  protected authService = inject(AuthService);
+export class CoachNavbarComponent implements OnInit {
+  protected keycloak = inject(Keycloak);
 
   protected navLinks: NavLink[] = [
     {
@@ -20,9 +20,15 @@ export class CoachNavbarComponent {
     },
   ];
 
-  protected userName: string = this.authService.getUsername();
+  protected userName!: string;
 
-  protected logOut(): void {
-    this.authService.logout();
+  public ngOnInit(): void {
+    this.keycloak.loadUserProfile().then(res => {
+      this.userName = res.username!;
+    });
+  }
+
+  protected logOut(): void { 
+    this.keycloak.logout();
   }
 }

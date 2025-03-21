@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../auth/services/auth.service';
 import { ButtonModule } from 'primeng/button';
-import { JwtDecoded } from '../../student/models/JwtDecoded';
+import { JwtDecoded } from '../../shared/models/JwtDecoded';
 import { jwtDecode } from 'jwt-decode';
-import { NavbarComponent } from '../navbar/navbar.component';
-import { FooterComponent } from '../footer/footer.component';
-import { QuestionTileComponent } from '../question-tile/question-tile.component';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-landing-page',
@@ -23,17 +20,17 @@ import { QuestionTileComponent } from '../question-tile/question-tile.component'
 })
 export class LandingPageComponent implements OnInit {
   public constructor(
-    private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly keycloak: Keycloak,
   ) {}
 
   protected logIn(): void {
-    this.authService.redirectToLoginPage();
+    this.keycloak.login()
   }
 
   public async ngOnInit(): Promise<void> {
-    const token = await this.authService.getToken();
-    if (token && this.authService.isLoggedIn()) {
+    const token = this.keycloak.token
+    if (token && this.keycloak.authenticated) {
       const decoded: JwtDecoded = jwtDecode(token);
       const roles: string[] | undefined = decoded.resource_access['api-client']?.roles;
       if (roles?.includes('student')) {

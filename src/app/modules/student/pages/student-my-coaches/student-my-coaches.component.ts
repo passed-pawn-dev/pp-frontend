@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-student-my-coaches',
   standalone: true,
-  imports: [RouterLink],
+  // imports: [RouterLink],
   templateUrl: './student-my-coaches.component.html',
   styleUrl: './student-my-coaches.component.scss'
 })

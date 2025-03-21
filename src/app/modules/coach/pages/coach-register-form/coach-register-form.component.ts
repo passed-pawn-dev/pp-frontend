@@ -2,18 +2,17 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Gender, genderToLabelMapping } from '../../../shared/enums/gender.enum';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { enumToObjectArray } from '../../../shared/utils/enum-to-object-array';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePickerModule } from 'primeng/datepicker';
 import {
   AutoCompleteCompleteEvent,
   AutoCompleteModule,
   AutoCompleteSelectEvent
 } from 'primeng/autocomplete';
-import countries from '../../../../../assets/countries.json';
+import countries from '../../../../../../public/countries.json';
 import { Nationality } from '../../../shared/models/Nationality';
 import { NationalityService } from '../../../shared/service/nationality.service';
 import { Coach } from '../../models/Coach';
@@ -24,6 +23,7 @@ import {
   chessTitleToLabelMapping
 } from '../../../shared/enums/chess-titles.enum';
 import {MessageService} from 'primeng/api';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-coach-register-form',
@@ -31,11 +31,11 @@ import {MessageService} from 'primeng/api';
   imports: [
     ReactiveFormsModule,
     InputTextModule,
-    DropdownModule,
+    SelectModule,
     ButtonModule,
     InputNumberModule,
     AutoCompleteModule,
-    CalendarModule,
+    DatePickerModule,
     ValidationErrorsComponent
   ],
   templateUrl: './coach-register-form.component.html',
