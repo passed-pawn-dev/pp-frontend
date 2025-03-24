@@ -4,6 +4,9 @@ import { ButtonModule } from 'primeng/button';
 import { JwtDecoded } from '../../shared/models/JwtDecoded';
 import { jwtDecode } from 'jwt-decode';
 import Keycloak from 'keycloak-js';
+import { QuestionTileComponent } from '../question-tile/question-tile.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-landing-page',

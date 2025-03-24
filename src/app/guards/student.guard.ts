@@ -1,5 +1,4 @@
 import { CanActivateFn } from '@angular/router';
-import { AuthService } from '../auth/services/auth.service';
 import { inject } from '@angular/core';
 import Keycloak from 'keycloak-js';
 import { JwtDecoded } from '../modules/shared/models/JwtDecoded';

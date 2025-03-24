@@ -30,7 +30,7 @@
 <div class="page">
   <h2>Course Details</h2>
   <section class="main-section">
-    <img class="course-img" src="assets/images/chess-course-1.png" alt="chess-course" />
+    <img class="course-img" src="images/chess-course-1.png" alt="chess-course" />
     <div class="right">
       <div class="content">
         <h2>{{ course().title }}</h2>
@@ -42,10 +42,11 @@
           recusandae ipsam!
         </div>
       </div>
+      <button class="primary-btn" type="submit" (click)="buyCourse()">Buy</button>
       <div class="footer">
         <div class="date">
           Released on 2025
-          <img src="assets/icons/calendar.png" alt="calendar" />
+          <img src="icons/calendar.png" alt="calendar" />
         </div>
       </div>
     </div>
@@ -66,14 +67,14 @@
         <div class="created-courses">
           <div>3</div>
           <!-- [numebr of created courses by coach] -->
-          <img src="assets/icons/book.png" alt="book" />
+          <img src="icons/book.png" alt="book" />
           <div>Created Courses</div>
         </div>
         <button type="button" class="toggle-btn" (click)="toggleCoachDetails()">
           @if (showCoachDetails) {
-            <img src="assets/icons/purple-arrow-up.png" alt="arrow-up" />
+            <img src="icons/purple-arrow-up.png" alt="arrow-up" />
           } @else {
-            <img src="assets/icons/purple-arrow-down.png" alt="arrow-up" />
+            <img src="icons/purple-arrow-down.png" alt="arrow-up" />
           }
         </button>
       </div>

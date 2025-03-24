@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../auth/services/auth.service';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-navbar',
@@ -9,9 +9,9 @@ import { AuthService } from '../../../auth/services/auth.service';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  public constructor(private readonly authService: AuthService) {}
+  public constructor(private readonly keycloak: Keycloak,) {}
 
   protected logIn(): void {
-    this.authService.redirectToLoginPage();
+    this.keycloak.login()
   }
 }
