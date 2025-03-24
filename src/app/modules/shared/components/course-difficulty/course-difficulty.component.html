@@ -1,0 +1,12 @@
+<!-- eslint-disable @angular-eslint/template/no-inline-styles -->
+<div class="tile">
+  <div class="header" [style.color]="color">{{ header }}</div>
+  <div class="circles-group">
+    @for (ele of filledCircles; track ele) {
+      <div class="circle" [style.background-color]="color"></div>
+    }
+    @for (ele of emptyCircles; track ele) {
+      <div class="circle"></div>
+    }
+  </div>
+</div>

@@ -1,12 +1,13 @@
+@import 'variables';
+
+.page {
+  width: $page-width;
+  margin: auto;
+}
+
 .list {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-left: 2rem;
-}
-
-.page {
-  width: 62.5rem;
-  margin: auto;
+  gap: 1rem;
 }

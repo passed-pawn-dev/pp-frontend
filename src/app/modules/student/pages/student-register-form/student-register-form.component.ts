@@ -48,6 +48,7 @@ export class StudentRegisterFormComponent implements OnInit {
   protected nationalities: Nationality[] = [];
   protected filteredCountries: string[] = [];
   protected maxDate = new Date();
+  protected step: number = 1;
 
   protected registerForm = this.fb.group({
     username: ['', Validators.required],
@@ -61,6 +62,27 @@ export class StudentRegisterFormComponent implements OnInit {
     chessTitle: [null],
     nationalityId: ['']
   });
+
+  // protected registerForm = this.fb.group({
+  //   step1: this.fb.group({
+  //     username: ['', Validators.required],
+  //     firstName: ['', Validators.required],
+  //     lastName: ['', Validators.required]
+  //   }),
+  //   step2: this.fb.group({
+  //     email: ['', Validators.required, Validators.email],
+  //     phoneNumber: ['', Validators.required],
+  //     dateOfBirth: [Date.now()]
+  //   }),
+  //   step3: this.fb.group({
+  //     nationalityId: ['', Validators.required],
+  //     chessTitle: [null],
+  //     elo: [0]
+  //   }),
+  //   step4: this.fb.group({
+  //     password: ['', Validators.required]
+  //   }),
+  // });
 
   public ngOnInit(): void {
     this.nationalityService.getAll().subscribe((res) => {
@@ -87,6 +109,24 @@ export class StudentRegisterFormComponent implements OnInit {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
+  }
+
+  protected nextStep(): void {
+    this.step++;
+  }
+
+  protected prevStep(): void {
+    this.step--;
+  }
+
+  protected getStepClass(stepNumber: number): string {
+    if (this.step === stepNumber) {
+      return 'step-active';
+    } else if (this.step > stepNumber) {
+      return 'step-left';
+    } else {
+      return 'step-hidden';
+    }
   }
 
   protected onSubmit(): void {

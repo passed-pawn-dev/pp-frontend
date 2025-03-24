@@ -1,26 +1,132 @@
-.top-container {
-    align-items: end;
-    display: flex;
-    justify-content: space-between;
-}
-
-.info {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
+@import 'variables';
 
 .page {
-    margin: auto;
-    margin-bottom: 3rem;
-    width: 62.5rem;
-}
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: $page-width;
+  margin: auto;
+  // border: 1px solid;
 
-.dsc {
-    font-size: 0.75rem;
-    font-weight: 700;
-}
+  section {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    // border: 1px solid;
+  }
 
-.no-rev {
-    margin: 1rem;
+  .main-section {
+    display: flex;
+
+    .course-img {
+      width: 17rem;
+      height: 17rem;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      margin-right: 1rem;
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      // border: 1px solid;
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        // border: 1px solid;
+
+        .desc {
+          // color: $text-secondary;
+        }
+      }
+      .footer {
+        display: flex;
+        justify-content: flex-end;
+
+        .date {
+          display: flex;
+          gap: 1rem;
+          font-size: $font-M;
+          // border: 1px solid;
+
+          img {
+            height: 1.5rem;
+            // border: 1px solid;
+          }
+        }
+      }
+    }
+  }
+
+  .coach-section {
+    .content {
+      display: flex;
+      justify-content: space-between;
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+
+        .profile {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+
+          .circle {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: #e6762c;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: $font-XS;
+            font-weight: 700;
+          }
+        }
+
+        .chess-title {
+          background-color: black;
+          color: white;
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          font-weight: 700;
+        }
+
+        .created-courses {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          img {
+            height: $font-L;
+          }
+        }
+
+        .toggle-btn {
+          display: flex;
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+          padding: 0.5rem 0.2rem;
+          // border: 1px solid;
+
+          img {
+            height: $font-XS;
+          }
+        }
+      }
+    }
+
+    .details {
+      color: $text-secondary;
+      margin-top: 0.5rem;
+    }
+  }
 }

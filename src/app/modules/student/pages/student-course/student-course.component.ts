@@ -4,12 +4,13 @@ import { CourseReviewComponent } from '../../../shared/components/course-review/
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Button, ButtonModule } from 'primeng/button';
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 
 @Component({
   selector: 'app-student-course',
   standalone: true,
-  imports: [CourseReviewComponent, RouterLink, ButtonModule],
+  imports: [CourseReviewComponent, RouterLink, ButtonModule, StarRatingComponent],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
 })
@@ -23,6 +24,8 @@ export class StudentCourseComponent implements OnInit {
     studentNumber: 0,
     reviews: []
   });
+
+  protected showCoachDetails: boolean = false;
 
   public constructor(
     private courseService: CourseService,
@@ -51,11 +54,25 @@ export class StudentCourseComponent implements OnInit {
     });
   }
 
+  protected toggleCoachDetails(): void {
+    this.showCoachDetails = !this.showCoachDetails;
+  }
+
   protected buyCourse(): void {
     this.route.paramMap.subscribe((params) => {
       this.courseService.buy(params.get('id')!).subscribe({
-        next: (_) => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Course bought successfully' }),
-        error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Course could not be bought' })
+        next: (_) =>
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Course bought successfully'
+          }),
+        error: (_) =>
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Failure',
+            detail: 'Course could not be bought'
+          })
       });
     });
   }

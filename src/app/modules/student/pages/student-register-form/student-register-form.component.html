@@ -1,124 +1,216 @@
-<form
-  class="vertical-form register-form"
-  [formGroup]="registerForm"
-  (ngSubmit)="onSubmit()"
->
-  <div class="form-control-field">
-    <label for="username">Username</label>
-    <input pInputText="username" formControlName="username" type="text" required />
-    <app-validation-errors
-      [errors]="registerForm.controls.username.errors"
-      [dirty]="registerForm.controls.username.dirty"
-      [touched]="registerForm.controls.username.touched"
-    />
+<div class="tile">
+  <div class="steps-graphic">
+    <div [class.complete]="true"></div>
+    <!-- <div class="line" [class.complete]="step > 1" ></div> -->
+    <div [class.complete]="step > 1"></div>
+    <!-- <div class="line" [class.complete]="step > 2" ></div> -->
+    <div [class.complete]="step > 2"></div>
+    <!-- <div class="line" [class.complete]="step > 3" ></div> -->
+    <div [class.complete]="step > 3"></div>
+    <!-- <div class="line" [class.complete]="step > 4" ></div> -->
+    <div [class.complete]="step > 4"></div>
   </div>
+  <h2>Student Registration</h2>
+  <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="step-container">
+      <div
+        class="step"
+        [class.step-active]="step === 1"
+        [class.step-left]="step > 1"
+        [class.step-hidden]="step < 1"
+      >
+        <div class="form-control-field">
+          <label for="username">Username</label>
+          <input
+            pInputText="username"
+            formControlName="username"
+            type="text"
+            required
+          />
+        </div>
 
-  <div class="form-control-field">
-    <label for="firstName">First name</label>
-    <input pInputText="firstName" formControlName="firstName" type="text" required />
-    <app-validation-errors
-      [errors]="registerForm.controls.firstName.errors"
-      [dirty]="registerForm.controls.firstName.dirty"
-      [touched]="registerForm.controls.firstName.touched"
-    />
-  </div>
+        <div class="form-control-field">
+          <label for="firstName">First name</label>
+          <input
+            pInputText="firstName"
+            formControlName="firstName"
+            type="text"
+            required
+          />
+        </div>
 
-  <div class="form-control-field">
-    <label for="lastName">Last name</label>
-    <input pInputText id="lastName" formControlName="lastName" type="text" required />
-    <app-validation-errors
-      [errors]="registerForm.controls.lastName.errors"
-      [dirty]="registerForm.controls.lastName.dirty"
-      [touched]="registerForm.controls.lastName.touched"
-    />
-  </div>
+        <div class="form-control-field">
+          <label for="lastName">Last name</label>
+          <input
+            pInputText
+            id="lastName"
+            formControlName="lastName"
+            type="text"
+            required
+          />
+        </div>
+      </div>
 
-  <div class="form-control-field">
-    <label for="email">Email</label>
-    <input pInputText id="email" formControlName="email" type="email" required />
-    <app-validation-errors
-      [errors]="registerForm.controls.email.errors"
-      [dirty]="registerForm.controls.email.dirty"
-      [touched]="registerForm.controls.email.touched"
-    />
-  </div>
+      <div
+        class="step"
+        [class.step-active]="step === 2"
+        [class.step-left]="step > 2"
+        [class.step-hidden]="step < 2"
+      >
+        <div class="form-control-field">
+          <label for="email">Email</label>
+          <input pInputText id="email" formControlName="email" type="email" required />
+        </div>
 
-  <div class="form-control-field">
-    <label for="password">Password</label>
-    <input
-      pInputText
-      id="password"
-      formControlName="password"
-      type="password"
-      required
-    />
-    <app-validation-errors
-      [errors]="registerForm.controls.password.errors"
-      [dirty]="registerForm.controls.password.dirty"
-      [touched]="registerForm.controls.password.touched"
-    />
-  </div>
+        <div class="form-control-field">
+          <label for="phoneNumber">Phone number</label>
+          <input
+            pInputText
+            id="phoneNumber"
+            formControlName="phoneNumber"
+            type="text"
+            required
+          />
+        </div>
 
-  <div class="form-control-field">
-    <label for="phoneNumber">Phone number</label>
-    <input
-      pInputText
-      id="phoneNumber"
-      formControlName="phoneNumber"
-      type="text"
-      required
-    />
-    <app-validation-errors
-      [errors]="registerForm.controls.phoneNumber.errors"
-      [dirty]="registerForm.controls.phoneNumber.dirty"
-      [touched]="registerForm.controls.phoneNumber.touched"
-    />
-  </div>
+        <div class="form-control-field">
+          <label for="dateOfBirth">Date of birth</label>
+          <div class="calendar">
+            <p-calendar
+              id="dateOfBirth"
+              formControlName="dateOfBirth"
+              type="date"
+              showIcon="true"
+              [iconDisplay]="'input'"
+              [maxDate]="maxDate"
+            />
+          </div>
+        </div>
+      </div>
 
-  <div class="form-control-field">
-    <label for="dateOfBirth">Date of birth</label>
-    <p-calendar
-      id="dateOfBirth"
-      formControlName="dateOfBirth"
-      type="date"
-      showIcon="true"
-      [iconDisplay]="'input'"
-      [maxDate]="maxDate"
-    />
-  </div>
+      <div
+        class="step"
+        [class.step-active]="step === 3"
+        [class.step-left]="step > 3"
+        [class.step-hidden]="step < 3"
+      >
+        <div class="form-control-field">
+          <label for="elo">Fide rating</label>
+          <div class="inputNumber">
+            <p-inputNumber id="elo" formControlName="elo" type="number" />
+          </div>
+        </div>
 
-  <div class="form-control-field">
-    <label for="elo">Fide rating</label>
-    <p-inputNumber id="elo" formControlName="elo" type="number" />
-    <app-validation-errors
-      [errors]="registerForm.controls.elo.errors"
-      [dirty]="registerForm.controls.elo.dirty"
-      [touched]="registerForm.controls.elo.touched"
-    />
-  </div>
+        <div class="form-control-field">
+          <label for="chessTitle">Chess title</label>
+          <div class="dropdown">
+            <p-dropdown
+              formControlName="chessTitle"
+              optionLabel="label"
+              optionValue="enumValue"
+              placeholder="Select title"
+              [options]="chessTitles"
+            />
+          </div>
+        </div>
 
-  <div class="form-control-field">
-    <label for="chessTitle">Chess title</label>
-    <p-dropdown
-      formControlName="chessTitle"
-      optionLabel="label"
-      optionValue="enumValue"
-      placeholder="Select title"
-      [options]="chessTitles"
-    />
-  </div>
+        <div class="form-control-field">
+          <label for="nationalityId">Nationality</label>
+          <div class="autoComplete">
+            <p-autoComplete
+              formControlName="nationalityId"
+              [dropdown]="true"
+              [suggestions]="filteredCountries"
+              (completeMethod)="filterCountries($event)"
+            />
+          </div>
+        </div>
+      </div>
 
-  <div class="form-control-field">
-    <label for="nationalityId">Nationality</label>
-    <p-autoComplete
-      formControlName="nationalityId"
-      [dropdown]="true"
-      [suggestions]="filteredCountries"
-      (completeMethod)="filterCountries($event)"
-    />
-  </div>
+      <div
+        class="step"
+        [class.step-active]="step === 4"
+        [class.step-left]="step > 4"
+        [class.step-hidden]="step < 4"
+      >
+        <div class="form-control-field">
+          <label for="password">Password</label>
+          <input
+            pInputText
+            id="password"
+            formControlName="password"
+            type="password"
+            required
+          />
+        </div>
+      </div>
 
-  <div class="buttons-box">
-    <p-button type="submit" [disabled]="registerForm.invalid">Register</p-button>
-  </div>
-</form>
+      <div
+        class="step"
+        [class.step-active]="step === 5"
+        [class.step-left]="step > 5"
+        [class.step-hidden]="step < 5"
+      >
+        <div class="text">
+          You're almost done! Please review your details before submitting your account
+          registration .
+        </div>
+        <img src="assets/icons/elephant-register.png" alt="almost done" />
+      </div>
+    </div>
+    <div class="btn-group">
+      <button
+        type="button"
+        class="secondary-btn"
+        [disabled]="step < 2"
+        (click)="prevStep()"
+      >
+        Back
+      </button>
+      @if (step === 5) {
+        <button type="submit" class="primary-btn" [disabled]="registerForm.invalid">
+          Register
+        </button>
+      } @else {
+        <button type="button" class="primary-btn" (click)="nextStep()">
+          Next <img src="assets/icons/thick-arrow-right.png" alt="arrow" />
+        </button>
+      }
+    </div>
+  </form>
+  <app-validation-errors
+    [errors]="registerForm.controls.username.errors"
+    [dirty]="registerForm.controls.username.dirty"
+    [touched]="registerForm.controls.username.touched"
+  />
+  <app-validation-errors
+    [errors]="registerForm.controls.firstName.errors"
+    [dirty]="registerForm.controls.firstName.dirty"
+    [touched]="registerForm.controls.firstName.touched"
+  />
+  <app-validation-errors
+    [errors]="registerForm.controls.lastName.errors"
+    [dirty]="registerForm.controls.lastName.dirty"
+    [touched]="registerForm.controls.username.touched"
+  />
+  <app-validation-errors
+    [errors]="registerForm.controls.email.errors"
+    [dirty]="registerForm.controls.email.dirty"
+    [touched]="registerForm.controls.email.touched"
+  />
+  <app-validation-errors
+    [errors]="registerForm.controls.phoneNumber.errors"
+    [dirty]="registerForm.controls.phoneNumber.dirty"
+    [touched]="registerForm.controls.phoneNumber.touched"
+  />
+  <app-validation-errors
+    [errors]="registerForm.controls.elo.errors"
+    [dirty]="registerForm.controls.elo.dirty"
+    [touched]="registerForm.controls.elo.touched"
+  />
+  <app-validation-errors
+    [errors]="registerForm.controls.password.errors"
+    [dirty]="registerForm.controls.password.dirty"
+    [touched]="registerForm.controls.password.touched"
+  />
+</div>
