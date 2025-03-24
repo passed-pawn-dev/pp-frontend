@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 .tile {
   list-style-type: none;

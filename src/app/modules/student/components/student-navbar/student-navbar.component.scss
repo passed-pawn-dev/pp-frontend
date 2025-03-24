@@ -1,11 +1,13 @@
-@import 'variables';
+@use 'sass:color';
+
+@use 'variables' as v;
 
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   // backdrop-filter: blur(1rem);
-  background-color: $background;
+  background-color: v.$background;
   width: 100%;
   height: 4rem;
   padding: 0 1rem;
@@ -53,8 +55,8 @@
           border: 1px solid transparent;
 
           &:hover {
-            background-color: darken($background, 5%);
-            border: 1px solid darken($background, 5%);
+            background-color: color.adjust(v.$background, $lightness: -5%);
+            border: 1px solid color.adjust(v.$background, $lightness: -5%);
           }
         }
       }
@@ -63,7 +65,7 @@
 
   .secondary-btn {
     img {
-      height: $font-S;
+      height: v.$font-S;
     }
   }
 }

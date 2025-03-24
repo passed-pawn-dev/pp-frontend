@@ -1,4 +1,6 @@
-@import 'variables';
+@use 'sass:color';
+
+@use 'variables' as *;
 
 .content {
   .landing-page {
@@ -91,7 +93,7 @@
 
             &:hover {
               border: 1px solid $primary-light;
-              box-shadow: 5px 5px 0 lighten($primary-light, 10%);
+              box-shadow: 5px 5px 0 color.adjust($primary-light, $lightness: 10%);
             }
 
             img {
