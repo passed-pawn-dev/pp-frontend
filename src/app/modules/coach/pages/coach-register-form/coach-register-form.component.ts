@@ -22,7 +22,7 @@ import {
   ChessTitle,
   chessTitleToLabelMapping
 } from '../../../shared/enums/chess-titles.enum';
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { SelectModule } from 'primeng/select';
 
 @Component({
@@ -62,7 +62,7 @@ export class CoachRegisterFormComponent implements OnInit {
     phoneNumber: ['', [Validators.required]],
     dateOfBirth: [],
     elo: [null, [Validators.min(1000)]],
-    chessTitle: [null],
+    // chessTitle: [null],
     nationalityId: [''],
     shortDescription: [''],
     detailedDescription: ['']
@@ -74,7 +74,11 @@ export class CoachRegisterFormComponent implements OnInit {
         this.nationalities = res;
       },
       error: (_) => {
-        this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Nationalities could not be fetched' });
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Failure',
+          detail: 'Nationalities could not be fetched'
+        });
       }
     });
   }
@@ -115,7 +119,12 @@ export class CoachRegisterFormComponent implements OnInit {
 
       this.coachService.register(registerData).subscribe({
         next: (_) => this.router.navigate(['/coach']),
-        error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Failed to register' })
+        error: (_) =>
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Failure',
+            detail: 'Failed to register'
+          })
       });
     }
   }

@@ -10,6 +10,6 @@ export interface Student {
   dateOfBirth: string | null;
   elo: number | null;
   // chessTitle: ChessTitle | null,
-  chessTitle: number | null;
+  // chessTitle: number | null;
   nationalityId: string | null;
 }
