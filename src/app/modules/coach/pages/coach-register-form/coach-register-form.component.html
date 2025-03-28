@@ -84,6 +84,7 @@
     <div class="form-control-field">
       <label for="dateOfBirth">Date of birth</label>
       <p-date-picker
+        appendTo="body"
         id="dateOfBirth"
         formControlName="dateOfBirth"
         type="date"
@@ -157,6 +158,8 @@
   </div>
 
   <div class="btn-group">
-    <button class="primary-button" type="submit" [disabled]="registerForm.invalid">Register</button>
+    <button class="primary-button" type="submit" [disabled]="registerForm.invalid">
+      Register
+    </button>
   </div>
 </form>
