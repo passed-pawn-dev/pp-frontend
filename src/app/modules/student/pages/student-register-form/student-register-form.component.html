@@ -73,10 +73,12 @@
           />
         </div>
 
-        <div class="form-control-field">
+        <div class="form-control-field p-fluid">
           <label for="dateOfBirth">Date of birth</label>
           <div class="calendar">
             <p-date-picker
+              fluid
+              severity="secondary"
               appendTo="body"
               id="dateOfBirth"
               formControlName="dateOfBirth"
@@ -95,10 +97,16 @@
         [class.step-left]="step > 3"
         [class.step-hidden]="step < 3"
       >
-        <div class="form-control-field">
+        <div class="form-control-field p-fluid">
           <label for="elo">Fide rating</label>
           <div class="inputNumber">
-            <p-inputNumber id="elo" formControlName="elo" type="number" />
+            <p-inputNumber
+              id="elo"
+              formControlName="elo"
+              type="number"
+              fluid
+              severity="secondary"
+            />
           </div>
         </div>
 
@@ -115,10 +123,12 @@
           </div>
         </div> -->
 
-        <div class="form-control-field">
+        <div class="form-control-field p-fluid">
           <label for="nationalityId">Nationality</label>
           <div class="autoComplete">
             <p-autoComplete
+              fluid
+              severity="secondary"
               formControlName="nationalityId"
               [dropdown]="true"
               [suggestions]="filteredCountries"

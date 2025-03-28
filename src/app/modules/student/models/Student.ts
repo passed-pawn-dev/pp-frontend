@@ -11,5 +11,5 @@ export interface Student {
   elo: number | null;
   // chessTitle: ChessTitle | null,
   // chessTitle: number | null;
-  nationalityId: string | null;
+  nationalityId?: string | null;
 }

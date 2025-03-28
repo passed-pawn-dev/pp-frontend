@@ -9,7 +9,7 @@ export interface Coach {
   elo: number | null;
   // chessTitle: ChessTitle | null,
   // chessTitle: number | null;
-  nationalityId: string | null;
+  nationalityId?: string | null;
   detailedDescription: string | null;
   shortDescription: string | null;
 }

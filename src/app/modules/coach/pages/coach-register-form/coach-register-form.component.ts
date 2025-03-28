@@ -93,7 +93,7 @@ export class CoachRegisterFormComponent implements OnInit {
       country.toLowerCase().startsWith(query.toLowerCase())
     );
 
-    this.filteredCountries = filteredCountries;
+    this.filteredCountries = filteredCountries.concat('Not Set');
   }
 
   private parseDate(isoDate: number): string {
@@ -107,15 +107,23 @@ export class CoachRegisterFormComponent implements OnInit {
   protected onSubmit(): void {
     if (this.registerForm.valid) {
       const dateOfBirth = this.parseDate(this.registerForm.value.dateOfBirth!);
-      const nationalityId = this.nationalities.find(
+      const nationality = this.nationalities.find(
         (n) => n.fullName === this.registerForm.getRawValue().nationalityId
-      )!.id;
-
-      const registerData: Coach = {
-        ...this.registerForm.getRawValue(),
-        dateOfBirth: dateOfBirth,
-        nationalityId: nationalityId
-      };
+      );
+      let registerData: Coach;
+      if (nationality) {
+        registerData = {
+          ...this.registerForm.getRawValue(),
+          dateOfBirth: dateOfBirth,
+          nationalityId: nationality.id
+        };
+      } else {
+        registerData = {
+          ...this.registerForm.getRawValue(),
+          dateOfBirth: dateOfBirth
+        };
+        delete registerData.nationalityId;
+      }
 
       this.coachService.register(registerData).subscribe({
         next: (_) => this.router.navigate(['/coach']),

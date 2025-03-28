@@ -81,9 +81,11 @@
     </div>
   </div>
   <div class="row">
-    <div class="form-control-field">
+    <div class="form-control-field calendar p-fluid">
       <label for="dateOfBirth">Date of birth</label>
       <p-date-picker
+        fluid
+        severity="secondary"
         appendTo="body"
         id="dateOfBirth"
         formControlName="dateOfBirth"
@@ -116,9 +118,11 @@
       />
     </div> -->
 
-    <div class="form-control-field">
+    <div class="form-control-field p-fluid">
       <label for="nationalityId">Nationality</label>
       <p-autoComplete
+        fluid
+        severity="secondary"
         formControlName="nationalityId"
         [dropdown]="true"
         [suggestions]="filteredCountries"
