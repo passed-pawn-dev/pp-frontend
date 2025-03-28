@@ -3,10 +3,10 @@ import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { JwtDecoded } from '../../shared/models/JwtDecoded';
 import { jwtDecode } from 'jwt-decode';
-import Keycloak from 'keycloak-js';
 import { QuestionTileComponent } from '../question-tile/question-tile.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -24,16 +24,16 @@ import { FooterComponent } from '../footer/footer.component';
 export class LandingPageComponent implements OnInit {
   public constructor(
     private readonly router: Router,
-    private readonly keycloak: Keycloak,
+    private readonly authService: AuthService
   ) {}
 
   protected logIn(): void {
-    this.keycloak.login()
+    this.authService.redirectToLoginPage();
   }
 
   public async ngOnInit(): Promise<void> {
-    const token = this.keycloak.token
-    if (token && this.keycloak.authenticated) {
+    const token = this.authService.getToken();
+    if (token && this.authService.isLoggedIn()) {
       const decoded: JwtDecoded = jwtDecode(token);
       const roles: string[] | undefined = decoded.resource_access['api-client']?.roles;
       if (roles?.includes('student')) {

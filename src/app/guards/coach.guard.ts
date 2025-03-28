@@ -1,14 +1,14 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
-import Keycloak from 'keycloak-js';
 import { JwtDecoded } from '../modules/shared/models/JwtDecoded';
 import { jwtDecode } from 'jwt-decode';
+import { AuthService } from '../auth/services/auth.service';
 
 export const coachGuard: CanActivateFn = async (_route, _state) => {
-  const keycloak = inject(Keycloak);
+  const authService = inject(AuthService);
 
-  const token = keycloak.token;
-  if (!token) {
+  const token = authService.getToken();
+  if (token === undefined) {
     return false;
   }
 
@@ -18,9 +18,7 @@ export const coachGuard: CanActivateFn = async (_route, _state) => {
   if (roles && roles.includes('coach')) {
     return true;
   } else {
-    keycloak.login({
-      prompt: 'login'
-    });
+    authService.redirectToLoginPage();
     return false;
   }
 };

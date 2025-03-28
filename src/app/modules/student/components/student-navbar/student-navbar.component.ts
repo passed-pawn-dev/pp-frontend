@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { NAV_LINKS } from '../../constants/nav-links';
 import { RouterLink } from '@angular/router';
 import { NavLink } from '../../models/NavLink';
-import Keycloak from 'keycloak-js';
+import { AuthService } from '../../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-student-navbar',
@@ -12,19 +12,19 @@ import Keycloak from 'keycloak-js';
   styleUrl: './student-navbar.component.scss'
 })
 export class StudentNavbarComponent implements OnInit {
-  protected keycloak = inject(Keycloak);
+  protected authService = inject(AuthService);
 
   protected navLinks: NavLink[] = NAV_LINKS;
 
   protected userName!: string;
 
   public ngOnInit(): void {
-    this.keycloak.loadUserProfile().then(res => {
-      this.userName = res.username!;
+    this.authService.getUsername().then((res) => {
+      this.userName = res;
     });
   }
 
   protected logOut(): void {
-    this.keycloak.logout();
+    this.authService.logout();
   }
 }

@@ -1,14 +1,14 @@
 import { CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
-import Keycloak from 'keycloak-js';
+import { AuthService } from '../auth/services/auth.service';
 import { JwtDecoded } from '../modules/shared/models/JwtDecoded';
 import { jwtDecode } from 'jwt-decode';
 
 export const studentGuard: CanActivateFn = async (_route, _state) => {
-  const keycloak = inject(Keycloak);
+  const authService = inject(AuthService);
 
-  const token = keycloak.token;
-  if (!token) {
+  const token = authService.getToken();
+  if (token === undefined) {
     return false;
   }
 
@@ -18,9 +18,7 @@ export const studentGuard: CanActivateFn = async (_route, _state) => {
   if (roles && roles.includes('student')) {
     return true;
   } else {
-    keycloak.login({
-      prompt: 'login'
-    });
+    authService.redirectToLoginPage(true);
     return false;
   }
 };

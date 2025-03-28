@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import Keycloak from 'keycloak-js';
+import { AuthService } from '../../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-coach-my-profile',
@@ -9,9 +10,9 @@ import Keycloak from 'keycloak-js';
   styleUrl: './coach-my-profile.component.scss'
 })
 export class CoachMyProfileComponent {
-  public constructor(private readonly keycloak: Keycloak) {}
+  public constructor(private readonly authService: AuthService) {}
 
   protected logOut(): void {
-    this.keycloak.logout();
+    this.authService.logout();
   }
 }
