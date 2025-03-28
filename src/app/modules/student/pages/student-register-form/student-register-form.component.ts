@@ -7,7 +7,6 @@ import {
 } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
@@ -21,6 +20,8 @@ import { StudentService } from '../../service/student.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NationalityService } from '../../../shared/service/nationality.service';
 import { Nationality } from '../../../shared/models/Nationality';
+import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-student-register-form',
@@ -28,11 +29,11 @@ import { Nationality } from '../../../shared/models/Nationality';
   imports: [
     ReactiveFormsModule,
     InputTextModule,
-    DropdownModule,
+    SelectModule,
     ButtonModule,
     InputNumberModule,
     AutoCompleteModule,
-    CalendarModule,
+    DatePickerModule,
     ValidationErrorsComponent
   ],
   templateUrl: './student-register-form.component.html',

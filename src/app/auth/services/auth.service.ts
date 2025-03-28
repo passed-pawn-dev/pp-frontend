@@ -1,42 +1,36 @@
+import Keycloak from 'keycloak-js';
 import { Injectable } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
 import { environment } from '../../../../environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private constructor(private readonly keycloakService: KeycloakService) {}
+  private constructor(private readonly keycloak: Keycloak) {}
 
-  public get userName(): string {
-    return this.keycloakService.getUsername();
+  public redirectToLoginPage(promptLogIn: boolean = true): Promise<void> {
+    if (promptLogIn) {
+      return this.keycloak.login({
+        prompt: 'login'
+      });
+    } else {
+      return this.keycloak.login();
+    }
   }
 
-  public redirectToLoginPage(): Promise<void> {
-    return this.keycloakService.login();
-  }
-
-  public isLoggedIn(): boolean {
-    return this.keycloakService.isLoggedIn();
+  public isLoggedIn(): boolean | undefined {
+    return this.keycloak.authenticated;
   }
 
   public logout(): void {
-    this.keycloakService.logout(environment.keycloak.postLogoutRedirectUri);
+    this.keycloak.logout();
   }
 
-  public getToken(): Promise<string> {
-    return this.keycloakService.getToken();
+  public getToken(): string | undefined {
+    return this.keycloak.token;
   }
 
-  public getUsername(): string {
-    return this.keycloakService.getUsername();
-  }
-
-  public isStudent(): boolean {
-    return this.keycloakService.isUserInRole('student');
-  }
-
-  public isCoach(): boolean {
-    return this.keycloakService.isUserInRole('coach');
+  public getUsername(): Promise<string> {
+    return this.keycloak.loadUserProfile().then((res) => res.username!);
   }
 }

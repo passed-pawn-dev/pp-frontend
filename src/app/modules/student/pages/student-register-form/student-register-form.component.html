@@ -76,7 +76,7 @@
         <div class="form-control-field">
           <label for="dateOfBirth">Date of birth</label>
           <div class="calendar">
-            <p-calendar
+            <p-date-picker
               id="dateOfBirth"
               formControlName="dateOfBirth"
               type="date"
@@ -104,7 +104,7 @@
         <div class="form-control-field">
           <label for="chessTitle">Chess title</label>
           <div class="dropdown">
-            <p-dropdown
+            <p-select
               formControlName="chessTitle"
               optionLabel="label"
               optionValue="enumValue"
@@ -155,7 +155,7 @@
           You're almost done! Please review your details before submitting your account
           registration .
         </div>
-        <img src="assets/icons/elephant-register.png" alt="almost done" />
+        <img src="icons/elephant-register.png" alt="almost done" />
       </div>
     </div>
     <div class="btn-group">
@@ -173,7 +173,7 @@
         </button>
       } @else {
         <button type="button" class="primary-btn" (click)="nextStep()">
-          Next <img src="assets/icons/thick-arrow-right.png" alt="arrow" />
+          Next <img src="icons/thick-arrow-right.png" alt="arrow" />
         </button>
       }
     </div>

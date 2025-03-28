@@ -3,7 +3,7 @@
 }
 
 .link {
-  background-color: darken(white, 5);
+  background-color: color.adjust(white, $lightness: -5);
   border-radius: 1rem;
   color: black;
   display: block;

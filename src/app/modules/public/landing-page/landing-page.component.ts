@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../auth/services/auth.service';
 import { ButtonModule } from 'primeng/button';
-import { JwtDecoded } from '../../student/models/JwtDecoded';
+import { JwtDecoded } from '../../shared/models/JwtDecoded';
 import { jwtDecode } from 'jwt-decode';
+import { QuestionTileComponent } from '../question-tile/question-tile.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
-import { QuestionTileComponent } from '../question-tile/question-tile.component';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -23,8 +23,8 @@ import { QuestionTileComponent } from '../question-tile/question-tile.component'
 })
 export class LandingPageComponent implements OnInit {
   public constructor(
-    private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly authService: AuthService
   ) {}
 
   protected logIn(): void {
@@ -32,7 +32,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    const token = await this.authService.getToken();
+    const token = this.authService.getToken();
     if (token && this.authService.isLoggedIn()) {
       const decoded: JwtDecoded = jwtDecode(token);
       const roles: string[] | undefined = decoded.resource_access['api-client']?.roles;

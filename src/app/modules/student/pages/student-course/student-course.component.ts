@@ -10,7 +10,7 @@ import { StarRatingComponent } from '../../../shared/components/star-rating/star
 @Component({
   selector: 'app-student-course',
   standalone: true,
-  imports: [CourseReviewComponent, RouterLink, ButtonModule, StarRatingComponent],
+  imports: [ButtonModule, StarRatingComponent],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
 })

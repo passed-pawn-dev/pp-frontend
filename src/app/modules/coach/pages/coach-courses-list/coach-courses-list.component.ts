@@ -8,7 +8,7 @@ import { Button } from 'primeng/button';
 @Component({
   selector: 'app-coach-courses-list',
   standalone: true,
-  imports: [RouterLink, Button],
+  imports: [RouterLink],
   providers: [],
   templateUrl: './coach-courses-list.component.html',
   styleUrl: './coach-courses-list.component.scss'

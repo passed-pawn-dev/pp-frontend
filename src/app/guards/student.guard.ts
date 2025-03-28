@@ -1,23 +1,24 @@
 import { CanActivateFn } from '@angular/router';
-import { AuthService } from '../auth/services/auth.service';
 import { inject } from '@angular/core';
+import { AuthService } from '../auth/services/auth.service';
+import { JwtDecoded } from '../modules/shared/models/JwtDecoded';
 import { jwtDecode } from 'jwt-decode';
-import { JwtDecoded } from '../modules/student/models/JwtDecoded';
 
-export const studentGuard: CanActivateFn = async (route, state) => {
+export const studentGuard: CanActivateFn = async (_route, _state) => {
   const authService = inject(AuthService);
 
-  const token = await authService.getToken();
+  const token = authService.getToken();
+  if (token === undefined) {
+    return false;
+  }
+
   const decoded: JwtDecoded = jwtDecode(token);
   const roles: string[] | undefined = decoded.resource_access['api-client']?.roles;
 
-  if (roles?.includes('student')) {
-    console.log('test');
+  if (roles && roles.includes('student')) {
     return true;
   } else {
-    console.log(decoded);
-    alert(decoded);
-    authService.redirectToLoginPage();
+    authService.redirectToLoginPage(true);
     return false;
   }
 };

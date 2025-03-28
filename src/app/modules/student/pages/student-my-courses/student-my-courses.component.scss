@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .page {
     margin: auto;
     width: 62.5rem;
@@ -9,7 +11,7 @@
 }
 
 a {
-    background-color: darken(white, 5%);
+    background-color: color.adjust(white, $lightness: -5%);
     padding: 2rem;
     display: flex;
     justify-content: space-between;
@@ -19,7 +21,7 @@ a {
     color: black;
   
     &:hover {
-      background-color: darken(darken(white, 5%), 5%);
+      background-color: color.adjust(white, $lightness: -10%);
     }
 }
 

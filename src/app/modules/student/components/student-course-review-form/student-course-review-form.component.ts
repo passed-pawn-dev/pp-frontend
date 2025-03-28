@@ -6,7 +6,7 @@ import { ValidationErrorsComponent } from '../../../shared/components/validation
 import { ButtonModule } from 'primeng/button';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute } from '@angular/router';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { Textarea } from 'primeng/inputtextarea';
 import {MessageService} from 'primeng/api';
 
 @Component({
@@ -18,7 +18,7 @@ import {MessageService} from 'primeng/api';
     InputNumberModule,
     ValidationErrorsComponent,
     ButtonModule,
-    InputTextareaModule
+    Textarea
   ],
   templateUrl: './student-course-review-form.component.html',
   styleUrl: './student-course-review-form.component.scss'
