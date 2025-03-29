@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Course } from '../../models/Course';
 import { CourseService } from '../../service/course.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Button } from 'primeng/button';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-coach-courses-list',
@@ -19,7 +20,8 @@ export class CoachCoursesListComponent implements OnInit {
   public constructor(
     private courseService: CourseService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private destroyRef: DestroyRef
   ) {}
 
   public ngOnInit(): void {
@@ -27,17 +29,20 @@ export class CoachCoursesListComponent implements OnInit {
   }
 
   protected getAll(): void {
-    this.courseService.getAll().subscribe({
-      next: (res) => {
-        this.courses = res;
-      },
-      error: (_) =>
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Failure',
-          detail: 'Courses could not be fetched'
-        })
-    });
+    this.courseService
+      .getAll()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          this.courses = res;
+        },
+        error: (_) =>
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Failure',
+            detail: 'Courses could not be fetched'
+          })
+      });
   }
 
   protected deleteCourse(id: string): void {
@@ -45,22 +50,25 @@ export class CoachCoursesListComponent implements OnInit {
       message: 'Are you sure you want to delete this course?',
       header: 'Confirm',
       accept: () => {
-        this.courseService.delete(id).subscribe({
-          next: () => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: 'Course deleted successfully'
-            });
-            this.getAll();
-          },
-          error: (_) =>
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Failure',
-              detail: 'Course failed to delete'
-            })
-        });
+        this.courseService
+          .delete(id)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: () => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Course deleted successfully'
+              });
+              this.getAll();
+            },
+            error: (_) =>
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Failure',
+                detail: 'Course failed to delete'
+              })
+          });
       },
       reject: () => {}
     });

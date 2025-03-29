@@ -1,11 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-coach-lesson-form',
@@ -25,6 +26,7 @@ export class CoachLessonFormComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private messageService = inject(MessageService);
+  private destroyRef = inject(DestroyRef);
 
   protected lessonId: string = '';
 
@@ -33,22 +35,33 @@ export class CoachLessonFormComponent {
   });
 
   protected onSubmit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.lessonId = params.get('id')!;
-      this.courseService
-        .addLesson(this.lessonId, {
-          ...this.lessonForm.getRawValue(),
-          excercises: []
-        })
-        .subscribe({
-          next: (_) => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Lesson created successfully' });
-            this.router.navigate(['../..']);
-          },
-          error: (_) => {
-            this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Lesson could not be created. Ensure lesson number is correct.' });
-          }
-        });
-    });
+    this.route.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        this.lessonId = params.get('id')!;
+        this.courseService
+          .addLesson(this.lessonId, {
+            ...this.lessonForm.getRawValue(),
+            excercises: []
+          })
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: (_) => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Lesson created successfully'
+              });
+              this.router.navigate(['../..']);
+            },
+            error: (_) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Failure',
+                detail: 'Lesson could not be created. Ensure lesson number is correct.'
+              });
+            }
+          });
+      });
   }
 }
