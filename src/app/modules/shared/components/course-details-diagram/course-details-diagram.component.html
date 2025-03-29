@@ -1,0 +1,16 @@
+<!-- eslint-disable @angular-eslint/template/no-inline-styles -->
+<div class="tile">
+  <div class="bars-group">
+    @for (detail of detailsArray; track $index) {
+      <div class="dynamic" [style.width]="(detail[0] / max) * 100 + '%'">
+        {{ detail[0] }}
+      </div>
+      <!-- <div class="dynamic" >{{ detail[0] }}</div> -->
+    }
+  </div>
+  <div class="descs-group">
+    @for (detail of detailsArray; track $index) {
+      <div class="desc">{{ detail[1] }}</div>
+    }
+  </div>
+</div>

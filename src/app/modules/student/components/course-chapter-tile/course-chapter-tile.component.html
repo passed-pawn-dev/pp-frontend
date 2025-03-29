@@ -1,0 +1,60 @@
+<div class="chapter">
+  <div class="progress">
+    @if (chapter[1]) {
+      <div class="circle complete" [class.open]="showLessons">
+        <i class="fa fa-check-circle"></i>
+      </div>
+    } @else {
+      <div class="circle" [class.open]="showLessons"></div>
+    }
+  </div>
+  <div class="chapter-content">
+    <button type="button" class="icon-btn" (click)="toggleLessons()">
+      @if (showLessons) {
+        <img src="assets/icons/course-arrow-down.png" alt="arrow-down" />
+      } @else {
+        <img class="rotate" src="assets/icons/course-arrow-down.png" alt="arrow-down" />
+      }
+    </button>
+    <div>
+      <span>Lesson {{ chapterNumber }}</span> {{ chapter[0] }}
+    </div>
+  </div>
+</div>
+
+@if (showLessons) {
+  <div class="lesson-group">
+    @for (lesson of lessons; track $index) {
+      <div class="lesson">
+        <div class="progress">
+          @if (lesson[1]) {
+            <div class="circle complete"></div>
+          } @else {
+            <div class="circle"></div>
+          }
+        </div>
+        @if (lesson[1]) {
+          <div class="lesson-content complete">
+            <div class="left">
+              <div class="bold">{{ $index + 1 }}</div>
+              <div>{{ lesson[0] }}</div>
+            </div>
+            <div class="right">
+              <button type="button" class="primary-btn">Learn</button>
+            </div>
+          </div>
+        } @else {
+          <div class="lesson-content">
+            <div class="left">
+              <div class="bold">{{ $index + 1 }}</div>
+              <div>{{ lesson[0] }}</div>
+            </div>
+            <div class="right">
+              <button type="button" class="primary-btn">Learn</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

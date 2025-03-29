@@ -1,0 +1,56 @@
+@import 'variables';
+
+.tile {
+  display: flex;
+  width: fit-content;
+  // border: 1px solid;
+
+  .bars-group div,
+  .descs-group div {
+    box-sizing: border-box;
+    // color: white;
+    font-weight: 700;
+    height: 2rem;
+    padding: 0 0.5rem;
+    text-align: right;
+    display: flex;
+    align-items: center;
+  }
+
+  .bars-group,
+  .descs-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .bars-group {
+    width: 30rem;
+    align-items: flex-end;
+  }
+
+  .bars-group div {
+    justify-content: left;
+    // width: calc(100% + 2.5rem);
+    border-radius: 0.5rem 0 0 0.5rem;
+    z-index: 1;
+  }
+
+  .descs-group {
+    border-left: 2px solid white;
+  }
+
+  .descs-group div {
+    justify-content: right;
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+}
+
+@for $i from 1 through 5 {
+  .bars-group div:nth-child(#{$i}),
+  .descs-group div:nth-child(#{$i}) {
+    color: nth($colors, $i);
+    // background-color: nth($background-colors, $i);
+    background-color: $background;
+  }
+}

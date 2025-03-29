@@ -19,7 +19,7 @@ export class CourseDifficultyComponent implements OnInit {
     'Beginer',
     'Intermidiate',
     'Advanced',
-    'Master'
+    'Expert'
   ];
   protected color: string = '';
   protected header: string = '';

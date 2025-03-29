@@ -1,0 +1,39 @@
+<!-- eslint-disable @angular-eslint/template/no-inline-styles -->
+<li class="tile">
+  <a [routerLink]="course().id">
+    <img src="assets/images/chess-course-1.png" alt="" />
+    <!-- [course image] -->
+    <div class="content">
+      <div class="main">
+        <div class="header">
+          <h3>{{ course().title }}</h3>
+          <div class="coach">by Galiano Italiano</div>
+          <app-course-difficulty [difficulty]="1" />
+        </div>
+        <!-- @if (this.course().price > 0) {
+            <div class="price">123$</div>
+          } @else {
+            <div class="price free">Free</div>
+          } -->
+      </div>
+      <!-- <app-course-difficulty [difficulty]="5" /> -->
+      <div class="footer">
+        <div class="progress-stat-component">
+          <div class="header">
+            Completed <span>{{ courseProgress }}%</span>
+          </div>
+          <div class="progress-stat">
+            <div class="bar">
+              <div class="progress-bar" [style.width]="courseProgress + '%'"></div>
+            </div>
+            @if (courseProgress < 100) {
+              <i class="fa fa-check-circle"></i>
+            } @else {
+              <i class="fa fa-check-circle complete"></i>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+</li>

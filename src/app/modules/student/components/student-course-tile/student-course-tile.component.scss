@@ -12,14 +12,16 @@
     text-decoration: none;
     color: black;
     border: 1px solid white;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
+    // transition:
+    //   transform 0.3s ease,
+    //   box-shadow 0.3s ease;
 
     &:hover {
+      // transform: translateY(-0.5rem);
+      // box-shadow: 0 0.25rem 0 $text-secondary;
       border: 1px solid $text-secondary;
-      transform: translateY(-0.5rem);
-      box-shadow: 0 0.5rem 0 $text-secondary;
+      // border: 1px solid $border-secondary;
+      // box-shadow: 0 0 5px lighten($border-secondary, 10%);
     }
 
     img {
@@ -53,8 +55,8 @@
         }
 
         .price {
-          font-size: $font-XL;
-          line-height: 2rem;
+          font-size: $font-L;
+          line-height: 1.5rem;
           white-space: nowrap;
           // border: 1px solid blue;
         }

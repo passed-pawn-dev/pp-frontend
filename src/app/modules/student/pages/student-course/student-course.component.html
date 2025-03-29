@@ -62,13 +62,13 @@
         </div>
         <div class="chess-title">GM</div>
         <!-- [coach chess title] -->
-        <app-star-rating [rating]="4" [ratingsNumber]="123" />
         <div class="created-courses">
           <div>3</div>
           <!-- [numebr of created courses by coach] -->
           <img src="assets/icons/book.png" alt="book" />
-          <div>Created Courses</div>
+          <div>Courses Created</div>
         </div>
+        <app-star-rating [rating]="4" [ratingsNumber]="123" />
         <button type="button" class="toggle-btn" (click)="toggleCoachDetails()">
           @if (showCoachDetails) {
             <img src="assets/icons/purple-arrow-up.png" alt="arrow-up" />
@@ -90,16 +90,77 @@
   </section>
 
   <section class="inside-section">
-    <h3>What's inside</h3>
     <div class="content">
-      <div class="diagrams"></div>
-      <div class="line"></div>
-      <div class="footer"></div>
+      <h3>What's inside</h3>
+      <button type="button" class="toggle-btn" (click)="toggleInsideDetails()">
+        @if (showInsideDetails) {
+          <img src="assets/icons/purple-arrow-up.png" alt="arrow-up" />
+        } @else {
+          <img src="assets/icons/purple-arrow-down.png" alt="arrow-up" />
+        }
+      </button>
     </div>
+    @if (showInsideDetails) {
+      <div class="diagrams">
+        <app-course-difficulty [difficulty]="2" />
+        <app-course-details-diagram [detailsArray]="courseDetails" />
+      </div>
+      <div class="line"></div>
+      <div class="footer">
+        <div><span>27.5h</span> of Recorded Videos</div>
+        <div>English</div>
+        <div>
+          Live Coach Interaction <img src="assets/icons/green-live.png" alt="live" />
+        </div>
+      </div>
+    }
   </section>
 
-  <section>
-    <h3>Inpact</h3>
-    <div class="content"></div>
+  <section class="inpact">
+    <div class="content">
+      <h3>Inpact</h3>
+      <div class="header">
+        <div class="participation">
+          <div>3024</div>
+          <img src="assets/icons/people.png" alt="book" />
+          <div>Participants</div>
+        </div>
+        <app-star-rating [rating]="4" [ratingsNumber]="1503" />
+        <button type="button" class="toggle-btn" (click)="toggleInpactDetails()">
+          @if (showInpactDetails) {
+            <img src="assets/icons/purple-arrow-up.png" alt="arrow-up" />
+          } @else {
+            <img src="assets/icons/purple-arrow-down.png" alt="arrow-up" />
+          }
+        </button>
+      </div>
+    </div>
+    @if (showInpactDetails) {
+      <div class="details">
+        @for (review of course().reviews; track $index) {
+          <app-course-review [review]="review" />
+        }
+        @if (course().reviews.length === 0) {
+          <div class="no-rev">No revies yet</div>
+        }
+      </div>
+    }
   </section>
+
+  <div class="content-section">
+    <div class="header">
+      <img src="assets/icons/lock.png" alt="lock" />
+      <div>Buy course to study from prepared materials</div>
+    </div>
+  </div>
+
+  <div class="buy-section">
+    <div><span>30 days </span>to return if you're not satisfied</div>
+    <div class="right">
+      <div class="price">{{ formattedPrice() }}</div>
+      <button type="button" class="primary-btn" (click)="buyCourse()">
+        Buy Course
+      </button>
+    </div>
+  </div>
 </div>

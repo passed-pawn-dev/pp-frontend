@@ -1,4 +1,6 @@
-<p-confirmDialog></p-confirmDialog>
+<!-- eslint-disable @angular-eslint/template/no-inline-styles -->
+
+<!-- <p-confirmDialog></p-confirmDialog>
 <div class="page">
   <div class="course-data">
     <div class="course-header">
@@ -64,4 +66,153 @@
       </div>
     }
   </ul>
+</div> -->
+
+<div class="page">
+  <section class="main-section">
+    <img class="course-img" src="assets/images/chess-course-1.png" alt="chess-course" />
+    <div class="content">
+      <div class="top">
+        <div class="nav">
+          <h2>{{ course().title }}</h2>
+          <div>Sign out</div>
+        </div>
+        <div class="coach">Carlos Albinos</div>
+      </div>
+      <div class="progress-group">
+        <div class="progress-stat-component">
+          <div class="header">{{ 3 }} /{{ 5 }} Lessons</div>
+          <div class="progress-stat">
+            <div class="bar">
+              <div class="progress-bar" [style.width]="60 + '%'"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-stat-component">
+          <div class="header">{{ 4 }} /{{ 5 }} Puzzles</div>
+          <div class="progress-stat">
+            <div class="bar">
+              <div class="progress-bar" [style.width]="80 + '%'"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-stat-component">
+          <div class="header">{{ 2 }} /{{ 5 }} Quizes</div>
+          <div class="progress-stat">
+            <div class="bar">
+              <div class="progress-bar" [style.width]="40 + '%'"></div>
+            </div>
+          </div>
+        </div>
+
+        @if (40 < 100) {
+          <i class="fa fa-check-circle"></i>
+        } @else {
+          <i class="fa fa-check-circle complete"></i>
+        }
+      </div>
+    </div>
+  </section>
+  <section class="course-content-section">
+    <h3>Chapters</h3>
+    <div class="chapter-group">
+      <!-- <div class="chapter" >
+        <div class="progress" >
+          <div class="circle" ></div>
+        </div>
+        <div class="chapter-content" >
+          <button type="button" class="icon" >
+            <img src="assets/icons/course-arrow-down.png" alt="arrow-down">
+          </button>
+          <div>1. Chess opening lesson</div>
+        </div>
+      </div>
+
+      <div class="lesson-group" >
+
+        <div class="lesson" >
+          <div class="progress" >
+            <div class="circle" ></div>
+          </div>
+          <div class="lesson-content" >
+            <div class="left" >
+              <div class="bold" >Lesson 1</div>
+              <div>Chess opening lesson</div> 
+            </div>
+            <div class="right" >
+              <button type="button" class="secondary-btn" >Preview</button>
+            </div>
+          </div>
+        </div>
+  
+        <div class="lesson" >
+          <div class="progress" >
+            <div class="circle" ></div>
+          </div>
+          <div class="lesson-content" >
+            <div class="left" >
+              <div class="bold" >Lesson 2</div>
+              <div>Chess opening lesson</div> 
+            </div>
+            <div class="right" >
+              <button type="button" class="primary-btn" >Learn</button>
+            </div>
+          </div>
+        </div> -->
+      @for (chapter of chapters; track $index) {
+        <app-course-chapter-tile
+          [chapter]="chapter[0]"
+          [lessons]="chapter[1]"
+          [chapterNumber]="$index + 1"
+        />
+      }
+    </div>
+
+    <!-- <div class="chapter" >
+        <div class="progress" >
+          <div class="circle" ></div>
+        </div>
+        <div class="chapter-content" >
+          <button type="button" class="icon" >
+            <img src="assets/icons/course-arrow-down.png" alt="arrow-down">
+          </button>
+          <div>2. Chess opening lesson</div>
+        </div>
+      </div>
+
+      <div class="lesson-group" >
+
+        <div class="lesson" >
+          <div class="progress" >
+            <div class="circle" ></div>
+          </div>
+          <div class="lesson-content" >
+            <div class="left" >
+              <div class="bold" >Lesson 3</div>
+              <div>Chess opening lesson</div> 
+            </div>
+            <div class="right" >
+              <button type="button" class="primary-btn" >Learn</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+
+      <div class="chapter" >
+        <div class="progress" >
+          <div class="circle" ></div>
+        </div>
+        <div class="chapter-content" >
+          <button type="button" class="icon" >
+            <img src="assets/icons/course-arrow-down.png" alt="arrow-down">
+          </button>
+          <div>3. Chess opening lesson</div>
+        </div>
+      </div>
+    </div> -->
+  </section>
 </div>

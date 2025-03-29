@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  // border: 1px solid;
 
   .rating {
     font-size: $font-L;
@@ -12,8 +13,16 @@
   }
 
   .stars-group {
+    display: flex;
+    gap: 0.1rem;
+
     .star {
       height: $font-M;
+    }
+
+    i {
+      height: $font-M;
+      color: $yello-star;
     }
   }
 }

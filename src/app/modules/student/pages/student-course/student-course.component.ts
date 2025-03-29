@@ -6,11 +6,20 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Button, ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
+import { CourseDetailsDiagramComponent } from '../../../shared/components/course-details-diagram/course-details-diagram.component';
+import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 
 @Component({
   selector: 'app-student-course',
   standalone: true,
-  imports: [CourseReviewComponent, RouterLink, ButtonModule, StarRatingComponent],
+  imports: [
+    CourseReviewComponent,
+    RouterLink,
+    ButtonModule,
+    StarRatingComponent,
+    CourseDetailsDiagramComponent,
+    CourseDifficultyComponent
+  ],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
 })
@@ -27,13 +36,25 @@ export class StudentCourseComponent implements OnInit {
 
   protected showCoachDetails: boolean = false;
 
+  protected showInsideDetails: boolean = true;
+
+  protected showInpactDetails: boolean = false;
+
+  protected courseDetails: [number, string][] = [
+    [7, 'Puzzeles'],
+    [7, 'Quizes'],
+    [5, 'Video'],
+    [7, 'Examples'],
+    [100, 'Articles']
+  ];
+
   public constructor(
     private courseService: CourseService,
     private readonly route: ActivatedRoute,
     private messageService: MessageService
   ) {}
 
-  protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
+  protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} $`);
 
   protected reviewCount = computed(() => this.course().reviews.length);
 
@@ -56,6 +77,14 @@ export class StudentCourseComponent implements OnInit {
 
   protected toggleCoachDetails(): void {
     this.showCoachDetails = !this.showCoachDetails;
+  }
+
+  protected toggleInsideDetails(): void {
+    this.showInsideDetails = !this.showInsideDetails;
+  }
+
+  protected toggleInpactDetails(): void {
+    this.showInpactDetails = !this.showInpactDetails;
   }
 
   protected buyCourse(): void {

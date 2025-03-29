@@ -1,0 +1,214 @@
+@import 'variables';
+
+.chapter {
+  display: flex;
+  // border: 1px solid;
+
+  .progress {
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    // border: 1px solid;
+
+    .circle {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background-color: $border-secondary;
+      position: relative;
+
+      // &::after,
+      // &::before {
+      //     position: absolute;
+      //     content: '';
+      //     width: 0.5rem;
+      //     height: 0.5rem;
+      //     background-color: $border-secondary;
+      //     border-radius: 50%;
+      //     left: 50%;
+      //     transform: translateX(-50%);
+      //     bottom: -1.4rem;
+      // }
+
+      // &::after {
+      //     top: -1.4rem;
+      // }
+    }
+
+    .open {
+      &::before {
+        position: absolute;
+        content: '';
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: $border-secondary;
+        border-radius: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -1.4rem;
+      }
+    }
+
+    .complete {
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid;
+
+      &::before,
+      &::after {
+        background-color: $primary;
+      }
+
+      i {
+        font-size: 1.75rem;
+        color: $primary;
+        // border: 1px solid;
+      }
+    }
+  }
+
+  .chapter-content {
+    width: 100%;
+    background-color: white;
+    padding: 1.25rem 1.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    gap: 1.5rem;
+    font-size: $font-L;
+    // border: 1px solid;
+
+    span {
+      font-weight: 700;
+      margin-right: 1rem;
+      font-size: $font-M;
+    }
+
+    .icon-btn {
+      padding: 0;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      // transition: transform 0.5s;
+
+      // &:hover {
+      //   transform: rotate(0deg);
+      // }
+
+      img {
+        display: flex;
+        width: 1rem;
+        transform: rotate(0deg);
+      }
+
+      .rotate {
+        transform: rotate(-90deg);
+      }
+    }
+
+    .number {
+      font-weight: 700;
+    }
+  }
+}
+
+.lesson-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+
+  .lesson {
+    display: flex;
+    // margin-left: 3.7rem;
+
+    .progress {
+      // padding: 0 1.5rem;
+      padding: 0 1.25rem;
+      display: flex;
+      align-items: center;
+      // border: 1px solid;
+
+      .circle {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background-color: $border-secondary;
+        position: relative;
+
+        &::before,
+        &::after {
+          position: absolute;
+          content: '';
+          width: 0.5rem;
+          height: 0.5rem;
+          background-color: $border-secondary;
+          border-radius: 50%;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: -1.5rem;
+        }
+
+        &::after {
+          top: -1.5rem;
+        }
+      }
+
+      .complete {
+        background-color: $primary;
+
+        &::before,
+        &::after {
+          background-color: $primary;
+        }
+      }
+    }
+
+    .lesson-content {
+      width: 100%;
+      background-color: white;
+      padding: 1rem 1rem 1rem 1.5rem;
+      border-radius: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: content-box;
+      border-left: 0.5rem solid $border-secondary;
+
+      .left {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .bold {
+        font-weight: 700;
+      }
+    }
+
+    .complete {
+      border-color: $primary;
+    }
+
+    // &:first-child {
+
+    //     .progress {
+
+    //         .circle::after {
+    //             display: none;
+    //         }
+    //     }
+    // }
+
+    &:last-child {
+      .progress {
+        .circle::before {
+          display: none;
+        }
+      }
+    }
+  }
+}

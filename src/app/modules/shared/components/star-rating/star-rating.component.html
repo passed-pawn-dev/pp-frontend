@@ -1,10 +1,14 @@
 <div class="tile">
-  <div class="rating">{{ rating }}.0</div>
+  @if (ratingsNumber) {
+    <div class="rating">{{ rating }}.0</div>
+  }
   <div class="stars-group">
-    <img class="star" src="assets/icons/yellow-star.png" alt="star" />
-    <img class="star" src="assets/icons/yellow-star.png" alt="star" />
-    <img class="star" src="assets/icons/yellow-star.png" alt="star" />
-    <img class="star" src="assets/icons/yellow-star.png" alt="star" />
+    @for (ele of starsArray; track $index) {
+      <i class="fa fa-star"></i>
+    }
+    <!-- <i class="fa fa-star-half"></i> -->
   </div>
-  <div class="rating-number">({{ ratingsNumber }})</div>
+  @if (ratingsNumber) {
+    <div class="rating-number">({{ ratingsNumber }})</div>
+  }
 </div>

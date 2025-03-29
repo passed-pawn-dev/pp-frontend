@@ -4,11 +4,12 @@ import { MyCourse } from '../../models/MyCourse';
 
 import { CourseService } from '../../service/course.service';
 import { Course } from '../../models/Course';
+import { StudentBoughtCourseTileComponent } from '../../components/student-bought-course-tile/student-bought-course-tile.component';
 
 @Component({
   selector: 'app-student-my-courses',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, StudentBoughtCourseTileComponent],
   templateUrl: './student-my-courses.component.html',
   styleUrl: './student-my-courses.component.scss'
 })
@@ -20,8 +21,7 @@ export class StudentMyCoursesComponent implements OnInit {
   public ngOnInit(): void {
     this.courseService.getAllBought().subscribe((res) => {
       this.courses = res;
-      console.log(res)
-    
+      console.log(res);
     });
   }
 }

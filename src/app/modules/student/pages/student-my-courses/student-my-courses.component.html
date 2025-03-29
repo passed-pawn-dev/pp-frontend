@@ -2,9 +2,7 @@
   <h2>My Courses</h2>
   <ul class="list">
     @for (course of courses; track $index) {
-      <li class="tile" >
-          <a [routerLink]="course.id"><span>{{ course.title }}</span></a>
-      </li>
+      <app-student-bought-course-tile [course]="course" />
     }
   </ul>
 </div>

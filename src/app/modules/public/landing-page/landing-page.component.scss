@@ -89,10 +89,12 @@
             border-radius: 0.5rem;
             padding: 1.5rem;
 
-            &:hover {
-              border: 1px solid $primary-light;
-              box-shadow: 5px 5px 0 lighten($primary-light, 10%);
-            }
+            // &:hover {
+            //   border: 1px solid $primary-light;
+            //   box-shadow: 5px 5px 0 $primary-light
+            //   // border: 1px solid $text-secondary;
+            //   // box-shadow: 5px 5px 0 $text-secondary;
+            // }
 
             img {
               height: $font-XL;

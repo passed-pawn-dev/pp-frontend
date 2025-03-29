@@ -3,14 +3,22 @@ import { MyCourseDetails } from '../../models/MyCourseDetails';
 import { StudentCourseReviewFormComponent } from '../../components/student-course-review-form/student-course-review-form.component';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import {ConfirmationService, MessageService} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Exercise } from '../../models/Exercise';
+import { CourseDetailsDiagramComponent } from '../../../shared/components/course-details-diagram/course-details-diagram.component';
+import { CourseChapterTileComponent } from '../../components/course-chapter-tile/course-chapter-tile.component';
 
 @Component({
   selector: 'app-student-my-course',
   standalone: true,
-  imports: [StudentCourseReviewFormComponent, RouterLink, ConfirmDialogModule],
+  imports: [
+    StudentCourseReviewFormComponent,
+    RouterLink,
+    ConfirmDialogModule,
+    CourseDetailsDiagramComponent,
+    CourseChapterTileComponent
+  ],
   providers: [ConfirmationService],
   templateUrl: './student-my-course.component.html',
   styleUrl: './student-my-course.component.scss'
@@ -41,6 +49,24 @@ export class StudentMyCourseComponent implements OnInit {
     });
   }
 
+  protected chapters: [[string, boolean], [string, boolean][]][] = [
+    [
+      ['Chess openings123', true],
+      [
+        ['ala am kota', true],
+        ['kot ma ale ewq', true]
+      ]
+    ],
+    [
+      ['End Game wow', false],
+      [
+        ['ala am 31', true],
+        ['kot ma ale', true],
+        ['123', false]
+      ]
+    ]
+  ];
+
   protected getSortedExercises(exerciseList: Exercise[]): Exercise[] {
     return exerciseList.sort((a, b) => (a.id > b.id ? 1 : -1));
   }
@@ -52,8 +78,18 @@ export class StudentMyCourseComponent implements OnInit {
       accept: () => {
         this.route.paramMap.subscribe((params) => {
           this.courseService.signOut(params.get('id')!).subscribe({
-            next: (_) => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Signed out successfully' }),
-            error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Could not sign out' })
+            next: (_) =>
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Signed out successfully'
+              }),
+            error: (_) =>
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Failure',
+                detail: 'Could not sign out'
+              })
           });
         });
         this.router.navigate(['../'], { relativeTo: this.route });

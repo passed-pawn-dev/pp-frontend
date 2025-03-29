@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {ToastModule} from 'primeng/toast';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +11,12 @@ import {ToastModule} from 'primeng/toast';
 })
 export class AppComponent {
   private title = 'pp-frontend';
+
+  public constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
+    });
+  }
 }
