@@ -22,7 +22,7 @@ import {
   ChessTitle,
   chessTitleToLabelMapping
 } from '../../../shared/enums/chess-titles.enum';
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { SelectModule } from 'primeng/select';
 
 @Component({
@@ -62,7 +62,7 @@ export class CoachRegisterFormComponent implements OnInit {
     phoneNumber: ['', [Validators.required]],
     dateOfBirth: [],
     elo: [null, [Validators.min(1000)]],
-    chessTitle: [null],
+    // chessTitle: [null],
     nationalityId: [''],
     shortDescription: [''],
     detailedDescription: ['']
@@ -74,7 +74,11 @@ export class CoachRegisterFormComponent implements OnInit {
         this.nationalities = res;
       },
       error: (_) => {
-        this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Nationalities could not be fetched' });
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Failure',
+          detail: 'Nationalities could not be fetched'
+        });
       }
     });
   }
@@ -89,7 +93,7 @@ export class CoachRegisterFormComponent implements OnInit {
       country.toLowerCase().startsWith(query.toLowerCase())
     );
 
-    this.filteredCountries = filteredCountries;
+    this.filteredCountries = filteredCountries.concat('Not Set');
   }
 
   private parseDate(isoDate: number): string {
@@ -103,19 +107,32 @@ export class CoachRegisterFormComponent implements OnInit {
   protected onSubmit(): void {
     if (this.registerForm.valid) {
       const dateOfBirth = this.parseDate(this.registerForm.value.dateOfBirth!);
-      const nationalityId = this.nationalities.find(
+      const nationality = this.nationalities.find(
         (n) => n.fullName === this.registerForm.getRawValue().nationalityId
-      )!.id;
-
-      const registerData: Coach = {
-        ...this.registerForm.getRawValue(),
-        dateOfBirth: dateOfBirth,
-        nationalityId: nationalityId
-      };
+      );
+      let registerData: Coach;
+      if (nationality) {
+        registerData = {
+          ...this.registerForm.getRawValue(),
+          dateOfBirth: dateOfBirth,
+          nationalityId: nationality.id
+        };
+      } else {
+        registerData = {
+          ...this.registerForm.getRawValue(),
+          dateOfBirth: dateOfBirth
+        };
+        delete registerData.nationalityId;
+      }
 
       this.coachService.register(registerData).subscribe({
         next: (_) => this.router.navigate(['/coach']),
-        error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Failed to register' })
+        error: (_) =>
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Failure',
+            detail: 'Failed to register'
+          })
       });
     }
   }
