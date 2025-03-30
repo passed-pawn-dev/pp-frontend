@@ -62,7 +62,7 @@ export class StudentRegisterFormComponent implements OnInit {
     phoneNumber: ['', [Validators.required]],
     dateOfBirth: [Date.now()],
     elo: [0, [Validators.min(1000)]],
-    chessTitle: [null],
+    // chessTitle: [null],
     nationalityId: ['']
   });
 
@@ -106,7 +106,7 @@ export class StudentRegisterFormComponent implements OnInit {
       country.toLowerCase().startsWith(query.toLowerCase())
     );
 
-    this.filteredCountries = filteredCountries;
+    this.filteredCountries = filteredCountries.concat('Not Set');
   }
 
   private parseDate(isoDate: number): string {
@@ -138,20 +138,28 @@ export class StudentRegisterFormComponent implements OnInit {
   protected onSubmit(): void {
     if (this.registerForm.valid) {
       const dateOfBirth = this.parseDate(this.registerForm.value.dateOfBirth!);
-      const nationalityId = this.nationalities.find(
-        (n) => n.fullName === this.registerForm.getRawValue().nationalityId
-      )!.id;
-      const registerData: Student = {
-        ...this.registerForm.getRawValue(),
-        dateOfBirth: dateOfBirth,
-        nationalityId: nationalityId
-      };
-      this.studentService
-        .register(registerData)
+      const nationality = this.nationalities.find(
+        (n) => n.fullName === this.registerForm.getRawValue().nationalityId);
+      
+      let registerData: Student;
+      if (nationality) {
+        registerData = {
+          ...this.registerForm.getRawValue(),
+          dateOfBirth: dateOfBirth,
+          nationalityId: nationality.id
+        };
+      } else {
+        registerData = {
+          ...this.registerForm.getRawValue(),
+          dateOfBirth: dateOfBirth
+        };
+        delete registerData.nationalityId;
+      }
+      this.studentService.register(registerData)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res) => {
-          this.router.navigate(['/student']);
-        });
+        this.router.navigate(['/student']);
+      });
     }
   }
 }
