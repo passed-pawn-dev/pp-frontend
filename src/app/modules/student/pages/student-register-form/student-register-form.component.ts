@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   AutoCompleteCompleteEvent,
@@ -22,6 +22,7 @@ import { NationalityService } from '../../../shared/service/nationality.service'
 import { Nationality } from '../../../shared/models/Nationality';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-student-register-form',
@@ -44,6 +45,7 @@ export class StudentRegisterFormComponent implements OnInit {
   private studentService = inject(StudentService);
   private nationalityService = inject(NationalityService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   protected chessTitles = enumToObjectArray(ChessTitle, chessTitleToLabelMapping);
   protected nationalities: Nationality[] = [];
@@ -86,9 +88,12 @@ export class StudentRegisterFormComponent implements OnInit {
   // });
 
   public ngOnInit(): void {
-    this.nationalityService.getAll().subscribe((res) => {
-      this.nationalities = res;
-    });
+    this.nationalityService
+      .getAll()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res) => {
+        this.nationalities = res;
+      });
   }
 
   protected filterCountries(event: AutoCompleteCompleteEvent): void {
@@ -134,8 +139,8 @@ export class StudentRegisterFormComponent implements OnInit {
     if (this.registerForm.valid) {
       const dateOfBirth = this.parseDate(this.registerForm.value.dateOfBirth!);
       const nationality = this.nationalities.find(
-        (n) => n.fullName === this.registerForm.getRawValue().nationalityId
-      );
+        (n) => n.fullName === this.registerForm.getRawValue().nationalityId);
+      
       let registerData: Student;
       if (nationality) {
         registerData = {
@@ -150,7 +155,9 @@ export class StudentRegisterFormComponent implements OnInit {
         };
         delete registerData.nationalityId;
       }
-      this.studentService.register(registerData).subscribe((res) => {
+      this.studentService.register(registerData)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((res) => {
         this.router.navigate(['/student']);
       });
     }

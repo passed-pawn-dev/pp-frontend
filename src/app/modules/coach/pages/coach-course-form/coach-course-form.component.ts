@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -6,7 +6,8 @@ import { ValidationErrorsComponent } from '../../../shared/components/validation
 import { ButtonModule } from 'primeng/button';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-coach-course-form',
@@ -28,6 +29,7 @@ export class CoachCourseFormComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private messageService = inject(MessageService);
+  private destroyRef = inject(DestroyRef);
 
   private courseId: string | null = null;
 
@@ -38,35 +40,62 @@ export class CoachCourseFormComponent implements OnInit {
   });
 
   public ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const id: string | null = params.get('id');
-      this.courseId = id;
-      if (id) {
-        this.courseService.getById(id).subscribe((res) => {
-          this.courseForm.patchValue(res);
-        });
-      }
-    });
+    this.route.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        const id: string | null = params.get('id');
+        this.courseId = id;
+        if (id) {
+          this.courseService
+            .getById(id)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((res) => {
+              this.courseForm.patchValue(res);
+            });
+        }
+      });
   }
 
   protected onSubmit(): void {
     if (this.courseId === null) {
-      this.courseService.create(this.courseForm.getRawValue()).subscribe({
-        next: (_) => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Course created successfully' })
-          this.router.navigate(['coach/courses']);
-        },
-        error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Failed to create course' })
-      });
+      this.courseService
+        .create(this.courseForm.getRawValue())
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (_) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Course created successfully'
+            });
+            this.router.navigate(['coach/courses']);
+          },
+          error: (_) =>
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Failure',
+              detail: 'Failed to create course'
+            })
+        });
     } else {
       this.courseService
         .update(this.courseId, this.courseForm.getRawValue())
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (_) => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Course updated successfully' })
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Course updated successfully'
+            });
             this.router.navigate(['coach/courses']);
           },
-          error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Failed to update course' })
+          error: (_) =>
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Failure',
+              detail: 'Failed to update course'
+            })
         });
     }
   }

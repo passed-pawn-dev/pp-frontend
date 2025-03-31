@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MyCourse } from '../../models/MyCourse';
 
 import { CourseService } from '../../service/course.service';
 import { Course } from '../../models/Course';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-student-my-courses',
@@ -15,11 +16,17 @@ import { Course } from '../../models/Course';
 export class StudentMyCoursesComponent implements OnInit {
   protected courses: MyCourse[] = [];
 
-  public constructor(private courseService: CourseService) {}
+  public constructor(
+    private courseService: CourseService,
+    private destroyRef: DestroyRef
+  ) {}
 
   public ngOnInit(): void {
-    this.courseService.getAllBought().subscribe((res) => {
-      this.courses = res;    
-    });
+    this.courseService
+      .getAllBought()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res) => {
+        this.courses = res;
+      });
   }
 }
