@@ -11,6 +11,6 @@ export interface QuizDetails {
 
 interface QuizAnswer {
   text: string;
-  move?: string;
+  lastMove?: string;
   newPosition?: string;
 }

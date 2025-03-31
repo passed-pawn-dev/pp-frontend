@@ -17,23 +17,23 @@ export class StudentSolveQuizComponent {
     answers: [
       {
         text: 'Pawn to e4',
-        newPosition: 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1'
-        // move: "e4",
+        newPosition: 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1',
+        lastMove: 'e4'
       },
       {
         text: 'Pawn to d4',
-        newPosition: 'rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR w KQkq - 0 1'
-        // move: "d4",
+        newPosition: 'rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR w KQkq - 0 1',
+        lastMove: 'd4'
       },
       {
         text: 'Pawn to c4',
-        newPosition: 'rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR w KQkq - 0 1'
-        // move: "c4",
+        newPosition: 'rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR w KQkq - 0 1',
+        lastMove: 'c4'
       },
       {
         text: 'Pawn to b4',
-        newPosition: 'rnbqkbnr/pppppppp/8/8/1P6/8/P1PPPPPP/RNBQKBNR w KQkq - 0 1'
-        // move: "b4",
+        newPosition: 'rnbqkbnr/pppppppp/8/8/1P6/8/P1PPPPPP/RNBQKBNR w KQkq - 0 1',
+        lastMove: 'b4'
       }
     ],
     solution: 0,

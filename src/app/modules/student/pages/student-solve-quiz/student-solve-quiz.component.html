@@ -7,7 +7,7 @@
           [startingFen]="boardFen()"
         ></app-display-chessboard>
       }
-      <div class="panel">
+      <div class="panel right-panel">
         <div class="question">
           {{ quiz().question }}
         </div>
@@ -27,7 +27,12 @@
                 [disabled]="answerSubmitted"
                 (click)="selectAnswer($index)"
               >
-                {{ answer.text }}
+                <span>{{ answer.text }}</span>
+                @if (answerSubmitted && quiz().solution === $index) {
+                  <img class="small-icon" alt="xmark" src="/icons/check-green.svg" />
+                } @else if (answerSubmitted && selectedAnswer() === $index) {
+                  <img class="small-icon" alt="xmark" src="/icons/xmark.svg" />
+                }
               </button>
             </li>
           }
@@ -65,13 +70,22 @@
         </div>
         @if (quiz().hint && hintShown) {
           <div class="hint">
-            {{ quiz().hint }}
+            <img class="icon" src="icons/lightbulb.svg" alt="lightbulb" />
+            <span>{{ quiz().hint }}</span>
           </div>
         }
       </div>
     </div>
     @if (answerSubmitted) {
       <div class="panel bottom-container">
+        @if (solved) {
+          <img src="" alt="" />
+        } @else {}
+        <img
+          class="icon"
+          alt="checkmark"
+          [src]="solved ? '/icons/check-green.svg' : 'icons/xmark.svg'"
+        />
         <span>{{ solved ? 'Correct! ' : 'Incorrect. ' }}</span>
         @if (quiz().explanation) {
           <span>{{ quiz().explanation }}</span>

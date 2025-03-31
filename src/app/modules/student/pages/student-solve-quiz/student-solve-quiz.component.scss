@@ -10,7 +10,7 @@
 .main-content {
   display: flex;
   flex-direction: column;
-  width: 70vw;
+  width: 60vw;
   justify-content: stretch;
 }
 
@@ -22,12 +22,17 @@
 .chessboard {
   width: 30rem;
   margin-right: 1rem;
+  flex-grow: 2;
 }
 
 .panel {
   background-color: white;
   border-radius: 1rem;
   padding: 1rem;
+}
+
+.right-panel {
+  flex-grow: 1;
 }
 
 .answers {
@@ -48,6 +53,9 @@ li {
   margin-left: 0;
   text-align: start;
   background-color: #f4f4f4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   &:hover {
     background-color: #c3bebc;
   }
@@ -113,12 +121,19 @@ li {
 .hint {
   background-color: #ffe9b7;
   border-radius: 0.5rem;
-  padding: 0.5rem;
+  padding: 1rem;
   margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .icon {
   width: 2rem;
+}
+
+.small-icon {
+  width: 1rem;
 }
 
 .reset-button {
@@ -147,6 +162,7 @@ li {
 
 .bottom-container {
   margin-top: 1rem;
-  width: 100%;
-  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
