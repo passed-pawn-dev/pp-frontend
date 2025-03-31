@@ -60,6 +60,21 @@
             </div>
           }
         </div>
+        <a
+          class="exercise-link-title"
+          [routerLink]="
+            '/student/my-courses/' +
+            course().id +
+            '/lesson/' +
+            lesson.id +
+            '/quiz/' +
+            quiz().id
+          "
+        >
+          <i class="pi pi-chevron-left"></i>
+          <span>{{ quiz().title }}</span
+          ><i class="pi pi-chevron-right"></i>
+        </a>
       </div>
     }
   </ul>

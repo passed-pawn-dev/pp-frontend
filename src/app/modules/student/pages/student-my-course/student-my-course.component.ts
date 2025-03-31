@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Exercise } from '../../models/Exercise';
 import { ButtonModule } from 'primeng/button';
+import { Quiz } from '../../models/Quiz';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -24,6 +25,11 @@ export class StudentMyCourseComponent implements OnInit {
     coachName: '',
     thumbnail: '',
     lessons: []
+  });
+
+  protected quiz = signal<Quiz>({
+    id: '1',
+    title: 'quiz'
   });
 
   public constructor(

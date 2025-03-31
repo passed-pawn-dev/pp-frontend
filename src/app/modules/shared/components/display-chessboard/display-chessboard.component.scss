@@ -2,19 +2,6 @@
 
 @use 'variables' as *;
 
-.chessboard-controls {
-  display: flex;
-  gap: 1.5rem;
-  margin-left: calc(50% - 33rem);
-  padding-top: 2rem;
-  width: fit-content;
-}
-
-.chessboard-fen-load-input {
-  align-items: flex-start;
-  display: flex;
-}
-
 .chessboard {
   aspect-ratio: 1/1;
   display: grid;
@@ -52,19 +39,6 @@
     padding-bottom: 0.25rem;
     place-content: center;
 
-    &:has(.safe-square) {
-      cursor: pointer;
-    }
-
-    &:has(.chessboard-chess-piece) {
-      cursor: pointer;
-    }
-
-    .selected-square {
-      height: 100%;
-      width: 100%;
-    }
-
     img {
       transform: scale(1.5);
     }
@@ -75,51 +49,6 @@
   }
 }
 
-.safe-square {
-  border-radius: 50%;
-  height: 1.625rem;
-  left: calc(50% - 0.8125rem);
-  pointer-events: none;
-  position: absolute;
-  top: calc(50% - 0.8125rem);
-  width: 1.625rem;
-  z-index: 100;
-}
-
-.close-promotion-dialog {
-  cursor: pointer;
-  left: calc(50% - 0.875rem);
-  position: absolute;
-  top: 0;
-  transform: scale(3);
-}
-
-.promotion-dialog {
-  box-sizing: content-box;
-  display: flex;
-  height: 5rem;
-  justify-content: space-between;
-  max-width: 40rem;
-  padding-right: 0.25rem;
-  padding-top: 2rem;
-  position: relative;
-}
-
-.promotion-piece {
-  cursor: pointer;
-  display: grid;
-  height: 5rem;
-  place-content: center;
-  width: 5rem;
-  img {
-    transform: scale(1.5);
-  }
-}
-
-.promotion-dialog-wrapper {
-  height: 7rem;
-}
-
 img {
   user-select: none;
 }
@@ -127,13 +56,8 @@ img {
 .main-game-content {
   display: flex;
   gap: 1rem;
-  margin-left: calc(50% - 26.5rem);
   max-width: 53rem;
   width: 100%;
-}
-
-.move-list {
-  width: 12rem;
 }
 
 @for $row from 1 through 8 {
@@ -152,14 +76,6 @@ img {
             ($row + $col) % 2 == 0,
             $white-square-selected-background,
             $black-square-selected-background
-          );
-        }
-
-        .safe-square {
-          background-color: if(
-            ($row + $col) % 2 == 0,
-            $white-square-valid-move-circle-color,
-            $black-square-valid-move-circle-color
           );
         }
 
