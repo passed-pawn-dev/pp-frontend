@@ -1,0 +1,48 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+@if (gameOverMessage) {
+  <h2 class="game-over-message">{{ gameOverMessage }}</h2>
+}
+<div class="chess-content">
+  <div class="main-game-content">
+    @if (loading) {
+      <div class="loading-overlay"></div>
+    }
+    <div class="chessboard">
+      <!-- field[0] -> square, for example "b2"; field[1] -> Piece fen char, for example "P" -->
+      @for (field of chessboardView; track $index) {
+        <div class="chessboard-field">
+          @if ($index % 8 === 0) {
+            <div class="chessboard-file">{{ field[0][1] }}</div>
+          }
+
+          @if ($index > 55) {
+            <div class="chessboard-rank">{{ field[0][0] }}</div>
+          }
+
+          <div
+            class="chessboard-field-content"
+            [ngClass]="{
+              'selected-square': isSquareSelected(field[0]),
+              'piece-square': field[1] !== null,
+              'last-move': isSquareLastMove(field[0]),
+              'king-in-check': isSquareChecked(field[0]),
+              'promotion-square': isSquarePromotionSquare(field[0])
+            }"
+          >
+            <div
+              [ngClass]="{ 'safe-square': isSquareSafeForSelectedPiece(field[0]) }"
+            ></div>
+            @if (field[1] !== null) {
+              <div class="chessboard-chess-piece">
+                <img
+                  [alt]="'chess-piece-' + field[1]"
+                  [src]="pieceImagePaths[field[1]]"
+                />
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
