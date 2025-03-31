@@ -32,44 +32,21 @@
   max-width: 5rem;
   position: relative;
   width: 100%;
-}
 
-.chessboard-field-content {
-  display: grid;
-  height: 100%;
-  padding-bottom: 0.25rem;
-  place-content: center;
-
-  &:has(.safe-square) {
-    cursor: pointer;
-  }
-  &:has(.chessboard-chess-piece) {
-    cursor: pointer;
-  }
-
-  .selected-square {
+  .chessboard-field-content {
+    display: grid;
     height: 100%;
-    width: 100%;
-  }
+    padding-bottom: 0.25rem;
+    place-content: center;
 
-  img {
-    transform: scale(1.5);
+    img {
+      transform: scale(1.5);
+    }
   }
 
   .king-in-check {
     background-color: $king-in-check-background;
   }
-}
-
-.safe-square {
-  border-radius: 50%;
-  height: 1.625rem;
-  left: calc(50% - 0.8125rem);
-  pointer-events: none;
-  position: absolute;
-  top: calc(50% - 0.8125rem);
-  width: 1.625rem;
-  z-index: 100;
 }
 
 img {
@@ -99,14 +76,6 @@ img {
             ($row + $col) % 2 == 0,
             $white-square-selected-background,
             $black-square-selected-background
-          );
-        }
-
-        .safe-square {
-          background-color: if(
-            ($row + $col) % 2 == 0,
-            $white-square-valid-move-circle-color,
-            $black-square-valid-move-circle-color
           );
         }
 

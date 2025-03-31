@@ -1,3 +1,5 @@
+import { TLastMove } from '../../../chess-logic/models';
+
 export interface QuizDetails {
   id: string;
   title: string;
@@ -11,6 +13,6 @@ export interface QuizDetails {
 
 interface QuizAnswer {
   text: string;
-  lastMove?: string;
+  lastMove?: TLastMove;
   newPosition?: string;
 }

@@ -5,6 +5,7 @@
         <app-display-chessboard
           class="chessboard"
           [startingFen]="boardFen()"
+          [lastMove]="lastMove()"
         ></app-display-chessboard>
       }
       <div class="panel right-panel">
@@ -19,6 +20,7 @@
                 class="answer"
                 [class.correct]="answerSubmitted && quiz().solution === $index"
                 [class.selected]="!answerSubmitted && selectedAnswer() === $index"
+                [class.selectable]="!answerSubmitted"
                 [class.incorrect]="
                   answerSubmitted &&
                   selectedAnswer() === $index &&

@@ -1,7 +1,4 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-@if (gameOverMessage) {
-  <h2 class="game-over-message">{{ gameOverMessage }}</h2>
-}
 <div class="chess-content">
   <div class="main-game-content">
     @if (loading) {
@@ -22,16 +19,11 @@
           <div
             class="chessboard-field-content"
             [ngClass]="{
-              'selected-square': isSquareSelected(field[0]),
               'piece-square': field[1] !== null,
               'last-move': isSquareLastMove(field[0]),
-              'king-in-check': isSquareChecked(field[0]),
-              'promotion-square': isSquarePromotionSquare(field[0])
+              'king-in-check': isSquareChecked(field[0])
             }"
           >
-            <div
-              [ngClass]="{ 'safe-square': isSquareSafeForSelectedPiece(field[0]) }"
-            ></div>
             @if (field[1] !== null) {
               <div class="chessboard-chess-piece">
                 <img

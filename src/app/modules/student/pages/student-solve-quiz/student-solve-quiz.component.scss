@@ -61,6 +61,12 @@ li {
   }
 }
 
+.selectable {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .correct {
   opacity: 1;
   background-color: lightgreen;
