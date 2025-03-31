@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { MyCourseDetails } from '../../models/MyCourseDetails';
 import { StudentCourseReviewFormComponent } from '../../components/student-course-review-form/student-course-review-form.component';
 import { CourseService } from '../../service/course.service';
@@ -7,6 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Exercise } from '../../models/Exercise';
 import { ButtonModule } from 'primeng/button';
 import { Quiz } from '../../models/Quiz';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-student-my-course',
@@ -36,15 +37,21 @@ export class StudentMyCourseComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private readonly destroyRef: DestroyRef
   ) {}
 
   public ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.courseService.getBoughtById(params.get('id')!).subscribe((res) => {
-        this.course.set(res);
+    this.route.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        this.courseService
+          .getBoughtById(params.get('id')!)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((res) => {
+            this.course.set(res);
+          });
       });
-    });
   }
 
   protected getSortedExercises(exerciseList: Exercise[]): Exercise[] {
@@ -56,22 +63,27 @@ export class StudentMyCourseComponent implements OnInit {
       message: 'Are you sure you want to sign out from this course?',
       header: 'Confirm',
       accept: () => {
-        this.route.paramMap.subscribe((params) => {
-          this.courseService.signOut(params.get('id')!).subscribe({
-            next: (_) =>
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Signed out successfully'
-              }),
-            error: (_) =>
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Failure',
-                detail: 'Could not sign out'
-              })
+        this.route.paramMap
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((params) => {
+            this.courseService
+              .signOut(params.get('id')!)
+              .pipe(takeUntilDestroyed(this.destroyRef))
+              .subscribe({
+                next: (_) =>
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    detail: 'Signed out successfully'
+                  }),
+                error: (_) =>
+                  this.messageService.add({
+                    severity: 'error',
+                    summary: 'Failure',
+                    detail: 'Could not sign out'
+                  })
+              });
           });
-        });
         this.router.navigate(['../'], { relativeTo: this.route });
       },
       reject: () => {}

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { PuzzleChessboardComponent } from '../../../shared/components/puzzle-chessboard/puzzle-chessboard.component';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -13,7 +13,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Textarea } from 'primeng/inputtextarea';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { PreviewMode } from '../../../shared/enums/preview-mode.enum';
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-coach-add-exercise',
@@ -34,6 +36,7 @@ export class CoachAddExerciseComponent implements OnInit {
   private courseService = inject(CourseService);
   private fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
   private messageService = inject(MessageService);
+  private destroyRef = inject(DestroyRef);
 
   protected lessonId: string | null = null;
   protected PreviewMode = PreviewMode;
@@ -44,9 +47,11 @@ export class CoachAddExerciseComponent implements OnInit {
   });
 
   public ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.lessonId = params.get('lessonId')!;
-    });
+    this.route.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        this.lessonId = params.get('lessonId')!;
+      });
   }
 
   protected back(): void {
@@ -71,14 +76,23 @@ export class CoachAddExerciseComponent implements OnInit {
         puzzleData.fenBoard,
         puzzleData.moveListString
       )
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (_) => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Puzzle created successfully' });
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Puzzle created successfully'
+          });
           this.back();
         },
         error: (err) => {
-          this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Puzzle could not be created' });
-          console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Failure',
+            detail: 'Puzzle could not be created'
+          });
+          // console.log(err);
         }
       });
   }

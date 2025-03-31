@@ -1,12 +1,13 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CourseDetails } from '../../models/CourseDetails';
 import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
 import { Exercise } from '../../models/Exercise';
 import { LessonDetails } from '../../models/LessonDetails';
-import {Messages} from 'primeng/messages';
-import {MessageService} from 'primeng/api';
+import { Messages } from 'primeng/messages';
+import { MessageService } from 'primeng/api';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-coach-course-details',
@@ -18,6 +19,8 @@ import {MessageService} from 'primeng/api';
 export class CoachCourseDetailsComponent implements OnInit {
   private router = inject(Router);
   private messageService = inject(MessageService);
+  private destroyRef = inject(DestroyRef);
+
   protected course = signal<CourseDetails>({
     id: '',
     title: '',
@@ -49,20 +52,32 @@ export class CoachCourseDetailsComponent implements OnInit {
   protected lessonCount = computed(() => new Array(this.course().lessonNumber));
 
   public ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const courseId = params.get('id')!;
-      this.courseService.getById(courseId).subscribe((res) => {
-        this.course.set(res);
-      });
+    this.route.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        const courseId = params.get('id')!;
+        this.courseService
+          .getById(courseId)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((res) => {
+            this.course.set(res);
+          });
 
-      this.courseService.getDetailsById(courseId).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.lessons.set(res.lessons);
-        },
-        error: (_) => this.messageService.add({ severity: 'error', summary: 'Failure', detail: 'Failed to fetch details' })
+        this.courseService
+          .getDetailsById(courseId)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: (res) => {
+              this.lessons.set(res.lessons);
+            },
+            error: (_) =>
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Failure',
+                detail: 'Failed to fetch details'
+              })
+          });
       });
-    });
   }
 
   protected navigateAddExercise(lessonNumber: string): void {
@@ -72,13 +87,27 @@ export class CoachCourseDetailsComponent implements OnInit {
   }
 
   protected deleteLesson(lessonNumber: string): void {
-    this.courseService.deleteLesson(lessonNumber).subscribe({
-      next: (_) => {
-        this.lessons.set(this.lessons().filter(lesson => lesson.id !== lessonNumber));
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Lesson deleted successfully' });
-      },
-      error: (_) => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to delete lesson' })
-    });
+    this.courseService
+      .deleteLesson(lessonNumber)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (_) => {
+          this.lessons.set(
+            this.lessons().filter((lesson) => lesson.id !== lessonNumber)
+          );
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Lesson deleted successfully'
+          });
+        },
+        error: (_) =>
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Failed to delete lesson'
+          })
+      });
   }
 
   protected getSortedExercises(exerciseList: Exercise[]): Exercise[] {

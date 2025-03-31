@@ -1,7 +1,8 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { LessonDetails } from '../../models/LessonDetails';
 import { LessonService } from '../../service/lesson.service';
 import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-student-lesson-details',
@@ -26,15 +27,20 @@ export class StudentLessonDetailsComponent implements OnInit {
 
   public constructor(
     private lessonService: LessonService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly destroyRef: DestroyRef
   ) {}
 
   public ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.lessonService.getById(params.get('id')!).subscribe((res) => {
-        console.log(res);
-        this.lesson.set(res);
+    this.route.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        this.lessonService
+          .getById(params.get('id')!)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((res) => {
+            this.lesson.set(res);
+          });
       });
-    });
   }
 }
