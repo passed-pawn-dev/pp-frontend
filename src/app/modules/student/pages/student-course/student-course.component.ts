@@ -15,11 +15,22 @@ import { Button, ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  CourseDetailsDiagram,
+  CourseDetailsDiagramComponent
+} from '../../../shared/components/course-details-diagram/course-details-diagram.component';
+import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 
 @Component({
   selector: 'app-student-course',
   standalone: true,
-  imports: [ButtonModule, StarRatingComponent],
+  imports: [
+    ButtonModule,
+    StarRatingComponent,
+    CourseDetailsDiagramComponent,
+    CourseDifficultyComponent,
+    CourseReviewComponent
+  ],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
 })
@@ -35,6 +46,15 @@ export class StudentCourseComponent implements OnInit {
   });
 
   protected showCoachDetails: boolean = false;
+
+  protected showInpactDetails: boolean = false;
+
+  protected diagramCourseDetails: CourseDetailsDiagram[] = [
+    { title: 'Puzzles', amount: 16 },
+    { title: 'Quizes', amount: 1 },
+    { title: 'Video', amount: 9 },
+    { title: 'Examples', amount: 10 }
+  ];
 
   public constructor(
     private courseService: CourseService,
@@ -71,6 +91,10 @@ export class StudentCourseComponent implements OnInit {
 
   protected toggleCoachDetails(): void {
     this.showCoachDetails = !this.showCoachDetails;
+  }
+
+  protected toggleInpactDetails(): void {
+    this.showInpactDetails = !this.showInpactDetails;
   }
 
   protected buyCourse(): void {

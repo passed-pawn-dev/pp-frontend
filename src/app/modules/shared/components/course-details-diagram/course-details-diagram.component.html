@@ -1,0 +1,17 @@
+<!-- eslint-disable @angular-eslint/template/no-inline-styles -->
+<div class="diagram">
+  <div class="values">
+    @for (ele of courseDetails; track $index) {
+      <div class="bar" [style.width]="`calc(${calculateWidth(ele.amount)} + 1.5rem)`">
+        {{ ele.amount }}
+      </div>
+    }
+  </div>
+  <div class="tags">
+    @for (ele of courseDetails; track $index) {
+      <div class="bar">
+        {{ ele.title }}
+      </div>
+    }
+  </div>
+</div>

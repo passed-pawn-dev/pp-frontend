@@ -42,7 +42,6 @@
           recusandae ipsam!
         </div>
       </div>
-      <button class="primary-btn" type="submit" (click)="buyCourse()">Buy</button>
       <div class="footer">
         <div class="date">
           Released on 2025
@@ -63,7 +62,7 @@
         </div>
         <div class="chess-title">GM</div>
         <!-- [coach chess title] -->
-        <app-star-rating [rating]="4" [ratingsNumber]="123" />
+        <app-star-rating [rating]="2.51" [ratingsNumber]="123" />
         <div class="created-courses">
           <div>3</div>
           <!-- [numebr of created courses by coach] -->
@@ -93,14 +92,59 @@
   <section class="inside-section">
     <h3>What's inside</h3>
     <div class="content">
-      <div class="diagrams"></div>
+      <div class="top">
+        <app-course-difficulty [difficulty]="3" />
+        <app-course-details-diagram [courseDetails]="diagramCourseDetails" />
+        <!-- [couse details form diagram] -->
+      </div>
       <div class="line"></div>
-      <div class="footer"></div>
+      <div class="bottom">
+        <div class="language">English</div>
+        <div class="video"><span>17.5 h </span>of Recorder Videos</div>
+        <div class="interaction">Coach Interaction</div>
+      </div>
     </div>
   </section>
 
-  <section>
-    <h3>Inpact</h3>
-    <div class="content"></div>
+  <section class="inpact-section">
+    <div class="content">
+      <h3>Inpact</h3>
+      <div class="header">
+        <app-star-rating [rating]="4" [ratingsNumber]="123" />
+        <div class="created-courses">
+          <div>2321</div>
+          <!-- [numebr of created courses by coach] -->
+          <img src="icons/people.png" alt="book" />
+          <div>Participants</div>
+        </div>
+        <button type="button" class="toggle-btn" (click)="toggleInpactDetails()">
+          @if (showInpactDetails) {
+            <img src="icons/purple-arrow-up.png" alt="arrow-up" />
+          } @else {
+            <img src="icons/purple-arrow-down.png" alt="arrow-up" />
+          }
+        </button>
+      </div>
+    </div>
+    @if (showInpactDetails) {
+      <div class="review-group">
+        @for (review of course().reviews; track $index) {
+          <app-course-review [review]="review" />
+        }
+        @if (course().reviews.length === 0) {
+          <div class="no-rev">No revies yet</div>
+        }
+      </div>
+    }
+  </section>
+
+  <section class="payment-section">
+    <div class="text"><span>30 days</span> to return if you're not satisfied</div>
+    <div class="payment">
+      <div class="price">{{ course().price }}$</div>
+      <button class="primary-btn" type="submit" (click)="buyCourse()">
+        Buy Course
+      </button>
+    </div>
   </section>
 </div>

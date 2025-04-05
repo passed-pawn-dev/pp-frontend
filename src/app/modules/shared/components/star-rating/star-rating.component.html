@@ -1,10 +1,29 @@
 <div class="tile">
-  <div class="rating">{{ rating }}.0</div>
+  @if (!showMinimal) {
+    <div class="rating">{{ rating.toFixed(2) }}</div>
+  }
   <div class="stars-group">
-    <img class="star" src="icons/yellow-star.png" alt="star" />
-    <img class="star" src="icons/yellow-star.png" alt="star" />
-    <img class="star" src="icons/yellow-star.png" alt="star" />
-    <img class="star" src="icons/yellow-star.png" alt="star" />
+    @for (star of starsArray; track $index) {
+      <img
+        src="icons/yellow-star.png"
+        alt="star"
+        class="star"
+        [class.minimal]="showMinimal"
+      />
+    }
+    @if (addHalfStar) {
+      <img src="icons/yellow-half-star.png" class="star" alt="half-star" />
+    }
+    @for (star of emptyStarArray; track $index) {
+      <img
+        src="icons/empty-star.png"
+        alt="star"
+        class="star"
+        [class.minimal]="showMinimal"
+      />
+    }
   </div>
-  <div class="rating-number">({{ ratingsNumber }})</div>
+  @if (!showMinimal) {
+    <div class="rating-number">({{ ratingsNumber }})</div>
+  }
 </div>

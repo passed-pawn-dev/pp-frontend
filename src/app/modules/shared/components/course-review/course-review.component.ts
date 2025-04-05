@@ -1,10 +1,11 @@
 import { Component, input } from '@angular/core';
 import { CourseReview } from '../../../student/models/CourseReview';
+import { StarRatingComponent } from '../star-rating/star-rating.component';
 
 @Component({
   selector: 'app-course-review',
   standalone: true,
-  imports: [],
+  imports: [StarRatingComponent],
   templateUrl: './course-review.component.html',
   styleUrl: './course-review.component.scss'
 })
