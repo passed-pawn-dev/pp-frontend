@@ -1,0 +1,302 @@
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  inject
+} from '@angular/core';
+import { ChessBoard } from '../../../../chess-logic/board';
+import {
+  Color,
+  TChessboard,
+  TChessboardView,
+  TLastMove,
+  pieceImagePaths
+} from '../../../../chess-logic/models';
+import { FenConverter } from '../../../../chess-logic/FenConverter';
+import { Rook } from '../../../../chess-logic/pieces/rook';
+import { Knight } from '../../../../chess-logic/pieces/knight';
+import { Bishop } from '../../../../chess-logic/pieces/bishop';
+import { King } from '../../../../chess-logic/pieces/king';
+import { Queen } from '../../../../chess-logic/pieces/queen';
+import { Pawn } from '../../../../chess-logic/pieces/pawn';
+import { Piece } from '../../../../chess-logic/pieces/piece';
+import { DragDropModule } from 'primeng/dragdrop';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import { FenValidator } from '../../../../chess-logic/FenValidator';
+import { SelectModule } from 'primeng/select';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxModule } from 'primeng/checkbox';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+enum Mode {
+  Draw = 'Draw',
+  Move = 'Move',
+  Erase = 'Erase'
+}
+
+@Component({
+  selector: 'app-chessboard-editor',
+  imports: [
+    DragDropModule,
+    FormsModule,
+    SelectModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    InputNumberModule,
+    CheckboxModule
+  ],
+  templateUrl: './chessboard-editor.component.html',
+  styleUrl: './chessboard-editor.component.scss'
+})
+export class ChessboardEditorComponent implements OnInit {
+  private fb: FormBuilder = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
+
+  @Output() public newFenEvent = new EventEmitter<string>();
+
+  protected startingFen: string =
+    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+  protected FILES = ChessBoard.FILES;
+  protected RANKS = ChessBoard.RANKS;
+  private chessboard: TChessboard = new Map(
+    this.RANKS.flatMap((RANK) => this.FILES.map((FILE) => [`${FILE}${RANK}`, null]))
+  );
+  protected colors: Color[] = [Color.White, Color.Black];
+  protected cursorStyle: string = 'default';
+  protected currentPiece: Piece | undefined;
+  public fen: string = '';
+  protected pieceImagePaths = pieceImagePaths;
+  protected fenInputErrors: string[] = [];
+  protected Mode = Mode;
+  protected _mode: Mode = Mode.Move;
+
+  protected fenForm = this.fb.group({
+    sideToMove: [Color.White],
+    enPassant: [null] as [string | null],
+    whiteShort: [false],
+    whiteLong: [false],
+    blackShort: [false],
+    blackLong: [false],
+    halfMoveClock: [0, Validators.min(0)],
+    fullMoveNumber: [1, Validators.min(1)]
+  });
+
+  protected whitePieces = [
+    new King(Color.White),
+    new Queen(Color.White),
+    new Rook(Color.White),
+    new Bishop(Color.White),
+    new Knight(Color.White),
+    new Pawn(Color.White)
+  ];
+  protected blackPieces = [
+    new King(Color.Black),
+    new Queen(Color.Black),
+    new Rook(Color.Black),
+    new Bishop(Color.Black),
+    new Knight(Color.Black),
+    new Pawn(Color.Black)
+  ];
+
+  public get chessboardView(): TChessboardView {
+    const chessboardView = new Map();
+    for (let [square, piece] of this.chessboard) {
+      chessboardView.set(square, piece?.fenChar || null);
+    }
+
+    return chessboardView;
+  }
+
+  protected get mode(): Mode {
+    return this._mode;
+  }
+
+  protected set mode(value: Mode) {
+    this._mode = value;
+    switch (value) {
+      case Mode.Move:
+        this.cursorStyle = 'grab';
+        break;
+      case Mode.Draw:
+        this.cursorStyle = `url("${pieceImagePaths[this.currentPiece!.fenChar]}") 10 10, auto`;
+        break;
+      case Mode.Erase:
+        this.cursorStyle = 'url("icons/eraser.svg") 10 10, auto';
+        break;
+    }
+  }
+
+  public ngOnInit(): void {
+    this.resetToStartingPosition();
+    this.updateFenAndSave();
+    this.mode = Mode.Move;
+
+    this.fenForm.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((values) => {
+        this.updateSideToMove(values.sideToMove!);
+        this.updateCastling([
+          values.whiteShort!,
+          values.whiteLong!,
+          values.blackShort!,
+          values.blackLong!
+        ]);
+        this.updateEnPassant(values.enPassant!);
+        this.updateClocks(values.halfMoveClock!, values.fullMoveNumber!);
+        this.newFenEvent.emit(this.fen);
+      });
+  }
+
+  protected replaceSegment(index: number, replacement: string): void {
+    const firstPart = this.fen.split(' ', index);
+    const secondPart = this.fen.split(' ').slice(index + 1);
+    this.fen = [...firstPart, replacement, ...secondPart].join(' ');
+  }
+
+  protected updateSideToMove(color: Color): void {
+    const index = this.fen.indexOf(' ') + 1;
+    const newColor = color === Color.White ? 'w' : 'b';
+    this.fen = this.fen.substring(0, index) + newColor + this.fen.substring(index + 1);
+  }
+
+  protected updateCastling(rights: boolean[]): void {
+    const whiteShort = rights[0] ? 'K' : '';
+    const whiteLong = rights[1] ? 'Q' : '';
+    const blackShort = rights[2] ? 'k' : '';
+    const blackLong = rights[3] ? 'q' : '';
+    const newRights = [whiteShort, whiteLong, blackShort, blackLong].join('');
+    this.replaceSegment(2, newRights.length === 0 ? '-' : newRights);
+  }
+
+  protected updateEnPassant(square: string | null): void {
+    const newSquare = square === null || square.match(/^$|.*\s.*/) ? '-' : square;
+    this.replaceSegment(3, newSquare);
+  }
+
+  protected updateClocks(halfMoveClock: number, fullMoveNumber: number): void {
+    this.replaceSegment(4, halfMoveClock.toString());
+    this.replaceSegment(5, fullMoveNumber.toString());
+  }
+
+  protected drawWith(piece: Piece): void {
+    this.currentPiece = piece;
+    this.mode = Mode.Draw;
+  }
+
+  protected onFieldClicked(square: string): void {
+    if (this.mode === Mode.Draw) {
+      this.chessboard.set(square, this.currentPiece!);
+    }
+    if (this.mode === Mode.Erase) {
+      this.chessboard.set(square, null);
+    }
+    this.updateFenAndSave();
+  }
+
+  protected clearBoard(): void {
+    ChessBoard.FILES.forEach((file) => {
+      ChessBoard.RANKS.forEach((rank) => {
+        this.chessboard.set(`${file}${rank}`, null);
+      });
+    });
+    this.updateFenAndSave();
+  }
+
+  protected onInput(fen: string): void {
+    const { result, errors } = FenValidator.validateFEN(this.fen);
+
+    if (result) {
+      this.fenInputErrors = [];
+      const boardFromFen = FenConverter.convertFenToBoard(fen);
+      this.chessboard = boardFromFen;
+      this.updateFenForm();
+    } else {
+      this.fenInputErrors = errors!;
+    }
+  }
+
+  protected updateFenForm(): void {
+    const sideToMove = this.fen.split(' ')[1];
+    const castlingRights = this.fen.split(' ')[2];
+    const enPassant = this.fen.split(' ')[3];
+    const halfMoveClock = this.fen.split(' ')[4];
+    const fullMoveNumber = this.fen.split(' ')[5];
+    this.fenForm
+      .get('sideToMove')
+      ?.setValue(sideToMove == 'w' ? Color.White : Color.Black);
+    this.fenForm.get('whiteShort')?.setValue(castlingRights.includes('K'));
+    this.fenForm.get('whiteLong')?.setValue(castlingRights.includes('Q'));
+    this.fenForm.get('blackShort')?.setValue(castlingRights.includes('k'));
+    this.fenForm.get('blackLong')?.setValue(castlingRights.includes('q'));
+    this.fenForm.get('enPassant')?.setValue(enPassant === '-' ? null : enPassant);
+    this.fenForm.get('halfMoveClock')?.setValue(parseInt(halfMoveClock));
+    this.fenForm.get('fullMoveNumber')?.setValue(parseInt(fullMoveNumber));
+  }
+
+  protected resetToStartingPosition(): void {
+    this.fen = this.startingFen;
+    this.updateFenForm();
+    const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
+    this.chessboard = boardFromFen;
+    this.updateFenAndSave();
+  }
+
+  protected dragStart(square: string): void {
+    if (this.mode === Mode.Move) {
+      const newPiece: Piece = this.chessboard.get(square)!;
+      this.chessboard.set(square, null);
+      this.currentPiece = newPiece;
+    }
+  }
+
+  protected pieceListDragStart(piece: Piece): void {
+    this.mode = Mode.Move;
+    this.currentPiece = piece;
+  }
+
+  protected calculateFen(): void {
+    this.fen = FenConverter.convertBoardToFen(
+      this.chessboard,
+      this.fenForm.get('sideToMove')?.value!,
+      undefined,
+      this.fenForm.get('halfMoveClock')?.value!,
+      this.fenForm.get('fullMoveNumber')?.value!
+    );
+    this.updateCastling([
+      this.fenForm.get('whiteShort')?.value!,
+      this.fenForm.get('whiteLong')?.value!,
+      this.fenForm.get('blackShort')?.value!,
+      this.fenForm.get('blackLong')?.value!
+    ]);
+    this.updateEnPassant(this.fenForm.get('enPassant')?.value!);
+  }
+
+  protected dropPiece(square: string): void {
+    if (this.mode === Mode.Move) {
+      this.chessboard.set(square, this.currentPiece!);
+      this.updateFenAndSave();
+    }
+  }
+
+  protected flipBoard(): void {
+    this.chessboard = new Map(Array.from(this.chessboard).reverse());
+    this.updateFenAndSave();
+  }
+
+  protected isSelected(piece: Piece): boolean {
+    return this.mode === Mode.Draw && this.currentPiece === piece;
+  }
+
+  protected updateFenAndSave(): void {
+    this.calculateFen();
+    this.newFenEvent.emit(this.fen);
+  }
+}

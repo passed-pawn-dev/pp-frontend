@@ -86,6 +86,12 @@ export class CoachCourseDetailsComponent implements OnInit {
     ]);
   }
 
+  protected navigateAddQuiz(lessonNumber: string): void {
+    this.router.navigate([
+      `/coach/courses/${this.course().id}/lesson/${lessonNumber}/quiz/add`
+    ]);
+  }
+
   protected deleteLesson(lessonNumber: string): void {
     this.courseService
       .deleteLesson(lessonNumber)
