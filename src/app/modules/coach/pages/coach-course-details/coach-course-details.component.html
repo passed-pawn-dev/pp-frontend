@@ -46,6 +46,13 @@
           </button>
           <button
             type="button"
+            class="primary-button button-small"
+            (click)="navigateAddQuiz(lesson.id)"
+          >
+            Add quiz
+          </button>
+          <button
+            type="button"
             class="danger-btn button-small"
             (click)="deleteLesson(lesson.id)"
           >

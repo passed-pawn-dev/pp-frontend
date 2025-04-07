@@ -1,0 +1,186 @@
+<div class="main-content">
+  <div class="top-section">
+    <div class="left-panel panel">
+      <div class="piece-selection">
+        <div class="piece-list">
+          @for (piece of whitePieces; track $index) {
+            <div
+              tabindex="0"
+              role="button"
+              pDraggable
+              [class]="
+                'chessboard-chess-piece selectable' +
+                (isSelected(piece) ? ' selected' : '')
+              "
+              (onDragStart)="pieceListDragStart(piece)"
+              (click)="drawWith(piece)"
+            >
+              <img
+                [alt]="'chess-piece-' + piece.fenChar"
+                [src]="pieceImagePaths[piece.fenChar]"
+              />
+            </div>
+          }
+          <button
+            type="button"
+            [class]="'selectable' + (mode === Mode.Move ? ' selected' : '')"
+            (click)="mode = Mode.Move"
+          >
+            <img class="icon" src="/icons/move.svg" alt="" />
+          </button>
+        </div>
+        <div class="piece-list">
+          @for (piece of blackPieces; track $index) {
+            <div
+              tabindex="0"
+              role="button"
+              pDraggable
+              [class]="
+                'chessboard-chess-piece selectable' +
+                (isSelected(piece) ? ' selected' : '')
+              "
+              (onDragStart)="pieceListDragStart(piece)"
+              (click)="drawWith(piece)"
+            >
+              <img
+                [alt]="'chess-piece-' + piece.fenChar"
+                [src]="pieceImagePaths[piece.fenChar]"
+              />
+            </div>
+          }
+          <button
+            type="button"
+            [class]="'selectable' + (mode === Mode.Erase ? ' selected' : '')"
+            (click)="mode = Mode.Erase"
+          >
+            <img class="icon" src="/icons/eraser.svg" alt="" />
+          </button>
+        </div>
+      </div>
+      <div class="util-buttons">
+        <button
+          class="primary-btn util-btn"
+          type="button"
+          (click)="resetToStartingPosition()"
+        >
+          Starting position
+        </button>
+        <button class="primary-btn util-btn" type="button" (click)="clearBoard()">
+          Clear
+        </button>
+        <button class="primary-btn util-btn" type="button" (click)="flipBoard()">
+          Flip Board
+        </button>
+      </div>
+    </div>
+
+    <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
+    <div class="chessboard" [style.cursor]="cursorStyle">
+      @for (field of chessboardView; track $index) {
+        <div
+          class="chessboard-field"
+          tabindex="0"
+          role="button"
+          (click)="onFieldClicked(field[0])"
+        >
+          @if ($index % 8 === 0) {
+            <div class="chessboard-file">{{ field[0][1] }}</div>
+          }
+
+          @if ($index > 55) {
+            <div class="chessboard-rank">{{ field[0][0] }}</div>
+          }
+
+          <div
+            class="chessboard-field-content"
+            pDroppable
+            (onDrop)="dropPiece(field[0])"
+          >
+            @if (field[1] !== null) {
+              <div
+                pDraggable
+                class="chessboard-chess-piece"
+                (onDragStart)="dragStart(field[0])"
+              >
+                <img
+                  [alt]="'chess-piece-' + field[1]"
+                  [src]="pieceImagePaths[field[1]]"
+                />
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="bottom-section panel">
+    <input
+      class="fen-input"
+      type="text"
+      name="fen-input"
+      id="fen-input"
+      [(ngModel)]="fen"
+      (input)="onInput(fen)"
+    />
+
+    @for (error of fenInputErrors; track $index) {
+      <div class="error">{{ error }}</div>
+    }
+
+    <form class="fen-form" [formGroup]="fenForm">
+      <div>
+        <label for="sideToMove">Side to move</label>
+        <p-select formControlName="sideToMove" [options]="colors" />
+      </div>
+
+      <div>
+        <label for="">En passant</label>
+        <input
+          formControlName="enPassant"
+          id="enPassant"
+          type="text"
+          class="short-input"
+        />
+      </div>
+
+      <div class="castle-form">
+        <div>
+          <label for="whiteShort">White short</label>
+          <p-checkbox id="whiteShort" formControlName="whiteShort" [binary]="true" />
+          <label for="whiteLong">White long</label>
+          <p-checkbox id="whiteLong" formControlName="whiteLong" [binary]="true" />
+        </div>
+        <div>
+          <label for="blackShort">Black short</label>
+          <p-checkbox id="blackShort" formControlName="blackShort" [binary]="true" />
+          <label for="blackLong">Black long</label>
+          <p-checkbox id="blackLong" formControlName="blackLong" [binary]="true" />
+        </div>
+      </div>
+      <div class="clock-inputs">
+        <div>
+          <label for="halfMoveClock">Half move clock</label>
+          <input
+            class="short-input"
+            formControlName="halfMoveClock"
+            id="halfMoveClock"
+            type="number"
+            [min]="0"
+          />
+        </div>
+
+        <div>
+          <label for="fullMoveNumber">Full move number</label>
+          <input
+            class="short-input"
+            formControlName="fullMoveNumber"
+            id="fullMoveNumber"
+            type="number"
+            [min]="1"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
