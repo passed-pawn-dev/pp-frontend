@@ -6,6 +6,5 @@ export const environment = {
     postLogoutRedirectUri: 'http://localhost:4200',
     realm: 'passed-pawn-dev',
     clientId: 'passed-pawn-frontend'
-  },
-  test: 'default'
+  }
 };

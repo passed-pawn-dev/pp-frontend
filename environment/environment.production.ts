@@ -6,6 +6,5 @@ export const environment = {
     postLogoutRedirectUri: 'http://pp-local.passed-pawn.com',
     realm: 'passed-pawn',
     clientId: 'pp-frontend'
-  },
-  test: 'development'
+  }
 };
