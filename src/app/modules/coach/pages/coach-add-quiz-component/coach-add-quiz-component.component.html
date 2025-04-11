@@ -1,3 +1,170 @@
-<div class="main-content">
-  <app-chessboard-editor (newFenEvent)="onNewFen($event)"></app-chessboard-editor>
+<div class="page">
+  <div class="main-content">
+    <div class="top-section panel">
+      <app-step-indicator
+        [stepNumber]="stepNumber"
+        [currentStep]="step"
+      ></app-step-indicator>
+      <div class="step-header">
+        {{ stepHeaders[step - 1] }}
+      </div>
+      <div class="nav-buttons">
+        <button
+          type="button"
+          class="secondary-btn"
+          [disabled]="step < 2"
+          (click)="prevStep()"
+        >
+          Back
+        </button>
+        @if (step === stepNumber) {
+          <button type="button" class="primary-btn" (click)="submit()">Save</button>
+        } @else {
+          <button
+            type="button"
+            class="primary-btn"
+            [disabled]="!isStepValid(step)"
+            (click)="nextStep()"
+          >
+            Next <img src="icons/thick-arrow-right.png" alt="arrow" />
+          </button>
+        }
+      </div>
+    </div>
+    <form class="quiz-form" [formGroup]="quizForm">
+      <div class="step-container">
+        <!-- step 1 -->
+        <div
+          class="step"
+          [class.step-active]="step === 1"
+          [class.step-left]="step > 1"
+          [class.step-hidden]="step < 1"
+        >
+          <div>
+            <div class="form-control-field">
+              <label for="title">Title</label>
+              <input pInputText id="title" formControlName="title" type="text" />
+              <app-validation-errors
+                [errors]="quizForm.controls.title.errors"
+                [dirty]="quizForm.controls.title.dirty"
+                [touched]="quizForm.controls.title.touched"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- step 2 -->
+        <div
+          class="step"
+          [class.step-active]="step === 2"
+          [class.step-left]="step > 2"
+          [class.step-hidden]="step < 2"
+        >
+          <app-chessboard-editor
+            (newFenEvent)="onNewFen($event)"
+          ></app-chessboard-editor>
+        </div>
+        <!-- step 3 -->
+        <div
+          class="step"
+          [class.step-active]="step === 3"
+          [class.step-left]="step > 3"
+          [class.step-hidden]="step < 3"
+        >
+          <div class="questions-form">
+            <app-chessboard-editor
+              (newFenEvent)="newPositionForAnswer($event)"
+            ></app-chessboard-editor>
+            <div class="panel">
+              <div class="details-fields">
+                <div class="form-control-field">
+                  <label for="question">Question</label>
+                  <textarea pTextArea id="question" formControlName="question" required>
+                  </textarea>
+                  <app-validation-errors
+                    [errors]="quizForm.controls.question.errors"
+                    [dirty]="quizForm.controls.question.dirty"
+                    [touched]="quizForm.controls.question.touched"
+                  />
+                </div>
+
+                <div>Answers (2 - 6)</div>
+                <div formArrayName="answers" class="answers">
+                  @for (answer of answers.controls; track $index) {
+                    <div [formGroupName]="$index">
+                      <p-radiobutton [formControl]="solutionControl" [value]="$index" />
+
+                      <input
+                        pInputText
+                        formControlName="text"
+                        placeholder="Enter answer text"
+                        type="text"
+                        required
+                      />
+                      <app-validation-errors
+                        [errors]="answer.get('text')!.errors"
+                        [dirty]="answer.get('text')!.dirty"
+                        [touched]="answer.get('text')!.touched"
+                      />
+
+                      <button type="button" (click)="addPositionToAnswer($index)">
+                        Add current position
+                      </button>
+                      <button
+                        type="button"
+                        [disabled]="answers.length < 3"
+                        (click)="removeAnswer($index)"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  }
+                </div>
+                <button
+                  type="button"
+                  [disabled]="answers.length > 5"
+                  (click)="addAnswer()"
+                >
+                  Add Answer
+                </button>
+
+                <div class="form-control-field">
+                  <label for="hint">Hint (optional)</label>
+                  <input pInputText id="hint" formControlName="hint" type="text" />
+                  <app-validation-errors
+                    [errors]="quizForm.controls.hint.errors"
+                    [dirty]="quizForm.controls.hint.dirty"
+                    [touched]="quizForm.controls.hint.touched"
+                  />
+                </div>
+
+                <div class="form-control-field">
+                  <label for="explanation">Explanation (optional)</label>
+                  <input
+                    pInputText
+                    id="explanation"
+                    formControlName="explanation"
+                    type="text"
+                  />
+                  <app-validation-errors
+                    [errors]="quizForm.controls.explanation.errors"
+                    [dirty]="quizForm.controls.explanation.dirty"
+                    [touched]="quizForm.controls.explanation.touched"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- step 4 -->
+        <div
+          class="step"
+          [class.step-active]="step === 4"
+          [class.step-left]="step > 4"
+          [class.step-hidden]="step < 4"
+        >
+          <app-quiz [quiz]="quiz"></app-quiz>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
