@@ -1,0 +1,6 @@
+<div class="steps-graphic">
+  @for (step of steps; track $index) {
+    <div [class.complete]="currentStep + 1 > step"></div>
+    <!-- <div class="line" [class.complete]="currentStep > step" ></div> -->
+  }
+</div>
