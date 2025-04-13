@@ -1,6 +1,6 @@
 export interface JwtDecoded {
   resource_access: {
-    'api-client'?: {
+    [key: string]: {
       roles: string[];
     };
   };
