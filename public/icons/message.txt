@@ -1,2 +1,0 @@
-position -> fen
-add newPosition to answer
