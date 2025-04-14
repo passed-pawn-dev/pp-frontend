@@ -2,9 +2,13 @@ import {
   Component,
   DestroyRef,
   EventEmitter,
+  Input,
+  OnChanges,
   OnInit,
   Output,
-  inject
+  SimpleChanges,
+  inject,
+  input
 } from '@angular/core';
 import { ChessBoard } from '../../../../chess-logic/board';
 import {
@@ -56,9 +60,11 @@ enum Mode {
   templateUrl: './chessboard-editor.component.html',
   styleUrl: './chessboard-editor.component.scss'
 })
-export class ChessboardEditorComponent implements OnInit {
+export class ChessboardEditorComponent implements OnInit, OnChanges {
   private fb: FormBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
+
+  public startingPositionInput = input<string | undefined>();
 
   @Output() public newFenEvent = new EventEmitter<string>();
 
@@ -132,6 +138,15 @@ export class ChessboardEditorComponent implements OnInit {
         this.cursorStyle = 'url("icons/eraser.svg") 10 10, auto';
         break;
     }
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (this.startingPositionInput()) {
+      this.resetToInputtedStartingPosition();
+    } else {
+      this.resetToStartingPosition();
+    }
+    this.updateFenAndSave();
   }
 
   public ngOnInit(): void {
@@ -245,6 +260,14 @@ export class ChessboardEditorComponent implements OnInit {
     this.fen = this.startingFen;
     this.updateFenForm();
     const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
+    this.chessboard = boardFromFen;
+    this.updateFenAndSave();
+  }
+
+  protected resetToInputtedStartingPosition(): void {
+    this.fen = this.startingPositionInput()!;
+    this.updateFenForm();
+    const boardFromFen = FenConverter.convertFenToBoard(this.startingPositionInput()!);
     this.chessboard = boardFromFen;
     this.updateFenAndSave();
   }

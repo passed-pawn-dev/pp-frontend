@@ -84,6 +84,7 @@
           <div class="questions-form">
             @if (includeChessboard) {
               <app-chessboard-editor
+                [startingPositionInput]="quiz.fen"
                 (newFenEvent)="newPositionForAnswer($event)"
               ></app-chessboard-editor>
             }

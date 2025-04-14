@@ -65,6 +65,15 @@
         >
           Starting position
         </button>
+        @if (startingPositionInput()) {
+          <button
+            class="primary-btn util-btn"
+            type="button"
+            (click)="resetToInputtedStartingPosition()"
+          >
+            Base position
+          </button>
+        }
         <button class="primary-btn util-btn" type="button" (click)="clearBoard()">
           Clear
         </button>

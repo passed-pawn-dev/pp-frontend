@@ -23,7 +23,7 @@ import { Location } from '@angular/common';
 import { Checkbox } from 'primeng/checkbox';
 
 @Component({
-  selector: 'app-coach-add-quiz-component',
+  selector: 'app-coach-add-quiz',
   imports: [
     ChessboardEditorComponent,
     StepIndicatorComponent,
@@ -34,10 +34,10 @@ import { Checkbox } from 'primeng/checkbox';
     ValidationErrorsComponent,
     FormsModule
   ],
-  templateUrl: './coach-add-quiz-component.component.html',
-  styleUrl: './coach-add-quiz-component.component.scss'
+  templateUrl: './coach-add-quiz.component.html',
+  styleUrl: './coach-add-quiz.component.scss'
 })
-export class CoachAddQuizComponentComponent implements OnInit {
+export class CoachAddQuizComponent implements OnInit {
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
   private courseService = inject(CourseService);
