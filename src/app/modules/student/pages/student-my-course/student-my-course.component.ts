@@ -8,11 +8,20 @@ import { Exercise } from '../../models/Exercise';
 import { ButtonModule } from 'primeng/button';
 import { Quiz } from '../../models/Quiz';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  LessonComponent,
+  LessonStatus
+} from '../../../shared/components/lesson/lesson.component';
 
 @Component({
   selector: 'app-student-my-course',
   standalone: true,
-  imports: [StudentCourseReviewFormComponent, RouterLink, ButtonModule],
+  imports: [
+    StudentCourseReviewFormComponent,
+    RouterLink,
+    ButtonModule,
+    LessonComponent
+  ],
   providers: [],
   templateUrl: './student-my-course.component.html',
   styleUrl: './student-my-course.component.scss'
@@ -32,6 +41,8 @@ export class StudentMyCourseComponent implements OnInit {
     title: 'quiz'
   });
 
+  protected LessonStatus = LessonStatus;
+
   public constructor(
     private courseService: CourseService,
     private readonly route: ActivatedRoute,
@@ -40,6 +51,18 @@ export class StudentMyCourseComponent implements OnInit {
     private messageService: MessageService,
     private readonly destroyRef: DestroyRef
   ) {}
+
+  public showElements: boolean = true;
+
+  public toggleElements(): void {
+    this.showElements = !this.showElements;
+  }
+
+  public turnOn: boolean = false;
+
+  public toggleSwitch(): void {
+    this.turnOn = !this.turnOn;
+  }
 
   public ngOnInit(): void {
     this.route.paramMap

@@ -25,6 +25,7 @@
       @for $i from 1 through 4 {
         &:nth-child(#{$i}) {
           color: nth($colors, $i);
+          background-color: lighten($color: nth($colors, $i), $amount: 25);
         }
       }
     }
@@ -45,6 +46,7 @@
       @for $i from 1 through 4 {
         &:nth-child(#{$i}) {
           color: nth($colors, $i);
+          background-color: lighten($color: nth($colors, $i), $amount: 25);
         }
       }
     }
