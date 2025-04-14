@@ -9,6 +9,7 @@ import { NewLesson } from '../models/NewLesson';
 import { LessonDetails } from '../../student/models/LessonDetails';
 import { Exercise } from '../models/Exercise';
 import { CourseLessons } from '../models/CourseLessons';
+import { QuizDetails } from '../../student/models/QuizDetails';
 
 @Injectable({
   providedIn: 'root'
@@ -72,5 +73,9 @@ export class CourseService {
       fen,
       solution
     });
+  }
+
+  public addQuiz(lessonId: string, quiz: QuizDetails): Observable<Object> {
+    return this.httpClient.post(`api/Lesson/${lessonId}/quiz`, quiz);
   }
 }

@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { AuthService } from '../auth/services/auth.service';
 import { JwtDecoded } from '../modules/shared/models/JwtDecoded';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../../environment/environment';
 
 export const studentGuard: CanActivateFn = async (_route, _state) => {
   const authService = inject(AuthService);
@@ -13,7 +14,8 @@ export const studentGuard: CanActivateFn = async (_route, _state) => {
   }
 
   const decoded: JwtDecoded = jwtDecode(token);
-  const roles: string[] | undefined = decoded.resource_access['api-client']?.roles;
+  const roles: string[] | undefined =
+    decoded.resource_access[environment.keycloak.apiClientId]?.roles;
 
   if (roles && roles.includes('student')) {
     return true;

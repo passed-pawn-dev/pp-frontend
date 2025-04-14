@@ -23,6 +23,7 @@ import { Nationality } from '../../../shared/models/Nationality';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { StepIndicatorComponent } from '../../../shared/components/step-indicator/step-indicator.component';
 
 @Component({
   selector: 'app-student-register-form',
@@ -35,7 +36,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     InputNumberModule,
     AutoCompleteModule,
     DatePickerModule,
-    ValidationErrorsComponent
+    ValidationErrorsComponent,
+    StepIndicatorComponent
   ],
   templateUrl: './student-register-form.component.html',
   styleUrl: './student-register-form.component.scss'
@@ -139,8 +141,9 @@ export class StudentRegisterFormComponent implements OnInit {
     if (this.registerForm.valid) {
       const dateOfBirth = this.parseDate(this.registerForm.value.dateOfBirth!);
       const nationality = this.nationalities.find(
-        (n) => n.fullName === this.registerForm.getRawValue().nationalityId);
-      
+        (n) => n.fullName === this.registerForm.getRawValue().nationalityId
+      );
+
       let registerData: Student;
       if (nationality) {
         registerData = {
@@ -155,11 +158,12 @@ export class StudentRegisterFormComponent implements OnInit {
         };
         delete registerData.nationalityId;
       }
-      this.studentService.register(registerData)
+      this.studentService
+        .register(registerData)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((res) => {
-        this.router.navigate(['/student']);
-      });
+          this.router.navigate(['/student']);
+        });
     }
   }
 }

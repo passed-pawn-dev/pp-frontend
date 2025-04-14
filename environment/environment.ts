@@ -4,7 +4,8 @@ export const environment = {
     authority: 'http://localhost:8081',
     redirectUri: 'http://localhost:4200',
     postLogoutRedirectUri: 'http://localhost:4200',
-    realm: 'passed-pawn-dev',
-    clientId: 'passed-pawn-frontend'
+    realm: 'passed-pawn',
+    clientId: 'pp-frontend',
+    apiClientId: 'pp-api'
   }
 };

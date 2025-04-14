@@ -71,6 +71,11 @@ h3 {
   &:hover {
     background-color: color.adjust($primary, $lightness: -10%);
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 .secondary-btn {
