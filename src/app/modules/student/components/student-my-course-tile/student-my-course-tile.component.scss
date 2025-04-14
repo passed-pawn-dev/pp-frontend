@@ -17,9 +17,11 @@
       box-shadow 0.3s ease;
 
     &:hover {
-      border: 1px solid $text-secondary;
-      transform: translateY(-0.5rem);
-      box-shadow: 0 0.5rem 0 $text-secondary;
+      // border: 1px solid $text-secondary;
+      // transform: translateY(-0.5rem);
+      // box-shadow: 0 0.5rem 0 $text-secondary;
+      box-shadow: 0 0.5rem 0.5rem #dcdbdb;
+      transform: translateY(-0.25rem);
     }
 
     img {

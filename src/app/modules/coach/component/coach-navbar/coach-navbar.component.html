@@ -1,4 +1,4 @@
-<div class="navbar">
+<!-- <div class="navbar">
   <ul class="container">
     <ul class="navigation">
       @for (link of navLinks; track $index) {
@@ -15,4 +15,23 @@
       <button class="logout-btn log" type="button" (click)="logOut()">Log Out</button>
     </li>
   </ul>
+</div> -->
+
+<div class="navbar">
+  <div class="left">
+    <ul class="navigation">
+      <div class="logo">
+        <img src="icons/logo.png" alt="logo" />
+        <div class="text">Passed Pawn</div>
+      </div>
+      @for (link of navLinks; track $index) {
+        <li class="nav-link">
+          <a [routerLink]="link.path">{{ link.name }}</a>
+        </li>
+      }
+    </ul>
+  </div>
+  <div class="right">
+    <button type="button" class="secondary-btn" (click)="logOut()">Log out</button>
+  </div>
 </div>
