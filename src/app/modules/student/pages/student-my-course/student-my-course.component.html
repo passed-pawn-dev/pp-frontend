@@ -1,4 +1,4 @@
-<div class="page">
+<!-- <div class="page">
   <div class="course-data">
     <div class="course-header">
       <div class="course-header-left">
@@ -78,4 +78,53 @@
       </div>
     }
   </ul>
+</div> -->
+
+<div class="page">
+  <h2>Let's Learn</h2>
+  <section class="main-section">
+    <img class="course-img" src="images/chess-course-1.png" alt="chess-course" />
+    <div class="right">
+      <div class="content">
+        <h3>{{ course().title }}</h3>
+        <div class="desc">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis architecto
+          voluptates labore repudiandae ipsam adipisci. Quia dolorum, ut deserunt modi
+          aut officia soluta possimus accusamus eveniet, dolorem perferendis placeat
+          architecto sit sequi aliquam beatae tempora facilis consequuntur vitae
+          recusandae ipsam!
+        </div>
+      </div>
+      <div class="footer"></div>
+    </div>
+  </section>
+
+  <div class="lessons-section">
+    <h3>Lessons</h3>
+    <div class="lessons-group">
+      @for (lesson of course().lessons; track $index) {
+        <app-lesson
+          [lesson]="lesson"
+          [index]="$index"
+          [first]="$first"
+          [last]="false"
+          [complete]="LessonStatus.Complete"
+        />
+        <app-lesson
+          [lesson]="lesson"
+          [index]="$index"
+          [first]="false"
+          [last]="false"
+          [complete]="LessonStatus.InProgress"
+        />
+        <app-lesson
+          [lesson]="lesson"
+          [index]="$index"
+          [first]="false"
+          [last]="$last"
+          [complete]="LessonStatus.UnTouched"
+        />
+      }
+    </div>
+  </div>
 </div>
