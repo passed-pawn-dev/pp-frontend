@@ -1,13 +1,14 @@
 import { TLastMove } from '../../../chess-logic/models';
 
 export interface QuizDetails {
-  id: string;
+  id?: string;
+  order?: number;
   title: string;
   question: string;
   answers: QuizAnswer[];
   solution: number;
   hint?: string;
-  positon?: string;
+  fen?: string;
   explanation?: string;
 }
 

@@ -1,5 +1,91 @@
-.main-content {
+@use 'variables' as *;
+
+.page {
   display: flex;
   justify-content: center;
   padding-top: 1rem;
+}
+
+.panel {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.top-section {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.primary-btn,
+.secondary-btn {
+  img {
+    height: 0.75rem;
+  }
+}
+
+.quiz-form {
+  width: fit-content;
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+
+  .step-container {
+    .step {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: absolute;
+      transition:
+        transform 0.5s ease-in-out,
+        opacity 0.3s ease-in-out;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .step-hidden {
+      transform: translateX(120%);
+    }
+
+    .step-active {
+      position: relative;
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    .step-left {
+      transform: translateX(-120%);
+    }
+  }
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.questions-form {
+  display: flex;
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-control-field {
+  label {
+    margin-bottom: 0.5rem;
+  }
+  margin-bottom: 1rem;
+}
+
+.step-header {
+  font-size: large;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
