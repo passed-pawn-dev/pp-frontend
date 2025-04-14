@@ -7,6 +7,7 @@ import { QuestionTileComponent } from '../question-tile/question-tile.component'
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { AuthService } from '../../../auth/services/auth.service';
+import { environment } from '../../../../../environment/environment';
 
 @Component({
   selector: 'app-landing-page',
@@ -35,7 +36,8 @@ export class LandingPageComponent implements OnInit {
     const token = this.authService.getToken();
     if (token && this.authService.isLoggedIn()) {
       const decoded: JwtDecoded = jwtDecode(token);
-      const roles: string[] | undefined = decoded.resource_access['api-client']?.roles;
+      const roles: string[] | undefined =
+        decoded.resource_access[environment.keycloak.apiClientId]?.roles;
       if (roles?.includes('student')) {
         this.router.navigate(['/student']);
       } else if (roles?.includes('coach')) {
