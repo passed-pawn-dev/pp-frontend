@@ -13,6 +13,7 @@ import { StudentMyProfileComponent } from './pages/student-my-profile/student-my
 import { StudentSolveExerciseComponent } from './pages/student-solve-exercise/student-solve-exercise.component';
 import { studentExerciseResolver } from './resolvers/student-exercise.resolver';
 import { StudentSolveQuizComponent } from './pages/student-solve-quiz/student-solve-quiz.component';
+import { studentQuizResolver } from './resolvers/student-quiz.resolver';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -64,7 +65,10 @@ export const STUDENT_ROUTES: Route[] = [
       },
       {
         path: 'my-courses/:id/lesson/:lessonId/quiz/:quizId',
-        component: StudentSolveQuizComponent
+        component: StudentSolveQuizComponent,
+        resolve: {
+          quiz: studentQuizResolver
+        }
       },
       {
         path: 'my-games',

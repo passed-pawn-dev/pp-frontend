@@ -59,9 +59,20 @@
           [class.step-left]="step > 2"
           [class.step-hidden]="step < 2"
         >
-          <app-chessboard-editor
-            (newFenEvent)="onNewFen($event)"
-          ></app-chessboard-editor>
+          <div>
+            <label for="includeChessboard">Include chessboard</label>
+            <input
+              type="checkbox"
+              id="includeChessboard"
+              [checked]="includeChessboard"
+              (change)="toggleIncludeChessboard($event)"
+            />
+          </div>
+          @if (includeChessboard) {
+            <app-chessboard-editor
+              (newFenEvent)="onNewFen($event)"
+            ></app-chessboard-editor>
+          }
         </div>
         <!-- step 3 -->
         <div
@@ -71,9 +82,12 @@
           [class.step-hidden]="step < 3"
         >
           <div class="questions-form">
-            <app-chessboard-editor
-              (newFenEvent)="newPositionForAnswer($event)"
-            ></app-chessboard-editor>
+            @if (includeChessboard) {
+              <app-chessboard-editor
+                (newFenEvent)="newPositionForAnswer($event)"
+              ></app-chessboard-editor>
+            }
+
             <div class="panel">
               <div class="details-fields">
                 <div class="form-control-field">
@@ -106,9 +120,11 @@
                         [touched]="answer.get('text')!.touched"
                       />
 
-                      <button type="button" (click)="addPositionToAnswer($index)">
-                        Add current position
-                      </button>
+                      @if (includeChessboard) {
+                        <button type="button" (click)="addPositionToAnswer($index)">
+                          Add current position
+                        </button>
+                      }
                       <button
                         type="button"
                         [disabled]="answers.length < 3"

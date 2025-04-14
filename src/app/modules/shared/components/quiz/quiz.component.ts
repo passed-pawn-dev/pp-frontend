@@ -18,8 +18,8 @@ export class QuizComponent {
   protected selectedAnswer = signal<number | undefined>(undefined);
   protected boardFen = computed(() =>
     this.selectedAnswer() === undefined
-      ? this.quiz().positon!
-      : this.quiz().answers[this.selectedAnswer()!].newPosition!
+      ? this.quiz().fen!
+      : this.quiz().answers[this.selectedAnswer()!].newPosition || this.quiz().fen!
   );
 
   protected lastMove = computed(() =>

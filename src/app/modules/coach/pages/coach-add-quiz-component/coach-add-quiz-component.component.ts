@@ -16,6 +16,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { QuizComponent } from '../../../shared/components/quiz/quiz.component';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
+import { CourseService } from '../../service/course.service';
+import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { Location } from '@angular/common';
+import { Checkbox } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-coach-add-quiz-component',
@@ -26,7 +31,8 @@ import { ValidationErrorsComponent } from '../../../shared/components/validation
     TextareaModule,
     RadioButtonModule,
     QuizComponent,
-    ValidationErrorsComponent
+    ValidationErrorsComponent,
+    FormsModule
   ],
   templateUrl: './coach-add-quiz-component.component.html',
   styleUrl: './coach-add-quiz-component.component.scss'
@@ -34,7 +40,13 @@ import { ValidationErrorsComponent } from '../../../shared/components/validation
 export class CoachAddQuizComponentComponent implements OnInit {
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
+  private courseService = inject(CourseService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+  private messageService = inject(MessageService);
 
+  protected lessonId: string | null = null;
+  protected includeChessboard: boolean = true;
   protected step: number = 1;
   protected stepNumber: number = 4;
   protected currentPositionForAnswer: string = '';
@@ -46,6 +58,7 @@ export class CoachAddQuizComponentComponent implements OnInit {
   ];
   protected quiz: QuizDetails = {
     title: '',
+    order: 1,
     question: '',
     answers: [
       { text: '', newPosition: '' },
@@ -82,6 +95,12 @@ export class CoachAddQuizComponentComponent implements OnInit {
         this.quiz.hint = changes.hint!;
         this.quiz.explanation = changes.explanation!;
       });
+
+    this.route.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        this.lessonId = params.get('lessonId')!;
+      });
   }
 
   private createAnswer(): FormGroup {
@@ -114,11 +133,30 @@ export class CoachAddQuizComponentComponent implements OnInit {
   }
 
   protected onNewFen(event: string): void {
-    this.quiz.positon = event;
+    this.quiz.fen = event;
   }
 
   protected submit(): void {
-    // console.log(this.quiz);
+    this.courseService
+      .addQuiz(this.lessonId!, this.quiz)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (_) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Quiz created successfully'
+          });
+          this.location.back();
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Failure',
+            detail: 'Quiz could not be created'
+          });
+        }
+      });
   }
 
   protected newPositionForAnswer(position: string): void {
@@ -151,5 +189,11 @@ export class CoachAddQuizComponentComponent implements OnInit {
         });
         break;
     }
+  }
+
+  protected toggleIncludeChessboard(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.includeChessboard = input.checked;
+    this.quiz.fen = undefined;
   }
 }

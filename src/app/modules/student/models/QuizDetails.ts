@@ -8,7 +8,7 @@ export interface QuizDetails {
   answers: QuizAnswer[];
   solution: number;
   hint?: string;
-  positon?: string;
+  fen?: string;
   explanation?: string;
 }
 
