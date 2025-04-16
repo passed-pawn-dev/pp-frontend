@@ -3,13 +3,14 @@ import { RouterLink } from '@angular/router';
 import { Course } from '../../models/Course';
 import { CourseService } from '../../service/course.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Button } from 'primeng/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { StudentCourseTileComponent } from '../../../student/components/student-course-tile/student-course-tile.component';
+import { CoachCourseTileComponent } from '../../components/coach-course-tile/coach-course-tile.component';
 
 @Component({
   selector: 'app-coach-courses-list',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, StudentCourseTileComponent, CoachCourseTileComponent],
   providers: [],
   templateUrl: './coach-courses-list.component.html',
   styleUrl: './coach-courses-list.component.scss'
