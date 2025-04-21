@@ -2,10 +2,10 @@
 <div class="tile">
   <div class="header" [style.color]="color">{{ header }}</div>
   <div class="circles-group">
-    @for (ele of filledCircles; track ele) {
+    @for (ele of filledCircles; track $index) {
       <div class="circle" [style.background-color]="color"></div>
     }
-    @for (ele of emptyCircles; track ele) {
+    @for (ele of emptyCircles; track $index + 5) {
       <div class="circle"></div>
     }
   </div>

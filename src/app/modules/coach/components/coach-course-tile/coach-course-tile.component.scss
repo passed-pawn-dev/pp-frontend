@@ -1,0 +1,165 @@
+@use 'variables' as *;
+
+.tile {
+  list-style-type: none;
+
+  a {
+    display: flex;
+    gap: 1rem;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: black;
+    border: 1px solid white;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+
+    &:hover {
+      // border: 1px solid $text-secondary;
+      // transform: translateY(-0.5rem);
+      // box-shadow: 0 0.5rem 0 $text-secondary;
+      box-shadow: 0 0.5rem 0.5rem #dcdbdb;
+      transform: translateY(-0.25rem);
+    }
+
+    img {
+      width: 12rem;
+      height: 12rem;
+      object-fit: cover;
+      border-radius: 0.5rem;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .main {
+        display: flex;
+        justify-content: space-between;
+        // align-items: center;
+        // border: 1px solid;
+
+        .header {
+          // .top {
+          //   display: flex;
+          //   justify-content: space-between;
+          //   align-items: center;
+          //   // border: 1px solid;
+
+          // }
+          .flex {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+          }
+
+          .desc {
+            color: $text-secondary;
+          }
+        }
+
+        .price {
+          font-size: $font-L;
+          // line-height: 2rem;
+          white-space: nowrap;
+          // border: 1px solid blue;
+        }
+
+        .free {
+          color: $free;
+        }
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        // border: 1px solid;
+
+        .lessons {
+          margin-top: 1rem;
+
+          span {
+            margin-left: 0.5rem;
+          }
+        }
+
+        .operations {
+          display: flex;
+          gap: 1rem;
+
+          button,
+          a {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            cursor: pointer;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            border-radius: 0.5rem;
+            transform: none;
+            transition: none;
+            box-shadow: none;
+
+            &:hover {
+              background-color: $background;
+            }
+
+            img {
+              width: auto;
+              height: $font-L;
+              border-radius: 0;
+              // border: 1px solid;
+            }
+          }
+
+          .delete {
+            &:hover {
+              background-color: #ffdbdb;
+            }
+          }
+        }
+
+        // .progress-bar-container {
+        //   width: 30rem;
+        //   display: flex;
+        //   align-items: center;
+        //   gap: 0.25rem;
+
+        //   .percent {
+        //     color: $primary;
+        //     font-weight: 700;
+        //   }
+
+        //   .progress-bar {
+        //     width: 100%;
+        //     overflow: hidden;
+        //     height: 0.5rem;
+        //     background-color: $background;
+        //     border-radius: 2rem;
+
+        //     .progress {
+        //       width: 50%;
+        //       height: 100%;
+        //       background-color: $primary;
+        //       border-radius: 2rem;
+        //     }
+        //   }
+
+        //   img {
+        //     margin-left: 0.5rem;
+        //     height: $font-S;
+        //     width: $font-S;
+        //   }
+        // }
+      }
+    }
+  }
+}
