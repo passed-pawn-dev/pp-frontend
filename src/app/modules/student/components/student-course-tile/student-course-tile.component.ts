@@ -2,11 +2,12 @@ import { Component, computed, input } from '@angular/core';
 import { Course } from '../../models/Course';
 import { RouterLink } from '@angular/router';
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
+import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 
 @Component({
   selector: 'app-student-course-tile',
   standalone: true,
-  imports: [RouterLink, CourseDifficultyComponent],
+  imports: [RouterLink, CourseDifficultyComponent, StarRatingComponent],
   templateUrl: './student-course-tile.component.html',
   styleUrl: './student-course-tile.component.scss'
 })

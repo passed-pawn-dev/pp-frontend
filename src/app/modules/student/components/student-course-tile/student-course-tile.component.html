@@ -5,10 +5,14 @@
     <div class="content">
       <div class="main">
         <div class="header">
-          <h3>{{ course().title }}</h3>
+          <div class="flex">
+            <h3>{{ course().title }}</h3>
+            <app-star-rating [rating]="3.4" [showMinimal]="true" />
+          </div>
           <div class="desc">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora omnis enim
-            libero numquam dolore aperiam explicabo corporis eum at reiciendis.
+            ewqeewqewqeee libero numquam dolore aperiam explicabo corporis eum at
+            reiciendis.
           </div>
         </div>
         @if (this.course().price > 0) {

@@ -49,14 +49,20 @@
             // border: 1px solid;
           }
 
+          .flex {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+          }
+
           .desc {
             color: $text-secondary;
           }
         }
 
         .price {
-          font-size: $font-XL;
-          line-height: 2rem;
+          font-size: $font-L;
+          // line-height: 2rem;
           white-space: nowrap;
           // border: 1px solid blue;
         }

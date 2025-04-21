@@ -43,56 +43,33 @@
         // border: 1px solid;
 
         .header {
-          .top {
+          // .top {
+          //   display: flex;
+          //   justify-content: space-between;
+          //   align-items: center;
+          //   // border: 1px solid;
+
+          // }
+          .flex {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            // border: 1px solid;
-
-            .operations {
-              display: flex;
-              gap: 1.5rem;
-
-              button,
-              a {
-                margin: 0;
-                padding: 0;
-                background-color: white;
-                cursor: pointer;
-                width: 2rem;
-                height: 2rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border: none;
-                border-radius: 0.5rem;
-                transform: none;
-                transition: none;
-                box-shadow: none;
-
-                &:hover {
-                  background-color: #cfcfcf;
-                }
-
-                img {
-                  width: auto;
-                  height: $font-L;
-                  border-radius: 0;
-                  // border: 1px solid;
-                }
-              }
-
-              .delete {
-                &:hover {
-                  background-color: #ffc9c9;
-                }
-              }
-            }
+            gap: 1rem;
           }
 
           .desc {
             color: $text-secondary;
           }
+        }
+
+        .price {
+          font-size: $font-L;
+          // line-height: 2rem;
+          white-space: nowrap;
+          // border: 1px solid blue;
+        }
+
+        .free {
+          color: $free;
         }
       }
 
@@ -107,6 +84,46 @@
 
           span {
             margin-left: 0.5rem;
+          }
+        }
+
+        .operations {
+          display: flex;
+          gap: 1rem;
+
+          button,
+          a {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            cursor: pointer;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            border-radius: 0.5rem;
+            transform: none;
+            transition: none;
+            box-shadow: none;
+
+            &:hover {
+              background-color: $background;
+            }
+
+            img {
+              width: auto;
+              height: $font-L;
+              border-radius: 0;
+              // border: 1px solid;
+            }
+          }
+
+          .delete {
+            &:hover {
+              background-color: #ffdbdb;
+            }
           }
         }
 

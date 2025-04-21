@@ -36,9 +36,10 @@
     </div>
   </div>
 </div>
+<!-- lesson have quizzes, exercises and rest of element in lists so need to combine this lists to one that (some inheritence) -->
 @if (showElements) {
   <div class="elements-group">
-    @for (exer of lesson.exercises; track $index) {
+    @for (exer of lesson.quizzes; track $index) {
       <div class="element">
         <!-- <div class="progress-margin"[class.last]="last" [class.complete]="true" ></div> -->
         <div class="progress-container" [class.complete]="true">
@@ -50,13 +51,13 @@
               <div>{{ $index + 1 }}</div>
               <div>{{ exer.title }}</div>
             </div>
+            <button type="button" class="primary-btn">Learn</button>
           </div>
         </div>
       </div>
     }
 
-    <div class="element">
-      <!-- <div class="progress-margin" [class.last]="last" [class.complete]="false" ></div> -->
+    <!-- <div class="element">
       <div class="progress-container" [class.complete]="false">
         <div class="progress" [class.complete]="false"></div>
       </div>
@@ -72,7 +73,6 @@
     </div>
 
     <div class="element">
-      <!-- <div class="progress-margin" [class.last]="last" [class.complete]="true" ></div> -->
       <div class="progress-container" [class.complete]="true">
         <div class="progress" [class.complete]="true"></div>
       </div>
@@ -85,6 +85,6 @@
           <button type="button" class="primary-btn">Learn</button>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 }
