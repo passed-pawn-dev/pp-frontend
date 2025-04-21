@@ -3,7 +3,7 @@
 .tile {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
 
   .rating {
     font-size: $font-L;
@@ -12,6 +12,10 @@
   }
 
   .stars-group {
+    display: flex;
+    align-items: center;
+    // border: 1px solid;
+
     .star {
       height: $font-M;
     }
@@ -19,5 +23,9 @@
     .minimal {
       height: $font-XS;
     }
+  }
+
+  .rating-number {
+    color: $text-secondary;
   }
 }

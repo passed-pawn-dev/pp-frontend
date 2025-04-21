@@ -6,34 +6,44 @@
     <div class="content">
       <div class="main">
         <div class="header">
-          <div class="top">
+          <div class="flex">
             <h3>{{ course.title }}</h3>
-            <div class="operations">
-              <a type="button" class="edit" [routerLink]="course.id + '/edit'">
-                <img src="icons/edit.png" alt="edit" />
-              </a>
-              <button type="button" class="delete" (click)="onDelete()">
-                <img src="icons/delete.png" alt="delete" />
-              </button>
-            </div>
+            <app-star-rating [rating]="3.4" [showMinimal]="true" />
           </div>
           <div class="desc">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora omnis enim
             libero numquam dolore aperiam explicabo corporis eum at reiciendis.
           </div>
         </div>
-        <!-- @if (this.course().price > 0) {
-              <div class="price">{{ formattedPrice() }}</div>
-            } @else {
-              <div class="price free">Free</div>
-            } -->
+        <!-- <div class="operations">
+          <a type="button" class="edit" [routerLink]="course.id + '/edit'">
+            <img src="icons/edit.png" alt="edit" />
+          </a>
+          <button type="button" class="delete" (click)="onDelete()">
+            <img src="icons/delete.png" alt="delete" />
+          </button>
+        </div> -->
+
+        @if (100 > 0) {
+          <div class="price">100$</div>
+        } @else {
+          <div class="price free">Free</div>
+        }
       </div>
       <div class="footer">
         <div>
           <app-course-difficulty [difficulty]="3" />
           <!-- [course difficulty 1-5] -->
-          <div class="lessons">2 Lessons, <span>13 Elements</span></div>
+          <div class="lessons">2 Lessons <span>13 Elements</span></div>
           <!-- [coach name and surname] -->
+        </div>
+        <div class="operations">
+          <a type="button" class="edit" [routerLink]="course.id + '/edit'">
+            <img src="icons/edit.png" alt="edit" />
+          </a>
+          <button type="button" class="delete" (click)="onDelete()">
+            <img src="icons/delete.png" alt="delete" />
+          </button>
         </div>
 
         <!-- <div class="progress-bar-container">

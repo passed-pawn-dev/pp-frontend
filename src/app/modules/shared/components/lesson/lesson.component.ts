@@ -28,5 +28,6 @@ export class LessonComponent {
 
   public toggleElements(): void {
     this.showElements = !this.showElements;
+    console.log(this.lesson);
   }
 }
