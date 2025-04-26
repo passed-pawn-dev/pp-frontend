@@ -1,0 +1,31 @@
+<div class="ai-container">
+  @if (isHidden) {
+    <button class="show-button" type="button" (click)="show()">
+      <img class="ai-icon" src="icons/glitter.svg" alt="close" />
+    </button>
+  } @else {
+    <div>
+      <div #messagesContainer class="messages">
+        @for (message of messages; track $index; let last = $last) {
+          <div class="message">
+            {{ message }}
+          </div>
+        }
+      </div>
+
+      <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+        <div>
+          <input id="question" formControlName="question" placeholder="Your question" />
+          <app-validation-errors
+            [errors]="questionForm.controls.question.errors"
+            [dirty]="questionForm.controls.question.dirty"
+            [touched]="questionForm.controls.question.touched"
+          />
+          <button type="button" (click)="hide()">
+            <img class="hide-icon" src="icons/xmark-black.svg" alt="close" />
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+</div>
