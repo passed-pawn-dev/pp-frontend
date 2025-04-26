@@ -4,14 +4,14 @@ import {
   EventEmitter,
   OnInit,
   Output,
-  inject
+  inject,
+  signal
 } from '@angular/core';
 import { ChessBoard } from '../../../../chess-logic/board';
 import {
   Color,
   TChessboard,
   TChessboardView,
-  TLastMove,
   pieceImagePaths
 } from '../../../../chess-logic/models';
 import { FenConverter } from '../../../../chess-logic/FenConverter';
@@ -35,6 +35,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChessboardHighlightsDirective } from '../../directives/chessboard-highlights.directive';
+import { Severity } from '../../enums/severities.enum';
+import { Arrow } from '../../models/Arrow';
+import { ChessboardArrowsDirective } from '../../directives/chessboard-arrows.directive';
 
 enum Mode {
   Draw = 'Draw',
@@ -51,7 +55,9 @@ enum Mode {
     ReactiveFormsModule,
     InputTextModule,
     InputNumberModule,
-    CheckboxModule
+    CheckboxModule,
+    ChessboardHighlightsDirective,
+    ChessboardArrowsDirective
   ],
   templateUrl: './chessboard-editor.component.html',
   styleUrl: './chessboard-editor.component.scss'
@@ -61,11 +67,13 @@ export class ChessboardEditorComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   @Output() public newFenEvent = new EventEmitter<string>();
+  @Output() public newHighlightsEvent = new EventEmitter<Map<number, Severity>>();
+  @Output() public newArrowsEvent = new EventEmitter<Arrow[]>();
 
-  protected startingFen: string =
+  private startingFen: string =
     'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-  protected FILES = ChessBoard.FILES;
-  protected RANKS = ChessBoard.RANKS;
+  private FILES = ChessBoard.FILES;
+  private RANKS = ChessBoard.RANKS;
   private chessboard: TChessboard = new Map(
     this.RANKS.flatMap((RANK) => this.FILES.map((FILE) => [`${FILE}${RANK}`, null]))
   );
@@ -76,7 +84,14 @@ export class ChessboardEditorComponent implements OnInit {
   protected pieceImagePaths = pieceImagePaths;
   protected fenInputErrors: string[] = [];
   protected Mode = Mode;
+  protected Severity = Severity;
   protected _mode: Mode = Mode.Move;
+  protected currentSeverity = Severity.Info;
+  protected arrowStartField = 0;
+
+  protected highlights = signal<Map<number, Severity>>(new Map([]));
+
+  protected arrows = signal<Arrow[]>([]);
 
   protected fenForm = this.fb.group({
     sideToMove: [Color.White],
@@ -106,7 +121,7 @@ export class ChessboardEditorComponent implements OnInit {
     new Pawn(Color.Black)
   ];
 
-  public get chessboardView(): TChessboardView {
+  protected get chessboardView(): TChessboardView {
     const chessboardView = new Map();
     for (let [square, piece] of this.chessboard) {
       chessboardView.set(square, piece?.fenChar || null);
@@ -136,7 +151,11 @@ export class ChessboardEditorComponent implements OnInit {
 
   public ngOnInit(): void {
     this.resetToStartingPosition();
+
     this.updateFenAndSave();
+    this.updateArrows();
+    this.updateHighlights();
+
     this.mode = Mode.Move;
 
     this.fenForm.valueChanges
@@ -155,7 +174,11 @@ export class ChessboardEditorComponent implements OnInit {
       });
   }
 
-  protected replaceSegment(index: number, replacement: string): void {
+  protected onFieldRightClicked(event: MouseEvent): void {
+    event.preventDefault();
+  }
+
+  protected replaceFenSegment(index: number, replacement: string): void {
     const firstPart = this.fen.split(' ', index);
     const secondPart = this.fen.split(' ').slice(index + 1);
     this.fen = [...firstPart, replacement, ...secondPart].join(' ');
@@ -173,17 +196,17 @@ export class ChessboardEditorComponent implements OnInit {
     const blackShort = rights[2] ? 'k' : '';
     const blackLong = rights[3] ? 'q' : '';
     const newRights = [whiteShort, whiteLong, blackShort, blackLong].join('');
-    this.replaceSegment(2, newRights.length === 0 ? '-' : newRights);
+    this.replaceFenSegment(2, newRights.length === 0 ? '-' : newRights);
   }
 
   protected updateEnPassant(square: string | null): void {
     const newSquare = square === null || square.match(/^$|.*\s.*/) ? '-' : square;
-    this.replaceSegment(3, newSquare);
+    this.replaceFenSegment(3, newSquare);
   }
 
   protected updateClocks(halfMoveClock: number, fullMoveNumber: number): void {
-    this.replaceSegment(4, halfMoveClock.toString());
-    this.replaceSegment(5, fullMoveNumber.toString());
+    this.replaceFenSegment(4, halfMoveClock.toString());
+    this.replaceFenSegment(5, fullMoveNumber.toString());
   }
 
   protected drawWith(piece: Piece): void {
@@ -201,6 +224,74 @@ export class ChessboardEditorComponent implements OnInit {
     this.updateFenAndSave();
   }
 
+  protected onFieldDragStart(event: MouseEvent, field: number): void {
+    if (event.button === 2) {
+      this.arrowStartField = field;
+    }
+  }
+
+  private setHighlight(fieldIndex: number, severity: Severity): void {
+    const newMap = new Map(this.highlights());
+    newMap.set(fieldIndex, severity);
+    this.highlights.set(newMap);
+    this.updateHighlights();
+  }
+
+  private removeHighlight(fieldIndex: number): void {
+    const newMap = new Map(this.highlights());
+    newMap.delete(fieldIndex);
+    this.highlights.set(newMap);
+    this.updateHighlights();
+  }
+
+  private addArrow(field: number): void {
+    const newArray = [...this.arrows()];
+    const newArrow = {
+      source: this.arrowStartField,
+      destination: field,
+      severity: this.currentSeverity
+    };
+    newArray.push(newArrow);
+    this.arrows.set(newArray);
+    this.updateArrows();
+  }
+
+  private removeArrow(arrow: Arrow): void {
+    const newArray = [...this.arrows()];
+    newArray.splice(newArray.indexOf(arrow), 1);
+    this.arrows.set(newArray);
+    this.updateArrows();
+  }
+
+  protected onFieldDragEnd(event: MouseEvent, field: number): void {
+    if (event.button !== 2) return;
+    if (field === this.arrowStartField) {
+      const currentHighlight: Severity | undefined = this.highlights().get(field);
+
+      if (currentHighlight) {
+        this.removeHighlight(field);
+        if (currentHighlight !== this.currentSeverity) {
+          this.setHighlight(field, this.currentSeverity);
+        }
+      } else {
+        this.setHighlight(field, this.currentSeverity);
+      }
+    } else {
+      const currentArrow: Arrow | undefined = this.arrows().find(
+        (e) => e.source === this.arrowStartField && e.destination === field
+      );
+
+      if (currentArrow) {
+        this.removeArrow(currentArrow);
+        if (currentArrow.severity !== this.currentSeverity) {
+          this.addArrow(field);
+        }
+      } else {
+        this.addArrow(field);
+      }
+    }
+  }
+
   protected clearBoard(): void {
     ChessBoard.FILES.forEach((file) => {
       ChessBoard.RANKS.forEach((rank) => {
@@ -208,6 +299,16 @@ export class ChessboardEditorComponent implements OnInit {
       });
     });
     this.updateFenAndSave();
+  }
+
+  protected clearArrows(): void {
+    this.arrows.set([]);
+    this.updateArrows();
+  }
+
+  protected clearHighlights(): void {
+    this.highlights.set(new Map([]));
+    this.updateHighlights();
   }
 
   protected onInput(fen: string): void {
@@ -249,7 +350,7 @@ export class ChessboardEditorComponent implements OnInit {
     this.updateFenAndSave();
   }
 
-  protected dragStart(square: string): void {
+  protected onPieceDragStart(square: string): void {
     if (this.mode === Mode.Move) {
       const newPiece: Piece = this.chessboard.get(square)!;
       this.chessboard.set(square, null);
@@ -291,12 +392,24 @@ export class ChessboardEditorComponent implements OnInit {
     this.updateFenAndSave();
   }
 
-  protected isSelected(piece: Piece): boolean {
+  protected isPieceSelected(piece: Piece): boolean {
     return this.mode === Mode.Draw && this.currentPiece === piece;
+  }
+
+  protected isSeveritySelected(severity: Severity): boolean {
+    return this.currentSeverity === severity;
   }
 
   protected updateFenAndSave(): void {
     this.calculateFen();
     this.newFenEvent.emit(this.fen);
+  }
+
+  private updateHighlights(): void {
+    this.newArrowsEvent.emit(this.arrows());
+  }
+
+  private updateArrows(): void {
+    this.newArrowsEvent.emit(this.arrows());
   }
 }

@@ -47,7 +47,7 @@ export class CoachAddQuizComponentComponent implements OnInit {
 
   protected lessonId: string | null = null;
   protected includeChessboard: boolean = true;
-  protected step: number = 1;
+  protected step: number = 2;
   protected stepNumber: number = 4;
   protected currentPositionForAnswer: string = '';
   protected stepHeaders: string[] = [
