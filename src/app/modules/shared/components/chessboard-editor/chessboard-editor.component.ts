@@ -293,7 +293,7 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
       }
     } else {
       const currentArrow: Arrow | undefined = this.arrows().find(
-        (e) => e.source === this.arrowStartField && e.destination === field
+        (e: Arrow) => e.source === this.arrowStartField && e.destination === field
       );
 
       if (currentArrow) {
