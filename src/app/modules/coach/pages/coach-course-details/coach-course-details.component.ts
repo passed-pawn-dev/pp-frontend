@@ -8,11 +8,12 @@ import { LessonDetails } from '../../models/LessonDetails';
 import { Messages } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CoachLessonComponent } from '../../components/coach-lesson/coach-lesson.component';
 
 @Component({
   selector: 'app-coach-course-details',
   standalone: true,
-  imports: [RouterLink, CourseReviewComponent],
+  imports: [RouterLink, CourseReviewComponent, CoachLessonComponent],
   templateUrl: './coach-course-details.component.html',
   styleUrl: './coach-course-details.component.scss'
 })

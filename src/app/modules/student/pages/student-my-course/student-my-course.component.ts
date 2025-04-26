@@ -11,7 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   LessonComponent,
   LessonStatus
-} from '../../../shared/components/lesson/lesson.component';
+} from '../../components/lesson/lesson.component';
 
 @Component({
   selector: 'app-student-my-course',
