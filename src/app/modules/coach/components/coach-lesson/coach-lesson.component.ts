@@ -10,7 +10,7 @@ import { LessonDetails } from '../../models/LessonDetails';
   styleUrl: './coach-lesson.component.scss'
 })
 export class CoachLessonComponent {
-  public showElements: boolean = true;
+  public showElements: boolean = false;
 
   public showAddElementOptions: boolean = false;
 
