@@ -14,9 +14,13 @@ export class CoachCourseTileComponent {
   @Input() public course!: Course;
   @Output() public delete = new EventEmitter<string>();
 
-  public onDelete(): void {
-    console.log('in emit', this.course.id);
+  protected onDelete(): void {
+    // console.log('in emit', this.course.id);
 
     this.delete.emit(this.course.id.toString());
+  }
+
+  protected stopPropagation(event: Event): void {
+    event.stopPropagation();
   }
 }

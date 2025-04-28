@@ -10,7 +10,7 @@ import { CoachCourseTileComponent } from '../../components/coach-course-tile/coa
 @Component({
   selector: 'app-coach-courses-list',
   standalone: true,
-  imports: [RouterLink, StudentCourseTileComponent, CoachCourseTileComponent],
+  imports: [RouterLink, CoachCourseTileComponent],
   providers: [],
   templateUrl: './coach-courses-list.component.html',
   styleUrl: './coach-courses-list.component.scss'
@@ -47,7 +47,7 @@ export class CoachCoursesListComponent implements OnInit {
   }
 
   protected deleteCourse(id: string): void {
-    console.log('in parent', id);
+    // console.log('in parent', id);
 
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this course?',

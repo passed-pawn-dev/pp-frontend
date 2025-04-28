@@ -52,16 +52,13 @@ export class CoachCourseDetailsComponent implements OnInit {
   protected lessonCount = computed(() => new Array(this.course().lessonNumber));
 
   public ngOnInit(): void {
+    const course = this.route.snapshot.data['course'];
+    this.course.set(course);
+
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         const courseId = params.get('id')!;
-        this.courseService
-          .getById(courseId)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe((res) => {
-            this.course.set(res);
-          });
 
         this.courseService
           .getDetailsById(courseId)

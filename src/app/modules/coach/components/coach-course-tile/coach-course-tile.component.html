@@ -38,7 +38,12 @@
           <!-- [coach name and surname] -->
         </div>
         <div class="operations">
-          <a type="button" class="edit" [routerLink]="course.id + '/edit'">
+          <a
+            type="button"
+            class="edit"
+            [routerLink]="course.id + '/edit'"
+            (click)="stopPropagation($event)"
+          >
             <img src="icons/edit.png" alt="edit" />
           </a>
           <button type="button" class="delete" (click)="onDelete()">

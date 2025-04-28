@@ -14,6 +14,8 @@ import { StudentSolveExerciseComponent } from './pages/student-solve-exercise/st
 import { studentExerciseResolver } from './resolvers/student-exercise.resolver';
 import { StudentSolveQuizComponent } from './pages/student-solve-quiz/student-solve-quiz.component';
 import { studentQuizResolver } from './resolvers/student-quiz.resolver';
+import { studentBoughtCourseResolver } from './resolvers/student-bought-course.resolver';
+import { studentCourseResolver } from './resolvers/student-course.resolver';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -25,37 +27,40 @@ export const STUDENT_ROUTES: Route[] = [
         redirectTo: 'my-courses',
         pathMatch: 'full'
       },
-      {
-        path: 'my-coaches',
-        component: StudentMyCoachesComponent
-      },
-      {
-        path: 'my-coaches/:id',
-        component: StudentMyCoachComponent
-      },
+      // {
+      //   path: 'my-coaches',
+      //   component: StudentMyCoachesComponent
+      // },
+      // {
+      //   path: 'my-coaches/:id',
+      //   component: StudentMyCoachComponent
+      // },
       {
         path: 'my-courses',
         component: StudentMyCoursesComponent
       },
       {
         path: 'my-courses/:id',
-        component: StudentMyCourseComponent
+        component: StudentMyCourseComponent,
+        resolve: {
+          course: studentBoughtCourseResolver
+        }
       },
-      {
-        path: 'my-courses/:id/lessons',
-        component: StudentLessonsComponent,
-        children: [
-          {
-            path: '',
-            redirectTo: '1',
-            pathMatch: 'full'
-          },
-          {
-            path: ':id',
-            component: StudentLessonDetailsComponent
-          }
-        ]
-      },
+      // {
+      //   path: 'my-courses/:id/lessons',
+      //   component: StudentLessonsComponent,
+      //   children: [
+      //     {
+      //       path: '',
+      //       redirectTo: '1',
+      //       pathMatch: 'full'
+      //     },
+      //     {
+      //       path: ':id',
+      //       component: StudentLessonDetailsComponent
+      //     }
+      //   ]
+      // },
       {
         path: 'my-courses/:id/lesson/:lessonId/exercise/:exerciseId',
         component: StudentSolveExerciseComponent,
@@ -70,22 +75,25 @@ export const STUDENT_ROUTES: Route[] = [
           quiz: studentQuizResolver
         }
       },
-      {
-        path: 'my-games',
-        component: StudentMyGamesComponent
-      },
+      // {
+      //   path: 'my-games',
+      //   component: StudentMyGamesComponent
+      // },
       {
         path: 'courses',
         component: StudentCoursesComponent
       },
       {
         path: 'courses/:id',
-        component: StudentCourseComponent
-      },
-      {
-        path: 'profile',
-        component: StudentMyProfileComponent
+        component: StudentCourseComponent,
+        resolve: {
+          course: studentCourseResolver
+        }
       }
+      // {
+      //   path: 'profile',
+      //   component: StudentMyProfileComponent
+      // }
     ]
   }
 ];

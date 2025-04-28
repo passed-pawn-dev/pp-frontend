@@ -1,23 +1,23 @@
-import { inject } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   ResolveFn,
   Router,
   RouterStateSnapshot
 } from '@angular/router';
-import { CourseService } from '../service/course.service';
+import { MyCourseDetails } from '../models/MyCourseDetails';
 import { Observable, catchError, of } from 'rxjs';
-import { Exercise } from '../models/Exercise';
+import { inject } from '@angular/core';
+import { CourseService } from '../service/course.service';
 
-export const coachExerciseResolver: ResolveFn<Exercise> = (
+export const studentBoughtCourseResolver: ResolveFn<MyCourseDetails> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
-): Observable<Exercise> => {
+): Observable<MyCourseDetails> => {
   const courseService = inject(CourseService);
   const router = inject(Router);
 
-  const exerciseId = route.paramMap.get('exerciseId')!;
-  return courseService.getExerciseById(exerciseId).pipe(
+  const courseId = route.paramMap.get('id')!;
+  return courseService.getBoughtById(courseId).pipe(
     catchError((_) => {
       router.navigate(['/404']);
       return of(null as any);
