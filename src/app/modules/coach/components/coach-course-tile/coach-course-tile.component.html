@@ -41,7 +41,7 @@
           <a type="button" class="edit" [routerLink]="course.id + '/edit'">
             <img src="icons/edit.png" alt="edit" />
           </a>
-          <button type="button" class="delete" (click)="onDelete()">
+          <button type="button" class="delete" (click)="onDelete($event)">
             <img src="icons/delete.png" alt="delete" />
           </button>
         </div>

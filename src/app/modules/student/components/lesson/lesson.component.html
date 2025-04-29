@@ -1,5 +1,6 @@
 <!-- eslint-disable @angular-eslint/template/no-inline-styles -->
-<div class="lesson">
+
+<!-- <div class="lesson">
   <div
     class="progress-container"
     [class.first]="first"
@@ -36,12 +37,11 @@
     </div>
   </div>
 </div>
-<!-- lesson have quizzes, exercises and rest of element in lists so need to combine this lists to one that (some inheritence) -->
 @if (showElements) {
   <div class="elements-group">
     @for (exer of lesson.quizzes; track $index) {
       <div class="element">
-        <!-- <div class="progress-margin"[class.last]="last" [class.complete]="true" ></div> -->
+        <div class="progress-margin"[class.last]="last" [class.complete]="true" ></div>
         <div class="progress-container" [class.complete]="true">
           <div class="progress" [class.complete]="true"></div>
         </div>
@@ -51,40 +51,63 @@
               <div>{{ $index + 1 }}</div>
               <div>{{ exer.title }}</div>
             </div>
-            <button type="button" class="primary-btn">Learn</button>
+            <a type="button" class="primary-btn" [routerLink]="'lesson/' + lesson.id  + '/quiz/' + exer.id" >Learn</a>
           </div>
         </div>
       </div>
     }
+  </div>
+} -->
 
-    <!-- <div class="element">
-      <div class="progress-container" [class.complete]="false">
-        <div class="progress" [class.complete]="false"></div>
-      </div>
-      <div class="tile" [class.complete]="false">
-        <div class="content">
-          <div class="header">
-            <div>1</div>
-            <div>First element of lesson</div>
+<div class="lesson" [class.first]="first" [class.last]="last">
+  <div class="progress-container">
+    <div
+      class="circle"
+      [class.complete]="complete === 'Complete'"
+      [class.in-progress]="complete === 'InProgress'"
+    ></div>
+  </div>
+
+  <div class="tile">
+    <div class="top">
+      <div class="title">Lesson Title</div>
+      <div class="left">
+        <div class="progress-bar-container">
+          <div class="percent">{{ progress }} / {{ all }}</div>
+          <div class="progress-bar">
+            <div class="progress" [style.width]="(progress / all) * 100 + '%'"></div>
           </div>
-          <button type="button" class="primary-btn">Learn</button>
         </div>
+
+        <button type="button" class="toggle" (click)="toggleElements()">
+          <img
+            src="icons/arrow-right.png"
+            alt="arrow"
+            [class.show-details]="showElements"
+          />
+        </button>
       </div>
     </div>
-
-    <div class="element">
-      <div class="progress-container" [class.complete]="true">
-        <div class="progress" [class.complete]="true"></div>
+    @if (showElements) {
+      <div class="elements-group">
+        @for (element of lesson.quizzes; track $index) {
+          <a
+            class="element"
+            [routerLink]="'lesson/' + lesson.id + '/quiz/' + element.id"
+          >
+            <div class="left">
+              <img src="icons/puzzle.png" alt="puzzle" />
+              <div class="title">Element Title</div>
+            </div>
+            <div class="right">
+              <div></div>
+            </div>
+          </a>
+        }
+        @if (lesson.quizzes.length === 0) {
+          <div>No Elements</div>
+        }
       </div>
-      <div class="tile" [class.complete]="true">
-        <div class="content">
-          <div class="header">
-            <div>1</div>
-            <div>First element of lesson</div>
-          </div>
-          <button type="button" class="primary-btn">Learn</button>
-        </div>
-      </div>
-    </div> -->
+    }
   </div>
-}
+</div>

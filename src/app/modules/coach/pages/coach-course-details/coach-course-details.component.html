@@ -1,4 +1,4 @@
-<div class="page">
+<!-- <div class="page">
   <div class="course-data">
     <h1>{{ course().title }}</h1>
     <div>
@@ -10,9 +10,9 @@
 
     <div class="info">
       <div>{{ course().lessonNumber }} lessons</div>
-      <!-- <div>
+      <div>
         price: <span class="price">{{ formattedPrice() }}</span>
-      </div> -->
+      </div>
       <div>
         price: <span class="price">{{ course().price }}$</span>
       </div>
@@ -89,4 +89,45 @@
       </div>
     }
   </ul>
+</div> -->
+
+<div class="page">
+  <div class="header">
+    <h2>My Course Details</h2>
+    <a class="secondary-btn" [routerLink]="'/coach/courses'">Back to courses</a>
+  </div>
+  <section class="main-section">
+    <img class="course-img" src="images/chess-course-1.png" alt="chess-course" />
+    <div class="right">
+      <div class="content">
+        <h3>{{ course().title }}</h3>
+        <div class="desc">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis architecto
+          voluptates labore repudiandae ipsam adipisci. Quia dolorum, ut deserunt modi
+          aut officia soluta possimus accusamus eveniet, dolorem perferendis placeat
+          architecto sit sequi aliquam beatae tempora facilis consequuntur vitae
+          recusandae ipsam!
+        </div>
+      </div>
+      <div class="footer"></div>
+    </div>
+  </section>
+
+  <div class="lessons-section">
+    <div class="header">
+      <h3>Lessons</h3>
+      <a class="btn" [routerLink]="'lessons/new'">Add lesson</a>
+    </div>
+    <div class="lessons-group">
+      @for (lesson of lessons(); track $index) {
+        <app-coach-lesson
+          [lesson]="lesson"
+          [index]="$index"
+          [first]="$first"
+          [last]="$last"
+          (deleteLessonEvent)="deleteLesson($event)"
+        />
+      }
+    </div>
+  </div>
 </div>
