@@ -24,6 +24,8 @@ export class StudentCoursesComponent implements OnInit {
       .getAll()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {
+        console.log(res);
+
         this.courses = res;
       });
   }

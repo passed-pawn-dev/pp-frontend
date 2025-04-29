@@ -18,7 +18,7 @@ export class CourseService {
   public constructor(private httpClient: HttpClient) {}
 
   public getAll(): Observable<Course[]> {
-    return this.httpClient.get<Course[]>('/api/Course?paid=false');
+    return this.httpClient.get<Course[]>('/api/Course/Student');
   }
 
   public getById(id: string): Observable<CourseDetails> {
@@ -38,7 +38,7 @@ export class CourseService {
   }
 
   public getAllBought(): Observable<MyCourse[]> {
-    return this.httpClient.get<MyCourse[]>('/api/Course?paid=true');
+    return this.httpClient.get<MyCourse[]>('/api/Course/Student/bought');
   }
 
   public getBoughtById(id: string): Observable<MyCourseDetails> {

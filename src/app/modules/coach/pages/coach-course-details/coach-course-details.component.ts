@@ -25,11 +25,12 @@ export class CoachCourseDetailsComponent implements OnInit {
   protected course = signal<CourseDetails>({
     id: '',
     title: '',
+    averageScore: 0,
     description: '',
-    studentNumber: 0,
-    lessonNumber: 0,
+    enrolledStudentsCount: 0,
     price: 0,
-    reviews: []
+    reviews: [],
+    lessons: []
   });
 
   protected lessons = signal<LessonDetails[]>([]);
@@ -41,7 +42,7 @@ export class CoachCourseDetailsComponent implements OnInit {
 
   protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
 
-  protected reviewCount = computed(() => this.course().reviews.length);
+  protected reviewCount = computed(() => this.course().reviews.length || 0);
 
   protected averageReviewScore = computed(() =>
     this.course().reviews.length == 0
@@ -50,7 +51,7 @@ export class CoachCourseDetailsComponent implements OnInit {
         this.course().reviews.length
   );
 
-  protected lessonCount = computed(() => new Array(this.course().lessonNumber));
+  protected lessonCount = computed(() => new Array(this.course().lessons.length));
 
   public ngOnInit(): void {
     const course = this.route.snapshot.data['course'];
@@ -61,20 +62,20 @@ export class CoachCourseDetailsComponent implements OnInit {
       .subscribe((params) => {
         const courseId = params.get('id')!;
 
-        this.courseService
-          .getDetailsById(courseId)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: (res) => {
-              this.lessons.set(res.lessons);
-            },
-            error: (_) =>
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Failure',
-                detail: 'Failed to fetch details'
-              })
-          });
+        // this.courseService
+        //   .getDetailsById(courseId)
+        //   .pipe(takeUntilDestroyed(this.destroyRef))
+        //   .subscribe({
+        //     next: (res) => {
+        //       this.lessons.set(res.lessons);
+        //     },
+        //     error: (_) =>
+        //       this.messageService.add({
+        //         severity: 'error',
+        //         summary: 'Failure',
+        //         detail: 'Failed to fetch details'
+        //       })
+        //   });
       });
   }
 

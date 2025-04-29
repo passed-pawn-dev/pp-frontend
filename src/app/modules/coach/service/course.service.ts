@@ -10,6 +10,7 @@ import { LessonDetails } from '../../student/models/LessonDetails';
 import { Exercise } from '../models/Exercise';
 import { CourseLessons } from '../models/CourseLessons';
 import { QuizDetails } from '../../student/models/QuizDetails';
+import { CourseReview } from '../models/CourseReview';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +19,15 @@ export class CourseService {
   public constructor(private httpClient: HttpClient) {}
 
   public getAll(): Observable<Course[]> {
-    return this.httpClient.get<Course[]>('/api/Course/created');
+    return this.httpClient.get<Course[]>('/api/Course/Coach');
   }
 
   public getById(id: string): Observable<CourseDetails> {
-    return this.httpClient.get<CourseDetails>(`/api/Course/${id}`);
+    return this.httpClient.get<CourseDetails>(`/api/Course/Coach/${id}`);
   }
 
-  // TODO - THIS IS TEMPORARY SOLUTION
-  public getDetailsById(id: string): Observable<CourseLessons> {
-    return this.httpClient.get<CourseLessons>(`/api/Course/${id}/details`);
+  public getReviewsById(id: string): Observable<CourseReview[]> {
+    return this.httpClient.get<CourseReview[]>(`/api/Course/${id}/review`);
   }
 
   public getLessonsById(id: string): Observable<LessonDetails[]> {

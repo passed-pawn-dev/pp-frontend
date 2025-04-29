@@ -3,7 +3,11 @@ export interface Course {
   title: string;
   description: string;
   price: number;
-  lessonNumber: number;
-  score: number;
-  reviewScore: number;
+  coachName: string;
+  averageScore: number;
+  eloRangeStart: number;
+  eloRangeEnd: number;
+  pictureUrl?: string;
+  lessonCount: number;
+  elementCount: number;
 }

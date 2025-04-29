@@ -4,9 +4,10 @@ import { Lesson } from './Lesson';
 export interface CourseDetails {
   id: string;
   title: string;
+  averageScore: number;
   description: string;
-  studentNumber: number;
-  lessonNumber: number;
+  enrolledStudentsCount: number;
   price: number;
   reviews: CourseReview[];
+  lessons: [];
 }

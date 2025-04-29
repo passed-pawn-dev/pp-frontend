@@ -7,7 +7,7 @@
         <div class="header">
           <div class="flex">
             <h3>{{ course().title }}</h3>
-            <app-star-rating [rating]="3.4" [showMinimal]="true" />
+            <app-star-rating [rating]="course().reviewScore" [showMinimal]="true" />
           </div>
           <div class="desc">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora omnis enim
@@ -23,9 +23,9 @@
       </div>
       <div class="footer">
         <div>
-          <app-course-difficulty [difficulty]="2" />
+          <app-course-difficulty [difficulty]="course().difficulty" />
           <!-- [course difficulty 1-5] -->
-          <div class="coach">Galiano Italiano</div>
+          <div class="coach">{{ course().coachName }}</div>
           <!-- [coach name and surname] -->
         </div>
         <button type="button" class="primary-btn" (click)="buyCourse($event)">
