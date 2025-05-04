@@ -2,40 +2,144 @@
 
 .ai-container {
   position: fixed;
-  max-width: 20rem;
-  bottom: 0;
-  right: 0;
+  max-width: 30rem;
+  bottom: 1rem;
+  right: 1rem;
   margin-bottom: 1rem;
   margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .border {
+    background: linear-gradient(90deg, #0bd9d5 0%, #5760c7 50%, $primary 100%);
+    padding: 1px;
+    border-radius: 0.5rem;
+    width: 100%;
+
+    form {
+      display: flex;
+      position: relative;
+
+      input {
+        font-family: 'Poppins', sans-serif;
+        border-radius: 0.45rem 0 0 0.45rem;
+        border: none;
+        flex: 1;
+        padding-left: 1rem;
+        font-size: $font-S;
+
+        &:disabled {
+          background-color: white;
+        }
+
+        &:focus {
+          border: none;
+          outline: none;
+        }
+      }
+
+      .error {
+        position: absolute;
+        content: '';
+        bottom: -2rem;
+        left: 0;
+      }
+
+      .show-button {
+        border-radius: 0 0.45rem 0.45rem 0;
+      }
+    }
+  }
+
+  .flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
-.messages {
-  padding: 1rem;
-  border-radius: 1rem;
-  background-color: #ffffffc5;
-  max-height: 20rem;
-  overflow-y: scroll;
-  color: white;
-  scroll-behavior: smooth;
-  :nth-child(even) {
-    background-color: gray;
-  }
-  :nth-child(odd) {
-    background-color: black;
+.messages-container {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0 10px $border-secondary;
+  background-color: white;
+  // border: 1px solid red;
+
+  .border-2 {
+    background: linear-gradient(90deg, #0bd9d5 0%, #5760c7 50%, $primary 100%);
+    width: 100%;
+    padding: 0;
+    height: 1px;
   }
 
-  .message {
-    margin-bottom: 0.5rem;
+  .header {
+    font-weight: 700;
     padding: 0.5rem;
-    border-radius: 1rem;
+    line-height: $font-S;
+  }
+
+  .messages {
+    padding: 1rem;
+    // border-radius: 0.5rem;
+    // background-color: white;
+    max-height: 20rem;
+    overflow-y: scroll;
+    color: white;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-end;
+    // border: 1px solid black;
+
+    :nth-child(odd) {
+      background-color: gray;
+    }
+
+    :nth-child(even) {
+      background-color: black;
+    }
+
+    .message {
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      width: 20rem;
+      font-size: $font-S;
+      // line-height: $font-S;
+    }
+
+    .response {
+      display: flex;
+      gap: 1rem;
+      background-color: white;
+
+      img {
+        height: 3rem;
+        background-color: white;
+      }
+
+      .message {
+        position: relative;
+
+        .tr {
+          height: 0.75rem;
+          background-color: transparent;
+          position: absolute;
+          content: '';
+          left: -0.5rem;
+          top: 1.5rem;
+        }
+      }
+    }
   }
 }
 
 .show-button {
   all: unset;
-  background-color: $primary-lighter;
+  background-color: white;
   padding: 0.5rem;
-  border-radius: 1rem;
+  border-radius: 0.45rem;
   width: 2rem;
   height: 2rem;
   display: flex;
@@ -45,7 +149,7 @@
 }
 
 .hide-icon {
-  width: 1rem;
+  width: 1.5rem;
 }
 
 .ai-icon {

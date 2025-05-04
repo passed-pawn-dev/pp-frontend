@@ -22,6 +22,5 @@ export class CoachExercisePreviewComponent implements OnInit {
     const exercise = this.route.snapshot.data['exercise'];
     this.fen = exercise.fen;
     this.solution = exercise.solution;
-    console.log(this.fen);
   }
 }

@@ -9,6 +9,7 @@ import { CoachAddExerciseComponent } from './pages/coach-add-exercise/coach-add-
 import { CoachExercisePreviewComponent } from './pages/coach-exercise-preview/coach-exercise-preview.component';
 import { coachExerciseResolver } from './resolvers/coach-exercise.resolver';
 import { CoachAddQuizComponent } from './pages/coach-add-quiz/coach-add-quiz.component';
+import { coachCourseResolver } from './resolvers/coach-course.resolver';
 
 export const COACH_ROUTES: Route[] = [
   {
@@ -30,7 +31,10 @@ export const COACH_ROUTES: Route[] = [
       },
       {
         path: 'courses/:id',
-        component: CoachCourseDetailsComponent
+        component: CoachCourseDetailsComponent,
+        resolve: {
+          course: coachCourseResolver
+        }
       },
       {
         path: 'courses/:id/lesson/:lessonId/exercise/add',
@@ -53,12 +57,15 @@ export const COACH_ROUTES: Route[] = [
       },
       {
         path: 'courses/:id/edit',
-        component: CoachCourseFormComponent
-      },
-      {
-        path: 'profile',
-        component: CoachMyProfileComponent
+        component: CoachCourseFormComponent,
+        resolve: {
+          course: coachCourseResolver
+        }
       }
+      // {
+      //   path: 'profile',
+      //   component: CoachMyProfileComponent
+      // }
     ]
   }
 ];

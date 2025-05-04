@@ -31,7 +31,7 @@ export class CoachCourseFormComponent implements OnInit {
   private messageService = inject(MessageService);
   private destroyRef = inject(DestroyRef);
 
-  private courseId: string | null = null;
+  protected courseId: string | null = null;
 
   protected courseForm = this.fb.group({
     title: ['', [Validators.required]],
@@ -46,12 +46,8 @@ export class CoachCourseFormComponent implements OnInit {
         const id: string | null = params.get('id');
         this.courseId = id;
         if (id) {
-          this.courseService
-            .getById(id)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((res) => {
-              this.courseForm.patchValue(res);
-            });
+          const existingCourse = this.route.snapshot.data['course'];
+          this.courseForm.patchValue(existingCourse);
         }
       });
   }

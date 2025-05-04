@@ -19,6 +19,8 @@
   font-weight: 600;
   position: absolute;
   right: 0.25rem;
+  user-select: none;
+  pointer-events: none;
 }
 
 .chessboard-file {
@@ -26,6 +28,8 @@
   left: 0.25rem;
   position: absolute;
   top: 0.25rem;
+  user-select: none;
+  pointer-events: none;
 }
 
 .chessboard-field {
@@ -205,4 +209,38 @@ img {
 .selected {
   background-color: #d5c1ff;
   border: 2px solid #6015f4;
+}
+
+.color-select-buttons {
+  margin-top: 1rem;
+  .severity-input {
+    cursor: pointer;
+    appearance: none;
+    margin: 0;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 100%;
+  }
+  .info {
+    background-color: blue;
+  }
+  .warning {
+    background-color: yellow;
+  }
+  .danger {
+    background-color: red;
+  }
+  .correct {
+    background-color: green;
+  }
+  display: flex;
+  justify-content: center;
+}
+
+.round {
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.2rem;
 }

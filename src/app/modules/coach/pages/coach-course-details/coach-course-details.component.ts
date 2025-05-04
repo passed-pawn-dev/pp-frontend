@@ -8,11 +8,12 @@ import { LessonDetails } from '../../models/LessonDetails';
 import { Messages } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CoachLessonComponent } from '../../components/coach-lesson/coach-lesson.component';
 
 @Component({
   selector: 'app-coach-course-details',
   standalone: true,
-  imports: [RouterLink, CourseReviewComponent],
+  imports: [RouterLink, CourseReviewComponent, CoachLessonComponent],
   templateUrl: './coach-course-details.component.html',
   styleUrl: './coach-course-details.component.scss'
 })
@@ -52,16 +53,13 @@ export class CoachCourseDetailsComponent implements OnInit {
   protected lessonCount = computed(() => new Array(this.course().lessonNumber));
 
   public ngOnInit(): void {
+    const course = this.route.snapshot.data['course'];
+    this.course.set(course);
+
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         const courseId = params.get('id')!;
-        this.courseService
-          .getById(courseId)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe((res) => {
-            this.course.set(res);
-          });
 
         this.courseService
           .getDetailsById(courseId)
