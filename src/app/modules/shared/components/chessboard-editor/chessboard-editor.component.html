@@ -10,7 +10,7 @@
               pDraggable
               [class]="
                 'chessboard-chess-piece selectable' +
-                (isSelected(piece) ? ' selected' : '')
+                (isPieceSelected(piece) ? ' selected' : '')
               "
               (onDragStart)="pieceListDragStart(piece)"
               (click)="drawWith(piece)"
@@ -37,7 +37,7 @@
               pDraggable
               [class]="
                 'chessboard-chess-piece selectable' +
-                (isSelected(piece) ? ' selected' : '')
+                (isPieceSelected(piece) ? ' selected' : '')
               "
               (onDragStart)="pieceListDragStart(piece)"
               (click)="drawWith(piece)"
@@ -57,6 +57,59 @@
           </button>
         </div>
       </div>
+      <div class="color-select-buttons">
+        <div [class]="'round' + (isSeveritySelected(Severity.Info) ? ' selected' : '')">
+          <input
+            class="severity-input info"
+            type="radio"
+            name="myOptions"
+            [value]="Severity.Info"
+            [(ngModel)]="currentSeverity"
+          />
+        </div>
+
+        <div
+          [class]="'round' + (isSeveritySelected(Severity.Warning) ? ' selected' : '')"
+        >
+          <input
+            class="severity-input warning"
+            type="radio"
+            name="myOptions"
+            [value]="Severity.Warning"
+            [(ngModel)]="currentSeverity"
+          />
+        </div>
+
+        <div
+          [class]="'round' + (isSeveritySelected(Severity.Danger) ? ' selected' : '')"
+        >
+          <input
+            class="severity-input danger"
+            type="radio"
+            name="myOptions"
+            [value]="Severity.Danger"
+            [(ngModel)]="currentSeverity"
+          />
+        </div>
+
+        <div
+          [class]="'round' + (isSeveritySelected(Severity.Correct) ? ' selected' : '')"
+        >
+          <input
+            class="severity-input correct"
+            type="radio"
+            name="myOptions"
+            [value]="Severity.Correct"
+            [(ngModel)]="currentSeverity"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" (click)="clearArrows()">Clear arrows</button>
+        <button type="button" (click)="clearHighlights()">Clear highlights</button>
+      </div>
+
       <div class="util-buttons">
         <button
           class="primary-btn util-btn"
@@ -84,13 +137,21 @@
     </div>
 
     <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
-    <div class="chessboard" [style.cursor]="cursorStyle">
+    <div
+      class="chessboard"
+      [appChessboardHighlights]="highlights()"
+      [appChessboardArrows]="arrows()"
+      [style.cursor]="cursorStyle"
+    >
       @for (field of chessboardView; track $index) {
         <div
           class="chessboard-field"
           tabindex="0"
           role="button"
           (click)="onFieldClicked(field[0])"
+          (mousedown)="onFieldDragStart($event, $index)"
+          (mouseup)="onFieldDragEnd($event, $index)"
+          (contextmenu)="onFieldRightClicked($event)"
         >
           @if ($index % 8 === 0) {
             <div class="chessboard-file">{{ field[0][1] }}</div>
@@ -109,7 +170,7 @@
               <div
                 pDraggable
                 class="chessboard-chess-piece"
-                (onDragStart)="dragStart(field[0])"
+                (onDragStart)="onPieceDragStart(field[0])"
               >
                 <img
                   [alt]="'chess-piece-' + field[1]"
