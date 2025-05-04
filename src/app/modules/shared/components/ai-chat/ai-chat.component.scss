@@ -93,11 +93,11 @@
     align-items: flex-end;
     // border: 1px solid black;
 
-    :nth-child(odd) {
+    :nth-child(even) {
       background-color: gray;
     }
 
-    :nth-child(even) {
+    :nth-child(odd) {
       background-color: black;
     }
 
