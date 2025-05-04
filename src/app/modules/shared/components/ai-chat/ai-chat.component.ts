@@ -36,7 +36,13 @@ export class AiChatComponent {
 
   protected isHidden: boolean = true;
   protected messages: string[] = [
-    'Hello, ask me any question about Passed Pawn, and I will try to help!'
+    'Hello, ask me any question about Passed Pawn, and I will try to help.',
+    'aaa',
+    'aaa',
+    'aaa',
+    'aaa',
+    'aaa',
+    'aaa'
   ];
 
   protected questionForm = this.fb.group({
@@ -73,7 +79,7 @@ export class AiChatComponent {
       if (container) {
         container.nativeElement.scrollTop = container.nativeElement.scrollHeight;
       }
-    }, 0);
+    }, 100);
   }
 
   protected show(): void {

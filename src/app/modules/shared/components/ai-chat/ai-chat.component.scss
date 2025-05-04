@@ -93,20 +93,14 @@
     align-items: flex-end;
     // border: 1px solid black;
 
-    :nth-child(even) {
-      background-color: gray;
-    }
-
-    :nth-child(odd) {
-      background-color: black;
-    }
-
     .message {
       padding: 0.5rem;
       border-radius: 0.25rem;
       width: 20rem;
       font-size: $font-S;
+      background-color: gray;
       // line-height: $font-S;
+      word-wrap: break-word;
     }
 
     .response {
@@ -121,6 +115,7 @@
 
       .message {
         position: relative;
+        background-color: black;
 
         .tr {
           height: 0.75rem;
