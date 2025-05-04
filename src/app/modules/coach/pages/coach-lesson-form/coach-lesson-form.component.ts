@@ -42,7 +42,7 @@ export class CoachLessonFormComponent {
         this.courseService
           .addLesson(this.lessonId, {
             ...this.lessonForm.getRawValue(),
-            excercises: []
+            puzzles: []
           })
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
@@ -52,7 +52,7 @@ export class CoachLessonFormComponent {
                 summary: 'Success',
                 detail: 'Lesson created successfully'
               });
-              this.router.navigate(['../..']);
+              this.router.navigate(['../..'], { relativeTo: this.route });
             },
             error: (_) => {
               this.messageService.add({

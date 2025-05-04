@@ -7,10 +7,11 @@ import { NewCourse } from '../models/NewCourse';
 import { Lesson } from '../models/Lesson';
 import { NewLesson } from '../models/NewLesson';
 import { LessonDetails } from '../../student/models/LessonDetails';
-import { Exercise } from '../models/Exercise';
+import { Puzzle } from '../models/Puzzle';
 import { CourseLessons } from '../models/CourseLessons';
 import { QuizDetails } from '../../student/models/QuizDetails';
 import { CourseReview } from '../models/CourseReview';
+import { ElementKind } from '../../shared/enums/element-kind.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class CourseService {
   }
 
   public create(course: NewCourse): Observable<Course> {
-    return this.httpClient.post<Course>('/api/Course', course);
+    return this.httpClient.post<Course>('/api/Course/Coach', course);
   }
 
   public update(id: string, course: NewCourse): Observable<Course> {
@@ -49,15 +50,41 @@ export class CourseService {
   }
 
   public addLesson(id: string, lesson: NewLesson): Observable<Lesson> {
-    return this.httpClient.post<Lesson>(`api/Course/${id}/lesson`, lesson);
+    return this.httpClient.post<Lesson>(`api/Course/Coach/${id}/lesson`, lesson);
   }
 
   public deleteLesson(id: string): Observable<object> {
     return this.httpClient.delete(`api/Lesson/${id}`);
   }
 
-  public getExerciseById(id: string): Observable<Exercise> {
-    return this.httpClient.get<Exercise>(`api/CourseExercise/${id}`);
+  public deleteElement(id: string, kind: ElementKind): Observable<object> {
+    switch (kind) {
+      case ElementKind.Quiz:
+        return this.deleteQuiz(id);
+      case ElementKind.Example:
+        return this.deleteExample(id);
+      case ElementKind.Puzzle:
+        return this.deletePuzzle(id);
+      case ElementKind.Video:
+        return this.deleteVideo(id);
+    }
+  }
+
+  public deleteQuiz(id: string): Observable<object> {
+    return this.httpClient.delete(``);
+  }
+  public deleteExample(id: string): Observable<object> {
+    return this.httpClient.delete(``);
+  }
+  public deleteVideo(id: string): Observable<object> {
+    return this.httpClient.delete(``);
+  }
+  public deletePuzzle(id: string): Observable<object> {
+    return this.httpClient.delete(``);
+  }
+
+  public getExerciseById(id: string): Observable<Puzzle> {
+    return this.httpClient.get<Puzzle>(`api/CourseExercise/${id}`);
   }
 
   public addExercise(
@@ -71,7 +98,8 @@ export class CourseService {
       title,
       description,
       fen,
-      solution
+      solution,
+      order: 1
     });
   }
 

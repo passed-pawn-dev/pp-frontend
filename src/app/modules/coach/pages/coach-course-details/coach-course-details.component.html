@@ -19,7 +19,7 @@
       <div>{{ course().enrolledStudentsCount }} enrolled students</div>
       <div>
         Average review score: {{ averageReviewScore() }} ({{ reviewCount() }} reviews) -->
-      <!-- </div>
+<!-- </div>
     </div>
 
     @for (review of course().reviews; track $index) {
@@ -32,7 +32,7 @@
     </div>
   </div>
   <hr /> -->
-  <!-- <ul class="course-lesson-list">
+<!-- <ul class="course-lesson-list">
     @for (lesson of lessons(); track $index) {
       <div class="course-lesson">
         <li class="course-lesson-header">
@@ -101,13 +101,7 @@
     <div class="right">
       <div class="content">
         <h3>{{ course().title }}</h3>
-        <div class="desc">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis architecto
-          voluptates labore repudiandae ipsam adipisci. Quia dolorum, ut deserunt modi
-          aut officia soluta possimus accusamus eveniet, dolorem perferendis placeat
-          architecto sit sequi aliquam beatae tempora facilis consequuntur vitae
-          recusandae ipsam!
-        </div>
+        <div class="desc">{{ course().description }}</div>
       </div>
       <div class="footer"></div>
     </div>

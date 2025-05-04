@@ -3,17 +3,17 @@ import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CourseDetails } from '../../models/CourseDetails';
 import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
-import { Exercise } from '../../models/Exercise';
+import { Puzzle } from '../../models/Puzzle';
 import { LessonDetails } from '../../models/LessonDetails';
 import { Messages } from 'primeng/messages';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CoachLessonComponent } from '../../components/coach-lesson/coach-lesson.component';
 
 @Component({
   selector: 'app-coach-course-details',
   standalone: true,
-  imports: [RouterLink, CourseReviewComponent, CoachLessonComponent],
+  imports: [RouterLink, CoachLessonComponent],
   templateUrl: './coach-course-details.component.html',
   styleUrl: './coach-course-details.component.scss'
 })
@@ -21,6 +21,7 @@ export class CoachCourseDetailsComponent implements OnInit {
   private router = inject(Router);
   private messageService = inject(MessageService);
   private destroyRef = inject(DestroyRef);
+  private confirmationService: ConfirmationService = inject(ConfirmationService);
 
   protected course = signal<CourseDetails>({
     id: '',
@@ -92,30 +93,38 @@ export class CoachCourseDetailsComponent implements OnInit {
   }
 
   protected deleteLesson(lessonNumber: string): void {
-    this.courseService
-      .deleteLesson(lessonNumber)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (_) => {
-          this.lessons.set(
-            this.lessons().filter((lesson) => lesson.id !== lessonNumber)
-          );
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Lesson deleted successfully'
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this lesson?',
+      header: 'Confirm',
+      accept: () => {
+        this.courseService
+          .deleteLesson(lessonNumber)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: (_) => {
+              this.lessons.set(
+                this.lessons().filter((lesson) => lesson.id !== lessonNumber)
+              );
+
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Lesson deleted successfully'
+              });
+            },
+            error: (_) =>
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Failed to delete lesson'
+              })
           });
-        },
-        error: (_) =>
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Failed to delete lesson'
-          })
-      });
+      },
+      reject: () => {}
+    });
   }
 
-  protected getSortedExercises(exerciseList: Exercise[]): Exercise[] {
+  protected getSortedExercises(exerciseList: Puzzle[]): Puzzle[] {
     return exerciseList.sort((a, b) => (a.id > b.id ? 1 : -1));
   }
 }
