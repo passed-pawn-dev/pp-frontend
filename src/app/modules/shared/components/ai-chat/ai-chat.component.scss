@@ -17,10 +17,10 @@
   overflow-y: scroll;
   color: white;
   scroll-behavior: smooth;
-  :nth-child(odd) {
+  :nth-child(even) {
     background-color: gray;
   }
-  :nth-child(even) {
+  :nth-child(odd) {
     background-color: black;
   }
 
