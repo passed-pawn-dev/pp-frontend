@@ -26,7 +26,7 @@ import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-puzzle-chessboard',
   standalone: true,
-  imports: [Button, CommonModule, MoveListComponent, InputTextModule, FormsModule],
+  imports: [CommonModule, MoveListComponent, InputTextModule, FormsModule],
   templateUrl: './puzzle-chessboard.component.html',
   styleUrl: './puzzle-chessboard.component.scss'
 })
