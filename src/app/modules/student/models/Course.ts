@@ -4,9 +4,10 @@ export interface Course {
   id: string;
   title: string;
   description: string;
-  difficulty: number;
+  eloRangeStart: number;
+  eloRangeEnd: number;
   coachName: string;
-  thumbnail: string;
+  pictureUrl: string;
   price: number;
-  reviewScore: number;
+  averageScore: number;
 }

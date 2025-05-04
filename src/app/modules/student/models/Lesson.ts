@@ -6,6 +6,7 @@ import { Quiz } from './Quiz';
 export interface Lesson {
   id: string;
   lessonNumber: number;
+  //TODO change to puzzles
   exercises: Exercise[];
   examples: Example[];
   preview: boolean;

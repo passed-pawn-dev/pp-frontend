@@ -87,13 +87,7 @@
     <div class="right">
       <div class="content">
         <h3>{{ course().title }}</h3>
-        <div class="desc">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis architecto
-          voluptates labore repudiandae ipsam adipisci. Quia dolorum, ut deserunt modi
-          aut officia soluta possimus accusamus eveniet, dolorem perferendis placeat
-          architecto sit sequi aliquam beatae tempora facilis consequuntur vitae
-          recusandae ipsam!
-        </div>
+        <div class="desc">{{ course().description }}</div>
       </div>
       <div class="footer"></div>
     </div>
@@ -103,7 +97,7 @@
     <h3>Lessons</h3>
     <div class="lessons-group">
       @for (lesson of course().lessons; track $index) {
-        <app-lesson
+        <app-student-lesson
           [lesson]="lesson"
           [index]="$index"
           [first]="$first"

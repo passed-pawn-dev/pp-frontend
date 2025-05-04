@@ -3,6 +3,7 @@ import {
   DestroyRef,
   Input,
   OnInit,
+  Signal,
   computed,
   input,
   signal
@@ -20,6 +21,8 @@ import {
   CourseDetailsDiagramComponent
 } from '../../../shared/components/course-details-diagram/course-details-diagram.component';
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
+import { ChessTitle } from '../../../shared/enums/chess-titles.enum';
+import { CourseReview } from '../../models/CourseReview';
 
 @Component({
   selector: 'app-student-course',
@@ -39,22 +42,41 @@ export class StudentCourseComponent implements OnInit {
     id: '',
     title: '',
     description: '',
+    releaseDate: '',
+    coach: {
+      name: '',
+      chessTitle: ChessTitle.CandidateMaster,
+      createdCoursesCount: 0,
+      description: '',
+      pictureUrl: ''
+    },
+    puzzleCount: 0,
+    videoCount: 0,
+    quizCount: 0,
+    exampleCount: 0,
+    language: '',
+    eloRangeStart: 0,
+    eloRangeEnd: 0,
+    totalVideoCount: 0,
+    reviewCount: 0,
+    averageScore: 0,
+    pictureUrl: null,
     price: 0,
-    lessonNumber: 0,
-    studentNumber: 0,
-    reviews: []
+    studentNumber: 0
   });
+
+  protected reviews: CourseReview[] = [];
 
   protected showCoachDetails: boolean = false;
 
   protected showInpactDetails: boolean = false;
 
-  protected diagramCourseDetails: CourseDetailsDiagram[] = [
-    { title: 'Puzzles', amount: 16 },
-    { title: 'Quizes', amount: 1 },
-    { title: 'Video', amount: 9 },
-    { title: 'Examples', amount: 10 }
-  ];
+  protected diagramCourseDetails: Signal<CourseDetailsDiagram[]> = computed(() => [
+    { title: 'Puzzles', amount: this.course().puzzleCount },
+    { title: 'Quizes', amount: this.course().quizCount },
+    { title: 'Videos', amount: this.course().videoCount },
+    { title: 'Examples', amount: this.course().exampleCount }
+  ]);
 
   public constructor(
     private courseService: CourseService,
@@ -65,14 +87,18 @@ export class StudentCourseComponent implements OnInit {
 
   protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
 
-  protected reviewCount = computed(() => this.course().reviews.length);
+  protected formattedDate: Signal<string> = computed(() => {
+    const date: Date = new Date(this.course().releaseDate);
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+  });
+
+  protected reviewCount = computed(() => this.reviews.length);
 
   protected averageReviewScore = computed(() =>
-    this.course().reviews.length == 0
+    this.reviews.length == 0
       ? 0
       : (
-          this.course().reviews.reduce((acc, curr) => acc + curr.value, 0) /
-          this.course().reviews.length
+          this.reviews.reduce((acc, curr) => acc + curr.value, 0) / this.reviews.length
         ).toFixed(2)
   );
 

@@ -1,13 +1,9 @@
-import { Title } from "./Title";
+import { ChessTitle } from '../../shared/enums/chess-titles.enum';
 
 export interface Coach {
-    id: string;
-    firstName: string;
-    lastName: string;
-    photoId: string;
-    dateOfBirth: Date;
-    ELO: number;
-    title: Title;
-    countryId: string;
-  }
-  
+  name: string;
+  chessTitle: ChessTitle;
+  createdCoursesCount: number;
+  description: string;
+  pictureUrl: string;
+}

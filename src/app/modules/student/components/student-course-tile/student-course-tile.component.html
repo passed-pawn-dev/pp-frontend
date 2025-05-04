@@ -7,23 +7,19 @@
         <div class="header">
           <div class="flex">
             <h3>{{ course().title }}</h3>
-            <app-star-rating [rating]="course().reviewScore" [showMinimal]="true" />
+            <app-star-rating [rating]="course().averageScore" [showMinimal]="true" />
           </div>
-          <div class="desc">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora omnis enim
-            ewqeewqewqeee libero numquam dolore aperiam explicabo corporis eum at
-            reiciendis.
-          </div>
+          <div class="desc">{{ course().description }}</div>
         </div>
         @if (this.course().price > 0) {
-          <div class="price">{{ formattedPrice() }}</div>
+          <div class="price">{{ course().price }}</div>
         } @else {
           <div class="price free">Free</div>
         }
       </div>
       <div class="footer">
         <div>
-          <app-course-difficulty [difficulty]="course().difficulty" />
+          <!-- <app-course-difficulty [difficulty]="course().difficulty" /> -->
           <!-- [course difficulty 1-5] -->
           <div class="coach">{{ course().coachName }}</div>
           <!-- [coach name and surname] -->

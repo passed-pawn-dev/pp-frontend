@@ -34,17 +34,11 @@
     <div class="right">
       <div class="content">
         <h3>{{ course().title }}</h3>
-        <div class="desc">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis architecto
-          voluptates labore repudiandae ipsam adipisci. Quia dolorum, ut deserunt modi
-          aut officia soluta possimus accusamus eveniet, dolorem perferendis placeat
-          architecto sit sequi aliquam beatae tempora facilis consequuntur vitae
-          recusandae ipsam!
-        </div>
+        <div class="desc">{{ course().description }}</div>
       </div>
       <div class="footer">
         <div class="date">
-          Released on 2025
+          Released in {{ formattedDate() }}
           <img src="icons/calendar.png" alt="calendar" />
         </div>
       </div>
@@ -57,14 +51,14 @@
       <div class="header">
         <div class="profile">
           <div class="circle"><span>CA</span></div>
-          <div>Carlos Albinos</div>
+          <div>{{ course().coach.name }}</div>
           <!-- [coach name and surname] -->
         </div>
-        <div class="chess-title">GM</div>
+        <div class="chess-title">{{ course().coach.chessTitle || 'N/A' }}</div>
         <!-- [coach chess title] -->
         <app-star-rating [rating]="2.51" [ratingsNumber]="123" />
         <div class="created-courses">
-          <div>3</div>
+          <div>{{ course().coach.createdCoursesCount }}</div>
           <!-- [numebr of created courses by coach] -->
           <img src="icons/book.png" alt="book" />
           <div>Created Courses</div>
@@ -81,10 +75,7 @@
     @if (showCoachDetails) {
       <div class="details">
         <!-- [coach description] -->
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi ex, numquam
-        ipsam nam praesentium vel! Neque error laudantium pariatur dolore consequuntur
-        quam quidem consectetur! Ad impedit blanditiis illum saepe ducimus quos quas! Et
-        vitae quas corrupti quidem. Culpa, soluta architecto.
+        {{ course().coach.description }}
       </div>
     }
   </section>
@@ -94,13 +85,15 @@
     <div class="content">
       <div class="top">
         <app-course-difficulty [difficulty]="3" />
-        <app-course-details-diagram [courseDetails]="diagramCourseDetails" />
+        <app-course-details-diagram [courseDetails]="diagramCourseDetails()" />
         <!-- [couse details form diagram] -->
       </div>
       <div class="line"></div>
       <div class="bottom">
-        <div class="language">English</div>
-        <div class="video"><span>17.5 h </span>of Recorder Videos</div>
+        <div class="language">{{ course().language }}</div>
+        <div class="video">
+          <span>{{ course().totalVideoCount }} h </span>of Recorded Videos
+        </div>
         <div class="interaction">Coach Interaction</div>
       </div>
     </div>
@@ -110,7 +103,10 @@
     <div class="content">
       <h3>Opinions</h3>
       <div class="header">
-        <app-star-rating [rating]="4" [ratingsNumber]="123" />
+        <app-star-rating
+          [rating]="course().averageScore"
+          [ratingsNumber]="course().reviewCount"
+        />
         <div class="created-courses">
           <div>2321</div>
           <!-- [numebr of created courses by coach] -->
@@ -128,10 +124,10 @@
     </div>
     @if (showInpactDetails) {
       <div class="review-group">
-        @for (review of course().reviews; track $index) {
+        @for (review of reviews; track $index) {
           <app-course-review [review]="review" />
         }
-        @if (course().reviews.length === 0) {
+        @if (reviews.length === 0) {
           <div class="no-rev">No revies yet</div>
         }
       </div>

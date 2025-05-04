@@ -90,14 +90,21 @@
     </div>
     @if (showElements) {
       <div class="elements-group">
-        @for (element of lesson.quizzes; track $index) {
+        @for (element of elements(); track $index) {
           <a
             class="element"
-            [routerLink]="'lesson/' + lesson.id + '/quiz/' + element.id"
+            [routerLink]="
+              'lesson/' +
+              lesson.id +
+              '/' +
+              element.kind.toLowerCase() +
+              '/' +
+              element.id
+            "
           >
             <div class="left">
-              <img src="icons/puzzle.png" alt="puzzle" />
-              <div class="title">Element Title</div>
+              <img [src]="kindToIcon.get(element.kind)" [alt]="element.kind" />
+              <div class="title">{{ element.title }}</div>
             </div>
             <div class="right">
               <div></div>

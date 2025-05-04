@@ -9,14 +9,14 @@ import { ButtonModule } from 'primeng/button';
 import { Quiz } from '../../models/Quiz';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
-  LessonComponent,
+  StudentLessonComponent,
   LessonStatus
-} from '../../components/lesson/lesson.component';
+} from '../../components/student-lesson/student-lesson.component';
 
 @Component({
   selector: 'app-student-my-course',
   standalone: true,
-  imports: [ButtonModule, LessonComponent],
+  imports: [ButtonModule, StudentLessonComponent],
   providers: [],
   templateUrl: './student-my-course.component.html',
   styleUrl: './student-my-course.component.scss'
@@ -33,7 +33,8 @@ export class StudentMyCourseComponent implements OnInit {
 
   protected quiz = signal<Quiz>({
     id: '1',
-    title: 'quiz'
+    title: 'quiz',
+    order: 1
   });
 
   protected LessonStatus = LessonStatus;

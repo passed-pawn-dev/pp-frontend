@@ -19,7 +19,8 @@ export class StudentLessonDetailsComponent implements OnInit {
       id: '',
       title: '',
       description: '',
-      url: ''
+      url: '',
+      order: 1
     },
     exercises: [],
     examples: []
