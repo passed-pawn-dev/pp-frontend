@@ -14,7 +14,7 @@ export class CoachCourseTileComponent {
   @Input() public course!: Course;
   @Output() public delete = new EventEmitter<string>();
 
-  protected onDelete(): void {
+  protected onDelete(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
 
