@@ -109,7 +109,7 @@
 <div class="content-container">
   @if (previewMode === PreviewMode.NoPreview) {
     <div class="chessboard-controls">
-      <div class="header">Boread Operations</div>
+      <div class="header">Board Operations</div>
 
       <button type="button" class="operation-btn" (click)="reverseChessboard()">
         Reverse side
@@ -204,7 +204,7 @@
               [disabled]="displayingStartingMove"
               (click)="setCurrentPositionAsStartingPosition()"
             >
-              Set Position
+              Start from this position
             </button>
           </div>
           <div class="move-list">
@@ -240,7 +240,7 @@
               [disabled]="gameHistory.length === 0"
               (click)="onSavePuzzle()"
             >
-              Save Sequence
+              Save Puzzle
             </button>
           </div>
         </div>
