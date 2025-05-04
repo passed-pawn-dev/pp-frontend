@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Lesson } from '../../../student/models/Lesson';
+import { Lesson } from '../../models/Lesson';
+import { RouterLink } from '@angular/router';
 
 export enum LessonStatus {
   Complete = 'Complete',
@@ -9,12 +10,12 @@ export enum LessonStatus {
 
 @Component({
   selector: 'app-lesson',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './lesson.component.html',
   styleUrl: './lesson.component.scss'
 })
 export class LessonComponent {
-  public showElements: boolean = false;
+  public showElements: boolean = true;
 
   // Change to lesson object with list of all elemenets
   @Input() public lesson!: Lesson;

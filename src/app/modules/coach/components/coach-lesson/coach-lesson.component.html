@@ -1,0 +1,85 @@
+<!-- eslint-disable @angular-eslint/template/no-inline-styles -->
+<div class="lesson" [class.first]="first" [class.last]="last">
+  <div class="progress-container">
+    <div class="circle"></div>
+  </div>
+
+  <div class="tile">
+    <div class="top">
+      <div class="title">Lesson Title</div>
+      <div class="left">
+        <!-- <div class="progress-bar-container">
+            <div class="percent">{{ progress }} / {{ all }}</div>
+            <div class="progress-bar">
+              <div class="progress" [style.width]="(progress / all) * 100 + '%'"></div>
+            </div>
+          </div> -->
+
+        <button type="button" class="delete" (click)="deleteLesson()">
+          <img src="icons/delete.png" alt="delete" />
+        </button>
+
+        <button type="button" class="edit">
+          <img src="icons/edit.png" alt="edit" />
+        </button>
+
+        <button type="button" class="add" (click)="toggleAddOperations()">
+          <div>Add</div>
+          <img src="icons/arrow-down-purple.png" alt="" />
+
+          @if (showAddElementOptions) {
+            <div class="options-group">
+              <a [routerLink]="'lesson/' + lesson.id + '/exercise/add'"
+                ><div><img src="icons/puzzle-black.png" alt="" />Puzzle</div>
+                <img src="icons/plus.png" class="plus" alt="plus"
+              /></a>
+              <a [routerLink]="'lesson/' + lesson.id + '/quiz/add'"
+                ><div><img src="icons/quiz-black.png" alt="" />Quiz</div>
+                <img src="icons/plus.png" class="plus" alt="plus"
+              /></a>
+              <a [routerLink]=""
+                ><div><img src="icons/video-black.png" alt="" />Video</div>
+                <img src="icons/plus.png" class="plus" alt="plus"
+              /></a>
+              <a [routerLink]=""
+                ><div><img src="icons/example-black.png" alt="" />Example</div>
+                <img src="icons/plus.png" class="plus" alt="plus"
+              /></a>
+            </div>
+          }
+        </button>
+
+        <button type="button" class="toggle" (click)="toggleElements()">
+          <img
+            src="icons/arrow-right.png"
+            alt="arrow"
+            [class.show-details]="showElements"
+          />
+        </button>
+      </div>
+    </div>
+    @if (showElements) {
+      <div class="elements-group">
+        @for (element of lesson.quizzes; track $index) {
+          <a
+            class="element"
+            [routerLink]="'lesson/' + lesson.id + '/quiz/' + element.id"
+          >
+            <div class="left">
+              <img src="icons/puzzle.png" alt="puzzle" />
+              <div class="title">Element Title</div>
+            </div>
+            <div class="right">
+              <button type="button" class="delete">
+                <img src="icons/delete.png" alt="delete" />
+              </button>
+            </div>
+          </a>
+        }
+        @if (lesson.quizzes.length === 0) {
+          <div>No Elements</div>
+        }
+      </div>
+    }
+  </div>
+</div>
