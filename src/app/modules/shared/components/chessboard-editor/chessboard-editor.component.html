@@ -1,6 +1,7 @@
 <div class="main-content">
   <div class="top-section">
-    <div class="left-panel panel">
+    <div class="left-tile">
+      <div class="header">Board Pieces</div>
       <div class="piece-selection">
         <div class="piece-list">
           @for (piece of whitePieces; track $index) {
@@ -16,6 +17,7 @@
               (click)="drawWith(piece)"
             >
               <img
+                class="left-board-piece"
                 [alt]="'chess-piece-' + piece.fenChar"
                 [src]="pieceImagePaths[piece.fenChar]"
               />
@@ -43,6 +45,7 @@
               (click)="drawWith(piece)"
             >
               <img
+                class="left-board-piece"
                 [alt]="'chess-piece-' + piece.fenChar"
                 [src]="pieceImagePaths[piece.fenChar]"
               />
@@ -57,6 +60,8 @@
           </button>
         </div>
       </div>
+
+      <div class="header-2">Board Elements</div>
       <div class="color-select-buttons">
         <div [class]="'round' + (isSeveritySelected(Severity.Info) ? ' selected' : '')">
           <input
@@ -184,7 +189,7 @@
     </div>
   </div>
 
-  <div class="bottom-section panel">
+  <div class="fen-tile">
     <input
       class="fen-input"
       type="text"

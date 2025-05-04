@@ -10,8 +10,9 @@
   max-height: 31rem;
   position: relative;
   width: 100%;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   overflow: hidden;
+  border: 3px solid black;
 }
 
 .chessboard-rank {
@@ -62,8 +63,6 @@ img {
 
 .main-content {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   width: 100%;
 }
 
@@ -122,12 +121,6 @@ img {
   z-index: 100;
 }
 
-.piece-selection {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
 .piece-list {
   display: flex;
   flex-direction: column;
@@ -162,12 +155,40 @@ img {
   padding: 1rem;
 }
 
-.left-panel {
-  margin-right: 1em;
+.header {
+  font-size: $font-M;
+  font-weight: 700;
+  white-space: nowrap;
+  margin-bottom: 0.5rem;
 }
 
-.bottom-section {
+.header-2 {
+  font-size: $font-M;
+  font-weight: 700;
+  white-space: nowrap;
+  margin-bottom: 0.5rem;
   margin-top: 1rem;
+}
+
+.left-tile {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  border: 3px solid red;
+
+  .piece-selection {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+
+    .left-board-piece {
+      width: 2rem;
+    }
+  }
+}
+
+.fen-tile {
+  border: 3px solid blue;
 }
 
 .fen-form {
@@ -191,11 +212,10 @@ img {
 }
 
 .icon {
-  width: 2rem;
+  width: 1.5rem;
 }
 
 .selectable {
-  all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -204,6 +224,7 @@ img {
     background-color: #d5c1ff;
   }
   border-radius: 0.5rem;
+  border: 2px solid transparent;
 }
 
 .selected {
@@ -212,13 +233,12 @@ img {
 }
 
 .color-select-buttons {
-  margin-top: 1rem;
   .severity-input {
     cursor: pointer;
     appearance: none;
     margin: 0;
-    width: 1rem;
-    height: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
     border-radius: 100%;
   }
   .info {
@@ -235,6 +255,11 @@ img {
   }
   display: flex;
   justify-content: center;
+
+  .selected {
+    background-color: #d5c1ff;
+    border: 2px solid #6015f4;
+  }
 }
 
 .round {
@@ -243,4 +268,5 @@ img {
   justify-content: center;
   align-items: center;
   padding: 0.2rem;
+  border: 2px solid transparent;
 }

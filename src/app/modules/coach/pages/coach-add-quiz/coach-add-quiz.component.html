@@ -31,16 +31,18 @@
         }
       </div>
     </div>
+
     <form class="quiz-form" [formGroup]="quizForm">
       <div class="step-container">
         <!-- step 1 -->
         <div
-          class="step"
+          class="step step-1"
           [class.step-active]="step === 1"
           [class.step-left]="step > 1"
           [class.step-hidden]="step < 1"
         >
-          <div>
+          <div class="tile">
+            <div class="header">Basic Info</div>
             <div class="form-control-field">
               <label for="title">Title</label>
               <input pInputText id="title" formControlName="title" type="text" />
@@ -51,23 +53,26 @@
               />
             </div>
           </div>
+          <div class="elephant-tile">elephant</div>
         </div>
         <!-- step 2 -->
         <div
-          class="step"
+          class="step step-2"
           [class.step-active]="step === 2"
           [class.step-left]="step > 2"
           [class.step-hidden]="step < 2"
         >
-          <div>
+          <div class="show-chessboard-tile">
             <label for="includeChessboard">Include chessboard</label>
             <input
+              p-checkbox
               type="checkbox"
               id="includeChessboard"
               [checked]="includeChessboard"
               (change)="toggleIncludeChessboard($event)"
             />
           </div>
+
           @if (includeChessboard) {
             <app-chessboard-editor
               (newFenEvent)="onNewFen($event)"
