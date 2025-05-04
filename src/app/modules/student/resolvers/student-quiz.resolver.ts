@@ -1,10 +1,11 @@
 import {
   ActivatedRouteSnapshot,
   ResolveFn,
+  Router,
   RouterStateSnapshot
 } from '@angular/router';
 import { QuizDetails } from '../models/QuizDetails';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 import { inject } from '@angular/core';
 import { CourseService } from '../service/course.service';
 
@@ -13,6 +14,13 @@ export const studentQuizResolver: ResolveFn<QuizDetails> = (
   state: RouterStateSnapshot
 ): Observable<QuizDetails> => {
   const courseService = inject(CourseService);
-  const quizId = route.paramMap.get('quizId') || '1';
-  return courseService.getQuizById(quizId);
+  const router = inject(Router);
+
+  const quizId = route.paramMap.get('quizId')!;
+  return courseService.getQuizById(quizId).pipe(
+    catchError((_) => {
+      router.navigate(['/404']);
+      return of(null as any);
+    })
+  );
 };

@@ -16,12 +16,7 @@ import {
 @Component({
   selector: 'app-student-my-course',
   standalone: true,
-  imports: [
-    StudentCourseReviewFormComponent,
-    RouterLink,
-    ButtonModule,
-    LessonComponent
-  ],
+  imports: [ButtonModule, LessonComponent],
   providers: [],
   templateUrl: './student-my-course.component.html',
   styleUrl: './student-my-course.component.scss'
@@ -65,16 +60,8 @@ export class StudentMyCourseComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.route.paramMap
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((params) => {
-        this.courseService
-          .getBoughtById(params.get('id')!)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe((res) => {
-            this.course.set(res);
-          });
-      });
+    const course = this.route.snapshot.data['course'];
+    this.course.set(course);
   }
 
   protected getSortedExercises(exerciseList: Exercise[]): Exercise[] {
