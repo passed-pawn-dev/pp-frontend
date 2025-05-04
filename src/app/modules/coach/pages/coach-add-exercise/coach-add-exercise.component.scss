@@ -1,20 +1,104 @@
-.chessboard-form-page {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-}
+// .chessboard-form-page {
+//   display: flex;
+//   gap: 2rem;
+//   justify-content: center;
+// }
 
-.chessboard-form {
-  max-width: 53rem;
-  width: 100%;
-}
+// .chessboard-form {
+//   max-width: 53rem;
+//   width: 100%;
+// }
 
-.form-controls {
-  margin-top: 7rem;
-}
+// .form-controls {
+//   margin-top: 7rem;
+// }
 
-.form-inputs {
-  display: grid;
-  gap: 1rem;
-  padding-top: 4rem;
+// .form-inputs {
+//   display: grid;
+//   gap: 1rem;
+//   padding-top: 4rem;
+// }
+
+@use 'variables' as *;
+
+.page {
+  max-width: $page-width;
+  margin: auto;
+  // border: 1px solid;
+
+  input,
+  textarea {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid $border-secondary;
+    font-size: $font-S;
+    padding: 0.5rem;
+    height: 2.6rem;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+  }
+
+  textarea {
+    resize: none;
+    height: calc(1.2rem * 5 + 1rem);
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    height: 4rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    // border: 1px solid;
+
+    .puzzle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 4rem;
+      width: 4rem;
+      border-right: 2px solid $background;
+
+      img {
+        width: 2rem;
+      }
+    }
+
+    .header {
+      font-size: $font-L;
+      font-weight: 700;
+    }
+
+    .operation-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-right: 1rem;
+    }
+  }
+
+  .content-section {
+    .form-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      background-color: white;
+      width: 20rem;
+      position: absolute;
+      // border: 1px solid;
+
+      .header {
+        font-size: $font-M;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .lable {
+        color: $text-secondary;
+      }
+    }
+  }
 }

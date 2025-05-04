@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .move-list {
   display: flex;
   flex-direction: column-reverse;
@@ -19,10 +21,33 @@
   grid-template-columns: 2.5rem 5rem 5rem;
   padding-bottom: 0.25rem;
   width: 12rem;
+
+  .white,
+  .black {
+    font-size: $font-XS;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    // border: 1px solid;
+
+    .circle {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      border: 1px solid;
+    }
+  }
+
+  .black {
+    .circle {
+      background-color: black;
+    }
+  }
 }
 
 .move-number {
   width: 2.5rem;
+  font-size: $font-XS;
 }
 
 .current-move {
