@@ -5,11 +5,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { OverlayOptions } from 'primeng/api';
 import { PrimeNG } from 'primeng/config';
+import { AiChatComponent } from './modules/shared/components/ai-chat/ai-chat.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ToastModule, ConfirmDialogModule],
+  imports: [RouterOutlet, ToastModule, ConfirmDialogModule, AiChatComponent],
   providers: [ConfirmationService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

@@ -1,0 +1,82 @@
+<!-- <div class="ai-container">
+  @if (isHidden) {
+    <div class="border">
+      <button class="show-button" type="button" (click)="show()">
+        <img class="ai-icon" src="icons/glitter.svg" alt="close" />
+      </button>
+    </div>
+  } @else {
+    <div>
+      <div #messagesContainer class="messages">
+        @for (message of messages; track $index; let last = $last) {
+          <div class="message">
+            {{ message }}
+          </div>
+        }
+      </div>
+
+      <div class="border" >
+        <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+          <div>
+            <input id="question" formControlName="question" placeholder="Your question" />
+            <app-validation-errors
+              [errors]="questionForm.controls.question.errors"
+              [dirty]="questionForm.controls.question.dirty"
+              [touched]="questionForm.controls.question.touched"
+            />
+            <button type="button" (click)="hide()">
+              <img class="hide-icon" src="icons/xmark-black.svg" alt="close" />
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div> -->
+
+<div class="ai-container">
+  @if (isHidden) {
+    <div class="border flex">
+      <button class="show-button" type="button" (click)="show()">
+        <img class="ai-icon" src="icons/glitter.svg" alt="close" />
+      </button>
+    </div>
+  } @else {
+    <div class="messages-container">
+      <div class="header">AI Assistance</div>
+      <!-- <div class="border-2" ></div> -->
+      <div #messagesContainer class="messages">
+        @for (message of messages; track $index; let last = $last) {
+          @if ($even) {
+            <div class="message">
+              {{ message }}
+            </div>
+          } @else {
+            <div class="response">
+              <img src="icons/elephant.png" alt="elephant" />
+              <div class="message">
+                {{ message }}
+                <img src="icons/triangle.png" class="tr" alt="elephant" />
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+    <div class="border">
+      <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+        <input id="question" formControlName="question" placeholder="Your question" />
+        <button type="button" class="show-button" (click)="hide()">
+          <img class="hide-icon" src="icons/xmark-black.svg" alt="close" />
+        </button>
+        <app-validation-errors
+          class="error"
+          [errors]="questionForm.controls.question.errors"
+          [dirty]="questionForm.controls.question.dirty"
+          [touched]="questionForm.controls.question.touched"
+        />
+      </form>
+    </div>
+  }
+</div>
