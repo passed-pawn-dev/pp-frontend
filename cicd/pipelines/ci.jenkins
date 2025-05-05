@@ -1,19 +1,66 @@
-#!/usr/bin/env groovy
+pipeline {
+    agent {
+        kubernetes {
+            inheritFrom 'kaniko'
+        }
+    }
 
-def label = "k8s-${UUID.randomUUID().toString()}"
-def home = "/home/jenkins"
-def workspace = "${home}/workspace/build-jenkins-operator"
-def workdir = "${workspace}/src/github.com/jenkinsci/kubernetes-operator/"
+    environment {
+        IMAGE_NAME = "pp-frontend"
+        IMAGE_REPO = "pp-frontend"
+    }
 
-podTemplate(label: label,
-        containers: [
-                containerTemplate(name: 'alpine', image: 'alpine:3.11', ttyEnabled: true, command: 'cat'),
-        ],
-        ) {
-    node(label) {
-        stage('Run shell') {
-            container('alpine') {
-                sh 'echo "hello world"'
+    stages {
+        stage('Prepare Version') {
+            steps {
+                script {
+                    def date = new Date().format('yyyy-MM-dd-HH-mm-ss', TimeZone.getTimeZone('GMT+2'))
+                    
+                    // Get short commit hash (first 7 characters)
+                    def commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+                    
+                    env.IMAGE_TAG = "${date}-${commitHash}"
+                }
+            }
+        }
+        stage('Delete current package'){
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'pp-cicd-github-service-account-personal-access-token',
+                        usernameVariable: 'REGISTRY_USER',
+                        passwordVariable: 'REGISTRY_TOKEN'
+                    )
+                ]) {
+                    script {
+                        def response = sh(script: '''
+                            curl -L \
+                              -X DELETE \
+                              -H "Accept: application/vnd.github+json" \
+                              -H "Authorization: Bearer $REGISTRY_TOKEN" \
+                              -H "X-GitHub-Api-Version: 2022-11-28" \
+                              https://api.github.com/orgs/passed-pawn-dev/packages/container/$IMAGE_REPO%2F$IMAGE_NAME
+                        ''', returnStdout: true)
+                        
+                        echo "Delete package response: ${response}"
+                    }
+                }
+            }
+        }
+        stage('Build and Push with Kaniko') {
+            steps {
+                container('kaniko') {
+                    sh '/kaniko/executor --cleanup --dockerfile=Dockerfile --context=git://github.com/passed-pawn-dev/$IMAGE_REPO.git#refs/heads/main --destination=ghcr.io/passed-pawn-dev/$IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG --destination=ghcr.io/passed-pawn-dev/$IMAGE_REPO/$IMAGE_NAME:latest'
+                }
+            }
+        }
+    }
+    post {
+        success {
+            script {
+                build job: "build-app-chart-pipeline", 
+                    wait: false, 
+                    parameters: [string(name: 'FRONTEND_IMAGE', value: "${IMAGE_NAME}:${IMAGE_TAG}")]
             }
         }
     }
