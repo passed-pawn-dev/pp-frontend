@@ -20,7 +20,7 @@ import { CourseService } from '../../service/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Location } from '@angular/common';
-import { Checkbox } from 'primeng/checkbox';
+import { TalkingBobComponent } from '../../../shared/components/talking-bob/talking-bob.component';
 
 @Component({
   selector: 'app-coach-add-quiz',
@@ -32,7 +32,8 @@ import { Checkbox } from 'primeng/checkbox';
     RadioButtonModule,
     QuizComponent,
     ValidationErrorsComponent,
-    FormsModule
+    FormsModule,
+    TalkingBobComponent
   ],
   templateUrl: './coach-add-quiz.component.html',
   styleUrl: './coach-add-quiz.component.scss'
@@ -76,6 +77,40 @@ export class CoachAddQuizComponent implements OnInit {
     explanation: ['']
   });
 
+  protected answerBoardAppliedArray: boolean[] = [false, false];
+
+  protected addAnswerToBoardAppliedArray(): void {
+    this.answerBoardAppliedArray = [...this.answerBoardAppliedArray, false];
+  }
+
+  protected applyToBoardAppliedArray(index: number): void {
+    this.answerBoardAppliedArray = this.answerBoardAppliedArray.map((ans, i) =>
+      index === i ? false : ans
+    );
+
+    setTimeout(() => {
+      this.answerBoardAppliedArray = this.answerBoardAppliedArray.map((ans, i) =>
+        index === i ? true : ans
+      );
+    }, 200);
+  }
+
+  protected deleteFromBoardAppliedArray(index: number): void {
+    this.answerBoardAppliedArray = this.answerBoardAppliedArray.filter(
+      (ans, i) => i !== index
+    );
+  }
+
+  protected tab: number = 1;
+
+  protected showQuizTab(): void {
+    this.tab = 1;
+  }
+
+  protected showAddingsTab(): void {
+    this.tab = 2;
+  }
+
   protected get solutionControl(): FormControl<number | null> {
     return this.quizForm.get('solution') as FormControl<number | null>;
   }
@@ -112,16 +147,21 @@ export class CoachAddQuizComponent implements OnInit {
 
   protected addAnswer(): void {
     this.answers.push(this.createAnswer());
+    this.addAnswerToBoardAppliedArray();
   }
 
   protected addPositionToAnswer(answerIdx: number): void {
     const answersArray = this.quizForm.get('answers') as FormArray;
     const answerGroup = answersArray.at(answerIdx) as FormGroup;
     answerGroup.get('newPosition')?.patchValue(this.currentPositionForAnswer);
+    this.applyToBoardAppliedArray(answerIdx);
+    console.log(answerIdx);
+    console.log(this.answerBoardAppliedArray);
   }
 
   protected removeAnswer(idx: number): void {
     this.answers.removeAt(idx);
+    this.deleteFromBoardAppliedArray(idx);
   }
 
   protected nextStep(): void {

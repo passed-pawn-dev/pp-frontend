@@ -1,0 +1,29 @@
+.tile {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  width: fit-content;
+  // border: 1px solid;
+
+  .elephant {
+    height: 5rem;
+  }
+
+  .message {
+    background-color: black;
+    color: white;
+    position: relative;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+
+    .triangle {
+      height: 1.5rem;
+      transform: rotate(180deg);
+      position: absolute;
+      content: '';
+      bottom: 0.5rem;
+      right: -1rem;
+    }
+  }
+}

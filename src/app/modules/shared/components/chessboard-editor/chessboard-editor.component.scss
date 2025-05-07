@@ -1,17 +1,18 @@
 /* stylelint-disable at-rule-empty-line-before */
 
 @use 'variables' as *;
+@use 'sass:color';
 
 .chessboard {
   aspect-ratio: 1/1;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  max-width: 31rem;
-  max-height: 31rem;
+  min-width: 30rem;
+  height: 30rem;
   position: relative;
-  width: 100%;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   overflow: hidden;
+  // border: 3px solid black;
 }
 
 .chessboard-rank {
@@ -47,7 +48,7 @@
     place-content: center;
 
     img {
-      transform: scale(1.5);
+      transform: scale(1.2);
     }
   }
 
@@ -62,8 +63,6 @@ img {
 
 .main-content {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   width: 100%;
 }
 
@@ -122,38 +121,65 @@ img {
   z-index: 100;
 }
 
-.piece-selection {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
 .piece-list {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.fen-input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
 .util-buttons {
-  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 0.5rem;
 }
 
-.util-btn {
-  width: 100%;
+.operation-btn {
+  border: none;
+  background-color: transparent;
+  color: $primary;
+  font-size: $font-S;
+  border-radius: 0.5rem;
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  // border: 1px solid;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: color.adjust($primary, $lightness: 40%);
+  }
+}
+
+.clear {
+  color: red;
+
+  &:hover {
+    background-color: color.adjust(red, $lightness: 40%);
+  }
 }
 
 .top-section {
   display: flex;
+  gap: 1rem;
+  width: 100%;
+
+  .main-section {
+    .top {
+      display: flex;
+      gap: 1rem;
+
+      .elephant-tile {
+        background-color: white;
+        border-radius: 1rem;
+        padding: 1rem;
+        min-width: 34rem;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+    }
+  }
 }
 
 .panel {
@@ -162,12 +188,158 @@ img {
   padding: 1rem;
 }
 
-.left-panel {
-  margin-right: 1em;
+.header {
+  font-size: $font-M;
+  font-weight: 700;
+  line-height: $font-M;
+  white-space: nowrap;
+  margin-bottom: 0.5rem;
 }
 
-.bottom-section {
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: $border-secondary;
+  margin: 1.5rem 0;
+}
+
+.left-tile {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  // border: 3px solid red;
+  width: 16rem;
+
+  .piece-selection {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+
+    .left-board-piece {
+      width: 2rem;
+    }
+  }
+}
+
+.fen-tile {
+  // border: 3px solid blue;
   margin-top: 1rem;
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  // height: 16rem;
+
+  form {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  input,
+  select {
+    border-radius: 0.5rem;
+    border: 1px solid $border-secondary;
+    font-size: $font-S;
+    padding: 0.5rem;
+    height: 2.6rem;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    width: 3rem;
+  }
+
+  .fen-input {
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .form-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    .label {
+      font-size: $font-XS;
+      color: $text-secondary;
+    }
+
+    select,
+    input[type='number'] {
+      height: 2rem;
+      padding: 0;
+      padding-left: 0.5rem;
+    }
+
+    input[type='checkbox'] {
+      height: 1rem;
+      width: 1rem;
+    }
+
+    select {
+      width: 5rem;
+    }
+
+    input[type='text'] {
+      width: 100%;
+    }
+
+    /* The switch - the box around the slider */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 3.5rem;
+      height: 2rem;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: $background;
+      border-radius: 1rem;
+      transition: 0.2s;
+    }
+
+    .slider::before {
+      position: absolute;
+      content: '';
+      height: 1.5rem;
+      width: 1.5rem;
+      left: 0.25rem;
+      bottom: 0.25rem;
+      background-color: $primary;
+      transition: 0.2s;
+      border-radius: 1rem;
+    }
+
+    input:checked + .slider {
+      background-color: $primary-lighter;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px $primary-lighter;
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(1.5rem);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round::before {
+      border-radius: 50%;
+    }
+  }
 }
 
 .fen-form {
@@ -191,34 +363,33 @@ img {
 }
 
 .icon {
-  width: 2rem;
+  width: 1.5rem;
 }
 
 .selectable {
-  all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
   &:hover {
     cursor: pointer;
-    background-color: #d5c1ff;
+    background-color: $primary-lighter;
   }
   border-radius: 0.5rem;
+  border: 2px solid transparent;
 }
 
 .selected {
-  background-color: #d5c1ff;
-  border: 2px solid #6015f4;
+  background-color: $primary-lighter;
+  border: 2px solid $primary;
 }
 
 .color-select-buttons {
-  margin-top: 1rem;
   .severity-input {
     cursor: pointer;
     appearance: none;
     margin: 0;
-    width: 1rem;
-    height: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
     border-radius: 100%;
   }
   .info {
@@ -235,6 +406,29 @@ img {
   }
   display: flex;
   justify-content: center;
+
+  .selected {
+    background-color: $primary-lighter;
+    border: 2px solid $primary;
+  }
+}
+
+.color-btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .color-btn {
+    background-color: transparent;
+    border: 1px solid $primary;
+    color: $primary;
+    border-radius: 0.25rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $primary-lighter;
+    }
+  }
 }
 
 .round {
@@ -243,4 +437,5 @@ img {
   justify-content: center;
   align-items: center;
   padding: 0.2rem;
+  border: 2px solid transparent;
 }

@@ -1,15 +1,15 @@
 @use 'variables' as *;
 
 .page {
-  display: flex;
-  justify-content: center;
-  padding-top: 1rem;
+  width: $page-width;
+  // border: 1px solid;
+  margin: auto;
 }
 
 .panel {
   background-color: white;
   border-radius: 1rem;
-  padding: 1rem;
+  padding-right: 1rem;
 }
 
 .top-section {
@@ -17,6 +17,27 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 4rem;
+  border-radius: 1rem;
+  // border: 3px solid pink;
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .quiz {
+      height: 4rem;
+      width: 4rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-right: 1px solid $background;
+      img {
+        height: 1.75rem;
+      }
+    }
+  }
 }
 
 .primary-btn,
@@ -27,22 +48,117 @@
 }
 
 .quiz-form {
-  width: fit-content;
   margin: auto;
   position: relative;
   overflow: hidden;
 
+  input,
+  textarea {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid $border-secondary;
+    font-size: $font-S;
+    padding: 0.5rem;
+    height: 2.6rem;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+  }
+
+  textarea {
+    resize: none;
+    height: calc(1.2rem * 5 + 1rem);
+  }
+
   .step-container {
+    // border: 1px solid blue;
+
     .step {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+      // display: flex;
+      // flex-direction: column;
+      // gap: 1.5rem;
       position: absolute;
       transition:
         transform 0.5s ease-in-out,
         opacity 0.3s ease-in-out;
       opacity: 0;
       visibility: hidden;
+
+      .tile {
+        background-color: white;
+        border-radius: 1rem;
+        padding: 1rem;
+        height: 100%;
+
+        .header {
+          font-size: $font-M;
+          font-weight: 700;
+          white-space: nowrap;
+          margin-bottom: 0.5rem;
+        }
+      }
+
+      .elephant-tile {
+        background-color: white;
+        border-radius: 1rem;
+        padding: 1rem;
+        flex: 1;
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+      }
+    }
+
+    .step-1 {
+      display: flex;
+      gap: 1rem;
+      height: 35rem; // CHANGE!!!!!!1
+      // border: 3px solid red;
+
+      label {
+        color: $text-secondary;
+      }
+
+      .tile {
+        width: 50rem;
+        // border: 1px solid;
+
+        input {
+          width: 100%;
+        }
+      }
+    }
+
+    .step-2 {
+      // display: flex;
+
+      .show-chessboard-tile {
+        display: flex;
+        justify-content: space-between;
+        background-color: white;
+        border-radius: 1rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        // border: 1px solid green;
+
+        label {
+          white-space: nowrap;
+        }
+
+        input {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          width: fit-content;
+          height: 1rem;
+          cursor: pointer;
+          transform: scale(1.5);
+        }
+      }
+    }
+
+    .step-3 {
+      // border: 3px solid green;
     }
 
     .step-hidden {
@@ -64,28 +180,201 @@
 
 .nav-buttons {
   display: flex;
-  gap: 1rem;
-}
-
-.questions-form {
-  display: flex;
-}
-
-.answers {
-  display: flex;
-  flex-direction: column;
   gap: 0.5rem;
 }
 
-.form-control-field {
-  label {
-    margin-bottom: 0.5rem;
+.quiz-container {
+  // border: 3px solid purple;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 34rem;
+  height: 30rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+
+  .nav {
+    display: flex;
+    gap: 1rem;
+
+    .header {
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      padding-bottom: 0.25rem;
+      border-bottom: 3px solid transparent;
+      font-size: $font-M;
+      font-weight: 700;
+      line-height: $font-M;
+      white-space: nowrap;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+    }
+
+    .selected {
+      border-bottom: 3px solid $primary;
+    }
   }
-  margin-bottom: 1rem;
+
+  .first {
+    margin-bottom: 1rem;
+  }
+
+  .label {
+    color: $text-secondary;
+  }
+
+  .answers-nav {
+    display: flex;
+    justify-content: space-between;
+    color: $text-secondary;
+    font-size: $font-XS;
+    text-align: left;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+
+    div:nth-child(2) {
+      text-align: right;
+    }
+  }
+
+  .add-btn {
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    color: $primary;
+    height: 2rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $primary-lighter;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+
+  .answers {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .answer-tile {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+
+      input {
+        height: 2rem;
+        flex: 1;
+        border-radius: 0.25rem;
+      }
+
+      input[type='radio'] {
+        height: 1rem;
+        width: 1rem;
+        accent-color: $primary;
+        border: 1px solid $border-secondary;
+        margin: 0.25rem 1rem;
+        cursor: pointer;
+      }
+
+      label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        // border: 1px solid;
+      }
+
+      button {
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        border: 1px solid $primary;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.25rem;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $primary-lighter;
+        }
+
+        img {
+          height: 1.25rem;
+        }
+      }
+
+      .delete-btn {
+        border-color: #d40000;
+
+        &:hover {
+          background-color: #ffdbdb;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          pointer-events: none;
+        }
+      }
+
+      .square {
+        background-color: $background;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.25rem;
+        // border: 1px solid;
+
+        img {
+          height: 1.5rem;
+          animation: fadeIn 0.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: scale(0.5);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      }
+    }
+  }
+
+  .question-input {
+    height: 4.25rem;
+  }
+
+  .explanation-input {
+    height: 5.75rem;
+  }
+}
+
+.no-chessboard {
+  position: static;
+  margin: auto;
 }
 
 .step-header {
   font-size: large;
   margin-left: 1rem;
   margin-right: 1rem;
+}
+
+.chessboard {
+  display: flex;
 }
