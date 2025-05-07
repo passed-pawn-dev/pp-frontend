@@ -32,7 +32,7 @@ export class CourseService {
   }
 
   public getLessonsById(id: string): Observable<LessonDetails[]> {
-    return this.httpClient.get<LessonDetails[]>(`/api/Course/${id}/lesson`);
+    return this.httpClient.get<LessonDetails[]>(`/api/Course/Coach/${id}/lesson`);
   }
 
   public create(course: NewCourse): Observable<Course> {

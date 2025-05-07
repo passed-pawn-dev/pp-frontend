@@ -1,0 +1,68 @@
+<form class="quiz-form" [formGroup]="exampleForm">
+  <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
+  <div style="background-color: white">
+    <app-step-indicator
+      [stepNumber]="steps.controls.length"
+      [currentStep]="currentStep"
+    ></app-step-indicator>
+  </div>
+
+  <div class="form-control-field">
+    <label for="title">Title</label>
+    <input pInputText id="title" formControlName="title" type="text" />
+    <app-validation-errors
+      [errors]="exampleForm.controls.title.errors"
+      [dirty]="exampleForm.controls.title.dirty"
+      [touched]="exampleForm.controls.title.touched"
+    />
+  </div>
+  <div class="form-control-field">
+    <label for="initialDescription">Description</label>
+    <input
+      pInputText
+      id="initialDescription"
+      formControlName="initialDescription"
+      type="text"
+    />
+    <app-validation-errors
+      [errors]="exampleForm.controls.initialDescription.errors"
+      [dirty]="exampleForm.controls.initialDescription.dirty"
+      [touched]="exampleForm.controls.initialDescription.touched"
+    />
+  </div>
+
+  <div formArrayName="steps">
+    @for (step of steps.controls; track $index) {
+      <div [formGroupName]="$index">
+        <label for="description">Description</label>
+        <input
+          pInputText
+          formControlName="description"
+          type="description"
+          id="description"
+          required
+        />
+        <app-validation-errors
+          [errors]="step.get('description')!.errors"
+          [dirty]="step.get('description')!.dirty"
+          [touched]="step.get('description')!.touched"
+        />
+        <app-chessboard-editor></app-chessboard-editor>
+
+        <button type="button" (click)="addPositionToStep($index)">
+          Add current position
+        </button>
+        <button
+          type="button"
+          [disabled]="steps.length < 2"
+          (click)="removeStep($index)"
+        >
+          Remove
+        </button>
+      </div>
+    }
+  </div>
+  <button type="button" [disabled]="steps.length > 100" (click)="addStep()">
+    Add Step
+  </button>
+</form>
