@@ -61,201 +61,290 @@
         </div>
       </div>
 
-      <div class="header-2">Board Elements</div>
-      <div class="color-select-buttons">
-        <div [class]="'round' + (isSeveritySelected(Severity.Info) ? ' selected' : '')">
-          <input
-            class="severity-input info"
-            type="radio"
-            name="myOptions"
-            [value]="Severity.Info"
-            [(ngModel)]="currentSeverity"
-          />
+      <!-- <div class="line"></div>
+      <div class="header">Board Elements</div>
+      
+      <div class="color-btn-group" >
+        <div class="color-select-buttons">
+          <div [class]="'round' + (isSeveritySelected(Severity.Info) ? ' selected' : '')">
+            <input
+              class="severity-input info"
+              type="radio"
+              name="myOptions"
+              [value]="Severity.Info"
+              [(ngModel)]="currentSeverity"
+            />
+          </div>
+  
+          <div
+            [class]="'round' + (isSeveritySelected(Severity.Warning) ? ' selected' : '')"
+          >
+            <input
+              class="severity-input warning"
+              type="radio"
+              name="myOptions"
+              [value]="Severity.Warning"
+              [(ngModel)]="currentSeverity"
+            />
+          </div>
+  
+          <div
+            [class]="'round' + (isSeveritySelected(Severity.Danger) ? ' selected' : '')"
+          >
+            <input
+              class="severity-input danger"
+              type="radio"
+              name="myOptions"
+              [value]="Severity.Danger"
+              [(ngModel)]="currentSeverity"
+            />
+          </div>
+  
+          <div
+            [class]="'round' + (isSeveritySelected(Severity.Correct) ? ' selected' : '')"
+          >
+            <input
+              class="severity-input correct"
+              type="radio"
+              name="myOptions"
+              [value]="Severity.Correct"
+              [(ngModel)]="currentSeverity"
+            />
+          </div>
         </div>
+        <button type="button" class="color-btn" (click)="clearArrows()">Clear arrows</button>
+        <button type="button" class="color-btn" (click)="clearHighlights()">Clear highlights</button>
+      </div> -->
 
-        <div
-          [class]="'round' + (isSeveritySelected(Severity.Warning) ? ' selected' : '')"
-        >
-          <input
-            class="severity-input warning"
-            type="radio"
-            name="myOptions"
-            [value]="Severity.Warning"
-            [(ngModel)]="currentSeverity"
-          />
-        </div>
-
-        <div
-          [class]="'round' + (isSeveritySelected(Severity.Danger) ? ' selected' : '')"
-        >
-          <input
-            class="severity-input danger"
-            type="radio"
-            name="myOptions"
-            [value]="Severity.Danger"
-            [(ngModel)]="currentSeverity"
-          />
-        </div>
-
-        <div
-          [class]="'round' + (isSeveritySelected(Severity.Correct) ? ' selected' : '')"
-        >
-          <input
-            class="severity-input correct"
-            type="radio"
-            name="myOptions"
-            [value]="Severity.Correct"
-            [(ngModel)]="currentSeverity"
-          />
-        </div>
-      </div>
-
-      <div>
-        <button type="button" (click)="clearArrows()">Clear arrows</button>
-        <button type="button" (click)="clearHighlights()">Clear highlights</button>
-      </div>
+      <div class="line"></div>
+      <div class="header">Board Operations</div>
 
       <div class="util-buttons">
-        <button
-          class="primary-btn util-btn"
-          type="button"
-          (click)="resetToStartingPosition()"
-        >
+        <button class="operation-btn" type="button" (click)="resetToStartingPosition()">
           Starting position
         </button>
         @if (startingPositionInput()) {
           <button
-            class="primary-btn util-btn"
+            class="operation-btn"
             type="button"
             (click)="resetToInputtedStartingPosition()"
           >
             Base position
           </button>
         }
-        <button class="primary-btn util-btn" type="button" (click)="clearBoard()">
-          Clear
-        </button>
-        <button class="primary-btn util-btn" type="button" (click)="flipBoard()">
+        <button class="operation-btn" type="button" (click)="flipBoard()">
           Flip Board
         </button>
+        <button class="operation-btn clear" type="button" (click)="clearBoard()">
+          Clear
+        </button>
       </div>
     </div>
 
-    <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
-    <div
-      class="chessboard"
-      [appChessboardHighlights]="highlights()"
-      [appChessboardArrows]="arrows()"
-      [style.cursor]="cursorStyle"
-    >
-      @for (field of chessboardView; track $index) {
+    <div class="main-section">
+      <div class="top">
+        <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
         <div
-          class="chessboard-field"
-          tabindex="0"
-          role="button"
-          (click)="onFieldClicked(field[0])"
-          (mousedown)="onFieldDragStart($event, $index)"
-          (mouseup)="onFieldDragEnd($event, $index)"
-          (contextmenu)="onFieldRightClicked($event)"
+          class="chessboard"
+          [appChessboardHighlights]="highlights()"
+          [appChessboardArrows]="arrows()"
+          [style.cursor]="cursorStyle"
         >
-          @if ($index % 8 === 0) {
-            <div class="chessboard-file">{{ field[0][1] }}</div>
-          }
+          @for (field of chessboardView; track $index) {
+            <div
+              class="chessboard-field"
+              tabindex="0"
+              role="button"
+              (click)="onFieldClicked(field[0])"
+              (mousedown)="onFieldDragStart($event, $index)"
+              (mouseup)="onFieldDragEnd($event, $index)"
+              (contextmenu)="onFieldRightClicked($event)"
+            >
+              @if ($index % 8 === 0) {
+                <div class="chessboard-file">{{ field[0][1] }}</div>
+              }
 
-          @if ($index > 55) {
-            <div class="chessboard-rank">{{ field[0][0] }}</div>
-          }
+              @if ($index > 55) {
+                <div class="chessboard-rank">{{ field[0][0] }}</div>
+              }
 
-          <div
-            class="chessboard-field-content"
-            pDroppable
-            (onDrop)="dropPiece(field[0])"
-          >
-            @if (field[1] !== null) {
               <div
-                pDraggable
-                class="chessboard-chess-piece"
-                (onDragStart)="onPieceDragStart(field[0])"
+                class="chessboard-field-content"
+                pDroppable
+                (onDrop)="dropPiece(field[0])"
               >
-                <img
-                  [alt]="'chess-piece-' + field[1]"
-                  [src]="pieceImagePaths[field[1]]"
-                />
+                @if (field[1] !== null) {
+                  <div
+                    pDraggable
+                    class="chessboard-chess-piece"
+                    (onDragStart)="onPieceDragStart(field[0])"
+                  >
+                    <img
+                      [alt]="'chess-piece-' + field[1]"
+                      [src]="pieceImagePaths[field[1]]"
+                    />
+                  </div>
+                }
               </div>
-            }
+            </div>
+          }
+        </div>
+
+        <div class="elephant-tile">
+          @if (showElephant()) {
+            <app-talking-bob
+              text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio sunt laborum numquam rerum soluta vel, aperiam enim cupiditate fugiat repellendus."
+            />
+          }
+        </div>
+      </div>
+
+      <!-- FEN -->
+      <div class="fen-tile">
+        <div class="header">FEN</div>
+
+        <!-- <form class="fen-form" [formGroup]="fenForm">
+          <div>
+            <label for="sideToMove">Side to move</label>
+            <p-select formControlName="sideToMove" [options]="colors" />
           </div>
-        </div>
-      }
-    </div>
-  </div>
+    
+          <div>
+            <label for="">En passant</label>
+            <input
+              formControlName="enPassant"
+              id="enPassant"
+              type="text"
+              class="short-input"
+            />
+          </div>
+    
+          <div class="castle-form">
+            <div>
+              <label for="whiteShort">White short</label>
+              <p-checkbox id="whiteShort" formControlName="whiteShort" [binary]="true" />
+              <label for="whiteLong">White long</label>
+              <p-checkbox id="whiteLong" formControlName="whiteLong" [binary]="true" />
+            </div>
+            <div>
+              <label for="blackShort">Black short</label>
+              <p-checkbox id="blackShort" formControlName="blackShort" [binary]="true" />
+              <label for="blackLong">Black long</label>
+              <p-checkbox id="blackLong" formControlName="blackLong" [binary]="true" />
+            </div>
+          </div>
+          <div class="clock-inputs">
+            <div>
+              <label for="halfMoveClock">Half move clock</label>
+              <input
+                class="short-input"
+                formControlName="halfMoveClock"
+                id="halfMoveClock"
+                type="number"
+                [min]="0"
+              />
+            </div>
+    
+            <div>
+              <label for="fullMoveNumber">Full move number</label>
+              <input
+                class="short-input"
+                formControlName="fullMoveNumber"
+                id="fullMoveNumber"
+                type="number"
+                [min]="1"
+              />
+            </div>
+          </div>
+        </form> -->
 
-  <div class="fen-tile">
-    <input
-      class="fen-input"
-      type="text"
-      name="fen-input"
-      id="fen-input"
-      [(ngModel)]="fen"
-      (input)="onInput(fen)"
-    />
+        <form [formGroup]="fenForm">
+          <div class="form-input">
+            <div class="label">Side to move</div>
+            <select formControlName="sideToMove">
+              <option value="White">White</option>
+              <option value="Black">Black</option>
+            </select>
+          </div>
 
-    @for (error of fenInputErrors; track $index) {
-      <div class="error">{{ error }}</div>
-    }
+          <!-- <div>
+            <label for="">En passant</label>
+            <input
+              formControlName="enPassant"
+              id="enPassant"
+              type="text"
+              class="short-input"
+            />
+          </div> -->
 
-    <form class="fen-form" [formGroup]="fenForm">
-      <div>
-        <label for="sideToMove">Side to move</label>
-        <p-select formControlName="sideToMove" [options]="colors" />
-      </div>
+          <div class="form-input">
+            <div class="label">White short</div>
+            <label class="switch">
+              <input type="checkbox" id="whiteShort" [formControlName]="'whiteShort'" />
+              <span class="slider"></span>
+            </label>
+          </div>
 
-      <div>
-        <label for="">En passant</label>
+          <div class="form-input">
+            <div class="label">White long</div>
+            <label class="switch">
+              <input type="checkbox" id="whiteLong" [formControlName]="'whiteLong'" />
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="form-input">
+            <div class="label">Black short</div>
+            <label class="switch">
+              <input type="checkbox" id="blackShort" [formControlName]="'blackShort'" />
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="form-input">
+            <div class="label">Black long</div>
+            <label class="switch">
+              <input type="checkbox" id="blackLong" [formControlName]="'blackLong'" />
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="form-input">
+            <div class="label">Half move clock</div>
+            <input
+              class="short-input"
+              formControlName="halfMoveClock"
+              id="halfMoveClock"
+              type="number"
+              [min]="0"
+            />
+          </div>
+
+          <div class="form-input">
+            <div class="label">Full move number</div>
+            <input
+              class="short-input"
+              formControlName="fullMoveNumber"
+              id="fullMoveNumber"
+              type="number"
+              [min]="1"
+            />
+          </div>
+        </form>
+
         <input
-          formControlName="enPassant"
-          id="enPassant"
+          class="fen-input"
           type="text"
-          class="short-input"
+          name="fen-input"
+          id="fen-input"
+          [(ngModel)]="fen"
+          (input)="onInput(fen)"
         />
-      </div>
 
-      <div class="castle-form">
-        <div>
-          <label for="whiteShort">White short</label>
-          <p-checkbox id="whiteShort" formControlName="whiteShort" [binary]="true" />
-          <label for="whiteLong">White long</label>
-          <p-checkbox id="whiteLong" formControlName="whiteLong" [binary]="true" />
-        </div>
-        <div>
-          <label for="blackShort">Black short</label>
-          <p-checkbox id="blackShort" formControlName="blackShort" [binary]="true" />
-          <label for="blackLong">Black long</label>
-          <p-checkbox id="blackLong" formControlName="blackLong" [binary]="true" />
-        </div>
+        @for (error of fenInputErrors; track $index) {
+          <div class="error">{{ error }}</div>
+        }
       </div>
-      <div class="clock-inputs">
-        <div>
-          <label for="halfMoveClock">Half move clock</label>
-          <input
-            class="short-input"
-            formControlName="halfMoveClock"
-            id="halfMoveClock"
-            type="number"
-            [min]="0"
-          />
-        </div>
-
-        <div>
-          <label for="fullMoveNumber">Full move number</label>
-          <input
-            class="short-input"
-            formControlName="fullMoveNumber"
-            id="fullMoveNumber"
-            type="number"
-            [min]="1"
-          />
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
 </div>

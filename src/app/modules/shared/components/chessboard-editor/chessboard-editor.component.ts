@@ -43,6 +43,7 @@ import { ChessboardHighlightsDirective } from '../../directives/chessboard-highl
 import { Severity } from '../../enums/severities.enum';
 import { Arrow } from '../../models/Arrow';
 import { ChessboardArrowsDirective } from '../../directives/chessboard-arrows.directive';
+import { TalkingBobComponent } from '../talking-bob/talking-bob.component';
 
 enum Mode {
   Draw = 'Draw',
@@ -61,7 +62,8 @@ enum Mode {
     InputNumberModule,
     CheckboxModule,
     ChessboardHighlightsDirective,
-    ChessboardArrowsDirective
+    ChessboardArrowsDirective,
+    TalkingBobComponent
   ],
   templateUrl: './chessboard-editor.component.html',
   styleUrl: './chessboard-editor.component.scss'
@@ -71,6 +73,7 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   private destroyRef = inject(DestroyRef);
 
   public startingPositionInput = input<string | undefined>();
+  public showElephant = input<boolean>(false);
 
   @Output() public newFenEvent = new EventEmitter<string>();
   @Output() public newHighlightsEvent = new EventEmitter<Map<number, Severity>>();
