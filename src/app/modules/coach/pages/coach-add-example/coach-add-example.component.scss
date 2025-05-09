@@ -1,0 +1,39 @@
+.example-form {
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.step {
+  position: absolute;
+  transition:
+    transform 0.5s ease-in-out,
+    opacity 0.3s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.step-hidden {
+  transform: translateX(120%);
+}
+
+.step-active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.step-left {
+  transform: translateX(-120%);
+}
+
+.primary-btn {
+  img {
+    height: 0.75rem;
+  }
+}
+
+.buttons {
+  display: flex;
+}

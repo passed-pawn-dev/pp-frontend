@@ -84,6 +84,7 @@
           @if (includeChessboard) {
             <app-chessboard-editor
               [showElephant]="true"
+              [useArrowsAndHighlights]="false"
               (newFenEvent)="onNewFen($event)"
             ></app-chessboard-editor>
           }
@@ -98,6 +99,7 @@
           @if (includeChessboard) {
             <app-chessboard-editor
               [startingPositionInput]="quiz.fen"
+              [useArrowsAndHighlights]="false"
               (newFenEvent)="newPositionForAnswer($event)"
             ></app-chessboard-editor>
           }
