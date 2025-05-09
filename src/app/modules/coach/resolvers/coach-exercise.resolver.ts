@@ -7,12 +7,12 @@ import {
 } from '@angular/router';
 import { CourseService } from '../service/course.service';
 import { Observable, catchError, of } from 'rxjs';
-import { Exercise } from '../models/Exercise';
+import { Puzzle } from '../models/Puzzle';
 
-export const coachExerciseResolver: ResolveFn<Exercise> = (
+export const coachExerciseResolver: ResolveFn<Puzzle> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
-): Observable<Exercise> => {
+): Observable<Puzzle> => {
   const courseService = inject(CourseService);
   const router = inject(Router);
 

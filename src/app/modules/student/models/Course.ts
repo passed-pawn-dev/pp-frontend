@@ -1,8 +1,13 @@
+import { CourseDifficulty } from '../../shared/enums/course-difficulty.enum';
+
 export interface Course {
   id: string;
   title: string;
+  description: string;
+  eloRangeStart: number;
+  eloRangeEnd: number;
   coachName: string;
-  thumbnail: string;
+  pictureUrl: string;
   price: number;
-  reviewScore: number;
+  averageScore: number;
 }

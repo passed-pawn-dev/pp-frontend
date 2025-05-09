@@ -1,4 +1,3 @@
-<!-- eslint-disable @angular-eslint/template/no-inline-styles -->
 <li class="tile">
   <a [routerLink]="course.id">
     <img src="images/chess-course-1.png" alt="" />
@@ -8,11 +7,10 @@
         <div class="header">
           <div class="flex">
             <h3>{{ course.title }}</h3>
-            <app-star-rating [rating]="3.4" [showMinimal]="true" />
+            <app-star-rating [rating]="course.averageScore" [showMinimal]="true" />
           </div>
           <div class="desc">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora omnis enim
-            libero numquam dolore aperiam explicabo corporis eum at reiciendis.
+            {{ course.description }}
           </div>
         </div>
         <!-- <div class="operations">
@@ -24,8 +22,8 @@
           </button>
         </div> -->
 
-        @if (100 > 0) {
-          <div class="price">100$</div>
+        @if (course.price > 0) {
+          <div class="price">{{ course.price }}</div>
         } @else {
           <div class="price free">Free</div>
         }
@@ -34,7 +32,11 @@
         <div>
           <app-course-difficulty [difficulty]="3" />
           <!-- [course difficulty 1-5] -->
-          <div class="lessons">2 Lessons <span>13 Elements</span></div>
+          <div class="lessons">
+            {{ course.lessonCount }} Lessons<span
+              >{{ course.elementCount }} Elements</span
+            >
+          </div>
           <!-- [coach name and surname] -->
         </div>
         <div class="operations">

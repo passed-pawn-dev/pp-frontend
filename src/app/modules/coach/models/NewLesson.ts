@@ -1,6 +1,6 @@
-import { Excercise } from './Excercise';
+import { Puzzle } from './Puzzle';
 
 export interface NewLesson {
   lessonNumber: number | null;
-  excercises: Excercise[];
+  puzzles: Puzzle[];
 }

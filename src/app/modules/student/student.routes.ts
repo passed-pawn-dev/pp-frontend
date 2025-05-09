@@ -62,7 +62,7 @@ export const STUDENT_ROUTES: Route[] = [
       //   ]
       // },
       {
-        path: 'my-courses/:id/lesson/:lessonId/exercise/:exerciseId',
+        path: 'my-courses/:id/lesson/:lessonId/puzzle/:exerciseId',
         component: StudentSolveExerciseComponent,
         resolve: {
           exercise: studentExerciseResolver

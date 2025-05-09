@@ -1,13 +1,13 @@
 import { Example } from '../../student/models/Example';
 import { Quiz } from '../../student/models/Quiz';
 import { Video } from '../../student/models/Video';
-import { Exercise } from './Exercise';
+import { Puzzle } from './Puzzle';
 
 export interface LessonDetails {
   id: string;
   lessonNumber: number;
   videos: Video[];
-  exercises: Exercise[];
+  puzzles: Puzzle[];
   examples: Example[];
   quizzes: Quiz[];
 }

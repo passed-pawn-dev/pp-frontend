@@ -47,8 +47,6 @@ export class CoachCoursesListComponent implements OnInit {
   }
 
   protected deleteCourse(id: string): void {
-    // console.log('in parent', id);
-
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this course?',
       header: 'Confirm',

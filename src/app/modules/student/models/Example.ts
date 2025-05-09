@@ -3,5 +3,5 @@ export interface Example {
   title: string;
   description: string;
   pgn: string;
-  order: string;
+  order: number;
 }

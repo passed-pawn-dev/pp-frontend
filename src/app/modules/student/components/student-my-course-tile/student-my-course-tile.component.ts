@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-student-my-course-tile',
-  imports: [CourseDifficultyComponent, RouterLink],
+  imports: [RouterLink],
   templateUrl: './student-my-course-tile.component.html',
   styleUrl: './student-my-course-tile.component.scss'
 })

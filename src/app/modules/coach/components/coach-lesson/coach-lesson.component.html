@@ -1,4 +1,3 @@
-<!-- eslint-disable @angular-eslint/template/no-inline-styles -->
 <div class="lesson" [class.first]="first" [class.last]="last">
   <div class="progress-container">
     <div class="circle"></div>
@@ -15,7 +14,7 @@
             </div>
           </div> -->
 
-        <button type="button" class="delete" (click)="deleteLesson()">
+        <button type="button" class="delete" (click)="deleteLesson($event)">
           <img src="icons/delete.png" alt="delete" />
         </button>
 
@@ -60,17 +59,21 @@
     </div>
     @if (showElements) {
       <div class="elements-group">
-        @for (element of lesson.quizzes; track $index) {
+        @for (element of elements(); track $index) {
           <a
             class="element"
             [routerLink]="'lesson/' + lesson.id + '/quiz/' + element.id"
           >
             <div class="left">
-              <img src="icons/puzzle.png" alt="puzzle" />
-              <div class="title">Element Title</div>
+              <img [src]="kindToIcon.get(element.kind)" [alt]="element.kind" />
+              <div class="title">{{ element.title }}</div>
             </div>
             <div class="right">
-              <button type="button" class="delete">
+              <button
+                type="button"
+                class="delete"
+                (click)="deleteElement($event, element.id, element.kind)"
+              >
                 <img src="icons/delete.png" alt="delete" />
               </button>
             </div>

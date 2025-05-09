@@ -7,10 +7,7 @@
       <div class="main">
         <div class="header">
           <h3>{{ course.title }}</h3>
-          <div class="desc">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora omnis enim
-            libero numquam dolore aperiam explicabo corporis eum at reiciendis.
-          </div>
+          <div class="desc">{{ course.description }}</div>
         </div>
         <!-- @if (this.course().price > 0) {
             <div class="price">{{ formattedPrice() }}</div>
@@ -20,9 +17,9 @@
       </div>
       <div class="footer">
         <div>
-          <app-course-difficulty [difficulty]="2" />
+          <!-- <app-course-difficulty [difficulty]="2" /> -->
           <!-- [course difficulty 1-5] -->
-          <div class="coach">Galiano Italiano</div>
+          <div class="coach">{{ course.coachName }}</div>
           <!-- [coach name and surname] -->
         </div>
 

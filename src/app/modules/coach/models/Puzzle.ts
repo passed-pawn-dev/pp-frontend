@@ -1,4 +1,5 @@
-export interface Excercise {
+export interface Puzzle {
+  id: string;
   title: string;
   description: string;
   fen: string;

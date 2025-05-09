@@ -18,19 +18,19 @@ export class CourseService {
   public constructor(private httpClient: HttpClient) {}
 
   public getAll(): Observable<Course[]> {
-    return this.httpClient.get<Course[]>('/api/Course?paid=false');
+    return this.httpClient.get<Course[]>('/api/Course/Student');
   }
 
   public getById(id: string): Observable<CourseDetails> {
-    return this.httpClient.get<CourseDetails>(`/api/Course/${id}`);
+    return this.httpClient.get<CourseDetails>(`/api/Course/Student/${id}`);
   }
 
   public buy(id: string): Observable<Object> {
-    return this.httpClient.post(`/api/Course/${id}/course-list`, {});
+    return this.httpClient.post(`/api/Course/Student/${id}/course-list`, {});
   }
 
   public signOut(id: string): Observable<Object> {
-    return this.httpClient.delete(`/api/Course/${id}/course-list`);
+    return this.httpClient.delete(`/api/Course/Student/${id}/course-list`);
   }
 
   public review(id: string, review: NewCourseReview): Observable<CourseReview> {
@@ -38,11 +38,11 @@ export class CourseService {
   }
 
   public getAllBought(): Observable<MyCourse[]> {
-    return this.httpClient.get<MyCourse[]>('/api/Course?paid=true');
+    return this.httpClient.get<MyCourse[]>('/api/Course/Student/bought');
   }
 
   public getBoughtById(id: string): Observable<MyCourseDetails> {
-    return this.httpClient.get<MyCourseDetails>(`/api/Course/${id}/bought`);
+    return this.httpClient.get<MyCourseDetails>(`/api/Course/Student/${id}/bought`);
   }
 
   public getLessons(id: string): Observable<Lesson[]> {
