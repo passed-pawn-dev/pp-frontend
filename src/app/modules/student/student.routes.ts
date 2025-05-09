@@ -16,6 +16,8 @@ import { StudentSolveQuizComponent } from './pages/student-solve-quiz/student-so
 import { studentQuizResolver } from './resolvers/student-quiz.resolver';
 import { studentBoughtCourseResolver } from './resolvers/student-bought-course.resolver';
 import { studentCourseResolver } from './resolvers/student-course.resolver';
+import { StudentExampleComponent } from './pages/student-example/student-example.component';
+import { studentExampleResolver } from './resolvers/student-example.resolver';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -73,6 +75,13 @@ export const STUDENT_ROUTES: Route[] = [
         component: StudentSolveQuizComponent,
         resolve: {
           quiz: studentQuizResolver
+        }
+      },
+      {
+        path: 'my-courses/:id/lesson/:lessonId/example/:exampleId',
+        component: StudentExampleComponent,
+        resolve: {
+          example: studentExampleResolver
         }
       },
       // {
