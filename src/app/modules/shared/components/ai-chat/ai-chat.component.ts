@@ -36,13 +36,7 @@ export class AiChatComponent {
 
   protected isHidden: boolean = true;
   protected messages: string[] = [
-    'Hello, ask me any question about Passed Pawn, and I will try to help.',
-    'aaa',
-    'aaa',
-    'aaa',
-    'aaa',
-    'aaa',
-    'aaa'
+    'Hello, ask me any question about Passed Pawn, and I will try to help.'
   ];
 
   protected questionForm = this.fb.group({
