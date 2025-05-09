@@ -72,16 +72,16 @@ export class CourseService {
   }
 
   public deleteQuiz(id: string): Observable<object> {
-    return this.httpClient.delete(``);
+    return this.httpClient.delete(`api/CourseQuiz/${id}`);
   }
   public deleteExample(id: string): Observable<object> {
-    return this.httpClient.delete(``);
+    return this.httpClient.delete(`api/CourseExample/${id}`);
   }
   public deleteVideo(id: string): Observable<object> {
-    return this.httpClient.delete(``);
+    return this.httpClient.delete(`api/CourseVideo/${id}`);
   }
   public deletePuzzle(id: string): Observable<object> {
-    return this.httpClient.delete(``);
+    return this.httpClient.delete(`api/CoursePuzzle/${id}`);
   }
 
   public getExerciseById(id: string): Observable<Puzzle> {

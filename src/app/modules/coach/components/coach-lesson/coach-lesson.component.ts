@@ -124,8 +124,8 @@ export class CoachLessonComponent implements OnInit {
             },
             error: (_) =>
               this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
+                severity: 'error',
+                summary: 'Error',
                 detail: 'Failed to delete element'
               })
           });

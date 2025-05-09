@@ -74,6 +74,7 @@
           <div class="show-chessboard-tile">
             <label for="includeChessboard">Include chessboard</label>
             <input
+              class="include-chessboard-input"
               type="checkbox"
               id="includeChessboard"
               [checked]="includeChessboard"
@@ -148,10 +149,12 @@
                     Correct<br />
                     Answer
                   </div>
-                  <div>
-                    Applied<br />
-                    Board
-                  </div>
+                  @if (includeChessboard) {
+                    <div>
+                      Applied<br />
+                      Board
+                    </div>
+                  }
                 </div>
                 <div formArrayName="answers" class="answers">
                   @for (answer of answers.controls; track $index) {
@@ -187,12 +190,12 @@
                         <button type="button" (click)="addPositionToAnswer($index)">
                           <img src="icons/link-purple.png" alt="link" />
                         </button>
+                        <div class="square">
+                          @if (answerBoardAppliedArray[$index]) {
+                            <img src="icons/chessboard.png" alt="chessboard" />
+                          }
+                        </div>
                       }
-                      <div class="square">
-                        @if (answerBoardAppliedArray[$index]) {
-                          <img src="icons/chessboard.png" alt="chessboard" />
-                        }
-                      </div>
                     </div>
                     <app-validation-errors
                       [errors]="answer.get('text')!.errors"
