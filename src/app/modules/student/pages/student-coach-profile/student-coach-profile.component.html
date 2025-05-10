@@ -1,0 +1,21 @@
+<div class="page">
+  <div class="main-card">
+    <img
+      alt="coach-pfp"
+      class="main-card-image"
+      [src]="coachProfile().photoUrl || 'images/chess-course-1.png'"
+    />
+    <div class="main-card-body">
+      <div class="main-card-text">
+        <div class="main-card-title">{{ coachProfile().fullName }}</div>
+        {{ coachProfile().detailedDescription || 'Test description' }}
+      </div>
+      <div class="main-card-bonus-info">0 courses</div>
+    </div>
+  </div>
+  <div class="courses">
+    @for (course of coachProfile().courses; track course.id) {
+      <app-student-course-tile [course]="course" />
+    }
+  </div>
+</div>
