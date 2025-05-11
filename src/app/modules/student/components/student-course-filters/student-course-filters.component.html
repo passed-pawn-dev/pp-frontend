@@ -1,16 +1,19 @@
 <div class="tile">
   <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="search">Search</label>
-      <input type="text" formControlName="search" id="search" />
-      <select formControlName="searchBy">
-        <option [value]="SearchBy.Title">Title</option>
-        <option [value]="SearchBy.CoachName">Coach Name</option>
-      </select>
+    <div class="">
+      <label class="label" for="search">Search</label>
+      <div class="search-group">
+        <input type="text" formControlName="search" id="search" />
+        <select formControlName="searchBy">
+          <option [value]="SearchBy.Title">Title</option>
+          <option [value]="SearchBy.CoachName">Coach Name</option>
+        </select>
+      </div>
     </div>
-    <div>
+
+    <div class="flex-filters">
       <div>
-        Difficulty
+        <div class="label">Difficulty</div>
         <div>
           <div class="difficulty-input">
             @for (button of Array(5).fill(null); track $index) {
@@ -34,8 +37,8 @@
               <div
                 class="highlight"
                 [style]="`
-                width: calc((${maxDifficulty} - ${minDifficulty}) * 0.25rem + (${maxDifficulty} - ${minDifficulty} + 1) * 1.5rem);
-                margin-left: calc((${minDifficulty} - 1) * 1.5rem + (${minDifficulty} - 1) * 0.25rem )
+                width: calc((${maxDifficulty} - ${minDifficulty}) * 0.25rem + (${maxDifficulty} - ${minDifficulty} + 1) * 2rem);
+                margin-left: calc((${minDifficulty} - 1) * 2rem + (${minDifficulty} - 1) * 0.25rem )
                 `"
               ></div>
             }
@@ -58,40 +61,85 @@
           }
         </div>
       </div>
-      <div>
-        Size
-        <label for="courseSizeSmall">Small</label>
-        <input type="checkbox" formControlName="courseSizeSmall" id="courseSizeSmall" />
-        <label for="courseSizeMedium">Medium</label>
-        <input
-          type="checkbox"
-          formControlName="courseSizeMedium"
-          id="courseSizeMedium"
-        />
-        <label for="courseSizeBig">Big</label>
-        <input type="checkbox" formControlName="courseSizeBig" id="courseSizeSmall" />
+
+      <div class="size-group">
+        <div class="label">Size</div>
+
+        <div class="flex">
+          <div class="chechbox-group">
+            <label class="custom-checkbox">
+              <input
+                type="checkbox"
+                formControlName="courseSizeSmall"
+                id="courseSizeSmall"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <label for="courseSizeSmall">Small</label>
+            <!-- <input type="checkbox" formControlName="courseSizeSmall" id="courseSizeSmall" /> -->
+          </div>
+
+          <div class="chechbox-group">
+            <label class="custom-checkbox">
+              <input
+                type="checkbox"
+                formControlName="courseSizeMedium"
+                id="courseSizeMedium"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <label for="courseSizeMedium">Medium</label>
+            <!-- <input type="checkbox" formControlName="courseSizeMedium" id="courseSizeMedium" /> -->
+          </div>
+
+          <div class="chechbox-group">
+            <label class="custom-checkbox">
+              <input
+                type="checkbox"
+                formControlName="courseSizeBig"
+                id="courseSizeBig"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <label for="courseSizeBig">Big</label>
+            <!-- <input type="checkbox" formControlName="courseSizeBig" id="courseSizeSmall" /> -->
+          </div>
+        </div>
       </div>
-      <div>
-        Price
-        <div>
+
+      <div class="price-group">
+        <div class="label">Price</div>
+        <div class="price-input-group">
           <input type="number" name="minPrice" formControlName="minPrice" /> -
           <input type="number" name="maxPrice" formControlName="maxPrice" />
         </div>
       </div>
-      <div>
-        <label for="sortBy">Sort by</label>
+
+      <div class="sort-group">
+        <!-- <label class="label" for="sortBy">Sort by</label> -->
+        <div class="label">Sort by</div>
         <select id="sortBy" formControlName="sortBy">
           <option [value]="SortBy.Popularity">Popularity</option>
           <option [value]="SortBy.Price">Price</option>
           <option [value]="SortBy.AverageScore">Score</option>
         </select>
-        <input type="checkbox" formControlName="sortDesc" />
+        <!-- <input type="checkbox" formControlName="sortDesc" /> -->
       </div>
-      <div>
-        <label for="showOwned">Show owned</label>
-        <input type="checkbox" id="showOwned" formControlName="showOwned" />
+
+      <div class="owned-group">
+        <label class="label" for="showOwned">Other</label>
+        <div class="flex">
+          <div class="chechbox-group">
+            <label class="custom-checkbox">
+              <input type="checkbox" id="showOwned" formControlName="showOwned" />
+              <span class="checkmark"></span>
+            </label>
+            <label for="showOwned">owned</label>
+            <!-- <input type="checkbox" id="showOwned" formControlName="showOwned" /> -->
+          </div>
+        </div>
       </div>
     </div>
-    <button class="primary-btn" type="submit">Search</button>
+    <button class="primary-btn submit" type="submit">Search</button>
   </form>
 </div>
