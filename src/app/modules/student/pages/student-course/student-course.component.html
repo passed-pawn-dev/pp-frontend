@@ -51,7 +51,11 @@
       <div class="header">
         <div class="profile">
           <div class="circle"><span>CA</span></div>
-          <div>{{ course().coach.name }}</div>
+          <a
+            class="coach-link"
+            [routerLink]="['/student', 'coach', course().coach.id, 'profile']"
+            >{{ course().coach.name }}</a
+          >
           <!-- [coach name and surname] -->
         </div>
         <div class="chess-title">{{ course().coach.chessTitle || 'N/A' }}</div>

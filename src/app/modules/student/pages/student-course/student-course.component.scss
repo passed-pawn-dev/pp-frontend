@@ -91,6 +91,16 @@
             font-size: $font-XS;
             font-weight: 700;
           }
+
+          .coach-link {
+            text-decoration: none;
+            color: black;
+
+            &:hover {
+              text-decoration: underline;
+              color: #00e;
+            }
+          }
         }
 
         .chess-title {

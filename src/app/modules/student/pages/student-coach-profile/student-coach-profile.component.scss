@@ -6,7 +6,7 @@
     height: 20rem;
     background-color: white;
     border-radius: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     padding: 0.5rem;
 
     .main-card-image {
@@ -23,16 +23,18 @@
       height: 100%;
       display: flex;
       justify-content: space-between;
+      gap: 2rem;
 
       .main-card-title {
-        font-weight: 700;
-        font-size: 3rem;
         text-transform: uppercase;
       }
 
       .main-card-bonus-info {
         align-self: flex-end;
         font-size: 1.1rem;
+        display: flex;
+        gap: 2rem;
+        align-items: center;
 
         .chess-title {
           color: white;
@@ -47,6 +49,10 @@
     }
   }
 
+  .created-courses-header {
+    margin-bottom: 1rem;
+  }
+
   .courses {
     display: flex;
     flex-direction: column;
@@ -59,6 +65,10 @@
     .main-card {
       flex-direction: column;
       height: auto;
+
+      .main-card-body {
+        flex-direction: column;
+      }
     }
   }
 }

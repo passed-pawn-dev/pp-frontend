@@ -7,15 +7,16 @@
     />
     <div class="main-card-body">
       <div class="main-card-text">
-        <div class="main-card-title">{{ coachProfile().fullName }}</div>
+        <h2 class="main-card-title">{{ coachProfile().fullName }}</h2>
         {{ coachProfile().detailedDescription || 'Test description' }}
       </div>
       <div class="main-card-bonus-info">
         <span class="chess-title">{{ coachProfile().chessTitle ?? 'No title' }}</span>
-        {{ coursesCount }}
+        <span>{{ coursesCount }}</span>
       </div>
     </div>
   </div>
+  <h3 class="created-courses-header">Created Courses</h3>
   <div class="courses">
     @for (course of coachProfile().courses; track course.id) {
       <app-student-course-tile [course]="course" />
