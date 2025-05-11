@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { difficultyRanges } from '../../constants/difficulty-ranges';
 
 @Component({
   selector: 'app-course-difficulty',
@@ -8,26 +9,27 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrl: './course-difficulty.component.scss'
 })
 export class CourseDifficultyComponent implements OnInit {
-  @Input() public difficulty!: number;
+  @Input({ required: true }) public eloRangeStart!: number | null;
+  @Input({ required: true }) public eloRangeEnd!: number | null;
 
-  protected filledCircles: number[] = [];
-  protected emptyCircles: number[] = [];
-
-  private colors: string[] = ['#84d7fd', '#79f1a0', '#fec552', '#f68a74', '#4f4f4f'];
-  private headers: string[] = [
-    'Novice',
-    'Beginer',
-    'Intermidiate',
-    'Advanced',
-    'Master'
-  ];
-  protected color: string = '';
-  protected header: string = '';
+  protected minDifficulty!: number;
+  protected maxDifficulty!: number;
 
   public ngOnInit(): void {
-    this.filledCircles = Array(this.difficulty).fill(0);
-    this.emptyCircles = Array(5 - this.difficulty).fill(0);
-    this.color = this.colors[this.difficulty - 1];
-    this.header = this.headers[this.difficulty - 1];
+    this.minDifficulty =
+      this.eloRangeStart == null ? 0 : this.findRangeIndex(this.eloRangeStart);
+    this.maxDifficulty =
+      this.eloRangeEnd == null ? 4 : this.findRangeIndex(this.eloRangeEnd);
   }
+
+  private findRangeIndex(value: number): number {
+    const index = difficultyRanges.findIndex((range) => {
+      const minValid = range.min == null || value >= range.min;
+      const maxValid = range.max == null || value <= range.max;
+      return minValid && maxValid;
+    });
+    return index;
+  }
+
+  protected difficulties = ['Novice', 'Beginner', 'Intermediate', 'Expert', 'Master'];
 }

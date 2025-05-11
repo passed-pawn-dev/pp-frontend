@@ -30,8 +30,10 @@
       </div>
       <div class="footer">
         <div>
-          <app-course-difficulty [difficulty]="3" />
-          <!-- [course difficulty 1-5] -->
+          <app-course-difficulty
+            [eloRangeStart]="course.eloRangeStart"
+            [eloRangeEnd]="course.eloRangeEnd"
+          />
           <div class="lessons">
             {{ course.lessonCount }} Lessons<span
               >{{ course.elementCount }} Elements</span

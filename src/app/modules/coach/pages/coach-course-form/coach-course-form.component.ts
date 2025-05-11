@@ -1,5 +1,12 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
@@ -33,11 +40,16 @@ export class CoachCourseFormComponent implements OnInit {
 
   protected courseId: string | null = null;
 
-  protected courseForm = this.fb.group({
-    title: ['', [Validators.required]],
-    description: ['', [Validators.required]],
-    price: [0, [Validators.required]]
-  });
+  protected courseForm = this.fb.group(
+    {
+      title: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      price: [0, [Validators.required]],
+      eloRangeStart: [null, [Validators.min(0), Validators.max(3400)]],
+      eloRangeEnd: [null, [Validators.min(0), Validators.max(3400)]]
+    },
+    { validators: this.eloRangeValidator() }
+  );
 
   public ngOnInit(): void {
     this.route.paramMap
@@ -50,6 +62,22 @@ export class CoachCourseFormComponent implements OnInit {
           this.courseForm.patchValue(existingCourse);
         }
       });
+  }
+
+  // TODO add message
+  private eloRangeValidator(): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const start = group.get('eloRangeStart')?.value;
+      const end = group.get('eloRangeEnd')?.value;
+
+      const isStartLessThanEnd = start === null || end === null || start < end;
+
+      if (!isStartLessThanEnd) {
+        return { eloRangeInvalid: true };
+      }
+
+      return null;
+    };
   }
 
   protected onSubmit(): void {

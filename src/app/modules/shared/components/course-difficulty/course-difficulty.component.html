@@ -1,12 +1,7 @@
-<!-- eslint-disable @angular-eslint/template/no-inline-styles -->
-<div class="tile">
-  <div class="header" [style.color]="color">{{ header }}</div>
-  <div class="circles-group">
-    @for (ele of filledCircles; track $index) {
-      <div class="circle" [style.background-color]="color"></div>
-    }
-    @for (ele of emptyCircles; track $index + 5) {
-      <div class="circle"></div>
-    }
-  </div>
+<div class="difficulty">
+  {{ difficulties[minDifficulty] }}
+  @if (minDifficulty !== maxDifficulty) {
+    -
+    {{ difficulties[maxDifficulty] }}
+  }
 </div>
