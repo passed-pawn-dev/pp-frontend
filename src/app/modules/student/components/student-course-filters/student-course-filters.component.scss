@@ -1,0 +1,57 @@
+@use 'variables' as *;
+
+.tile {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.difficulty-input {
+  display: flex;
+  width: fit-content;
+  gap: 0.25rem;
+  position: relative;
+  align-items: center;
+}
+
+.highlight {
+  background-color: $primary-light;
+  position: absolute;
+  height: 1.5rem;
+  border-radius: 1rem;
+}
+
+.circle {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: $background-darker;
+  border-radius: 100%;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.border {
+  background-color: $primary;
+  height: 1.1rem;
+  width: 1.1rem;
+  margin: 0.2rem;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.reset-difficulty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 1rem;
+  }
+}
+
+.difficulty {
+  color: $primary;
+  font-size: $font-XS;
+}

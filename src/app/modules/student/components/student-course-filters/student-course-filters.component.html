@@ -1,0 +1,97 @@
+<div class="tile">
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="search">Search</label>
+      <input type="text" formControlName="search" id="search" />
+      <select formControlName="searchBy">
+        <option [value]="SearchBy.Title">Title</option>
+        <option [value]="SearchBy.CoachName">Coach Name</option>
+      </select>
+    </div>
+    <div>
+      <div>
+        Difficulty
+        <div>
+          <div class="difficulty-input">
+            @for (button of Array(5).fill(null); track $index) {
+              <button
+                type="button"
+                class="circle"
+                [class.border]="
+                  minDifficulty === $index + 1 || maxDifficulty === $index + 1
+                "
+                [class.hidden]="
+                  minDifficulty &&
+                  maxDifficulty &&
+                  $index + 1 < maxDifficulty &&
+                  $index + 1 > minDifficulty
+                "
+                (click)="setDifficulty($index + 1)"
+              ></button>
+            }
+            @if (minDifficulty !== null && maxDifficulty !== null) {
+              <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
+              <div
+                class="highlight"
+                [style]="`
+                width: calc((${maxDifficulty} - ${minDifficulty}) * 0.25rem + (${maxDifficulty} - ${minDifficulty} + 1) * 1.5rem);
+                margin-left: calc((${minDifficulty} - 1) * 1.5rem + (${minDifficulty} - 1) * 0.25rem )
+                `"
+              ></div>
+            }
+            <button
+              type="button"
+              class="circle reset-difficulty"
+              (click)="resetDifficulty()"
+            >
+              <img src="icons/xmark-black.svg" alt="reset" />
+            </button>
+          </div>
+          @if (minDifficulty !== null && maxDifficulty !== null) {
+            <div class="difficulty">
+              {{ difficulties[minDifficulty - 1] }}
+              @if (minDifficulty !== maxDifficulty) {
+                -
+                {{ difficulties[maxDifficulty - 1] }}
+              }
+            </div>
+          }
+        </div>
+      </div>
+      <div>
+        Size
+        <label for="courseSizeSmall">Small</label>
+        <input type="checkbox" formControlName="courseSizeSmall" id="courseSizeSmall" />
+        <label for="courseSizeMedium">Medium</label>
+        <input
+          type="checkbox"
+          formControlName="courseSizeMedium"
+          id="courseSizeMedium"
+        />
+        <label for="courseSizeBig">Big</label>
+        <input type="checkbox" formControlName="courseSizeBig" id="courseSizeSmall" />
+      </div>
+      <div>
+        Price
+        <div>
+          <input type="number" name="minPrice" formControlName="minPrice" /> -
+          <input type="number" name="maxPrice" formControlName="maxPrice" />
+        </div>
+      </div>
+      <div>
+        <label for="sortBy">Sort by</label>
+        <select id="sortBy" formControlName="sortBy">
+          <option [value]="SortBy.Popularity">Popularity</option>
+          <option [value]="SortBy.Price">Price</option>
+          <option [value]="SortBy.AverageScore">Score</option>
+        </select>
+        <input type="checkbox" formControlName="sortDesc" />
+      </div>
+      <div>
+        <label for="showOwned">Show owned</label>
+        <input type="checkbox" id="showOwned" formControlName="showOwned" />
+      </div>
+    </div>
+    <button class="primary-btn" type="submit">Search</button>
+  </form>
+</div>
