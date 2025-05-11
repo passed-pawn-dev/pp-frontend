@@ -94,7 +94,7 @@ export class StudentCourseComponent implements OnInit {
   ) {}
 
   protected get lessonsAvailableForPreview(): number {
-    return this.course().lessons.filter((lesson) => lesson.inPreview).length;
+    return this.course().lessons.filter((lesson) => lesson.preview).length;
   }
 
   protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
@@ -123,6 +123,7 @@ export class StudentCourseComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             this.course.set(res);
+
             // this.course.set({
             //   ...this.course(),
             //   lessons: [
@@ -159,24 +160,6 @@ export class StudentCourseComponent implements OnInit {
             //           title: 'tytuł',
             //         }
             //       ],
-            //     },
-            //     {
-            //       id: '8',
-            //       lessonNumber: 9,
-            //       title: 'lekcja 2',
-            //       quizzes: [],
-            //       puzzles: [],
-            //       examples: [],
-            //       inPreview: false
-            //     },
-            //     {
-            //       id: '9',
-            //       lessonNumber: 8,
-            //       title: 'lekcja 3',
-            //       quizzes: [],
-            //       puzzles: [],
-            //       examples: [],
-            //       inPreview: false
             //     },
             //     {
             //       id: '99',

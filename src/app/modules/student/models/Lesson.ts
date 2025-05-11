@@ -9,7 +9,7 @@ export interface Lesson {
   lessonNumber: number;
   puzzles: Exercise[];
   examples: Example[];
-  inPreview: boolean;
+  preview: boolean;
   quizzes: Quiz[];
   // video:
 }

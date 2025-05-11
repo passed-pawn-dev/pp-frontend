@@ -117,20 +117,24 @@
       </button>
     </div>
   </section>
-  <div class="lessons">
-    @if (showLessons) {
-      @for (lesson of course().lessons; track $index) {
-        <app-student-lesson
-          [lesson]="lesson"
-          [index]="$index"
-          [first]="$first"
-          [last]="$last"
-          [complete]="LessonStatus.InProgress"
-          [locked]="!lesson.inPreview"
-        />
-      }
+  @if (showLessons) {
+    @if (course().lessons.length === 0) {
+      <div>No lessons</div>
+    } @else {
+      <div class="lessons">
+        @for (lesson of course().lessons; track $index) {
+          <app-student-lesson
+            [lesson]="lesson"
+            [index]="$index"
+            [first]="$first"
+            [last]="$last"
+            [complete]="LessonStatus.InProgress"
+            [locked]="!lesson.preview"
+          />
+        }
+      </div>
     }
-  </div>
+  }
 
   <section class="inpact-section">
     <div class="content">

@@ -71,10 +71,10 @@
   <div class="tile">
     <div class="top">
       <div class="title">{{ lesson.title }}</div>
-      @if (locked) {
-        <div>locked</div>
-      }
       <div class="left">
+        @if (locked) {
+          <div class="locked"><img src="icons/lock.png" alt="locked" /></div>
+        }
         <div class="progress-bar-container">
           <div class="percent">{{ progress }} / {{ all }}</div>
           <div class="progress-bar">

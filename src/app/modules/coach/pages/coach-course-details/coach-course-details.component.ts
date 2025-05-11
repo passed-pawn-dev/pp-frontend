@@ -57,6 +57,7 @@ export class CoachCourseDetailsComponent implements OnInit {
   public ngOnInit(): void {
     const course = this.route.snapshot.data['course'];
     this.course.set(course);
+    this.lessons.set(course.lessons);
 
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))

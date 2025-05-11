@@ -22,7 +22,7 @@ export class StudentLessonComponent implements OnInit {
   @Input() public complete!: LessonStatus;
   @Input({ required: true }) public locked!: boolean;
 
-  public progress: number = 5;
+  public progress: number = 0;
   public all: number = 8;
 
   public toggleElements(): void {
