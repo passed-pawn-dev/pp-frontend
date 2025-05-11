@@ -29,4 +29,13 @@ export class StudentCoachProfileComponent implements OnInit {
     const coachProfile = this.route.snapshot.data['coachProfile'];
     this.coachProfile.set(coachProfile);
   }
+
+  protected get coursesCount(): string {
+    const coursesCount = this.coachProfile().courses.length;
+    if (coursesCount == 1) {
+      return '1 course';
+    } else {
+      return `${coursesCount} courses`;
+    }
+  }
 }
