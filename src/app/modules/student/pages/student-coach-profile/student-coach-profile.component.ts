@@ -33,9 +33,9 @@ export class StudentCoachProfileComponent implements OnInit {
   protected get coursesCount(): string {
     const coursesCount = this.coachProfile().courses.length;
     if (coursesCount == 1) {
-      return '1 course';
+      return '1 Created Course';
     } else {
-      return `${coursesCount} courses`;
+      return `${coursesCount} Created Courses`;
     }
   }
 }
