@@ -23,6 +23,8 @@ import {
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { ChessTitle } from '../../../shared/enums/chess-titles.enum';
 import { CourseReview } from '../../models/CourseReview';
+import { StudentLessonComponent } from '../../components/student-lesson/student-lesson.component';
+import { LessonStatus } from '../../enums/LessonStatus';
 
 @Component({
   selector: 'app-student-course',
@@ -32,7 +34,8 @@ import { CourseReview } from '../../models/CourseReview';
     StarRatingComponent,
     CourseDetailsDiagramComponent,
     CourseDifficultyComponent,
-    CourseReviewComponent
+    CourseReviewComponent,
+    StudentLessonComponent
   ],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
@@ -62,14 +65,19 @@ export class StudentCourseComponent implements OnInit {
     averageScore: 0,
     pictureUrl: null,
     price: 0,
-    studentNumber: 0
+    studentNumber: 0,
+    lessons: []
   });
 
   protected reviews: CourseReview[] = [];
 
+  protected LessonStatus = LessonStatus;
+
   protected showCoachDetails: boolean = false;
 
   protected showInpactDetails: boolean = false;
+
+  protected showLessons: boolean = false;
 
   protected diagramCourseDetails: Signal<CourseDetailsDiagram[]> = computed(() => [
     { title: 'Puzzles', amount: this.course().puzzleCount },
@@ -84,6 +92,10 @@ export class StudentCourseComponent implements OnInit {
     private messageService: MessageService,
     private readonly destroyRef: DestroyRef
   ) {}
+
+  protected get lessonsAvailableForPreview(): number {
+    return this.course().lessons.filter((lesson) => lesson.inPreview).length;
+  }
 
   protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
 
@@ -111,6 +123,97 @@ export class StudentCourseComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             this.course.set(res);
+            // this.course.set({
+            //   ...this.course(),
+            //   lessons: [
+            //     {
+            //       id: '6',
+            //       lessonNumber: 11,
+            //       title: 'lekcja 1',
+            //       inPreview: true,
+            //       quizzes: [
+            //         {
+            //           id: '13',
+            //           title: 'dasdas',
+            //           order: 14
+            //         },
+            //         {
+            //           id: '14',
+            //           title: 'asdsa',
+            //           order: 13
+            //         },
+            //         {
+            //           id: '15',
+            //           title: 'asdsad',
+            //           order: 12
+            //         }
+            //       ],
+            //       puzzles: [],
+            //       examples: [
+            //         {
+            //           id: '1',
+            //           title: 'sda',
+            //         },
+            //         {
+            //           id: '7',
+            //           title: 'tytuł',
+            //         }
+            //       ],
+            //     },
+            //     {
+            //       id: '8',
+            //       lessonNumber: 9,
+            //       title: 'lekcja 2',
+            //       quizzes: [],
+            //       puzzles: [],
+            //       examples: [],
+            //       inPreview: false
+            //     },
+            //     {
+            //       id: '9',
+            //       lessonNumber: 8,
+            //       title: 'lekcja 3',
+            //       quizzes: [],
+            //       puzzles: [],
+            //       examples: [],
+            //       inPreview: false
+            //     },
+            //     {
+            //       id: '99',
+            //       lessonNumber: 11,
+            //       title: 'lekcja 4',
+            //       inPreview: false,
+            //       quizzes: [
+            //         {
+            //           id: '13',
+            //           title: 'dasdas',
+            //           order: 14
+            //         },
+            //         {
+            //           id: '14',
+            //           title: 'asdsa',
+            //           order: 13
+            //         },
+            //         {
+            //           id: '15',
+            //           title: 'asdsad',
+            //           order: 12
+            //         }
+            //       ],
+            //       puzzles: [],
+            //       examples: [
+            //         {
+            //           id: '1',
+            //           title: 'sda',
+            //         },
+            //         {
+            //           id: '7',
+            //           title: 'tytuł',
+            //         }
+            //       ],
+            //     },
+            //   ]
+            // });
           });
       });
   }
@@ -121,6 +224,10 @@ export class StudentCourseComponent implements OnInit {
 
   protected toggleInpactDetails(): void {
     this.showInpactDetails = !this.showInpactDetails;
+  }
+
+  protected toggleLessons(): void {
+    this.showLessons = !this.showLessons;
   }
 
   protected buyCourse(): void {

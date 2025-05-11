@@ -31,7 +31,8 @@ export class CoachLessonFormComponent {
   protected lessonId: string = '';
 
   protected lessonForm = this.fb.group({
-    lessonNumber: [0, [Validators.required, Validators.min(1)]]
+    lessonNumber: [0, [Validators.required, Validators.min(1)]],
+    title: ['', [Validators.required, Validators.min(1)]]
   });
 
   protected onSubmit(): void {
