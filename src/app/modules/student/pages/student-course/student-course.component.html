@@ -88,7 +88,10 @@
     <h3>What's inside</h3>
     <div class="content">
       <div class="top">
-        <app-course-difficulty [difficulty]="3" />
+        <app-course-difficulty
+          [eloRangeStart]="course().eloRangeStart"
+          [eloRangeEnd]="course().eloRangeEnd"
+        />
         <app-course-details-diagram [courseDetails]="diagramCourseDetails()" />
         <!-- [couse details form diagram] -->
       </div>

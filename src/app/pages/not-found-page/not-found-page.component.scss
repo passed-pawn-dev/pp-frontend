@@ -1,0 +1,27 @@
+@use 'variables' as *;
+
+h2 {
+  margin-bottom: 0.5rem;
+}
+
+.page {
+  width: fit-content;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.images {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  img {
+    height: 12rem;
+  }
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+}

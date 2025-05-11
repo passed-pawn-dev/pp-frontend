@@ -32,7 +32,7 @@ export class CourseService {
   }
 
   public getLessonsById(id: string): Observable<LessonDetails[]> {
-    return this.httpClient.get<LessonDetails[]>(`/api/Course/${id}/lesson`);
+    return this.httpClient.get<LessonDetails[]>(`/api/Course/Coach/${id}/lesson`);
   }
 
   public create(course: NewCourse): Observable<Course> {
@@ -40,7 +40,7 @@ export class CourseService {
   }
 
   public update(id: string, course: NewCourse): Observable<Course> {
-    return this.httpClient.put<Course>(`/api/Course/${id}`, course);
+    return this.httpClient.put<Course>(`/api/Course/Coach/${id}`, course);
   }
 
   public delete(id: string): Observable<string> {

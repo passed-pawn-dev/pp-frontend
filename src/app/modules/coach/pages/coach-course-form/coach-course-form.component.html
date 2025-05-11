@@ -43,6 +43,26 @@
     />
   </div>
 
+  <div class="form-control-field">
+    <label for="price">Elo range start</label>
+    <p-inputNumber id="eloRangeStart" formControlName="eloRangeStart" type="number" />
+    <app-validation-errors
+      [errors]="courseForm.controls.eloRangeStart.errors"
+      [dirty]="courseForm.controls.eloRangeStart.dirty"
+      [touched]="courseForm.controls.eloRangeStart.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
+    <label for="price">Elo range end</label>
+    <p-inputNumber id="eloRangeEnd" formControlName="eloRangeEnd" type="number" />
+    <app-validation-errors
+      [errors]="courseForm.controls.eloRangeEnd.errors"
+      [dirty]="courseForm.controls.eloRangeEnd.dirty"
+      [touched]="courseForm.controls.eloRangeEnd.touched"
+    />
+  </div>
+
   <div class="btn-group">
     <a class="secondary-btn" [routerLink]="'/coach/courses'">Cancel</a>
     <button class="primary-button" type="submit" [disabled]="courseForm.invalid">

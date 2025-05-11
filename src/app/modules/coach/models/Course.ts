@@ -5,8 +5,8 @@ export interface Course {
   price: number;
   coachName: string;
   averageScore: number;
-  eloRangeStart: number;
-  eloRangeEnd: number;
+  eloRangeStart: number | null;
+  eloRangeEnd: number | null;
   pictureUrl?: string;
   lessonCount: number;
   elementCount: number;
