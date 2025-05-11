@@ -37,6 +37,12 @@
         <div class="desc">{{ course().description }}</div>
       </div>
       <div class="footer">
+        <!-- TODO -->
+        <div class="owned-info">
+          @if (true) {
+            You own this course
+          }
+        </div>
         <div class="date">
           Released in {{ formattedDate() }}
           <img src="icons/calendar.png" alt="calendar" />
@@ -145,8 +151,9 @@
     <div class="text"><span>30 days</span> to return if you're not satisfied</div>
     <div class="payment">
       <div class="price">{{ course().price }}$</div>
-      <button class="primary-btn" type="submit" (click)="buyCourse()">
-        Buy Course
+      <!-- TODO change condition -->
+      <button class="primary-btn" type="submit" [disabled]="true" (click)="buyCourse()">
+        {{ true ? 'Owned' : 'Buy Course' }}
       </button>
     </div>
   </section>

@@ -46,7 +46,12 @@
 
       .footer {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
+
+        .owned-info {
+          font-size: $font-M;
+          color: $primary;
+        }
 
         .date {
           display: flex;
@@ -238,5 +243,11 @@
         font-size: $font-XL;
       }
     }
+  }
+}
+
+.primary-btn:disabled {
+  &:hover {
+    background-color: $primary;
   }
 }

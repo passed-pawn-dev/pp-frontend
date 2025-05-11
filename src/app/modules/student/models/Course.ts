@@ -10,4 +10,5 @@ export interface Course {
   pictureUrl: string;
   price: number;
   averageScore: number;
+  isBought: boolean;
 }
