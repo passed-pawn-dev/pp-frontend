@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { CoursesQueryParams } from '../../models/CoursesQueryParams';
 import { SortBy } from '../../../shared/enums/sort-by.enum';
 import { difficultyRanges } from '../../../shared/constants/difficulty-ranges';
@@ -56,6 +61,10 @@ export class StudentCourseFiltersComponent {
     return this.searchForm.controls.searchBy.value!;
   }
 
+  protected get sortDesc(): boolean | null {
+    return this.searchForm.controls.sortDesc.value;
+  }
+
   protected setDifficulty(value: number): void {
     const currentMin = this.searchForm.controls.minDifficulty.value;
     const currentMax = this.searchForm.controls.maxDifficulty.value;
@@ -72,6 +81,10 @@ export class StudentCourseFiltersComponent {
   protected resetDifficulty(): void {
     this.searchForm.controls.minDifficulty.setValue(null);
     this.searchForm.controls.maxDifficulty.setValue(null);
+  }
+
+  protected toggleSortDesc(): void {
+    this.searchForm.controls.sortDesc.setValue(!this.sortDesc);
   }
 
   protected onSubmit(): void {

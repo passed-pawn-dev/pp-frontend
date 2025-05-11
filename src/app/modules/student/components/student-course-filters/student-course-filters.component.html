@@ -123,7 +123,9 @@
           <option [value]="SortBy.Price">Price</option>
           <option [value]="SortBy.AverageScore">Score</option>
         </select>
-        <!-- <input type="checkbox" formControlName="sortDesc" /> -->
+        <button type="button" (click)="toggleSortDesc()">
+          {{ sortDesc ? 'v' : '^' }}
+        </button>
       </div>
 
       <div class="owned-group">

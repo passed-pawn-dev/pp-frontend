@@ -59,7 +59,7 @@ export class StudentLessonComponent implements OnInit {
           kind: ElementKind.Example
         } as Element;
       }),
-      ...this.lesson.exercises.map((el) => {
+      ...this.lesson.puzzles.map((el) => {
         return {
           ...el,
           kind: ElementKind.Puzzle
