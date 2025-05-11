@@ -16,6 +16,8 @@ import { StudentSolveQuizComponent } from './pages/student-solve-quiz/student-so
 import { studentQuizResolver } from './resolvers/student-quiz.resolver';
 import { studentBoughtCourseResolver } from './resolvers/student-bought-course.resolver';
 import { studentCourseResolver } from './resolvers/student-course.resolver';
+import { StudentCoachProfileComponent } from './pages/student-coach-profile/student-coach-profile.component';
+import { studentCoachProfileResolver } from './resolvers/student-coach-profile.resolver';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -88,6 +90,13 @@ export const STUDENT_ROUTES: Route[] = [
         component: StudentCourseComponent,
         resolve: {
           course: studentCourseResolver
+        }
+      },
+      {
+        path: 'coach/:id/profile',
+        component: StudentCoachProfileComponent,
+        resolve: {
+          coachProfile: studentCoachProfileResolver
         }
       }
       // {
