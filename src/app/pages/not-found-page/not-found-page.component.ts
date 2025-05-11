@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { TalkingBobComponent } from '../../modules/shared/components/talking-bob/talking-bob.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-not-found-page',
   standalone: true,
-  imports: [],
+  imports: [TalkingBobComponent],
   templateUrl: './not-found-page.component.html',
   styleUrl: './not-found-page.component.scss'
 })
-export class NotFoundPageComponent {}
+export class NotFoundPageComponent {
+  private readonly location = inject(Location);
+
+  protected back(): void {
+    this.location.historyGo(-2);
+  }
+}
