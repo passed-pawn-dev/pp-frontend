@@ -1,9 +1,18 @@
 <div class="page">
   <!-- <h1>Avalaible Courses</h1> -->
   <h2>Avalaible Courses</h2>
+  <app-student-course-filters (newQueryParams)="onNewFilters($event)" />
   <ul class="list">
     @for (course of courses; track $index) {
       <app-student-course-tile [course]="course" />
     }
+    <p-paginator
+      class="paginator"
+      [first]="first"
+      [rows]="5"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[5, 10, 15]"
+      (onPageChange)="onPageChange($event)"
+    />
   </ul>
 </div>

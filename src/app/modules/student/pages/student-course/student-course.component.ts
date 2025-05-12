@@ -36,6 +36,7 @@ import { LessonStatus } from '../../enums/LessonStatus';
     CourseDifficultyComponent,
     CourseReviewComponent,
     StudentLessonComponent
+    RouterLink
   ],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
@@ -47,6 +48,7 @@ export class StudentCourseComponent implements OnInit {
     description: '',
     releaseDate: '',
     coach: {
+      id: 0,
       name: '',
       chessTitle: ChessTitle.CandidateMaster,
       createdCoursesCount: 0,

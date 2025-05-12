@@ -4,8 +4,8 @@ export interface Course {
   id: string;
   title: string;
   description: string;
-  eloRangeStart: number;
-  eloRangeEnd: number;
+  eloRangeStart: number | null;
+  eloRangeEnd: number | null;
   coachName: string;
   pictureUrl: string;
   price: number;

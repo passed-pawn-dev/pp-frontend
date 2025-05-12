@@ -114,3 +114,8 @@ h3 {
   width: 100%;
   // nie działa
 }
+
+.paginator .p-paginator-page.p-paginator-page-selected {
+  background-color: $primary-lighter;
+  color: #64748b;
+}

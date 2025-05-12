@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MyCourse } from '../models/MyCourse';
 import { Observable } from 'rxjs';
@@ -10,6 +10,7 @@ import { CourseReview } from '../models/CourseReview';
 import { NewCourseReview } from '../models/NewCourseReview';
 import { Exercise } from '../models/Exercise';
 import { QuizDetails } from '../models/QuizDetails';
+import { CoursesQueryParams } from '../models/CoursesQueryParams';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,18 @@ import { QuizDetails } from '../models/QuizDetails';
 export class CourseService {
   public constructor(private httpClient: HttpClient) {}
 
-  public getAll(): Observable<Course[]> {
-    return this.httpClient.get<Course[]>('/api/Course/Student');
+  public getAll(coursesParams: CoursesQueryParams): Observable<HttpResponse<Course[]>> {
+    let params = new HttpParams();
+    Object.entries(coursesParams).forEach(([key, value]) => {
+      if (value != null) {
+        params = params.set(key, value);
+      }
+    });
+
+    return this.httpClient.get<Course[]>('/api/Course/Student', {
+      params,
+      observe: 'response'
+    });
   }
 
   public getById(id: string): Observable<CourseDetails> {
