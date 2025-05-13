@@ -61,10 +61,10 @@ export class StudentLessonComponent implements OnInit {
           kind: ElementKind.Puzzle
         } as Element;
       }),
-      ...this.lesson.examples.map((el) => {
+      ...this.lesson.videos.map((el) => {
         return {
           ...el,
-          kind: ElementKind.Example
+          kind: ElementKind.Video
         } as Element;
       })
     ].sort((a, b) => a.order - b.order);

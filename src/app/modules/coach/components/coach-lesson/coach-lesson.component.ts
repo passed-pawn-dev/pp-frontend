@@ -78,10 +78,10 @@ export class CoachLessonComponent implements OnInit {
           kind: ElementKind.Puzzle
         } as Element;
       }),
-      ...this.lesson.examples.map((el) => {
+      ...this.lesson.videos.map((el) => {
         return {
           ...el,
-          kind: ElementKind.Example
+          kind: ElementKind.Video
         } as Element;
       })
     ].sort((a, b) => a.order - b.order);
@@ -124,8 +124,8 @@ export class CoachLessonComponent implements OnInit {
             },
             error: (_) =>
               this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
+                severity: 'error',
+                summary: 'Error',
                 detail: 'Failed to delete element'
               })
           });

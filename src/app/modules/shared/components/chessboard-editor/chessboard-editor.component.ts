@@ -69,6 +69,8 @@ enum Mode {
   styleUrl: './chessboard-editor.component.scss'
 })
 export class ChessboardEditorComponent implements OnInit, OnChanges {
+  @Input({ required: true }) public useArrowsAndHighlights: boolean = true;
+
   private fb: FormBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
 
@@ -168,7 +170,7 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   }
 
   public ngOnInit(): void {
-    this.resetToStartingPosition();
+    // this.resetToStartingPosition();
 
     this.updateFenAndSave();
     this.updateArrows();
@@ -432,7 +434,7 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   }
 
   private updateHighlights(): void {
-    this.newArrowsEvent.emit(this.arrows());
+    this.newHighlightsEvent.emit(this.highlights());
   }
 
   private updateArrows(): void {

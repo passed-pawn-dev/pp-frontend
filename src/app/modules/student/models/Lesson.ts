@@ -1,6 +1,7 @@
 import { Example } from './Example';
 import { Exercise } from './Exercise';
 import { Quiz } from './Quiz';
+import { Video } from './Video';
 
 // Change to lesson object with list of all elemenets
 export interface Lesson {
@@ -11,5 +12,5 @@ export interface Lesson {
   examples: Example[];
   preview: boolean;
   quizzes: Quiz[];
-  // video:
+  videos: Video[];
 }
