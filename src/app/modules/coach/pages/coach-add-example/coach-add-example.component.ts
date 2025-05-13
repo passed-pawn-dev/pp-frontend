@@ -68,9 +68,7 @@ export class CoachAddExampleComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         this.lessonId = params.get('lessonId')!;
-        console.log(params.get('lessonId'));
       });
-    console.log(this.lessonId);
   }
 
   private createStep(): FormGroup {
@@ -125,13 +123,12 @@ export class CoachAddExampleComponent implements OnInit {
   }
 
   protected submit(): void {
-    console.log(this.exampleForm.getRawValue());
     const exampleForm = this.exampleForm.getRawValue();
 
     const example: NewExample = {
       title: exampleForm.title!,
       initialDescription: exampleForm.title!,
-      order: 1,
+      order: null,
       steps: []
     };
 
@@ -148,8 +145,6 @@ export class CoachAddExampleComponent implements OnInit {
         }))
       });
     });
-
-    console.log(example);
 
     this.courseService
       .addExample(this.lessonId!, example)

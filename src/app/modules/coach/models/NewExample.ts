@@ -17,6 +17,6 @@ interface Step {
 export interface NewExample {
   title: string;
   initialDescription: string;
-  order: number;
+  order: number | null;
   steps: Step[];
 }

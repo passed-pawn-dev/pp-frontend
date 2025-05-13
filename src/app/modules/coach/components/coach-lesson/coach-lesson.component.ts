@@ -77,12 +77,6 @@ export class CoachLessonComponent implements OnInit {
           ...el,
           kind: ElementKind.Puzzle
         } as Element;
-      }),
-      ...this.lesson.examples.map((el) => {
-        return {
-          ...el,
-          kind: ElementKind.Example
-        } as Element;
       })
     ].sort((a, b) => a.order - b.order);
   }
