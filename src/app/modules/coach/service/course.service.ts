@@ -41,7 +41,7 @@ export class CourseService {
   }
 
   public update(id: string, course: NewCourse): Observable<Course> {
-    return this.httpClient.put<Course>(`/api/Course/${id}`, course);
+    return this.httpClient.put<Course>(`/api/Course/Coach/${id}`, course);
   }
 
   public delete(id: string): Observable<string> {

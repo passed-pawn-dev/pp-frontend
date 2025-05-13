@@ -32,7 +32,8 @@ import { CourseReview } from '../../models/CourseReview';
     StarRatingComponent,
     CourseDetailsDiagramComponent,
     CourseDifficultyComponent,
-    CourseReviewComponent
+    CourseReviewComponent,
+    RouterLink
   ],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
@@ -44,6 +45,7 @@ export class StudentCourseComponent implements OnInit {
     description: '',
     releaseDate: '',
     coach: {
+      id: 0,
       name: '',
       chessTitle: ChessTitle.CandidateMaster,
       createdCoursesCount: 0,

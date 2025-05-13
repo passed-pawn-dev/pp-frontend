@@ -48,16 +48,16 @@
       <div #messagesContainer class="messages">
         @for (message of messages; track $index; let last = $last) {
           @if ($even) {
-            <div class="message">
-              {{ message }}
-            </div>
-          } @else {
             <div class="response">
               <img src="icons/elephant.png" alt="elephant" />
               <div class="message">
                 {{ message }}
                 <img src="icons/triangle.png" class="tr" alt="elephant" />
               </div>
+            </div>
+          } @else {
+            <div class="message">
+              {{ message }}
             </div>
           }
         }

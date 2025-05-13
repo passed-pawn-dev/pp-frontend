@@ -1,5 +1,5 @@
 <li class="tile">
-  <a [routerLink]="course().id">
+  <a [routerLink]="['/student', 'courses', course().id]">
     <img src="images/chess-course-1.png" alt="" />
     <!-- [course image] -->
     <div class="content">
@@ -19,7 +19,10 @@
       </div>
       <div class="footer">
         <div>
-          <!-- <app-course-difficulty [difficulty]="course().difficulty" /> -->
+          <app-course-difficulty
+            [eloRangeStart]="course().eloRangeStart"
+            [eloRangeEnd]="course().eloRangeEnd"
+          />
           <!-- [course difficulty 1-5] -->
           <div class="coach">{{ course().coachName }}</div>
           <!-- [coach name and surname] -->

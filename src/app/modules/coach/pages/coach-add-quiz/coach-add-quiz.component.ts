@@ -155,8 +155,6 @@ export class CoachAddQuizComponent implements OnInit {
     const answerGroup = answersArray.at(answerIdx) as FormGroup;
     answerGroup.get('newPosition')?.patchValue(this.currentPositionForAnswer);
     this.applyToBoardAppliedArray(answerIdx);
-    console.log(answerIdx);
-    console.log(this.answerBoardAppliedArray);
   }
 
   protected removeAnswer(idx: number): void {

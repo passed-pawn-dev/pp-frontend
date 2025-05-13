@@ -51,7 +51,11 @@
       <div class="header">
         <div class="profile">
           <div class="circle"><span>CA</span></div>
-          <div>{{ course().coach.name }}</div>
+          <a
+            class="coach-link"
+            [routerLink]="['/student', 'coach', course().coach.id, 'profile']"
+            >{{ course().coach.name }}</a
+          >
           <!-- [coach name and surname] -->
         </div>
         <div class="chess-title">{{ course().coach.chessTitle || 'N/A' }}</div>
@@ -84,7 +88,10 @@
     <h3>What's inside</h3>
     <div class="content">
       <div class="top">
-        <app-course-difficulty [difficulty]="3" />
+        <app-course-difficulty
+          [eloRangeStart]="course().eloRangeStart"
+          [eloRangeEnd]="course().eloRangeEnd"
+        />
         <app-course-details-diagram [courseDetails]="diagramCourseDetails()" />
         <!-- [couse details form diagram] -->
       </div>

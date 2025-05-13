@@ -1,23 +1,5 @@
 @use 'variables' as *;
 
-.tile {
-  width: fit-content;
-
-  .header {
-    font-size: $font-XS;
-    font-weight: 700;
-    margin-bottom: 0.1rem;
-  }
-
-  .circles-group {
-    display: flex;
-    gap: 0.2rem;
-
-    .circle {
-      width: 1em;
-      height: 1rem;
-      border-radius: 50%;
-      background-color: $background;
-    }
-  }
+.difficulty {
+  color: $primary;
 }
