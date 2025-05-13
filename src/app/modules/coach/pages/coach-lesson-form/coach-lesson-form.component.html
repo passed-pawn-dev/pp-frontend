@@ -4,6 +4,16 @@
   (ngSubmit)="onSubmit()"
 >
   <div class="form-control-field">
+    <label for="title">Lesson title</label>
+    <input id="title" formControlName="title" type="text" />
+    <app-validation-errors
+      [errors]="lessonForm.controls.title.errors"
+      [dirty]="lessonForm.controls.title.dirty"
+      [touched]="lessonForm.controls.title.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
     <label for="lessonNumber">Lesson number</label>
     <p-inputNumber id="lessonNumber" formControlName="lessonNumber" type="number" />
     <app-validation-errors

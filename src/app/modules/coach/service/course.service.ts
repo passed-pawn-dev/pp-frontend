@@ -12,6 +12,7 @@ import { CourseLessons } from '../models/CourseLessons';
 import { QuizDetails } from '../../student/models/QuizDetails';
 import { CourseReview } from '../models/CourseReview';
 import { ElementKind } from '../../shared/enums/element-kind.enum';
+import { NewExample } from '../models/NewExample';
 
 @Injectable({
   providedIn: 'root'
@@ -71,16 +72,16 @@ export class CourseService {
   }
 
   public deleteQuiz(id: string): Observable<object> {
-    return this.httpClient.delete(``);
+    return this.httpClient.delete(`api/CourseQuiz/${id}`);
   }
   public deleteExample(id: string): Observable<object> {
-    return this.httpClient.delete(``);
+    return this.httpClient.delete(`api/CourseExample/${id}`);
   }
   public deleteVideo(id: string): Observable<object> {
-    return this.httpClient.delete(``);
+    return this.httpClient.delete(`api/CourseVideo/${id}`);
   }
   public deletePuzzle(id: string): Observable<object> {
-    return this.httpClient.delete(``);
+    return this.httpClient.delete(`api/CoursePuzzle/${id}`);
   }
 
   public getExerciseById(id: string): Observable<Puzzle> {
@@ -105,5 +106,9 @@ export class CourseService {
 
   public addQuiz(lessonId: string, quiz: QuizDetails): Observable<Object> {
     return this.httpClient.post(`api/Lesson/${lessonId}/quiz`, quiz);
+  }
+
+  public addExample(lessonId: string, example: NewExample): Observable<Object> {
+    return this.httpClient.post(`api/Lesson/${lessonId}/example`, example);
   }
 }

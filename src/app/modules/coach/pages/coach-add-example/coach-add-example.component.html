@@ -1,0 +1,91 @@
+<form class="example-form" [formGroup]="exampleForm">
+  <div class="form-control-field">
+    <label for="title">Title</label>
+    <input pInputText id="title" formControlName="title" type="text" />
+    <app-validation-errors
+      [errors]="exampleForm.controls.title.errors"
+      [dirty]="exampleForm.controls.title.dirty"
+      [touched]="exampleForm.controls.title.touched"
+    />
+  </div>
+  <div class="form-control-field">
+    <label for="initialDescription">Description</label>
+    <textarea id="initialDescription" formControlName="initialDescription"></textarea>
+    <app-validation-errors
+      [errors]="exampleForm.controls.initialDescription.errors"
+      [dirty]="exampleForm.controls.initialDescription.dirty"
+      [touched]="exampleForm.controls.initialDescription.touched"
+    />
+  </div>
+
+  <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
+  <div style="background-color: white">
+    <app-step-indicator
+      [stepNumber]="steps.controls.length"
+      [currentStep]="currentStep"
+    ></app-step-indicator>
+    <div class="buttons">
+      <button
+        type="button"
+        class="secondary-btn"
+        [disabled]="currentStep < 2"
+        (click)="prevStep()"
+      >
+        Back
+      </button>
+      <button
+        type="button"
+        class="primary-btn"
+        [disabled]="currentStep >= steps.controls.length"
+        (click)="nextStep()"
+      >
+        Next <img src="icons/thick-arrow-right.png" alt="arrow" />
+      </button>
+      <button type="button" [disabled]="steps.length > 100" (click)="addStep()">
+        Add Step
+      </button>
+      <button type="button" class="primary-btn" (click)="submit()">Save</button>
+    </div>
+  </div>
+
+  <div formArrayName="steps">
+    @for (step of steps.controls; track $index) {
+      <div
+        class="step"
+        [class.step-active]="currentStep === $index + 1"
+        [class.step-left]="currentStep > $index + 1"
+        [class.step-hidden]="currentStep < $index + 1"
+      >
+        <div [formGroupName]="$index">
+          <app-chessboard-editor
+            [startingPositionInput]="stepPositions[$index]"
+            [useArrowsAndHighlights]="true"
+            (newFenEvent)="addPositionToStep($event, $index)"
+            (newArrowsEvent)="addArrowsToStep($event, $index)"
+            (newHighlightsEvent)="addHighlightsToStep($event, $index)"
+          >
+            <label for="description">Description</label>
+            <textarea
+              formControlName="description"
+              type="description"
+              id="description"
+              required
+            ></textarea>
+            <app-validation-errors
+              [errors]="step.get('description')!.errors"
+              [dirty]="step.get('description')!.dirty"
+              [touched]="step.get('description')!.touched"
+            />
+            <button
+              type="button"
+              [disabled]="steps.length < 2"
+              (click)="removeStep($index)"
+            >
+              Remove
+            </button>
+          </app-chessboard-editor>
+        </div>
+      </div>
+    }
+  </div>
+</form>
