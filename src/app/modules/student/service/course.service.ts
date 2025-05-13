@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MyCourse } from '../models/MyCourse';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Course } from '../models/Course';
 import { CourseDetails } from '../models/CourseDetails';
 import { Lesson } from '../models/Lesson';
@@ -39,6 +39,12 @@ export class CourseService {
 
   public buy(id: string): Observable<Object> {
     return this.httpClient.post(`/api/Course/Student/${id}/course-list`, {});
+  }
+
+  public getPaymentIntent(id: string): Observable<string> {
+    return this.httpClient
+      .post<{ clientSecret: string }>(`/api/Course/Student/${id}/buy`, {})
+      .pipe(map((response: { clientSecret: string }) => response.clientSecret));
   }
 
   public signOut(id: string): Observable<Object> {
