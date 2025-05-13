@@ -127,7 +127,7 @@ export class CoachAddExampleComponent implements OnInit {
 
     const example: NewExample = {
       title: exampleForm.title!,
-      initialDescription: exampleForm.title!,
+      initialDescription: exampleForm.initialDescription!,
       order: null,
       steps: []
     };
