@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { DisplayChessboardComponent } from '../../../shared/components/display-chessboard/display-chessboard.component';
 import { ExampleDetails } from '../../models/ExampleDetails';
 import { ActivatedRoute } from '@angular/router';
+import { Severity } from '../../../shared/enums/severities.enum';
 
 @Component({
   selector: 'app-student-example',
@@ -35,11 +36,20 @@ export class StudentExampleComponent implements OnInit {
     ]
   };
 
+  protected hightlights: Map<number, Severity>[] = [];
+
   protected currentStep: number = 0;
 
   public ngOnInit(): void {
     const example = this.route.snapshot.data['example'];
     this.example = example;
+    this.example.steps.forEach((step, idx) => {
+      const newHighlights: Map<number, Severity> = new Map([]);
+      step.highlights.forEach((highlight) => {
+        newHighlights.set(parseInt(highlight.position), highlight.severity);
+      });
+      this.hightlights.push(newHighlights);
+    });
   }
 
   @HostListener('window:keydown', ['$event'])

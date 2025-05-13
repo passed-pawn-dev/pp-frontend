@@ -3,7 +3,11 @@
   <div>{{ example.initialDescription }}</div>
 </div>
 <div class="container">
-  <app-display-chessboard [startingFen]="example.steps[currentStep].fen" />
+  <app-display-chessboard
+    [startingFen]="example.steps[currentStep].fen"
+    [arrows]="example.steps[currentStep].arrows"
+    [highlights]="hightlights[currentStep]"
+  />
   <div>
     <div>{{ example.steps[currentStep].description }}</div>
     <button type="button" [disabled]="currentStep < 1" (click)="prevStep()">
