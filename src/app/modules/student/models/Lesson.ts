@@ -6,6 +6,7 @@ import { Video } from './Video';
 // Change to lesson object with list of all elemenets
 export interface Lesson {
   id: string;
+  title: string;
   lessonNumber: number;
   puzzles: Exercise[];
   examples: Example[];

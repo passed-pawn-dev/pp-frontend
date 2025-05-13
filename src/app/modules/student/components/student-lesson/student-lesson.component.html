@@ -70,8 +70,11 @@
 
   <div class="tile">
     <div class="top">
-      <div class="title">Lesson Title</div>
+      <div class="title">{{ lesson.title }}</div>
       <div class="left">
+        @if (locked) {
+          <div class="locked"><img src="icons/lock.png" alt="locked" /></div>
+        }
         <div class="progress-bar-container">
           <div class="percent">{{ progress }} / {{ all }}</div>
           <div class="progress-bar">
@@ -91,25 +94,37 @@
     @if (showElements) {
       <div class="elements-group">
         @for (element of elements(); track $index) {
-          <a
-            class="element"
-            [routerLink]="
-              'lesson/' +
-              lesson.id +
-              '/' +
-              element.kind.toLowerCase() +
-              '/' +
-              element.id
-            "
-          >
-            <div class="left">
-              <img [src]="kindToIcon.get(element.kind)" [alt]="element.kind" />
-              <div class="title">{{ element.title }}</div>
+          @if (locked) {
+            <div class="element">
+              <div class="left">
+                <img [src]="kindToIcon.get(element.kind)" [alt]="element.kind" />
+                <div class="title">{{ element.title }}</div>
+              </div>
+              <div class="right">
+                <div></div>
+              </div>
             </div>
-            <div class="right">
-              <div></div>
-            </div>
-          </a>
+          } @else {
+            <a
+              class="element"
+              [routerLink]="
+                'lesson/' +
+                lesson.id +
+                '/' +
+                element.kind.toLowerCase() +
+                '/' +
+                element.id
+              "
+            >
+              <div class="left">
+                <img [src]="kindToIcon.get(element.kind)" [alt]="element.kind" />
+                <div class="title">{{ element.title }}</div>
+              </div>
+              <div class="right">
+                <div></div>
+              </div>
+            </a>
+          }
         }
         @if (elements().length === 0) {
           <div>No Elements</div>

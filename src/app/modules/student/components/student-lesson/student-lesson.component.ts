@@ -3,12 +3,7 @@ import { Lesson } from '../../models/Lesson';
 import { RouterLink } from '@angular/router';
 import { ElementKind } from '../../../shared/enums/element-kind.enum';
 import { Element } from '../../../coach/models/Element';
-
-export enum LessonStatus {
-  Complete = 'Complete',
-  InProgress = 'InProgress',
-  UnTouched = 'Untouched'
-}
+import { LessonStatus } from '../../enums/LessonStatus';
 
 @Component({
   selector: 'app-student-lesson',
@@ -25,8 +20,9 @@ export class StudentLessonComponent implements OnInit {
   @Input() public first!: boolean;
   @Input() public last!: boolean;
   @Input() public complete!: LessonStatus;
+  @Input({ required: true }) public locked!: boolean;
 
-  public progress: number = 5;
+  public progress: number = 0;
   public all: number = 8;
 
   public toggleElements(): void {

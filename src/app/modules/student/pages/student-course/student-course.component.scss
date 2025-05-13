@@ -240,3 +240,35 @@
     }
   }
 }
+
+.lesson-section {
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  .toggle-btn {
+    display: flex;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0.5rem 0.2rem;
+    // border: 1px solid;
+
+    img {
+      height: $font-XS;
+    }
+  }
+}
+
+.lessons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
