@@ -32,8 +32,8 @@ import { ChessboardHighlightsDirective } from '../../directives/chessboard-highl
 })
 export class DisplayChessboardComponent implements OnInit, OnChanges {
   @Input({ required: true }) public startingFen!: string;
-  @Input({ required: true }) public arrows: Arrow[] = [];
-  @Input({ required: true }) public highlights: Map<number, Severity> = new Map([]);
+  @Input() public arrows: Arrow[] = [];
+  @Input() public highlights: Map<number, Severity> = new Map([]);
   @Input() public lastMove!: TLastMove | undefined;
 
   protected PreviewMode = PreviewMode;

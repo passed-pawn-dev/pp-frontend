@@ -35,7 +35,7 @@ import { LessonStatus } from '../../enums/LessonStatus';
     CourseDetailsDiagramComponent,
     CourseDifficultyComponent,
     CourseReviewComponent,
-    StudentLessonComponent
+    StudentLessonComponent,
     RouterLink
   ],
   templateUrl: './student-course.component.html',
