@@ -18,7 +18,7 @@ export interface CourseDetails {
   totalVideoCount: number;
   reviewCount: number;
   averageScore: 0;
-  pictureUrl: null;
+  thumbnailUrl: null;
   price: number;
   studentNumber: number;
   lessons: Lesson[];

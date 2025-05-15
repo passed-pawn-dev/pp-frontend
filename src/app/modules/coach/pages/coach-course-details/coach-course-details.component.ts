@@ -9,11 +9,14 @@ import { Messages } from 'primeng/messages';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CoachLessonComponent } from '../../components/coach-lesson/coach-lesson.component';
+import { DialogModule } from 'primeng/dialog';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CoachUploadImageComponent } from '../../components/coach-upload-image/coach-upload-image.component';
 
 @Component({
   selector: 'app-coach-course-details',
   standalone: true,
-  imports: [RouterLink, CoachLessonComponent],
+  imports: [RouterLink, CoachLessonComponent, DialogModule, CoachUploadImageComponent],
   templateUrl: './coach-course-details.component.html',
   styleUrl: './coach-course-details.component.scss'
 })
@@ -22,6 +25,8 @@ export class CoachCourseDetailsComponent implements OnInit {
   private messageService = inject(MessageService);
   private destroyRef = inject(DestroyRef);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
+  private courseService = inject(CourseService);
+  private readonly route = inject(ActivatedRoute);
 
   protected course = signal<CourseDetails>({
     id: '',
@@ -36,14 +41,11 @@ export class CoachCourseDetailsComponent implements OnInit {
 
   protected lessons = signal<LessonDetails[]>([]);
 
-  public constructor(
-    private courseService: CourseService,
-    private readonly route: ActivatedRoute
-  ) {}
-
   protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
 
   protected reviewCount = computed(() => this.course().reviews.length || 0);
+
+  protected thumbnailFormVisible: boolean = false;
 
   protected averageReviewScore = computed(() =>
     this.course().reviews.length == 0
@@ -58,6 +60,47 @@ export class CoachCourseDetailsComponent implements OnInit {
     const course = this.route.snapshot.data['course'];
     this.course.set(course);
     this.lessons.set(course.lessons);
+  }
+
+  protected showThumbnailForm(): void {
+    this.thumbnailFormVisible = true;
+  }
+
+  protected hideThumbnailForm(): void {
+    this.thumbnailFormVisible = false;
+  }
+
+  protected deleteThumbnail(): void {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this thumbnail?',
+      header: 'Confirm',
+      accept: () => {
+        this.route.paramMap
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((params) => {
+            const courseId = params.get('id')!;
+            this.courseService
+              .deleteThumbnail(courseId)
+              .pipe(takeUntilDestroyed(this.destroyRef))
+              .subscribe({
+                next: (_) => {
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    detail: 'Thumbnail deleted successfully'
+                  });
+                },
+                error: (_) =>
+                  this.messageService.add({
+                    severity: 'error',
+                    summary: 'Fail',
+                    detail: 'Failed to delete thumbnail'
+                  })
+              });
+          });
+      },
+      reject: () => {}
+    });
   }
 
   protected navigateAddExercise(lessonNumber: string): void {
@@ -94,8 +137,8 @@ export class CoachCourseDetailsComponent implements OnInit {
             },
             error: (_) =>
               this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
+                severity: 'error',
+                summary: 'Fail',
                 detail: 'Failed to delete lesson'
               })
           });

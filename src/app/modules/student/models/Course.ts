@@ -7,7 +7,7 @@ export interface Course {
   eloRangeStart: number | null;
   eloRangeEnd: number | null;
   coachName: string;
-  pictureUrl: string;
+  thumbnailUrl?: string;
   price: number;
   averageScore: number;
   isBought: boolean;

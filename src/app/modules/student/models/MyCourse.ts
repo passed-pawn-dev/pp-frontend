@@ -3,5 +3,5 @@ export interface MyCourse {
   title: string;
   description: string;
   coachName: string;
-  thumbnail: string;
+  thumbnailUrl?: string;
 }

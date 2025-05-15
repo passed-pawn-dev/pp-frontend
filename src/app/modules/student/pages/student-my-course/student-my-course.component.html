@@ -83,7 +83,11 @@
 <div class="page">
   <h2>Your Course Details</h2>
   <section class="main-section">
-    <img class="course-img" src="images/chess-course-1.png" alt="chess-course" />
+    <img
+      class="course-img"
+      alt="chess-course"
+      [src]="course().thumbnailUrl ?? 'images/hat.png'"
+    />
     <div class="right">
       <div class="content">
         <h3>{{ course().title }}</h3>

@@ -91,13 +91,47 @@
   </ul>
 </div> -->
 
+<p-dialog
+  header="Add new thumbnail"
+  [modal]="true"
+  [draggable]="false"
+  [(visible)]="thumbnailFormVisible"
+>
+  <app-coach-upload-image (imageSubmitted)="hideThumbnailForm()" />
+</p-dialog>
+
 <div class="page">
   <div class="header">
     <h2>My Course Details</h2>
     <a class="secondary-btn" [routerLink]="'/coach/courses'">Back to courses</a>
   </div>
   <section class="main-section">
-    <img class="course-img" src="images/chess-course-1.png" alt="chess-course" />
+    <div class="img-section">
+      <img
+        class="course-img"
+        alt="chess-course"
+        [src]="course().thumbnailUrl ?? 'images/hat.png'"
+      />
+      <div class="buttons">
+        @if (course().thumbnailUrl) {
+          <button
+            class="delete-thumbnail-btn"
+            type="button"
+            (click)="deleteThumbnail()"
+          >
+            <img src="icons/xmark-black.svg" alt="" />
+          </button>
+        }
+
+        <button
+          class="update-thumbnail-btn"
+          type="button"
+          (click)="showThumbnailForm()"
+        >
+          <img src="icons/plus.png" alt="" />
+        </button>
+      </div>
+    </div>
     <div class="right">
       <div class="content">
         <h3>{{ course().title }}</h3>
