@@ -366,6 +366,15 @@
         display: flex;
         gap: 1rem;
 
+        .locked {
+          margin-right: 1rem;
+          display: flex;
+          align-items: center;
+          img {
+            height: 1.2rem;
+          }
+        }
+
         .progress-bar-container {
           width: 15rem;
           display: flex;

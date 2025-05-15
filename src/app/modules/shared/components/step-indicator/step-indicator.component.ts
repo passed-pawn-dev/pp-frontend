@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, input } from '@angular/core';
 
 @Component({
   selector: 'app-step-indicator',
@@ -6,13 +6,15 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './step-indicator.component.html',
   styleUrl: './step-indicator.component.scss'
 })
-export class StepIndicatorComponent implements OnInit {
-  @Input({ required: true }) public stepNumber!: number;
-  @Input({ required: true }) public currentStep!: number;
+export class StepIndicatorComponent implements OnChanges {
+  // @Input({ required: true }) public stepNumber!: number;
+  // @Input({ required: true }) public currentStep!: number;
+  public stepNumber = input<number>();
+  public currentStep = input<number>();
 
   protected steps: number[] = [];
 
-  public ngOnInit(): void {
-    this.steps = [...Array(this.stepNumber)].map((_, i) => i + 1);
+  public ngOnChanges(): void {
+    this.steps = [...Array(this.stepNumber())].map((_, i) => i + 1);
   }
 }

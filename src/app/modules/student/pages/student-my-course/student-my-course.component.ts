@@ -8,10 +8,8 @@ import { Exercise } from '../../models/Exercise';
 import { ButtonModule } from 'primeng/button';
 import { Quiz } from '../../models/Quiz';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  StudentLessonComponent,
-  LessonStatus
-} from '../../components/student-lesson/student-lesson.component';
+import { StudentLessonComponent } from '../../components/student-lesson/student-lesson.component';
+import { LessonStatus } from '../../enums/LessonStatus';
 
 @Component({
   selector: 'app-student-my-course',

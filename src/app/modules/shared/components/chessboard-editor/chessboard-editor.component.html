@@ -61,60 +61,74 @@
         </div>
       </div>
 
-      <!-- <div class="line"></div>
-      <div class="header">Board Elements</div>
-      
-      <div class="color-btn-group" >
-        <div class="color-select-buttons">
-          <div [class]="'round' + (isSeveritySelected(Severity.Info) ? ' selected' : '')">
-            <input
-              class="severity-input info"
-              type="radio"
-              name="myOptions"
-              [value]="Severity.Info"
-              [(ngModel)]="currentSeverity"
-            />
+      @if (useArrowsAndHighlights) {
+        <div class="line"></div>
+        <div class="header">Board Elements</div>
+
+        <div class="color-btn-group">
+          <div class="color-select-buttons">
+            <div
+              [class]="'round' + (isSeveritySelected(Severity.Info) ? ' selected' : '')"
+            >
+              <input
+                class="severity-input info"
+                type="radio"
+                name="myOptions"
+                [value]="Severity.Info"
+                [(ngModel)]="currentSeverity"
+              />
+            </div>
+
+            <div
+              [class]="
+                'round' + (isSeveritySelected(Severity.Warning) ? ' selected' : '')
+              "
+            >
+              <input
+                class="severity-input warning"
+                type="radio"
+                name="myOptions"
+                [value]="Severity.Warning"
+                [(ngModel)]="currentSeverity"
+              />
+            </div>
+
+            <div
+              [class]="
+                'round' + (isSeveritySelected(Severity.Danger) ? ' selected' : '')
+              "
+            >
+              <input
+                class="severity-input danger"
+                type="radio"
+                name="myOptions"
+                [value]="Severity.Danger"
+                [(ngModel)]="currentSeverity"
+              />
+            </div>
+
+            <div
+              [class]="
+                'round' + (isSeveritySelected(Severity.Correct) ? ' selected' : '')
+              "
+            >
+              <input
+                class="severity-input correct"
+                type="radio"
+                name="myOptions"
+                [value]="Severity.Correct"
+                [(ngModel)]="currentSeverity"
+              />
+            </div>
           </div>
-  
-          <div
-            [class]="'round' + (isSeveritySelected(Severity.Warning) ? ' selected' : '')"
-          >
-            <input
-              class="severity-input warning"
-              type="radio"
-              name="myOptions"
-              [value]="Severity.Warning"
-              [(ngModel)]="currentSeverity"
-            />
-          </div>
-  
-          <div
-            [class]="'round' + (isSeveritySelected(Severity.Danger) ? ' selected' : '')"
-          >
-            <input
-              class="severity-input danger"
-              type="radio"
-              name="myOptions"
-              [value]="Severity.Danger"
-              [(ngModel)]="currentSeverity"
-            />
-          </div>
-  
-          <div
-            [class]="'round' + (isSeveritySelected(Severity.Correct) ? ' selected' : '')"
-          >
-            <input
-              class="severity-input correct"
-              type="radio"
-              name="myOptions"
-              [value]="Severity.Correct"
-              [(ngModel)]="currentSeverity"
-            />
-          </div>
+          <button type="button" class="color-btn" (click)="clearArrows()">
+            Clear arrows
+          </button>
+          <button type="button" class="color-btn" (click)="clearHighlights()">
+            Clear highlights
+          </button>
         </div>
-        <button type="button" class="color-btn" (click)="clearArrows()">Clear arrows</button>
-        <button type="button" class="color-btn" (click)="clearHighlights()">Clear highlights</button>
-      </div> -->
+      }
 
       <div class="line"></div>
       <div class="header">Board Operations</div>
@@ -146,8 +160,8 @@
         <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
         <div
           class="chessboard"
-          [appChessboardHighlights]="highlights()"
-          [appChessboardArrows]="arrows()"
+          [appChessboardHighlights]="useArrowsAndHighlights ? highlights() : null"
+          [appChessboardArrows]="useArrowsAndHighlights ? arrows() : []"
           [style.cursor]="cursorStyle"
         >
           @for (field of chessboardView; track $index) {
@@ -191,6 +205,7 @@
         </div>
 
         <div class="elephant-tile">
+          <ng-content></ng-content>
           @if (showElephant()) {
             <app-talking-bob
               text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio sunt laborum numquam rerum soluta vel, aperiam enim cupiditate fugiat repellendus."
