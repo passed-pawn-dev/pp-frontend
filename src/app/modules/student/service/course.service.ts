@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MyCourse } from '../models/MyCourse';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Course } from '../models/Course';
 import { CourseDetails } from '../models/CourseDetails';
 import { Lesson } from '../models/Lesson';
@@ -10,6 +10,7 @@ import { CourseReview } from '../models/CourseReview';
 import { NewCourseReview } from '../models/NewCourseReview';
 import { Exercise } from '../models/Exercise';
 import { QuizDetails } from '../models/QuizDetails';
+import { ExampleDetails } from '../models/ExampleDetails';
 import { CoursesQueryParams } from '../models/CoursesQueryParams';
 
 @Injectable({
@@ -44,6 +45,12 @@ export class CourseService {
     return this.httpClient.post(`/api/Course/Student/${id}/course-list`, {});
   }
 
+  public getPaymentIntent(id: string): Observable<string> {
+    return this.httpClient
+      .post<{ clientSecret: string }>(`/api/Course/Student/${id}/buy`, {})
+      .pipe(map((response: { clientSecret: string }) => response.clientSecret));
+  }
+
   public signOut(id: string): Observable<Object> {
     return this.httpClient.delete(`/api/Course/Student/${id}/course-list`);
   }
@@ -73,5 +80,9 @@ export class CourseService {
 
   public getQuizById(id: string): Observable<QuizDetails> {
     return this.httpClient.get<QuizDetails>(`/api/CourseQuiz/${id}`);
+  }
+
+  public getExampleById(id: string): Observable<ExampleDetails> {
+    return this.httpClient.get<ExampleDetails>(`/api/CourseExample/${id}`);
   }
 }

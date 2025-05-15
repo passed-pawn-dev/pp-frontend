@@ -13,15 +13,27 @@ import { FenConverter } from '../../../../chess-logic/FenConverter';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { PreviewMode } from '../../enums/preview-mode.enum';
+import { Arrow } from '../../models/Arrow';
+import { Severity } from '../../enums/severities.enum';
+import { ChessboardArrowsDirective } from '../../directives/chessboard-arrows.directive';
+import { ChessboardHighlightsDirective } from '../../directives/chessboard-highlights.directive';
 
 @Component({
   selector: 'app-display-chessboard',
-  imports: [CommonModule, InputTextModule, FormsModule],
+  imports: [
+    CommonModule,
+    InputTextModule,
+    FormsModule,
+    ChessboardArrowsDirective,
+    ChessboardHighlightsDirective
+  ],
   templateUrl: './display-chessboard.component.html',
   styleUrl: './display-chessboard.component.scss'
 })
 export class DisplayChessboardComponent implements OnInit, OnChanges {
   @Input({ required: true }) public startingFen!: string;
+  @Input() public arrows: Arrow[] = [];
+  @Input() public highlights: Map<number, Severity> = new Map([]);
   @Input() public lastMove!: TLastMove | undefined;
 
   protected PreviewMode = PreviewMode;

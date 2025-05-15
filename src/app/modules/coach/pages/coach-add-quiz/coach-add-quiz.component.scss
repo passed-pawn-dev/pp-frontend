@@ -70,8 +70,6 @@
   }
 
   .step-container {
-    // border: 1px solid blue;
-
     .step {
       // display: flex;
       // flex-direction: column;
@@ -377,4 +375,8 @@
 
 .chessboard {
   display: flex;
+}
+
+.include-chessboard-input {
+  accent-color: $primary;
 }

@@ -4,6 +4,16 @@
   (ngSubmit)="onSubmit()"
 >
   <div class="form-control-field">
+    <label for="title">Lesson title</label>
+    <input id="title" formControlName="title" type="text" />
+    <app-validation-errors
+      [errors]="lessonForm.controls.title.errors"
+      [dirty]="lessonForm.controls.title.dirty"
+      [touched]="lessonForm.controls.title.touched"
+    />
+  </div>
+
+  <div class="form-control-field">
     <label for="lessonNumber">Lesson number</label>
     <p-inputNumber id="lessonNumber" formControlName="lessonNumber" type="number" />
     <app-validation-errors
@@ -13,9 +23,16 @@
     />
   </div>
 
+  <div class="form-control-field">
+    <label for="preview"
+      >Include in preview (this lesson will be available for free to all users)</label
+    >
+    <input type="checkbox" formControlName="preview" id="preview" />
+  </div>
+
   <div class="btn-group">
     <a class="secondary-btn" [routerLink]="'/coach/courses/' + lessonId">Cancel</a>
-    <button class="primary-button" type="submit" [disabled]="lessonForm.invalid">
+    <button class="primary-btn" type="submit" [disabled]="lessonForm.invalid">
       Submit
     </button>
   </div>

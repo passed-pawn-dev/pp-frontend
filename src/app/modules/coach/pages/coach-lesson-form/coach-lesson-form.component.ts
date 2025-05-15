@@ -31,7 +31,9 @@ export class CoachLessonFormComponent {
   protected lessonId: string = '';
 
   protected lessonForm = this.fb.group({
-    lessonNumber: [0, [Validators.required, Validators.min(1)]]
+    lessonNumber: [0, [Validators.required, Validators.min(1)]],
+    title: ['', [Validators.required, Validators.min(1)]],
+    preview: [false]
   });
 
   protected onSubmit(): void {
@@ -40,10 +42,7 @@ export class CoachLessonFormComponent {
       .subscribe((params) => {
         this.lessonId = params.get('id')!;
         this.courseService
-          .addLesson(this.lessonId, {
-            ...this.lessonForm.getRawValue(),
-            puzzles: []
-          })
+          .addLesson(this.lessonId, this.lessonForm.getRawValue())
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: (_) => {

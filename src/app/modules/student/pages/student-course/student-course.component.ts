@@ -24,6 +24,8 @@ import {
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { ChessTitle } from '../../../shared/enums/chess-titles.enum';
 import { CourseReview } from '../../models/CourseReview';
+import { StudentLessonComponent } from '../../components/student-lesson/student-lesson.component';
+import { LessonStatus } from '../../enums/LessonStatus';
 
 @Component({
   selector: 'app-student-course',
@@ -34,6 +36,7 @@ import { CourseReview } from '../../models/CourseReview';
     CourseDetailsDiagramComponent,
     CourseDifficultyComponent,
     CourseReviewComponent,
+    StudentLessonComponent,
     RouterLink
   ],
   templateUrl: './student-course.component.html',
@@ -65,14 +68,19 @@ export class StudentCourseComponent implements OnInit {
     averageScore: 0,
     pictureUrl: null,
     price: 0,
-    studentNumber: 0
+    studentNumber: 0,
+    lessons: []
   });
 
   protected reviews: CourseReview[] = [];
 
+  protected LessonStatus = LessonStatus;
+
   protected showCoachDetails: boolean = false;
 
   protected showInpactDetails: boolean = false;
+
+  protected showLessons: boolean = false;
 
   protected diagramCourseDetails: Signal<CourseDetailsDiagram[]> = computed(() => [
     { title: 'Puzzles', amount: this.course().puzzleCount },
@@ -88,6 +96,10 @@ export class StudentCourseComponent implements OnInit {
     private readonly destroyRef: DestroyRef,
     private cdRef: ChangeDetectorRef
   ) {}
+
+  protected get lessonsAvailableForPreview(): number {
+    return this.course().lessons.filter((lesson) => lesson.preview).length;
+  }
 
   protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
 
@@ -133,6 +145,10 @@ export class StudentCourseComponent implements OnInit {
 
   protected toggleInpactDetails(): void {
     this.showInpactDetails = !this.showInpactDetails;
+  }
+
+  protected toggleLessons(): void {
+    this.showLessons = !this.showLessons;
   }
 
   protected buyCourse(): void {
