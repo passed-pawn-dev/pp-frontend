@@ -64,7 +64,8 @@ export class StudentCourseComponent implements OnInit {
     averageScore: 0,
     pictureUrl: null,
     price: 0,
-    studentNumber: 0
+    studentNumber: 0,
+    isBought: false
   });
 
   protected reviews: CourseReview[] = [];
