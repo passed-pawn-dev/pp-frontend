@@ -27,6 +27,24 @@
   <a class="primary-btn" [routerLink]="'../'">Back to courses</a>
 </div> -->
 
+<p-dialog
+  header="Buy course"
+  [modal]="true"
+  [draggable]="false"
+  [(visible)]="showPaymentModal"
+  (close)="paymentModalClosed()"
+>
+  @if (clientSecret) {
+    <div class="buy-course-container">
+      <app-payment
+        [clientSecret]="clientSecret"
+        (paymentSuccess)="paymentSuccessful()"
+        (paymentFailure)="paymentFailed($event)"
+      />
+    </div>
+  }
+</p-dialog>
+
 <div class="page">
   <h2>Course Details</h2>
   <section class="main-section">
@@ -196,7 +214,7 @@
       <button
         class="primary-btn"
         type="submit"
-        [disabled]="course().isBought"
+        [disabled]="courseBought || course().isBought"
         (click)="buyCourse()"
       >
         {{ course().isBought ? 'Owned' : 'Buy Course' }}

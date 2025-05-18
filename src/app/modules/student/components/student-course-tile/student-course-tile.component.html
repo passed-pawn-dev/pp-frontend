@@ -1,3 +1,21 @@
+<p-dialog
+  header="Buy course"
+  [modal]="true"
+  [draggable]="false"
+  [(visible)]="showPaymentModal"
+  (close)="paymentModalClosed()"
+>
+  @if (clientSecret) {
+    <div class="buy-course-container">
+      <app-payment
+        [clientSecret]="clientSecret"
+        (paymentSuccess)="paymentSuccessful()"
+        (paymentFailure)="paymentFailed($event)"
+      />
+    </div>
+  }
+</p-dialog>
+
 <li class="tile">
   <a [routerLink]="['/student', 'courses', course().id]">
     <img alt="" [src]="course().thumbnailUrl ?? 'images/hat.png'" />
@@ -32,7 +50,12 @@
           <!-- [coach name and surname] -->
         </div>
         @if (!course().isBought) {
-          <button type="button" class="primary-btn" (click)="buyCourse($event)">
+          <button
+            type="button"
+            class="primary-btn"
+            [disabled]="courseBought"
+            (click)="buyCourse($event)"
+          >
             Buy
           </button>
         }
