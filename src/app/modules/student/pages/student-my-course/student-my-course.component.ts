@@ -32,7 +32,7 @@ export class StudentMyCourseComponent implements OnInit {
     title: '',
     description: '',
     coachName: '',
-    thumbnail: '',
+    thumbnailUrl: '',
     lessons: []
   });
 

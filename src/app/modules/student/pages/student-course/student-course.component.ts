@@ -66,7 +66,7 @@ export class StudentCourseComponent implements OnInit {
     totalVideoCount: 0,
     reviewCount: 0,
     averageScore: 0,
-    pictureUrl: null,
+    thumbnailUrl: null,
     price: 0,
     studentNumber: 0,
     isBought: false

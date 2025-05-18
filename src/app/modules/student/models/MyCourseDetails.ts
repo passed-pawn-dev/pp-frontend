@@ -5,6 +5,6 @@ export interface MyCourseDetails {
   title: string;
   description: string;
   coachName: string;
-  thumbnail: string;
+  thumbnailUrl?: string;
   lessons: Lesson[];
 }

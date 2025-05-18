@@ -1,6 +1,6 @@
 <li class="tile">
   <a [routerLink]="['/student', 'courses', course().id]">
-    <img src="images/chess-course-1.png" alt="" />
+    <img alt="" [src]="course().thumbnailUrl ?? 'images/hat.png'" />
     <!-- [course image] -->
     <div class="content">
       <div class="main">

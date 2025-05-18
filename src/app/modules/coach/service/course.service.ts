@@ -111,4 +111,12 @@ export class CourseService {
   public addExample(lessonId: string, example: NewExample): Observable<Object> {
     return this.httpClient.post(`api/Lesson/${lessonId}/example`, example);
   }
+
+  public updateThumbnail(courseId: string, thumbnail: FormData): Observable<Object> {
+    return this.httpClient.patch(`api/Course/Coach/${courseId}/thumbnail`, thumbnail);
+  }
+
+  public deleteThumbnail(courseId: string): Observable<Object> {
+    return this.httpClient.delete(`api/Course/Coach/${courseId}/thumbnail`);
+  }
 }

@@ -7,7 +7,7 @@ export interface Course {
   averageScore: number;
   eloRangeStart: number | null;
   eloRangeEnd: number | null;
-  pictureUrl?: string;
+  thumbnailUrl?: string;
   lessonCount: number;
   elementCount: number;
 }

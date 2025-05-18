@@ -1,7 +1,7 @@
 <!-- eslint-disable @angular-eslint/template/no-inline-styles -->
 <li class="tile">
   <a [routerLink]="course.id">
-    <img src="images/chess-course-1.png" alt="" />
+    <img alt="" [src]="course.thumbnailUrl ?? 'images/hat.png'" />
     <!-- [course image] -->
     <div class="content">
       <div class="main">

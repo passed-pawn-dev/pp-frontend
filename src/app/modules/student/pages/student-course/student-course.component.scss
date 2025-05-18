@@ -19,6 +19,7 @@
     display: flex;
 
     .course-img {
+      aspect-ratio: 1/1;
       width: 17rem;
       height: 17rem;
       object-fit: cover;
@@ -247,11 +248,11 @@
   }
 }
 
-
 .primary-btn:disabled {
   &:hover {
     background-color: $primary;
   }
+}
 
 .lesson-section {
   .content {
