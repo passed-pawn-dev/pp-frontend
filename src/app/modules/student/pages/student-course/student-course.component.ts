@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   Input,
@@ -93,7 +94,8 @@ export class StudentCourseComponent implements OnInit {
     private courseService: CourseService,
     private readonly route: ActivatedRoute,
     private messageService: MessageService,
-    private readonly destroyRef: DestroyRef
+    private readonly destroyRef: DestroyRef,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   protected get lessonsAvailableForPreview(): number {
@@ -126,6 +128,14 @@ export class StudentCourseComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             this.course.set(res);
+            this.cdRef.detectChanges();
+          });
+        this.courseService
+          .getReviews(params.get('id')!)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((res) => {
+            this.reviews = res;
+            this.cdRef.detectChanges();
           });
       });
   }

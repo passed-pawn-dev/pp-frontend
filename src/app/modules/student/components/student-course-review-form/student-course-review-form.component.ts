@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -31,10 +31,26 @@ export class StudentCourseReviewFormComponent {
   private messageService = inject(MessageService);
   private destroyRef = inject(DestroyRef);
 
+  @Output() public reviewSubmitted = new EventEmitter<void>();
+
+  protected Array = Array;
+
+  protected displayedRating: number = 0;
+  protected currentRating: number = 0;
+
   protected reviewForm = this.fb.group({
-    value: [5, [Validators.required, Validators.min(1), Validators.max(5)]],
+    value: [5, [Validators.required, Validators.min(1), Validators.max(10)]],
     content: ['', Validators.maxLength(1000)]
   });
+
+  protected setDisplayedRating(value: number): void {
+    this.displayedRating = value;
+  }
+
+  protected setCurrentRating(value: number): void {
+    this.currentRating = value;
+    this.reviewForm.controls.value.setValue(value / 2);
+  }
 
   protected onSubmit(): void {
     this.route.paramMap
@@ -58,5 +74,6 @@ export class StudentCourseReviewFormComponent {
               })
           });
       });
+    this.reviewSubmitted.emit();
   }
 }

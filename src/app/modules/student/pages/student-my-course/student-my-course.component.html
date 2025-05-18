@@ -80,6 +80,17 @@
   </ul>
 </div> -->
 
+<p-dialog
+  header="Add course review"
+  [modal]="true"
+  [draggable]="false"
+  [(visible)]="reviewFormVisible"
+>
+  <div class="review-form-container">
+    <app-student-course-review-form (reviewSubmitted)="hideReviewForm()" />
+  </div>
+</p-dialog>
+
 <div class="page">
   <h2>Your Course Details</h2>
   <section class="main-section">
@@ -90,6 +101,11 @@
         <div class="desc">{{ course().description }}</div>
       </div>
       <div class="footer"></div>
+      <div class="review-btn-container">
+        <button class="review-btn" type="button" (click)="showReviewForm()">
+          Add review
+        </button>
+      </div>
     </div>
   </section>
 
