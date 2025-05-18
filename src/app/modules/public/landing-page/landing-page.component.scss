@@ -298,3 +298,39 @@
     }
   }
 }
+
+.best-way-to-start {
+  .img-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  img {
+    width: 69rem;
+    margin: auto;
+    padding-left: 0.7rem;
+  }
+
+  .descriptions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+
+    .desc-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .header {
+        font-weight: 700;
+        font-size: $font-M;
+      }
+
+      .description {
+        color: $text-secondary;
+      }
+    }
+  }
+}
