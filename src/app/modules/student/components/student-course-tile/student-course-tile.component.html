@@ -11,10 +11,14 @@
           </div>
           <div class="desc">{{ course().description }}</div>
         </div>
-        @if (this.course().price > 0) {
-          <div class="price">{{ course().price }}</div>
+        @if (course().isBought) {
+          <div class="price owned">Owned</div>
         } @else {
-          <div class="price free">Free</div>
+          @if (this.course().price > 0) {
+            <div class="price">{{ course().price }} PLN</div>
+          } @else {
+            <div class="price free">Free</div>
+          }
         }
       </div>
       <div class="footer">
@@ -27,9 +31,11 @@
           <div class="coach">{{ course().coachName }}</div>
           <!-- [coach name and surname] -->
         </div>
-        <button type="button" class="primary-btn" (click)="buyCourse($event)">
-          Buy
-        </button>
+        @if (!course().isBought) {
+          <button type="button" class="primary-btn" (click)="buyCourse($event)">
+            Buy
+          </button>
+        }
       </div>
     </div>
   </a>

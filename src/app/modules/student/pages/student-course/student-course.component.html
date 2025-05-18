@@ -37,6 +37,13 @@
         <div class="desc">{{ course().description }}</div>
       </div>
       <div class="footer">
+        <div>
+          @if (course().isBought) {
+            <a class="owned-info" [routerLink]="`/student/my-courses/${course().id}`">
+              You own this course
+            </a>
+          }
+        </div>
         <div class="date">
           Released in {{ formattedDate() }}
           <img src="icons/calendar.png" alt="calendar" />
@@ -182,8 +189,13 @@
     <div class="text"><span>30 days</span> to return if you're not satisfied</div>
     <div class="payment">
       <div class="price">{{ course().price }}$</div>
-      <button class="primary-btn" type="submit" (click)="buyCourse()">
-        Buy Course
+      <button
+        class="primary-btn"
+        type="submit"
+        [disabled]="course().isBought"
+        (click)="buyCourse()"
+      >
+        {{ course().isBought ? 'Owned' : 'Buy Course' }}
       </button>
     </div>
   </section>

@@ -68,6 +68,7 @@ export class StudentCourseComponent implements OnInit {
     pictureUrl: null,
     price: 0,
     studentNumber: 0,
+    isBought: false
     lessons: []
   });
 

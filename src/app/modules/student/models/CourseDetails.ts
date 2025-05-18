@@ -21,5 +21,6 @@ export interface CourseDetails {
   pictureUrl: null;
   price: number;
   studentNumber: number;
+  isBought: boolean;
   lessons: Lesson[];
 }
