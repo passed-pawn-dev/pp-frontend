@@ -9,7 +9,7 @@ import { Answer } from '../models/Answer';
 export class AiChatService {
   private httpClient = inject(HttpClient);
   public askQuestion(question: string): Observable<Answer> {
-    return this.httpClient.post<Answer>('http://localhost:8000/ask', {
+    return this.httpClient.post<Answer>('http://localhost:8000/ai/ask', {
       question: question
     });
   }
