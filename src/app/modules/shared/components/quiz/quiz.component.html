@@ -63,7 +63,7 @@
           <button
             class="submit-button button"
             type="button"
-            [disabled]="selectedAnswer() === undefined"
+            [disabled]="selectedAnswer() === undefined || answerSubmitted"
             (click)="submitAnswer()"
           >
             <img class="icon" src="icons/check.svg" alt="checkmark" />
