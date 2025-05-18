@@ -1,25 +1,38 @@
-<h4>Add course review</h4>
 <form class="form" [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
-  <div>
-    <p-inputNumber
-      class="score-input"
-      id="value"
-      formControlName="value"
-      type="number"
-      showButtons="true"
-      [min]="1"
-      [max]="5"
-    />
-    <app-validation-errors
-      [errors]="reviewForm.controls.value.errors"
-      [dirty]="reviewForm.controls.value.dirty"
-      [touched]="reviewForm.controls.value.touched"
-    />
+  <div class="stars">
+    @for (star of Array(10); track $index) {
+      <div class="halfed">
+        <button
+          type="button"
+          (mouseover)="setDisplayedRating($index + 1)"
+          (click)="setCurrentRating($index + 1)"
+          (mouseleave)="setDisplayedRating(0)"
+        >
+          <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
+          <svg
+            width="25px"
+            height="50px"
+            viewBox="0 0 12 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            [style]="$index % 2 === 0 ? '' : 'transform: rotateY(180deg);'"
+          >
+            <path
+              d="M11.9997 1C11.6059 1 11.2487 1.2312 11.0874 1.59053L8.27041 7.86702L1.43062 8.60661C1.03903 8.64895 0.708778 8.91721 0.587066 9.2918C0.465355 9.66639 0.574861 10.0775 0.866772 10.342L5.96556 14.9606L4.55534 21.6942C4.4746 22.0797 4.62768 22.4767 4.94632 22.7082C5.26497 22.9397 5.68983 22.9626 6.03151 22.7667L11.9997 19.3447V1Z"
+              [attr.fill]="
+                $index + 1 <= displayedRating || $index + 1 <= currentRating
+                  ? '#fed545'
+                  : '#dbdbdb'
+              "
+            />
+          </svg>
+        </button>
+      </div>
+    }
   </div>
 
   <div class="review-description-wrapper">
     <textarea
-      pInputTextarea
       id="content"
       formControlName="content"
       placeholder="Your review"
@@ -33,6 +46,8 @@
   </div>
 
   <div>
-    <p-button type="submit" [disabled]="reviewForm.invalid">Submit</p-button>
+    <button class="primary-btn" type="submit" [disabled]="reviewForm.invalid">
+      Submit
+    </button>
   </div>
 </form>

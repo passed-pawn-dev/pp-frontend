@@ -41,10 +41,11 @@
         <div class="desc">{{ course().description }}</div>
       </div>
       <div class="footer">
-        <!-- TODO -->
-        <div class="owned-info">
-          @if (true) {
-            You own this course
+        <div>
+          @if (course().isBought) {
+            <a class="owned-info" [routerLink]="`/student/my-courses/${course().id}`">
+              You own this course
+            </a>
           }
         </div>
         <div class="date">
@@ -70,7 +71,7 @@
         </div>
         <div class="chess-title">{{ course().coach.chessTitle || 'N/A' }}</div>
         <!-- [coach chess title] -->
-        <app-star-rating [rating]="2.51" [ratingsNumber]="123" />
+        <app-star-rating [rating]="2.5" [ratingsNumber]="123" />
         <div class="created-courses">
           <div>{{ course().coach.createdCoursesCount }}</div>
           <!-- [numebr of created courses by coach] -->
@@ -192,9 +193,13 @@
     <div class="text"><span>30 days</span> to return if you're not satisfied</div>
     <div class="payment">
       <div class="price">{{ course().price }}$</div>
-      <!-- TODO change condition -->
-      <button class="primary-btn" type="submit" [disabled]="true" (click)="buyCourse()">
-        {{ true ? 'Owned' : 'Buy Course' }}
+      <button
+        class="primary-btn"
+        type="submit"
+        [disabled]="course().isBought"
+        (click)="buyCourse()"
+      >
+        {{ course().isBought ? 'Owned' : 'Buy Course' }}
       </button>
     </div>
   </section>

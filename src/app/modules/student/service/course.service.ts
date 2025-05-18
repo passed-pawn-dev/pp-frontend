@@ -37,6 +37,10 @@ export class CourseService {
     return this.httpClient.get<CourseDetails>(`/api/Course/Student/${id}`);
   }
 
+  public getReviews(id: string): Observable<CourseReview[]> {
+    return this.httpClient.get<CourseReview[]>(`/api/Course/${id}/review`);
+  }
+
   public buy(id: string): Observable<Object> {
     return this.httpClient.post(`/api/Course/Student/${id}/course-list`, {});
   }
@@ -52,7 +56,10 @@ export class CourseService {
   }
 
   public review(id: string, review: NewCourseReview): Observable<CourseReview> {
-    return this.httpClient.post<CourseReview>(`/api/Course/${id}/review`, review);
+    return this.httpClient.post<CourseReview>(
+      `/api/Course/Student/${id}/review`,
+      review
+    );
   }
 
   public getAllBought(): Observable<MyCourse[]> {

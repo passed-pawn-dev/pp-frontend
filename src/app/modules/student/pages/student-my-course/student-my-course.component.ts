@@ -8,13 +8,20 @@ import { Exercise } from '../../models/Exercise';
 import { ButtonModule } from 'primeng/button';
 import { Quiz } from '../../models/Quiz';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
+import { DialogModule } from 'primeng/dialog';
 import { StudentLessonComponent } from '../../components/student-lesson/student-lesson.component';
 import { LessonStatus } from '../../enums/LessonStatus';
 
 @Component({
   selector: 'app-student-my-course',
   standalone: true,
-  imports: [ButtonModule, StudentLessonComponent],
+  imports: [
+    ButtonModule,
+    StudentLessonComponent,
+    StudentCourseReviewFormComponent,
+    DialogModule
+  ],
   providers: [],
   templateUrl: './student-my-course.component.html',
   styleUrl: './student-my-course.component.scss'
@@ -48,11 +55,21 @@ export class StudentMyCourseComponent implements OnInit {
 
   public showElements: boolean = true;
 
+  protected reviewFormVisible: boolean = false;
+
   public toggleElements(): void {
     this.showElements = !this.showElements;
   }
 
   public turnOn: boolean = false;
+
+  protected showReviewForm(): void {
+    this.reviewFormVisible = true;
+  }
+
+  protected hideReviewForm(): void {
+    this.reviewFormVisible = false;
+  }
 
   public toggleSwitch(): void {
     this.turnOn = !this.turnOn;

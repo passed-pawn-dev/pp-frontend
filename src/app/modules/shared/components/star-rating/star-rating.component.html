@@ -12,7 +12,12 @@
       />
     }
     @if (addHalfStar) {
-      <img src="icons/yellow-half-star.png" class="star" alt="half-star" />
+      <img
+        src="icons/yellow-half-star.png"
+        class="star"
+        alt="half-star"
+        [class.minimal]="showMinimal"
+      />
     }
     @for (star of emptyStarArray; track $index) {
       <img

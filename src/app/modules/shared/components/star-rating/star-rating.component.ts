@@ -1,4 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  Input,
+  OnChanges,
+  OnInit,
+  inject
+} from '@angular/core';
 
 @Component({
   selector: 'app-star-rating',
@@ -7,7 +15,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './star-rating.component.html',
   styleUrl: './star-rating.component.scss'
 })
-export class StarRatingComponent implements OnInit {
+export class StarRatingComponent implements OnChanges {
   @Input() public rating: number = 0;
   @Input() public ratingsNumber!: number;
   @Input() public showMinimal: boolean = false;
@@ -16,7 +24,11 @@ export class StarRatingComponent implements OnInit {
   protected addHalfStar: Boolean = false;
   protected emptyStarArray: null[] = [];
 
-  public ngOnInit(): void {
+  public ngOnChanges(): void {
+    this.starsArray = [];
+    this.emptyStarArray = [];
+    this.addHalfStar = false;
+
     if (Number.isInteger(this.rating)) {
       this.starsArray = Array(this.rating).fill(null);
     } else {
