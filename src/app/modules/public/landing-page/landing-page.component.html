@@ -27,36 +27,50 @@
     <div class="content">
       <section>
         <h1>What We Offer</h1>
-        <div class="desc">
-          (Sth about courses) Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Officiis dolor iure odit libero eaque magni voluptates voluptatibus in quo!
-          Officia!
-        </div>
+        <div class="desc">Our courses consist of 4 kinds of elements:</div>
         <div class="tiles-group">
           <div class="tile">
-            <img src="icons/student-hat.png" alt="student-hat" />
-            <h3>Theory</h3>
+            <img src="icons/video-complete.png" alt="video" />
+            <h3>Videos</h3>
             <div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, ratione.
+              Learn from expert instructors through clear, easy-to-follow video
+              tutorials that break down key concepts and strategies.
             </div>
           </div>
           <div class="tile">
-            <img src="icons/puzzle.png" alt="student-hat" />
+            <img src="icons/example-complete.png" alt="example" />
+            <h3>Examples</h3>
+            <div>
+              Understand every move with visual examples, detailed text explanations,
+              and interactive highlights to guide your thinking.
+            </div>
+          </div>
+          <div class="tile">
+            <img src="icons/puzzle-complete.png" alt="puzzle" />
             <h3>Puzzles</h3>
             <div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, ratione.
+              Sharpen your skills by solving real-game scenarios on an interactive board
+              designed to reinforce tactical patterns.
             </div>
           </div>
           <div class="tile">
+            <img src="icons/quiz-complete.png" alt="quiz" />
+            <h3>Quizzes</h3>
+            <div>
+              Test your knowledge with dynamic quizzes (some featuring chessboards)
+              covering tactics, openings, and endgame theory.
+            </div>
+          </div>
+          <!-- <div class="tile">
             <img src="icons/live.png" alt="student-hat" />
             <h3>Coach Interaction</h3>
             <div>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, ratione.
             </div>
-          </div>
+          </div> -->
         </div>
       </section>
-      <section>
+      <!-- <section>
         <h1>Best Way To Start</h1>
         <div class="desc">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit pariatur velit
@@ -96,17 +110,46 @@
             </div>
           </div>
         </div>
+      </section> -->
+      <section class="best-way-to-start">
+        <h1>Best Way To Start</h1>
+        <div class="desc">
+          Kick off your chess journey in three simple steps — from choosing the right
+          course to mastering essential skills.
+        </div>
+
+        <div class="descriptions">
+          <div class="desc-container">
+            <div class="header">Choose Your Course</div>
+            <div class="description">Pick a course that suits your skill level</div>
+          </div>
+          <div class="desc-container">
+            <div class="header">Practise with materials</div>
+            <div class="description">Use various tools to boost your chess skills:</div>
+          </div>
+          <div class="desc-container">
+            <div class="header">Keep Learning</div>
+            <div class="description">Unlock new courses as you improve</div>
+          </div>
+        </div>
+
+        <div class="img-container">
+          <img
+            class=""
+            src="images/best-way-to-start.png"
+            alt="best way to start diagram"
+          />
+        </div>
       </section>
       <section>
-        <h1>FQA</h1>
+        <h1>FAQ</h1>
         <div class="desc">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit pariatur velit
-          enim culpa qui id?
+          Find quick answers to the most common questions about our service.
         </div>
         <div class="question-tile-group">
           <app-question-tile
             question="What skill levels do your courses cover?"
-            answer="We offer courses for all levels: Beginner, Intermediate, and Advanced. Whether you’re just starting or aiming to refine your strategy, we have a course for you."
+            answer="We offer courses for all levels: Novice, Beginner, Intermediate, Expert and Advanced. Whether you’re just starting or aiming to refine your strategy, we have a course for you."
           />
 
           <app-question-tile
@@ -122,11 +165,6 @@
           <app-question-tile
             question="Are the courses self-paced?"
             answer="Yes! You can complete the lessons at your own pace, anytime, anywhere."
-          />
-
-          <app-question-tile
-            question="Do you provide a certificate?"
-            answer="Yes, upon completing a course, you will receive a certificate of achievement."
           />
         </div>
       </section>
