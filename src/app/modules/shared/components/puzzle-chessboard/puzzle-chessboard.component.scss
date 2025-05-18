@@ -484,62 +484,6 @@
           user-select: none;
         }
       }
-
-      @for $row from 1 through 8 {
-        @for $col from 1 through 8 {
-          .chessboard {
-            .chessboard-field:nth-child(#{$col+($row - 1) * 8}) {
-              background-color: if(
-                ($row + $col) % 2 == 0,
-                $white-square-background,
-                $black-square-background
-              );
-
-              .selected-square,
-              .last-move {
-                background-color: if(
-                  ($row + $col) % 2 == 0,
-                  $white-square-selected-background,
-                  $black-square-selected-background
-                );
-              }
-
-              .safe-square {
-                background-color: if(
-                  ($row + $col) % 2 == 0,
-                  $white-square-valid-move-circle-color,
-                  $black-square-valid-move-circle-color
-                );
-              }
-
-              .piece-square {
-                .safe-square {
-                  background-color: transparent;
-                  border: if(
-                    ($row + $col) % 2 == 0,
-                    0.5rem solid $white-square-valid-move-circle-color,
-                    0.5rem solid $black-square-valid-move-circle-color
-                  );
-                  border-radius: 100%;
-                  height: 100%;
-                  left: 0;
-                  top: 0;
-                  width: 100%;
-                }
-              }
-
-              .chessboard-file,
-              .chessboard-rank {
-                color: if(
-                  ($row + $col) % 2 == 0,
-                  $black-square-background,
-                  $white-square-background
-                );
-              }
-            }
-          }
-        }
-      }
     }
 
     .chessboard-fen-load-input {
@@ -585,4 +529,58 @@
   }
 }
 
-// TODO - clean this up, remove unnecessary nesting, reduce bundle size
+@for $row from 1 through 8 {
+  @for $col from 1 through 8 {
+    .chessboard {
+      .chessboard-field:nth-child(#{$col+($row - 1) * 8}) {
+        background-color: if(
+          ($row + $col) % 2 == 0,
+          $white-square-background,
+          $black-square-background
+        );
+
+        .selected-square,
+        .last-move {
+          background-color: if(
+            ($row + $col) % 2 == 0,
+            $white-square-selected-background,
+            $black-square-selected-background
+          );
+        }
+
+        .safe-square {
+          background-color: if(
+            ($row + $col) % 2 == 0,
+            $white-square-valid-move-circle-color,
+            $black-square-valid-move-circle-color
+          );
+        }
+
+        .piece-square {
+          .safe-square {
+            background-color: transparent;
+            border: if(
+              ($row + $col) % 2 == 0,
+              0.5rem solid $white-square-valid-move-circle-color,
+              0.5rem solid $black-square-valid-move-circle-color
+            );
+            border-radius: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            width: 100%;
+          }
+        }
+
+        .chessboard-file,
+        .chessboard-rank {
+          color: if(
+            ($row + $col) % 2 == 0,
+            $black-square-background,
+            $white-square-background
+          );
+        }
+      }
+    }
+  }
+}

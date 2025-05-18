@@ -57,27 +57,7 @@ export class CoachCourseDetailsComponent implements OnInit {
   public ngOnInit(): void {
     const course = this.route.snapshot.data['course'];
     this.course.set(course);
-
-    this.route.paramMap
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((params) => {
-        const courseId = params.get('id')!;
-
-        // this.courseService
-        //   .getDetailsById(courseId)
-        //   .pipe(takeUntilDestroyed(this.destroyRef))
-        //   .subscribe({
-        //     next: (res) => {
-        //       this.lessons.set(res.lessons);
-        //     },
-        //     error: (_) =>
-        //       this.messageService.add({
-        //         severity: 'error',
-        //         summary: 'Failure',
-        //         detail: 'Failed to fetch details'
-        //       })
-        //   });
-      });
+    this.lessons.set(course.lessons);
   }
 
   protected navigateAddExercise(lessonNumber: string): void {

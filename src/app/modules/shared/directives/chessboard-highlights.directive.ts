@@ -15,7 +15,7 @@ import { Severity } from '../enums/severities.enum';
 export class ChessboardHighlightsDirective implements AfterViewInit, OnChanges {
   private el = inject(ElementRef);
 
-  @Input() public appChessboardHighlights: Map<number, Severity> = new Map();
+  @Input() public appChessboardHighlights: Map<number, Severity> | null = new Map();
 
   private severityToColors: Map<Severity, string[]> = new Map([
     [Severity.Warning, ['#ffcb29', '#ffdf2e']],
@@ -29,6 +29,9 @@ export class ChessboardHighlightsDirective implements AfterViewInit, OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
+    if (this.appChessboardHighlights == null) {
+      this.appChessboardHighlights = new Map([]);
+    }
     this.setHighlights();
   }
 
@@ -42,8 +45,8 @@ export class ChessboardHighlightsDirective implements AfterViewInit, OnChanges {
     const children: HTMLCollectionOf<HTMLElement> = this.el.nativeElement.children;
 
     Array.from(children).forEach((field: HTMLElement, index: number) => {
-      if (this.appChessboardHighlights.has(index)) {
-        const severity = this.appChessboardHighlights.get(index)!;
+      if (this.appChessboardHighlights!.has(index)) {
+        const severity = this.appChessboardHighlights!.get(index)!;
         const color: string = this.isWhite(index)
           ? this.severityToColors.get(severity)![1]
           : this.severityToColors.get(severity)![0];

@@ -4,7 +4,11 @@
     @if (loading) {
       <div class="loading-overlay"></div>
     }
-    <div class="chessboard">
+    <div
+      class="chessboard"
+      [appChessboardArrows]="arrows"
+      [appChessboardHighlights]="highlights"
+    >
       <!-- field[0] -> square, for example "b2"; field[1] -> Piece fen char, for example "P" -->
       @for (field of chessboardView; track $index) {
         <div class="chessboard-field">
