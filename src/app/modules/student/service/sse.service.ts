@@ -21,10 +21,13 @@ export class SseService {
 
       eventSource.onmessage = (event) => {
         observer.next(event.data);
+        observer.complete();
+        eventSource.close();
       };
 
       eventSource.onerror = (error) => {
         observer.error(error);
+        eventSource.close();
       };
 
       return () => {
