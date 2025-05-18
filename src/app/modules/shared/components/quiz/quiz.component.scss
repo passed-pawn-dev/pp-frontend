@@ -8,10 +8,10 @@
 }
 
 .main-content {
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   width: 60vw;
-  justify-content: stretch;
+  // justify-content: stretch;
 }
 
 .top-container {
@@ -32,7 +32,7 @@
 }
 
 .right-panel {
-  flex-grow: 1;
+  width: 100%;
 }
 
 .answers {
