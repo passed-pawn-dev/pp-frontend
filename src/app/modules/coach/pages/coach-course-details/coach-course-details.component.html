@@ -97,7 +97,14 @@
   [draggable]="false"
   [(visible)]="thumbnailFormVisible"
 >
-  <app-coach-upload-image (imageSubmitted)="hideThumbnailForm()" />
+  <app-coach-upload-image
+    [fileTypeErrorMessage]="
+      'Please select a valid file format like .png, .jpg, .jpeg, .webp or other image format'
+    "
+    [acceptedFileTypes]="['image']"
+    [maxSizeInBytes]="5 * 1024 * 1024"
+    (imageSubmitted)="hideThumbnailForm()"
+  />
 </p-dialog>
 
 <div class="page">
