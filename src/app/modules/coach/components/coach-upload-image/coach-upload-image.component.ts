@@ -1,4 +1,11 @@
-import { Component, DestroyRef, EventEmitter, Output, inject } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  Input,
+  Output,
+  inject
+} from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute } from '@angular/router';
@@ -17,6 +24,9 @@ export class CoachUploadImageComponent {
   private destroyRef = inject(DestroyRef);
 
   @Output() public imageSubmitted = new EventEmitter<void>();
+  @Input({ required: true }) public maxSizeInBytes!: number;
+  @Input({ required: true }) public acceptedFileTypes!: string[];
+  @Input({ required: true }) public fileTypeErrorMessage!: string;
 
   protected thumbnailErrorMessage: string | null = null;
 
@@ -57,14 +67,13 @@ export class CoachUploadImageComponent {
 
     const file = input.files[0];
 
-    if (!file.type.startsWith('image/')) {
-      this.thumbnailErrorMessage = 'Please select valid file type';
+    if (this.acceptedFileTypes.find((type) => !file.type.startsWith(type))) {
+      this.thumbnailErrorMessage = this.fileTypeErrorMessage;
       this.thumbnail = null;
       return;
     }
 
-    const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
-    if (file.size > maxSizeInBytes) {
+    if (file.size > this.maxSizeInBytes) {
       alert('File must be less than 5MB.');
       this.thumbnail = null;
       return;
