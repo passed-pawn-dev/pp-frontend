@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { MyCourse } from '../../models/MyCourse';
 import { RouterLink } from '@angular/router';
 

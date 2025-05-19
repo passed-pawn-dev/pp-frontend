@@ -1,5 +1,3 @@
-import { ChessTitle } from '../../shared/enums/chess-titles.enum';
-
 export interface Student {
   username: string | null;
   firstName: string | null;

@@ -144,13 +144,10 @@ export class CoachCourseDetailsComponent implements OnInit {
   }
 
   protected openAddCourseThumbnailDialog(): void {
-    const addCourseThumbnailDialogRef = this.dialogService.open(
-      CoachAddCourseThumbnailComponent,
-      {
-        header: 'Add course thumbnail',
-        closable: true,
-        modal: true
-      }
-    );
+    this.dialogService.open(CoachAddCourseThumbnailComponent, {
+      header: 'Add course thumbnail',
+      closable: true,
+      modal: true
+    });
   }
 }

@@ -1,7 +1,5 @@
-import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { MyCourseDetails } from '../../models/MyCourseDetails';
-import { CourseDetails } from '../../models/CourseDetails';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CourseService } from '../../service/course.service';
 import { Lesson } from '../../models/Lesson';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

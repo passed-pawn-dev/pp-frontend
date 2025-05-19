@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { LessonDetails } from '../../models/LessonDetails';
 import { LessonService } from '../../service/lesson.service';
 import { ActivatedRoute } from '@angular/router';

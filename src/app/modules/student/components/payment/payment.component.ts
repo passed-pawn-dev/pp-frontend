@@ -35,7 +35,7 @@ export class PaymentComponent implements OnInit {
 
     if (result.error) {
       this.paymentFailure.emit(result.error.message);
-    } else if (result.paymentIntent?.status === 'succeeded') {
+    } else if (result.paymentIntent.status === 'succeeded') {
       this.paymentSuccess.emit();
     }
   }

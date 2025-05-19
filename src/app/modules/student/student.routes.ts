@@ -1,15 +1,9 @@
 import { Route } from '@angular/router';
 import { StudentComponent } from './student.component';
-import { StudentMyCoachesComponent } from './pages/student-my-coaches/student-my-coaches.component';
 import { StudentMyCoursesComponent } from './pages/student-my-courses/student-my-courses.component';
-import { StudentMyGamesComponent } from './pages/student-my-games/student-my-games.component';
 import { StudentMyCourseComponent } from './pages/student-my-course/student-my-course.component';
-import { StudentLessonDetailsComponent } from './pages/student-lesson-details/student-lesson-details.component';
-import { StudentLessonsComponent } from './pages/student-lessons/student-lessons.component';
-import { StudentMyCoachComponent } from './pages/student-my-coach/student-my-coach.component';
 import { StudentCoursesComponent } from './pages/student-courses/student-courses.component';
 import { StudentCourseComponent } from './pages/student-course/student-course.component';
-import { StudentMyProfileComponent } from './pages/student-my-profile/student-my-profile.component';
 import { StudentSolveExerciseComponent } from './pages/student-solve-exercise/student-solve-exercise.component';
 import { studentExerciseResolver } from './resolvers/student-exercise.resolver';
 import { StudentSolveQuizComponent } from './pages/student-solve-quiz/student-solve-quiz.component';

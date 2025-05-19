@@ -131,7 +131,7 @@ export class CoachLessonComponent implements OnInit {
   }
 
   protected openAddVideoDialog(): void {
-    const addVideoDialogRef = this.dialogService.open(CoachAddVideoComponent, {
+    this.dialogService.open(CoachAddVideoComponent, {
       header: 'Add video',
       closable: true,
       modal: true,

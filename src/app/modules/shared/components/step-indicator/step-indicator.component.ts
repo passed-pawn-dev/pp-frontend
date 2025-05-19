@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, input } from '@angular/core';
+import { Component, OnChanges, input } from '@angular/core';
 
 @Component({
   selector: 'app-step-indicator',

@@ -5,7 +5,7 @@ import { JwtDecoded } from '../modules/shared/models/JwtDecoded';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from '../../../environment/environment';
 
-export const studentGuard: CanActivateFn = async (_route, _state) => {
+export const studentGuard: CanActivateFn = async () => {
   const authService = inject(AuthService);
 
   const token = authService.getToken();
@@ -15,7 +15,7 @@ export const studentGuard: CanActivateFn = async (_route, _state) => {
 
   const decoded: JwtDecoded = jwtDecode(token);
   const roles: string[] | undefined =
-    decoded.resource_access[environment.keycloak.apiClientId]?.roles;
+    decoded.resource_access[environment.keycloak.apiClientId].roles;
 
   if (roles && roles.includes('student')) {
     return true;

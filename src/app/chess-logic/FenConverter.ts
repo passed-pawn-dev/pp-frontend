@@ -1,4 +1,3 @@
-import { cloneDeep, reverse } from 'lodash';
 import { ChessBoard, fenCharToPiece } from './board';
 import { Color, FenChar, MoveType, TChessboard, TLastMove } from './models';
 import { King } from './pieces/king';
@@ -17,12 +16,12 @@ export class FenConverter {
   public static createLastMoveFromFEN(fen: string): TLastMove | undefined {
     // Split the FEN string into its components
     const [
-      position,
+      _position,
       activeColor,
-      castling,
+      _castling,
       enPassantSquare,
-      halfMoveClock,
-      fullMoveNumber
+      _halfMoveClock,
+      _fullMoveNumber
     ] = fen.split(' ');
 
     // If there's no en passant square, return null
@@ -61,7 +60,7 @@ export class FenConverter {
 
   public static convertFenToBoard(fen: string): TChessboard {
     const board = new Map();
-    const [fenBoard, playerToMove, castlingAvailability, enPassantSquare] =
+    const [fenBoard, _playerToMove, castlingAvailability, _enPassantSquare] =
       fen.split(' ');
     const files = ChessBoard.FILES;
     // this is mixed up - should be the other way around
@@ -123,7 +122,7 @@ export class FenConverter {
     let index = 1;
     let consecutiveEmptySquaresCounter = 0;
 
-    for (let [square, piece] of board) {
+    for (let [_square, piece] of board) {
       if (piece === null) {
         consecutiveEmptySquaresCounter++;
         if (index % 8 === 0) {

@@ -1,6 +1,6 @@
-import { Component, DestroyRef, OnInit, computed, inject, input } from '@angular/core';
+import { Component, DestroyRef, inject, input } from '@angular/core';
 import { Course } from '../../models/Course';
-import { ActivatedRoute, Route, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -43,7 +43,7 @@ export class StudentCourseTileComponent {
 
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((params) => {
+      .subscribe((_params) => {
         this.courseService
           .getPaymentIntent(this.course().id)
           .pipe(takeUntilDestroyed(this.destroyRef))

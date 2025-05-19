@@ -37,10 +37,10 @@ export class LandingPageComponent implements OnInit {
     if (token && this.authService.isLoggedIn()) {
       const decoded: JwtDecoded = jwtDecode(token);
       const roles: string[] | undefined =
-        decoded.resource_access[environment.keycloak.apiClientId]?.roles;
-      if (roles?.includes('student')) {
+        decoded.resource_access[environment.keycloak.apiClientId].roles;
+      if (roles.includes('student')) {
         this.router.navigate(['/student']);
-      } else if (roles?.includes('coach')) {
+      } else if (roles.includes('coach')) {
         this.router.navigate(['/coach']);
       }
     }

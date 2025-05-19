@@ -43,7 +43,7 @@ export class StudentExampleComponent implements OnInit {
   public ngOnInit(): void {
     const example = this.route.snapshot.data['example'];
     this.example = example;
-    this.example.steps.forEach((step, idx) => {
+    this.example.steps.forEach((step) => {
       const newHighlights: Map<number, Severity> = new Map([]);
       step.highlights.forEach((highlight) => {
         newHighlights.set(parseInt(highlight.position), highlight.severity);

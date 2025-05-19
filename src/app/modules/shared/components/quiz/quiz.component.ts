@@ -1,4 +1,4 @@
-import { Component, Input, computed, input, signal } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { QuizDetails } from '../../../student/models/QuizDetails';
 import { DisplayChessboardComponent } from '../display-chessboard/display-chessboard.component';
 

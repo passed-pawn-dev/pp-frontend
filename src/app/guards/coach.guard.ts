@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../auth/services/auth.service';
 import { environment } from '../../../environment/environment';
 
-export const coachGuard: CanActivateFn = async (_route, _state) => {
+export const coachGuard: CanActivateFn = async () => {
   const authService = inject(AuthService);
 
   const token = authService.getToken();
@@ -15,7 +15,7 @@ export const coachGuard: CanActivateFn = async (_route, _state) => {
 
   const decoded: JwtDecoded = jwtDecode(token);
   const roles: string[] | undefined =
-    decoded.resource_access[environment.keycloak.apiClientId]?.roles;
+    decoded.resource_access[environment.keycloak.apiClientId].roles;
 
   if (roles && roles.includes('coach')) {
     return true;

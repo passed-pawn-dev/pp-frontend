@@ -12,7 +12,6 @@ import { QuizDetails } from '../../student/models/QuizDetails';
 import { CourseReview } from '../models/CourseReview';
 import { ElementKind } from '../../shared/enums/element-kind.enum';
 import { NewExample } from '../models/NewExample';
-import { AddVideoRequestPayload } from '../models/AddVideoRequestPayload';
 
 @Injectable({
   providedIn: 'root'
