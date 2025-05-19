@@ -92,7 +92,7 @@ export class StudentMyCourseComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((params) => {
             this.courseService
-              .signOut(params.get('id')!)
+              .signOut(params.get('courseId')!)
               .pipe(takeUntilDestroyed(this.destroyRef))
               .subscribe({
                 next: (_) =>

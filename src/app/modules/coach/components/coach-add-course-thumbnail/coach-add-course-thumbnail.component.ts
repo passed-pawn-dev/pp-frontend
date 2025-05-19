@@ -44,7 +44,7 @@ export class CoachAddCourseThumbnailComponent {
       this.route.paramMap
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((params) => {
-          const courseId = params.get('id')!;
+          const courseId = params.get('courseId')!;
           this.courseService
             .updateThumbnail(courseId, formData)
             .pipe(takeUntilDestroyed(this.destroyRef))

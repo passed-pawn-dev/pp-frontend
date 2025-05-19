@@ -25,7 +25,7 @@ export class StudentLessonSideListComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         this.courseService
-          .getLessons(params.get('id')!)
+          .getLessons(params.get('courseId')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             this.lessons = res;

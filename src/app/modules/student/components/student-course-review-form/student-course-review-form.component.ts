@@ -57,7 +57,7 @@ export class StudentCourseReviewFormComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         this.courseService
-          .review(params.get('id')!, this.reviewForm.getRawValue())
+          .review(params.get('courseId')!, this.reviewForm.getRawValue())
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: (_) =>
