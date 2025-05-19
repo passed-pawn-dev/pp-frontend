@@ -18,5 +18,8 @@
     @if (state.maxValueError()) {
       <div>The provided value is too large</div>
     }
+    @if (state.fileTypeError()) {
+      <div>{{ this.errors()!.fileType!.message }}</div>
+    }
   </div>
 }

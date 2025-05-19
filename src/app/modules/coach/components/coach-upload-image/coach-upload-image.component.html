@@ -1,9 +1,25 @@
-<form (submit)="submitThumbnail($event)">
-  <input type="file" accept="image/*" (change)="onFileChange($event)" />
-  @if (thumbnailErrorMessage) {
-    <div>{{ thumbnailErrorMessage }}</div>
+<!-- TODO - do more styling -->
+<div class="file-upload-container">
+  <input
+    #inputFile
+    type="file"
+    [accept]="acceptedFileTypes"
+    (change)="onFileChange($event)"
+  />
+  <!-- TODO - replace with fileupload icon -->
+  <button type="button" (click)="inputFile.click()">+</button>
+
+  @if (filePreviewSrc !== null) {
+    <div class="file-preview-container">
+      <div>
+        <div>{{ file!.name }}</div>
+        <div>{{ file!.size }}</div>
+      </div>
+      @if (file!.type.startsWith('video')) {
+        <video alt="Selected video preview" controls [src]="filePreviewSrc"></video>
+      } @else if (file!.type.startsWith('image')) {
+        <img alt="Selected image preview" [src]="filePreviewSrc" />
+      }
+    </div>
   }
-  <div class="bottom-section">
-    <button class="primary-btn" type="submit" [disabled]="!thumbnail">Submit</button>
-  </div>
-</form>
+</div>

@@ -8,11 +8,11 @@ import { Lesson } from '../models/Lesson';
 import { NewLesson } from '../models/NewLesson';
 import { LessonDetails } from '../../student/models/LessonDetails';
 import { Puzzle } from '../models/Puzzle';
-import { CourseLessons } from '../models/CourseLessons';
 import { QuizDetails } from '../../student/models/QuizDetails';
 import { CourseReview } from '../models/CourseReview';
 import { ElementKind } from '../../shared/enums/element-kind.enum';
 import { NewExample } from '../models/NewExample';
+import { AddVideoRequestPayload } from '../models/AddVideoRequestPayload';
 
 @Injectable({
   providedIn: 'root'
@@ -110,6 +110,10 @@ export class CourseService {
 
   public addExample(lessonId: string, example: NewExample): Observable<Object> {
     return this.httpClient.post(`api/Lesson/${lessonId}/example`, example);
+  }
+
+  public addVideo(courseId: string, payload: FormData): Observable<Object> {
+    return this.httpClient.post(`api/Lesson/${courseId}/video`, payload);
   }
 
   public updateThumbnail(courseId: string, thumbnail: FormData): Observable<Object> {

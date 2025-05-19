@@ -1,252 +1,54 @@
 @use 'variables' as *;
 
-.lesson {
+.button-edit,
+.button-delete {
+  background-color: transparent;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 0.25rem;
+
+  img {
+    width: $font-L;
+  }
+}
+
+.button-edit:hover {
+  background-color: $background;
+}
+
+.button-delete:hover {
+  background-color: #ffdbdb;
+}
+
+.button-expand-lesson-details {
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 1rem;
+  }
+
+  .details-expanded {
+    transform: rotate(90deg);
+  }
+}
+
+.lesson-wrapper {
   display: flex;
   font-size: $font-S;
-
-  .progress-container {
-    width: 1rem;
-    margin-right: 0.5rem;
-    position: relative;
-    // border: 1px solid;
-
-    .circle {
-      position: relative;
-      top: 1rem;
-      width: 1rem;
-      height: 1rem;
-      background-color: $border-secondary;
-      border-radius: 50%;
-    }
-
-    .complete {
-      background-color: $primary;
-    }
-
-    .in-progress {
-      border: 0.2rem solid $primary;
-    }
-
-    &::before {
-      position: absolute;
-      content: '';
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0.2rem;
-      height: 0.5rem;
-      background-color: $border-secondary;
-      border-radius: 1rem;
-    }
-
-    &::after {
-      position: absolute;
-      content: '';
-      bottom: -0.75rem;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0.2rem;
-      height: calc(100% - 1.75rem);
-      background-color: $border-secondary;
-      border-radius: 1rem;
-    }
-  }
-
-  .tile {
-    width: 100%;
-    background-color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.5rem;
-
-    .edit,
-    .delete {
-      margin: 0;
-      padding: 0;
-      background-color: transparent;
-      cursor: pointer;
-      width: 2rem;
-      height: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: none;
-      border-radius: 0.25rem;
-      transform: none;
-      transition: none;
-      box-shadow: none;
-
-      &:hover {
-        background-color: $background;
-      }
-
-      img {
-        width: auto;
-        height: $font-L;
-        border-radius: 0;
-        // border: 1px solid;
-      }
-    }
-
-    .add {
-      font-size: $font-S;
-      height: 2rem;
-      background-color: transparent;
-      color: $primary;
-      border-radius: 0.25rem;
-      border: 1px solid $primary;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0 0.75rem;
-      cursor: pointer;
-      position: relative;
-
-      .options-group {
-        position: absolute;
-        content: '';
-        top: 2.5rem;
-        right: 0;
-        background-color: white;
-        box-shadow: 0 0 5px $border-secondary;
-        border-radius: 0.5rem;
-        padding: 0.5rem;
-        color: black;
-        display: flex;
-        flex-direction: column;
-        z-index: 2;
-
-        a {
-          color: black;
-          text-decoration: none;
-          padding: 0.5rem;
-          text-align: left;
-          border-radius: 0.25rem;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 1rem;
-
-          div {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-          }
-
-          img {
-            width: 1rem;
-          }
-
-          .plus {
-            height: 0.75rem;
-            width: 0.75rem;
-            opacity: 0;
-          }
-
-          &:hover {
-            background-color: $background;
-
-            .plus {
-              opacity: 1;
-            }
-          }
-        }
-      }
-
-      img {
-        width: 0.75rem;
-      }
-    }
-
-    .delete {
-      &:hover {
-        background-color: #ffdbdb;
-      }
-    }
-
-    .top {
-      height: 2.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      // padding: 0.25rem;
-      // border:1px solid;
-
-      .title {
-        font-weight: 700;
-      }
-
-      .left {
-        display: flex;
-        gap: 1rem;
-
-        .toggle {
-          border: none;
-          background-color: transparent;
-          display: flex;
-          align-items: center;
-          cursor: pointer;
-
-          img {
-            height: 1rem;
-          }
-
-          .show-details {
-            transform: rotate(90deg);
-          }
-        }
-      }
-    }
-
-    .elements-group {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 0.5rem;
-      // gap: 0.5rem;
-
-      .element {
-        // border: none;
-        height: 2.5rem;
-        text-decoration: none;
-        color: black;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-radius: 0.25rem;
-        padding: 0 0.25rem;
-        // border: 1px solid;
-
-        &:hover {
-          background-color: $background;
-
-          .right {
-            .delete {
-              display: flex;
-            }
-          }
-        }
-
-        .left {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-
-          img {
-            // width: 1rem;
-            height: 1rem;
-          }
-        }
-
-        .right {
-          .delete {
-            display: none;
-          }
-        }
-      }
-    }
-  }
 }
 
-.first {
+.lesson {
+  width: 100%;
+  background-color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.lesson-first {
   .progress-container {
     &::before {
       display: none;
@@ -254,10 +56,121 @@
   }
 }
 
-.last {
+.lesson-last {
   .progress-container {
     &::after {
       display: none;
     }
   }
+}
+
+.lesson-header {
+  height: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lesson-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.button-expand-lesson-elements {
+  font-size: $font-S;
+  height: 2rem;
+  background-color: transparent;
+  color: $primary;
+  border-radius: 0.25rem;
+  border: 0.0625rem solid $primary;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 0.75rem;
+
+  img {
+    width: 0.75rem;
+  }
+}
+
+.lesson-elements {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.lesson-element {
+  height: 2.5rem;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.25rem;
+  padding: 0 0.25rem;
+
+  &:hover {
+    background-color: $background;
+
+    .lesson-element-controls {
+      .button-delete {
+        display: block;
+      }
+    }
+  }
+}
+
+.lesson-element-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  img {
+    height: 1rem;
+  }
+}
+
+.lesson-element-controls {
+  .button-delete {
+    display: none;
+  }
+}
+
+.progress-container {
+  width: 1rem;
+  margin-right: 0.5rem;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0.2rem;
+    height: 0.5rem;
+    background-color: $border-secondary;
+    border-radius: 1rem;
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    bottom: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0.2rem;
+    height: calc(100% - 1.75rem);
+    background-color: $border-secondary;
+    border-radius: 1rem;
+  }
+}
+
+.circle {
+  position: relative;
+  top: 1rem;
+  width: 1rem;
+  height: 1rem;
+  background-color: $border-secondary;
+  border-radius: 50%;
 }

@@ -1,113 +1,4 @@
-<!-- <div class="page">
-  <div class="course-data">
-    <h1>{{ course().title }}</h1>
-    <div>
-      <div class="dsc">Description</div>
-      <div>{{ course().description }}</div>
-    </div>
-
-    <hr />
-
-    <div class="info">
-      <div>{{ this.lessonCount() }} lessons</div>
-      <div>
-        price: <span class="price">{{ formattedPrice() }}</span>
-      </div>
-      <div>
-        price: <span class="price">{{ course().price }}$</span>
-      </div>
-      <div>{{ course().enrolledStudentsCount }} enrolled students</div>
-      <div>
-        Average review score: {{ averageReviewScore() }} ({{ reviewCount() }} reviews) -->
-<!-- </div>
-    </div>
-
-    @for (review of course().reviews; track $index) {
-      <app-course-review [review]="review" />
-    }
-
-    <div class="btn-group">
-      <a class="primary-button" [routerLink]="'lessons/new'">Add lesson</a>
-      <a class="secondary-btn" [routerLink]="'/coach/courses'">Back to courses</a>
-    </div>
-  </div>
-  <hr /> -->
-<!-- <ul class="course-lesson-list">
-    @for (lesson of lessons(); track $index) {
-      <div class="course-lesson">
-        <li class="course-lesson-header">
-          <h3>Lesson {{ $index + 1 }}</h3>
-          <button
-            type="button"
-            class="primary-button button-small"
-            (click)="navigateAddExercise(lesson.id)"
-          >
-            Add exercise
-          </button>
-          <button
-            type="button"
-            class="primary-button button-small"
-            (click)="navigateAddQuiz(lesson.id)"
-          >
-            Add quiz
-          </button>
-          <button
-            type="button"
-            class="danger-btn button-small"
-            (click)="deleteLesson(lesson.id)"
-          >
-            Delete lesson
-          </button>
-        </li>
-        <div class="course-lesson-exercises">
-          @for (exercise of getSortedExercises(lesson.exercises); track exercise) {
-            <div class="exercise-wrapper">
-              <div class="exercise-header">
-                <h4>Exercise</h4>
-                <a
-                  class="exercise-link-title"
-                  [routerLink]="
-                    '/coach/courses/' +
-                    course().id +
-                    '/lesson/' +
-                    lesson.id +
-                    '/exercise/' +
-                    exercise.id
-                  "
-                >
-                  <i class="pi pi-chevron-left"></i>
-                  <span>{{ exercise.title }}</span
-                  ><i class="pi pi-chevron-right"></i
-                ></a>
-              </div>
-              <div class="exercise-description">
-                {{ exercise.description }}
-              </div>
-            </div>
-          }
-        </div>
-      </div>
-    }
-  </ul>
-</div> -->
-
-<p-dialog
-  header="Add new thumbnail"
-  [modal]="true"
-  [draggable]="false"
-  [(visible)]="thumbnailFormVisible"
->
-  <app-coach-upload-image
-    [fileTypeErrorMessage]="
-      'Please select a valid file format like .png, .jpg, .jpeg, .webp or other image format'
-    "
-    [acceptedFileTypes]="['image']"
-    [maxSizeInBytes]="5 * 1024 * 1024"
-    (imageSubmitted)="hideThumbnailForm()"
-  />
-</p-dialog>
-
-<div class="page">
+<div class="page page-content">
   <div class="header">
     <h2>My Course Details</h2>
     <a class="secondary-btn" [routerLink]="'/coach/courses'">Back to courses</a>
@@ -133,7 +24,7 @@
         <button
           class="update-thumbnail-btn"
           type="button"
-          (click)="showThumbnailForm()"
+          (click)="openAddCourseThumbnailDialog()"
         >
           <img src="icons/plus.png" alt="" />
         </button>

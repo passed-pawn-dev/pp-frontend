@@ -2,21 +2,20 @@ import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angula
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CourseDetails } from '../../models/CourseDetails';
-import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
 import { Puzzle } from '../../models/Puzzle';
 import { LessonDetails } from '../../models/LessonDetails';
-import { Messages } from 'primeng/messages';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CoachLessonComponent } from '../../components/coach-lesson/coach-lesson.component';
 import { DialogModule } from 'primeng/dialog';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CoachUploadImageComponent } from '../../components/coach-upload-image/coach-upload-image.component';
+import { CoachAddCourseThumbnailComponent } from '../../components/coach-add-course-thumbnail/coach-add-course-thumbnail.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-coach-course-details',
   standalone: true,
-  imports: [RouterLink, CoachLessonComponent, DialogModule, CoachUploadImageComponent],
+  imports: [RouterLink, CoachLessonComponent, DialogModule],
+  providers: [DialogService],
   templateUrl: './coach-course-details.component.html',
   styleUrl: './coach-course-details.component.scss'
 })
@@ -27,6 +26,7 @@ export class CoachCourseDetailsComponent implements OnInit {
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private courseService = inject(CourseService);
   private readonly route = inject(ActivatedRoute);
+  private dialogService: DialogService = inject(DialogService);
 
   protected course = signal<CourseDetails>({
     id: '',
@@ -60,14 +60,6 @@ export class CoachCourseDetailsComponent implements OnInit {
     const course = this.route.snapshot.data['course'];
     this.course.set(course);
     this.lessons.set(course.lessons);
-  }
-
-  protected showThumbnailForm(): void {
-    this.thumbnailFormVisible = true;
-  }
-
-  protected hideThumbnailForm(): void {
-    this.thumbnailFormVisible = false;
   }
 
   protected deleteThumbnail(): void {
@@ -149,5 +141,16 @@ export class CoachCourseDetailsComponent implements OnInit {
 
   protected getSortedExercises(exerciseList: Puzzle[]): Puzzle[] {
     return exerciseList.sort((a, b) => (a.id > b.id ? 1 : -1));
+  }
+
+  protected openAddCourseThumbnailDialog(): void {
+    const addCourseThumbnailDialogRef = this.dialogService.open(
+      CoachAddCourseThumbnailComponent,
+      {
+        header: 'Add course thumbnail',
+        closable: true,
+        modal: true
+      }
+    );
   }
 }
