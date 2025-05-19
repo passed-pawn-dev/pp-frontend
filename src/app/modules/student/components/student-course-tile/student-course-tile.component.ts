@@ -6,11 +6,21 @@ import { StarRatingComponent } from '../../../shared/components/star-rating/star
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CourseService } from '../../service/course.service';
 import { MessageService } from 'primeng/api';
+import { difficultyRanges } from '../../../shared/constants/difficulty-ranges';
+import { SseService } from '../../service/sse.service';
+import { Dialog } from 'primeng/dialog';
+import { PaymentComponent } from '../payment/payment.component';
 
 @Component({
   selector: 'app-student-course-tile',
   standalone: true,
-  imports: [RouterLink, StarRatingComponent, CourseDifficultyComponent],
+  imports: [
+    RouterLink,
+    StarRatingComponent,
+    CourseDifficultyComponent,
+    Dialog,
+    PaymentComponent
+  ],
   templateUrl: './student-course-tile.component.html',
   styleUrl: './student-course-tile.component.scss'
 })
@@ -19,8 +29,13 @@ export class StudentCourseTileComponent {
   private courseService: CourseService = inject(CourseService);
   private messageService: MessageService = inject(MessageService);
   private destroyRef: DestroyRef = inject(DestroyRef);
+  private sseService: SseService = inject(SseService);
 
   public course = input.required<Course>();
+
+  protected clientSecret: string | undefined;
+  protected showPaymentModal: boolean = false;
+  protected courseBought: boolean = false;
 
   protected buyCourse(event: Event): void {
     event.preventDefault();
@@ -30,15 +45,13 @@ export class StudentCourseTileComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((_params) => {
         this.courseService
-          .buy(this.course().id)
+          .getPaymentIntent(this.course().id)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
-            next: (_) =>
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Course bought successfully'
-              }),
+            next: (clientSecret) => {
+              this.clientSecret = clientSecret;
+              this.showPaymentModal = true;
+            },
             error: (_) =>
               this.messageService.add({
                 severity: 'error',
@@ -47,5 +60,38 @@ export class StudentCourseTileComponent {
               })
           });
       });
+  }
+
+  protected paymentModalClosed(): void {
+    this.showPaymentModal = false;
+    this.clientSecret = undefined;
+  }
+
+  protected paymentSuccessful(): void {
+    this.showPaymentModal = false;
+    this.clientSecret = undefined;
+    this.courseBought = true;
+
+    this.sseService.connect('/api/sse').subscribe({
+      next: (_) =>
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Course has been added to list'
+        })
+    });
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Payment successful! Course will be added to your list shortly'
+    });
+  }
+
+  protected paymentFailed(details: string): void {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Failure',
+      detail: details
+    });
   }
 }

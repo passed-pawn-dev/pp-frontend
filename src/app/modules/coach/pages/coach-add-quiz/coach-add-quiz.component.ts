@@ -2,6 +2,7 @@ import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { ChessboardEditorComponent } from '../../../shared/components/chessboard-editor/chessboard-editor.component';
 import { StepIndicatorComponent } from '../../../shared/components/step-indicator/step-indicator.component';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
