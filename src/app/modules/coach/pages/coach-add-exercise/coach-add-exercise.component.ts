@@ -68,7 +68,7 @@ export class CoachAddExerciseComponent implements OnInit {
     }
 
     this.courseService
-      .addExercise(
+      .addPuzzle(
         this.lessonId,
         this.exerciseForm.value.title!,
         this.exerciseForm.value.description!,

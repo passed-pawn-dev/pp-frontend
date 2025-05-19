@@ -147,8 +147,9 @@
                 />
               </div>
 
+
               <div>
-                <div class="label">Answers (2 - 6)</div>
+                <div class="label">Answers (2 - 10)</div>
                 <div class="answers-nav">
                   <div>
                     Correct<br />
@@ -162,7 +163,7 @@
                   }
                 </div>
                 <div formArrayName="answers" class="answers">
-                  @for (answer of answers.controls; track $index) {
+                  @for (answer of answers.controls; track answer) {
                     <div class="answer-tile" [formGroupName]="$index">
                       <!-- <p-radiobutton [formControl]="solutionControl" [value]="$index" /> -->
                       <label [for]="'radio' + $index">
@@ -215,7 +216,7 @@
               <button
                 type="button"
                 class="add-btn"
-                [disabled]="answers.length > 5"
+                [disabled]="answers.length > 9"
                 (click)="addAnswer()"
               >
                 + Add Answer

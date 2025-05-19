@@ -44,7 +44,7 @@ export class CourseService {
   }
 
   public delete(id: string): Observable<string> {
-    return this.httpClient.delete(`/api/Course/${id}`, {
+    return this.httpClient.delete(`/api/Course/Coach/${id}`, {
       responseType: 'text'
     });
   }
@@ -87,14 +87,14 @@ export class CourseService {
     return this.httpClient.get<Puzzle>(`api/CourseExercise/${id}`);
   }
 
-  public addExercise(
+  public addPuzzle(
     lessonId: string,
     title: string,
     description: string,
     fen: string,
     solution: string
   ): Observable<Object> {
-    return this.httpClient.post(`api/Lesson/${lessonId}/exercise`, {
+    return this.httpClient.post(`api/Lesson/${lessonId}/puzzle`, {
       title,
       description,
       fen,

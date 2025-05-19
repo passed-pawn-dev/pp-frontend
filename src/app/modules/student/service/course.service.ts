@@ -71,7 +71,7 @@ export class CourseService {
   }
 
   public getLessons(id: string): Observable<Lesson[]> {
-    return this.httpClient.get<Lesson[]>(`/api/Course/${id}/lesson`);
+    return this.httpClient.get<Lesson[]>(`/api/Course/Student/${id}/lessons`);
   }
 
   public getExerciseById(id: string): Observable<Exercise> {
