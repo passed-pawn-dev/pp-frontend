@@ -1,0 +1,53 @@
+<article class="form-wrapper">
+  <form class="vertical-form vertical-form-fields" [formGroup]="addVideoForm">
+    <div>
+      <app-coach-upload-image
+        [acceptedFileTypes]="acceptedFileTypes"
+        (fileSelected)="fileSelected($event)"
+      />
+      <app-validation-errors
+        [errors]="addVideoForm.controls['video'].errors"
+        [dirty]="addVideoForm.dirty"
+        [touched]="addVideoForm.touched"
+      />
+    </div>
+    <div>
+      <label for="title">Title</label>
+      <input id="title" type="text" class="standard-input" formControlName="title" />
+      <app-validation-errors
+        [errors]="addVideoForm.controls.title.errors"
+        [dirty]="addVideoForm.controls.title.dirty"
+        [touched]="addVideoForm.controls.title.touched"
+      />
+    </div>
+    <div>
+      <label for="description">Description</label>
+      <input type="text" class="standard-input" formControlName="description" />
+      <app-validation-errors
+        [errors]="addVideoForm.controls.description.errors"
+        [dirty]="addVideoForm.controls.description.dirty"
+        [touched]="addVideoForm.controls.description.touched"
+      />
+    </div>
+    <div>
+      <label for="order">Order</label>
+      <input type="number" class="standard-input" formControlName="order" />
+      <app-validation-errors
+        [errors]="addVideoForm.controls.order.errors"
+        [dirty]="addVideoForm.controls.order.dirty"
+        [touched]="addVideoForm.controls.order.touched"
+      />
+    </div>
+  </form>
+
+  <div class="dialog-buttons">
+    <button
+      type="button"
+      class="primary-btn small"
+      [disabled]="!addVideoForm.valid"
+      (click)="onSubmit()"
+    >
+      Submit
+    </button>
+  </div>
+</article>

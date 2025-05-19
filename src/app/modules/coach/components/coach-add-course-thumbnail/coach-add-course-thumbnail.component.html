@@ -1,0 +1,16 @@
+<article class="form-wrapper">
+  <form [formGroup]="uploadForm">
+    <app-coach-upload-image
+      [acceptedFileTypes]="acceptedFileTypes"
+      (fileSelected)="fileSelected($event)"
+    />
+  </form>
+  <app-validation-errors
+    [errors]="uploadForm.controls['thumbnail'].errors"
+    [dirty]="uploadForm.dirty"
+    [touched]="uploadForm.touched"
+  />
+  <div class="dialog-buttons">
+    <button type="button" class="primary-btn small" (click)="onSubmit()">Submit</button>
+  </div>
+</article>

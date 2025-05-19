@@ -14,6 +14,7 @@ body {
 
 button {
   font-family: 'Poppins', sans-serif;
+  cursor: pointer;
 }
 
 h1 {
@@ -46,12 +47,28 @@ h3 {
 .vertical-form {
   display: grid;
   gap: 1rem;
+
+  &.vertical-form-fields {
+    label + input {
+      display: block;
+    }
+  }
 }
 
-.buttons-box {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 1rem;
+input {
+  font-family: 'Poppins', sans-serif;
+}
+
+.standard-input,
+.standard-textarea {
+  border-radius: 0.5rem;
+  border: 0.0625rem solid $border-secondary;
+  font-family: 'Poppins', sans-serif;
+  font-size: $font-S;
+  font-style: normal;
+  height: 2.5rem;
+  padding: 0.5rem;
+  width: 100%;
 }
 
 .primary-btn {
@@ -76,6 +93,10 @@ h3 {
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  &.small {
+    padding: 0.25rem 0.5rem;
   }
 }
 
@@ -118,4 +139,79 @@ h3 {
 .paginator .p-paginator-page.p-paginator-page-selected {
   background-color: $primary-lighter;
   color: #64748b;
+}
+
+.page-content {
+  margin: auto;
+  max-width: $page-width;
+  width: 100%;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.dropdown-menu {
+  position: relative;
+}
+
+.dropdown-menu-options {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.3125rem $border-secondary;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  position: absolute;
+  right: 0;
+  top: 2.5rem;
+  z-index: 2;
+}
+
+.dropdown-menu-option {
+  align-items: center;
+  background-color: transparent;
+  border-radius: 0.25rem;
+  border: 0;
+  color: black;
+  display: flex;
+  font-size: 1rem;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.5rem;
+  text-decoration: none;
+
+  div {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+  }
+
+  img {
+    width: 1rem;
+  }
+
+  .dropdown-menu-option-action-icon {
+    height: 0.75rem;
+    opacity: 0;
+    width: 0.75rem;
+  }
+
+  &:hover {
+    background-color: $background;
+
+    .dropdown-menu-option-action-icon {
+      opacity: 1;
+    }
+  }
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 2rem;
 }

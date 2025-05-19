@@ -5,7 +5,8 @@ import { Puzzle } from './Puzzle';
 
 export interface LessonDetails {
   id: string;
-  lessonNumber: number;
+  title: string;
+  lessonNumber?: number;
   videos: Video[];
   puzzles: Puzzle[];
   examples: Example[];

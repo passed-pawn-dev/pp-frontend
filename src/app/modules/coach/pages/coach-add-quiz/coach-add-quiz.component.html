@@ -48,9 +48,14 @@
         >
           <div class="tile">
             <div class="header">Basic Info</div>
-            <div class="">
+            <div>
               <label for="title">Title</label>
-              <input id="title" formControlName="title" type="text" />
+              <input
+                class="standard-input"
+                id="title"
+                formControlName="title"
+                type="text"
+              />
               <app-validation-errors
                 [errors]="quizForm.controls.title.errors"
                 [dirty]="quizForm.controls.title.dirty"
@@ -130,7 +135,7 @@
                 <div class="label">Question</div>
                 <textarea
                   id="question"
-                  class="question-input"
+                  class="question-input standard-textarea"
                   formControlName="question"
                   required
                 >
@@ -142,7 +147,8 @@
                 />
               </div>
 
-              <div class="">
+
+              <div>
                 <div class="label">Answers (2 - 10)</div>
                 <div class="answers-nav">
                   <div>
@@ -171,6 +177,7 @@
                       </label>
 
                       <input
+                        class="standard-input"
                         formControlName="text"
                         placeholder="Enter answer text"
                         type="text"
@@ -218,7 +225,11 @@
               <div class="first">
                 <div class="label">Hint (optional)</div>
                 <!-- <input id="hint" class="" formControlName="hint" type="text" /> -->
-                <textarea id="hint" class="question-input" formControlName="hint">
+                <textarea
+                  id="hint"
+                  class="question-input standard-textarea"
+                  formControlName="hint"
+                >
                 </textarea>
                 <app-validation-errors
                   [errors]="quizForm.controls.hint.errors"
@@ -232,7 +243,7 @@
                 <!-- <input id="explanation" class="" formControlName="explanation" type="text" /> -->
                 <textarea
                   id="explanation"
-                  class="explanation-input"
+                  class="explanation-input standard-textarea"
                   formControlName="explanation"
                 >
                 </textarea>

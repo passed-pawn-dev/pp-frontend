@@ -9,19 +9,19 @@ import {
   signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Lesson } from '../../../student/models/Lesson';
 import { LessonDetails } from '../../models/LessonDetails';
-import { Quiz } from '../../../student/models/Quiz';
-import { Video } from '../../../student/models/Video';
 import { Element } from '../../models/Element';
 import { ElementKind } from '../../../shared/enums/element-kind.enum';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CourseService } from '../../service/course.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CoachAddVideoComponent } from '../../pages/coach-add-video/coach-add-video.component';
 
 @Component({
   selector: 'app-coach-lesson',
   imports: [RouterLink],
+  providers: [DialogService],
   templateUrl: './coach-lesson.component.html',
   styleUrl: './coach-lesson.component.scss'
 })
@@ -30,10 +30,11 @@ export class CoachLessonComponent implements OnInit {
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
   private destroyRef: DestroyRef = inject(DestroyRef);
+  private dialogService: DialogService = inject(DialogService);
 
-  public showElements: boolean = false;
+  protected showElements: boolean = false;
 
-  public showAddElementOptions: boolean = false;
+  protected showAddElementOptions: boolean = false;
 
   // Change to lesson object with list of all elemenets
   @Input({ required: true }) public lesson!: LessonDetails;
@@ -43,8 +44,8 @@ export class CoachLessonComponent implements OnInit {
 
   @Output() public deleteLessonEvent = new EventEmitter<string>();
 
-  public progress: number = 5;
-  public all: number = 8;
+  protected progress: number = 5;
+  protected all: number = 8;
   protected elements = signal<Element[]>([]);
 
   protected kindToIcon: Map<ElementKind, string> = new Map([
@@ -87,24 +88,19 @@ export class CoachLessonComponent implements OnInit {
     ].sort((a, b) => a.order - b.order);
   }
 
-  public toggleElements(): void {
+  protected toggleElements(): void {
     this.showElements = !this.showElements;
   }
 
-  public toggleAddOperations(): void {
+  protected toggleAddOperations(): void {
     this.showAddElementOptions = !this.showAddElementOptions;
   }
 
-  public deleteLesson(e: Event): void {
-    e.preventDefault();
-    e.stopPropagation();
+  protected deleteLesson(_: Event): void {
     this.deleteLessonEvent.emit(this.lesson.id);
   }
 
-  public deleteElement(e: Event, elementId: string, elementKind: ElementKind): void {
-    e.preventDefault();
-    e.stopPropagation();
-
+  protected deleteElement(e: Event, elementId: string, elementKind: ElementKind): void {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this element?',
       header: 'Confirm',
@@ -131,6 +127,17 @@ export class CoachLessonComponent implements OnInit {
           });
       },
       reject: () => {}
+    });
+  }
+
+  protected openAddVideoDialog(): void {
+    const addVideoDialogRef = this.dialogService.open(CoachAddVideoComponent, {
+      header: 'Add video',
+      closable: true,
+      modal: true,
+      inputValues: {
+        lessonId: this.lesson.id
+      }
     });
   }
 }

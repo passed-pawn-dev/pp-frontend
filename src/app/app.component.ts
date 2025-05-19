@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
-import { OverlayOptions } from 'primeng/api';
 import { PrimeNG } from 'primeng/config';
 import { AiChatComponent } from './modules/shared/components/ai-chat/ai-chat.component';
 

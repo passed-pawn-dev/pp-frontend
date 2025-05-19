@@ -1,85 +1,38 @@
-import {
-  Component,
-  DestroyRef,
-  EventEmitter,
-  Input,
-  Output,
-  inject
-} from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { CourseService } from '../../service/course.service';
-import { ActivatedRoute } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-coach-upload-image',
-  imports: [],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './coach-upload-image.component.html',
   styleUrl: './coach-upload-image.component.scss'
 })
 export class CoachUploadImageComponent {
-  private messageService = inject(MessageService);
-  private courseService = inject(CourseService);
-  private readonly route = inject(ActivatedRoute);
-  private destroyRef = inject(DestroyRef);
-
-  @Output() public imageSubmitted = new EventEmitter<void>();
-  @Input({ required: true }) public maxSizeInBytes!: number;
+  @Output() public fileSelected = new EventEmitter<any>();
   @Input({ required: true }) public acceptedFileTypes!: string[];
-  @Input({ required: true }) public fileTypeErrorMessage!: string;
 
-  protected thumbnailErrorMessage: string | null = null;
+  protected file: File | null = null;
 
-  protected thumbnail: File | null = null;
-  protected submitThumbnail(event: Event): void {
-    event.preventDefault();
-    this.imageSubmitted.emit();
-    const formData = new FormData();
-    formData.append('thumbnail', this.thumbnail!);
-    this.route.paramMap
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((params) => {
-        const courseId = params.get('id')!;
-        this.courseService
-          .updateThumbnail(courseId, formData)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: (_) => {
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Thumbnail updated successfully'
-              });
-            },
-            error: (_) =>
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Fail',
-                detail: 'Failed to update thumbnail'
-              })
-          });
-      });
-  }
+  protected filePreviewSrc: ArrayBuffer | string | null = null;
 
   protected onFileChange(event: Event): void {
+    this.filePreviewSrc = null;
+
     const input = event.target as HTMLInputElement;
     if (!input.files?.length) return;
 
     const file = input.files[0];
+    this.file = file;
 
-    if (this.acceptedFileTypes.find((type) => !file.type.startsWith(type))) {
-      this.thumbnailErrorMessage = this.fileTypeErrorMessage;
-      this.thumbnail = null;
-      return;
+    this.fileSelected.emit(file);
+
+    if (file.type.startsWith('video') || file.type.startsWith('image')) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        this.filePreviewSrc = event.target!.result;
+      };
     }
-
-    if (file.size > this.maxSizeInBytes) {
-      alert('File must be less than 5MB.');
-      this.thumbnail = null;
-      return;
-    }
-
-    this.thumbnailErrorMessage = null;
-    this.thumbnail = file;
   }
 }

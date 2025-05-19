@@ -1,12 +1,12 @@
-<div class="lesson" [class.first]="first" [class.last]="last">
+<div class="lesson-wrapper" [class.lesson-first]="first" [class.lesson-last]="last">
   <div class="progress-container">
     <div class="circle"></div>
   </div>
 
-  <div class="tile">
-    <div class="top">
-      <div class="title">Lesson Title</div>
-      <div class="left">
+  <div class="lesson">
+    <div class="lesson-header">
+      <div class="bold">{{ lesson.title }}</div>
+      <div class="lesson-controls">
         <!-- <div class="progress-bar-container">
             <div class="percent">{{ progress }} / {{ all }}</div>
             <div class="progress-bar">
@@ -14,64 +14,98 @@
             </div>
           </div> -->
 
-        <button type="button" class="delete" (click)="deleteLesson($event)">
+        <button type="button" class="button-delete" (click)="deleteLesson($event)">
           <img src="icons/delete.png" alt="delete" />
         </button>
 
-        <button type="button" class="edit">
+        <button type="button" class="button-edit">
           <img src="icons/edit.png" alt="edit" />
         </button>
 
-        <button type="button" class="add" (click)="toggleAddOperations()">
-          <div>Add</div>
-          <img src="icons/arrow-down-purple.png" alt="" />
-
+        <div class="dropdown-menu">
+          <button
+            type="button"
+            class="button-expand-lesson-elements"
+            (click)="toggleAddOperations()"
+          >
+            <div>Add</div>
+            <img src="icons/arrow-down-purple.png" alt="" />
+          </button>
           @if (showAddElementOptions) {
-            <div class="options-group">
-              <a [routerLink]="'lesson/' + lesson.id + '/exercise/add'"
-                ><div><img src="icons/puzzle-black.png" alt="" />Puzzle</div>
-                <img src="icons/plus.png" class="plus" alt="plus"
+            <div class="dropdown-menu-options">
+              <a
+                class="dropdown-menu-option"
+                [routerLink]="'lesson/' + lesson.id + '/exercise/add'"
+                ><div>
+                  <img src="icons/puzzle-black.png" alt="Add puzzle icon" />Puzzle
+                </div>
+                <img
+                  src="icons/plus.png"
+                  class="dropdown-menu-option-action-icon"
+                  alt="plus"
               /></a>
-              <a [routerLink]="'lesson/' + lesson.id + '/quiz/add'"
-                ><div><img src="icons/quiz-black.png" alt="" />Quiz</div>
-                <img src="icons/plus.png" class="plus" alt="plus"
+              <a
+                class="dropdown-menu-option"
+                [routerLink]="'lesson/' + lesson.id + '/quiz/add'"
+                ><div><img src="icons/quiz-black.png" alt="Add quizz icon" />Quiz</div>
+                <img
+                  src="icons/plus.png"
+                  class="dropdown-menu-option-action-icon"
+                  alt="plus"
               /></a>
-              <a [routerLink]=""
-                ><div><img src="icons/video-black.png" alt="" />Video</div>
-                <img src="icons/plus.png" class="plus" alt="plus"
-              /></a>
-              <a [routerLink]="'lesson/' + lesson.id + '/example/add'"
+              <button
+                class="dropdown-menu-option"
+                type="button"
+                (click)="openAddVideoDialog()"
+              >
+                <div><img src="icons/video-black.png" alt="Add quizz icon" />Video</div>
+                <img
+                  src="icons/plus.png"
+                  class="dropdown-menu-option-action-icon"
+                  alt="plus"
+                />
+              </button>
+              <a
+                class="dropdown-menu-option"
+                [routerLink]="'lesson/' + lesson.id + '/example/add'"
                 ><div><img src="icons/example-black.png" alt="" />Example</div>
-                <img src="icons/plus.png" class="plus" alt="plus"
+                <img
+                  src="icons/plus.png"
+                  class="dropdown-menu-option-action-icon"
+                  alt="plus"
               /></a>
             </div>
           }
-        </button>
+        </div>
 
-        <button type="button" class="toggle" (click)="toggleElements()">
+        <button
+          type="button"
+          class="button-expand-lesson-details"
+          (click)="toggleElements()"
+        >
           <img
             src="icons/arrow-right.png"
             alt="arrow"
-            [class.show-details]="showElements"
+            [class.details-expanded]="showElements"
           />
         </button>
       </div>
     </div>
     @if (showElements) {
-      <div class="elements-group">
+      <div class="lesson-elements">
         @for (element of elements(); track $index) {
           <a
-            class="element"
+            class="lesson-element"
             [routerLink]="'lesson/' + lesson.id + '/quiz/' + element.id"
           >
-            <div class="left">
+            <div class="lesson-element-label">
               <img [src]="kindToIcon.get(element.kind)" [alt]="element.kind" />
-              <div class="title">{{ element.title }}</div>
+              <div>{{ element.title }}</div>
             </div>
-            <div class="right">
+            <div class="lesson-element-controls">
               <button
                 type="button"
-                class="delete"
+                class="button-delete"
                 (click)="deleteElement($event, element.id, element.kind)"
               >
                 <img src="icons/delete.png" alt="delete" />
