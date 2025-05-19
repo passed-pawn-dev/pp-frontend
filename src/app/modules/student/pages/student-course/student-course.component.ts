@@ -26,6 +26,9 @@ import { ChessTitle } from '../../../shared/enums/chess-titles.enum';
 import { CourseReview } from '../../models/CourseReview';
 import { StudentLessonComponent } from '../../components/student-lesson/student-lesson.component';
 import { LessonStatus } from '../../enums/LessonStatus';
+import { Dialog } from 'primeng/dialog';
+import { PaymentComponent } from '../../components/payment/payment.component';
+import { SseService } from '../../service/sse.service';
 
 @Component({
   selector: 'app-student-course',
@@ -37,7 +40,9 @@ import { LessonStatus } from '../../enums/LessonStatus';
     CourseDifficultyComponent,
     CourseReviewComponent,
     StudentLessonComponent,
-    RouterLink
+    RouterLink,
+    Dialog,
+    PaymentComponent
   ],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
@@ -83,6 +88,10 @@ export class StudentCourseComponent implements OnInit {
 
   protected showLessons: boolean = false;
 
+  protected clientSecret: string | undefined;
+  protected showPaymentModal: boolean = false;
+  protected courseBought: boolean = false;
+
   protected diagramCourseDetails: Signal<CourseDetailsDiagram[]> = computed(() => [
     { title: 'Puzzles', amount: this.course().puzzleCount },
     { title: 'Quizes', amount: this.course().quizCount },
@@ -92,6 +101,7 @@ export class StudentCourseComponent implements OnInit {
 
   public constructor(
     private courseService: CourseService,
+    private readonly sseService: SseService,
     private readonly route: ActivatedRoute,
     private messageService: MessageService,
     private readonly destroyRef: DestroyRef,
@@ -157,15 +167,13 @@ export class StudentCourseComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         this.courseService
-          .buy(params.get('id')!)
+          .getPaymentIntent(params.get('id')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
-            next: (_) =>
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Course bought successfully'
-              }),
+            next: (clientSecret) => {
+              this.clientSecret = clientSecret;
+              this.showPaymentModal = true;
+            },
             error: (_) =>
               this.messageService.add({
                 severity: 'error',
@@ -174,5 +182,38 @@ export class StudentCourseComponent implements OnInit {
               })
           });
       });
+  }
+
+  protected paymentModalClosed(): void {
+    this.showPaymentModal = false;
+    this.clientSecret = undefined;
+  }
+
+  protected paymentSuccessful(): void {
+    this.showPaymentModal = false;
+    this.clientSecret = undefined;
+    this.courseBought = true;
+
+    this.sseService.connect('/api/sse').subscribe({
+      next: (_) =>
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Course has been added to list'
+        })
+    });
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Payment successful! Course will be added to your list shortly'
+    });
+  }
+
+  protected paymentFailed(details: string): void {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Failure',
+      detail: details
+    });
   }
 }

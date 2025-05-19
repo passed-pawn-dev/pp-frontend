@@ -6,9 +6,8 @@
   aspect-ratio: 1/1;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  min-width: 32rem;
+  width: 32rem;
   position: relative;
-  width: 100%;
   border-radius: 1rem;
   overflow: hidden;
 }
