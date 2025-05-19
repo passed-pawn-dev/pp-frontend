@@ -1,12 +1,11 @@
-import { Component, DestroyRef, OnInit, computed, inject, input } from '@angular/core';
+import { Component, DestroyRef, inject, input } from '@angular/core';
 import { Course } from '../../models/Course';
-import { ActivatedRoute, Route, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CourseService } from '../../service/course.service';
 import { MessageService } from 'primeng/api';
-import { difficultyRanges } from '../../../shared/constants/difficulty-ranges';
 
 @Component({
   selector: 'app-student-course-tile',
@@ -29,7 +28,7 @@ export class StudentCourseTileComponent {
 
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((params) => {
+      .subscribe((_params) => {
         this.courseService
           .buy(this.course().id)
           .pipe(takeUntilDestroyed(this.destroyRef))

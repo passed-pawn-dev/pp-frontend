@@ -1,12 +1,7 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-  AutoCompleteCompleteEvent,
-  AutoCompleteModule,
-  AutoCompleteSelectEvent
-} from 'primeng/autocomplete';
+import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
@@ -17,7 +12,7 @@ import {
 } from '../../../shared/enums/chess-titles.enum';
 import { Student } from '../../models/Student';
 import { StudentService } from '../../service/student.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NationalityService } from '../../../shared/service/nationality.service';
 import { Nationality } from '../../../shared/models/Nationality';
 import { SelectModule } from 'primeng/select';
@@ -161,7 +156,7 @@ export class StudentRegisterFormComponent implements OnInit {
       this.studentService
         .register(registerData)
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((res) => {
+        .subscribe(() => {
           this.router.navigate(['/student']);
         });
     }

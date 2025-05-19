@@ -187,7 +187,7 @@ export class CoachAddQuizComponent implements OnInit {
           });
           this.location.back();
         },
-        error: (err) => {
+        error: (_) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Failure',

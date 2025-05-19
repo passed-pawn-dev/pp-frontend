@@ -1,4 +1,3 @@
-import eslint from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
 import angulareslint from '@angular-eslint/eslint-plugin';
@@ -88,6 +87,14 @@ export default [
       '@typescript-eslint/prefer-string-starts-ends-with': 'warn',
       '@typescript-eslint/require-array-sort-compare': 'error',
       '@typescript-eslint/consistent-type-exports': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true
+        }
+      ],
       '@typescript-eslint/explicit-function-return-type': [
         'error',
         {

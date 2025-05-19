@@ -1,5 +1,3 @@
-import { Puzzle } from './Puzzle';
-
 export interface NewLesson {
   title: string | null;
   lessonNumber: number | null;

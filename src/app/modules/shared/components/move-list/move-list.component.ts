@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Button } from 'primeng/button';
 import { TMoveList } from '../../../../chess-logic/models';
 
 @Component({

@@ -604,7 +604,7 @@ export class ChessBoard {
     moveType: Set<MoveType>
   ): void {
     const { x: currentX, y: currentY } = ChessBoard.squareToCoords(currentSquare);
-    const { x: targetX, y: targetY } = ChessBoard.squareToCoords(targetSquare);
+    const { x: _targetX, y: targetY } = ChessBoard.squareToCoords(targetSquare);
 
     if (piece instanceof King && Math.abs(targetY - currentY) === 2) {
       // targetY > currentY === king side castle
@@ -626,7 +626,7 @@ export class ChessBoard {
       moveType.add(MoveType.Castling);
     } else {
       if (!this._lastMove) return;
-      const { x: lastMovePrevX, y: lastMovePrevY } = ChessBoard.squareToCoords(
+      const { x: lastMovePrevX, y: _lastMovePrevY } = ChessBoard.squareToCoords(
         this._lastMove.prevSquare
       );
       const { x: lastMoveCurrX, y: lastMoveCurrY } = ChessBoard.squareToCoords(
@@ -702,7 +702,7 @@ export class ChessBoard {
 
     const samePiecesCoords: TCoords[] = [{ x: prevX, y: prevY }];
 
-    for (let [square, piece] of this.chessboard) {
+    for (let [square, _piece] of this.chessboard) {
       const { x, y } = ChessBoard.squareToCoords(square);
       const piece: Piece | null = this.chessboard.get(square) as Piece | null;
       if (!piece || currentSquare === square) continue;
@@ -710,7 +710,7 @@ export class ChessBoard {
       if (piece.fenChar === currPiece.fenChar) {
         const safeSquares: string[] = this._safeSquares.get(square) || [];
         const pieceHasSameTargetSquare: boolean = safeSquares.some(
-          (safeSquare) => currentSquare
+          (_safeSquare) => currentSquare
         );
         if (pieceHasSameTargetSquare) samePiecesCoords.push({ x, y });
       }
@@ -809,8 +809,6 @@ export class ChessBoard {
 
     return false;
   }
-
-  public rollbackToPosition(moveIndex: number): void {}
 
   public startFromMove(moveIndex: number): void {
     if (moveIndex + 1 > this.gameHistory.length)

@@ -1,10 +1,5 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CoursesQueryParams } from '../../models/CoursesQueryParams';
 import { SortBy } from '../../../shared/enums/sort-by.enum';
 import { difficultyRanges } from '../../../shared/constants/difficulty-ranges';
