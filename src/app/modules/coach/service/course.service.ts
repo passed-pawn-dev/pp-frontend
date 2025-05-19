@@ -85,7 +85,7 @@ export class CourseService {
   }
 
   public getExerciseById(id: string): Observable<Puzzle> {
-    return this.httpClient.get<Puzzle>(`api/CourseExercise/${id}`);
+    return this.httpClient.get<Puzzle>(`api/CoursePuzzle/${id}`);
   }
 
   public addPuzzle(

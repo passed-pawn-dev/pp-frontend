@@ -1,3 +1,67 @@
+@use 'variables' as *;
+
+.page {
+  width: 60rem;
+  margin: auto;
+  padding-bottom: 2rem;
+}
+
+.top {
+  margin-bottom: 1rem;
+}
+
 .container {
   display: flex;
+  gap: 1rem;
+}
+
+.tile {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.right {
+  width: 100%;
+  height: 32rem;
+}
+
+.step-info {
+  background-color: $background;
+  border-radius: 0.25rem;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  height: 2rem;
+  align-items: center;
+
+  div {
+    width: 1.5rem;
+    display: flex;
+
+    &:nth-child(1) {
+      justify-content: flex-end;
+    }
+  }
+}
+
+.description {
+  height: 25.5rem;
+  overflow-y: scroll;
+}
+
+.buttons {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reverse {
+  transform: rotate(180deg);
 }
