@@ -70,7 +70,7 @@ export class CoachCourseDetailsComponent implements OnInit {
         this.route.paramMap
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((params) => {
-            const courseId = params.get('id')!;
+            const courseId = params.get('courseId')!;
             this.courseService
               .deleteThumbnail(courseId)
               .pipe(takeUntilDestroyed(this.destroyRef))

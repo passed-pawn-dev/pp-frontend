@@ -39,7 +39,7 @@ export class CoachLessonFormComponent {
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
-        this.lessonId = params.get('id')!;
+        this.lessonId = params.get('courseId')!;
         this.courseService
           .addLesson(this.lessonId, this.lessonForm.getRawValue())
           .pipe(takeUntilDestroyed(this.destroyRef))

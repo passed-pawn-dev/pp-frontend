@@ -55,7 +55,7 @@ export class CoachCourseFormComponent implements OnInit {
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
-        const id: string | null = params.get('id');
+        const id: string | null = params.get('courseId');
         this.courseId = id;
         if (id) {
           const existingCourse = this.route.snapshot.data['course'];
