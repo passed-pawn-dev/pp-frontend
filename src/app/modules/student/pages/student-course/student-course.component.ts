@@ -122,14 +122,14 @@ export class StudentCourseComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         this.courseService
-          .getById(params.get('id')!)
+          .getById(params.get('courseId')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             this.course.set(res);
             this.cdRef.detectChanges();
           });
         this.courseService
-          .getReviews(params.get('id')!)
+          .getReviews(params.get('courseId')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             this.reviews = res;
@@ -155,7 +155,7 @@ export class StudentCourseComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         this.courseService
-          .buy(params.get('id')!)
+          .buy(params.get('courseId')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: (_) =>

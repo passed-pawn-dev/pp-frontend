@@ -25,71 +25,44 @@ export const STUDENT_ROUTES: Route[] = [
         redirectTo: 'my-courses',
         pathMatch: 'full'
       },
-      // {
-      //   path: 'my-coaches',
-      //   component: StudentMyCoachesComponent
-      // },
-      // {
-      //   path: 'my-coaches/:id',
-      //   component: StudentMyCoachComponent
-      // },
       {
         path: 'my-courses',
         component: StudentMyCoursesComponent
       },
       {
-        path: 'my-courses/:id',
+        path: 'my-courses/:courseId',
         component: StudentMyCourseComponent,
         resolve: {
           course: studentBoughtCourseResolver
         }
       },
-      // {
-      //   path: 'my-courses/:id/lessons',
-      //   component: StudentLessonsComponent,
-      //   children: [
-      //     {
-      //       path: '',
-      //       redirectTo: '1',
-      //       pathMatch: 'full'
-      //     },
-      //     {
-      //       path: ':id',
-      //       component: StudentLessonDetailsComponent
-      //     }
-      //   ]
-      // },
       {
-        path: 'my-courses/:id/lesson/:lessonId/puzzle/:exerciseId',
+        path: 'my-courses/:courseId/lesson/:lessonId/puzzle/:exerciseId',
         component: StudentSolveExerciseComponent,
         resolve: {
           exercise: studentExerciseResolver
         }
       },
       {
-        path: 'my-courses/:id/lesson/:lessonId/quiz/:quizId',
+        path: 'my-courses/:courseId/lesson/:lessonId/quiz/:quizId',
         component: StudentSolveQuizComponent,
         resolve: {
           quiz: studentQuizResolver
         }
       },
       {
-        path: 'my-courses/:id/lesson/:lessonId/example/:exampleId',
+        path: 'my-courses/:courseId/lesson/:lessonId/example/:exampleId',
         component: StudentExampleComponent,
         resolve: {
           example: studentExampleResolver
         }
       },
-      // {
-      //   path: 'my-games',
-      //   component: StudentMyGamesComponent
-      // },
       {
         path: 'courses',
         component: StudentCoursesComponent
       },
       {
-        path: 'courses/:id',
+        path: 'courses/:courseId',
         component: StudentCourseComponent,
         resolve: {
           course: studentCourseResolver
@@ -102,10 +75,6 @@ export const STUDENT_ROUTES: Route[] = [
           coachProfile: studentCoachProfileResolver
         }
       }
-      // {
-      //   path: 'profile',
-      //   component: StudentMyProfileComponent
-      // }
     ]
   }
 ];

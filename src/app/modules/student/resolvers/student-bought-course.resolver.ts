@@ -10,7 +10,7 @@ export const studentBoughtCourseResolver: ResolveFn<MyCourseDetails> = (
   const courseService = inject(CourseService);
   const router = inject(Router);
 
-  const courseId = route.paramMap.get('id')!;
+  const courseId = route.paramMap.get('courseId')!;
   return courseService.getBoughtById(courseId).pipe(
     catchError((_) => {
       router.navigate(['/404']);
