@@ -1,0 +1,388 @@
+@use 'variables' as *;
+
+@use 'sass:color';
+
+.content-container {
+  display: flex;
+  width: 60rem;
+  margin: 0 auto;
+
+  .header {
+    font-size: $font-M;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid $border-secondary;
+    font-size: $font-S;
+    padding: 0.5rem;
+    height: 2.6rem;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+  }
+
+  textarea {
+    resize: none;
+    height: calc(1.2rem * 5 + 1rem);
+  }
+
+  .chessboard-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 1rem;
+    min-width: 20rem;
+    padding-top: 20rem;
+    // border: 3px solid blue;
+
+    .operation-btn {
+      border: none;
+      background-color: transparent;
+      color: $primary;
+      font-size: $font-S;
+      border-radius: 0.5rem;
+      width: fit-content;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      // border: 1px solid;
+
+      &:hover {
+        background-color: color.adjust($primary, $lightness: 40%);
+      }
+    }
+  }
+
+  .chess-content {
+    width: 100%;
+    // border: 1px solid red;
+
+    .main-game-content {
+      display: flex;
+      // gap: 1rem;
+      // margin-left: calc(50% - 26.5rem);
+      // max-width: 53rem;
+      width: 100%;
+      gap: 1rem;
+      // border: 3px solid red;
+
+      .moves-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        // justify-content: space-between;
+        padding: 1rem;
+        background-color: white;
+        border-radius: 1rem;
+        // border: 3px solid green;
+
+        .nav {
+          display: flex;
+          gap: 1rem;
+
+          .header {
+            margin-bottom: 0.5rem;
+          }
+
+          .open {
+            color: black;
+            border-bottom: 3px solid $primary;
+          }
+        }
+
+        .form-inputs {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+
+          .lable {
+            color: $text-secondary;
+          }
+        }
+
+        .moves-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 100%;
+          gap: 1rem;
+
+          .btn-group {
+            display: flex;
+            justify-content: space-between;
+            // border: 1px solid;
+
+            .square-flex {
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+
+              .square {
+                background-color: $background;
+                width: 2.6rem;
+                height: 2.6rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 0.25rem;
+                // border: 1px solid;
+              }
+
+              .desc {
+                font-size: $font-XS;
+              }
+            }
+          }
+
+          .move-list {
+            // height: 100%;
+            flex: 1;
+            display: flex;
+            gap: 0.5rem;
+            // border: 1px solid;
+
+            .down-arrow {
+              height: inherit;
+              top: 0;
+              left: 0;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              position: relative;
+
+              div {
+                height: calc((100% - 0.25rem));
+                width: 2px;
+                background-color: $text-secondary;
+                border-top-right-radius: 1rem;
+                border-top-left-radius: 1rem;
+              }
+
+              img {
+                height: 0.5rem;
+                left: 50%;
+              }
+            }
+          }
+        }
+      }
+
+      .chessboard {
+        aspect-ratio: 1/1;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        // max-width: 40rem;
+        position: relative;
+        // width: 100%;
+        // width: 40rem;
+        width: 32rem;
+        // border: 1px solid red;
+        border-radius: 1rem;
+        overflow: hidden;
+        // border: 3px solid purple;
+
+        .chessboard-rank {
+          bottom: 0.25rem;
+          font-weight: 600;
+          position: absolute;
+          right: 0.25rem;
+        }
+
+        .chessboard-file {
+          font-weight: 600;
+          left: 0.25rem;
+          position: absolute;
+          top: 0.25rem;
+        }
+
+        .chessboard-field {
+          aspect-ratio: 1/1;
+          height: 100%;
+          max-height: 5rem;
+          max-width: 5rem;
+          position: relative;
+          width: 100%;
+
+          .chessboard-field-content {
+            display: grid;
+            height: 100%;
+            padding-bottom: 0.25rem;
+            place-content: center;
+
+            &:has(.safe-square) {
+              cursor: pointer;
+            }
+
+            &:has(.chessboard-chess-piece) {
+              cursor: pointer;
+            }
+
+            .selected-square {
+              height: 100%;
+              width: 100%;
+            }
+
+            img {
+              transform: scale(1.5);
+            }
+          }
+
+          .king-in-check {
+            background-color: $king-in-check-background;
+          }
+        }
+
+        .safe-square {
+          border-radius: 50%;
+          height: 1.625rem;
+          left: calc(50% - 0.8125rem);
+          pointer-events: none;
+          position: absolute;
+          top: calc(50% - 0.8125rem);
+          width: 1.625rem;
+          z-index: 100;
+        }
+
+        .close-promotion-dialog {
+          cursor: pointer;
+          left: calc(50% - 0.875rem);
+          position: absolute;
+          top: 0;
+          transform: scale(3);
+        }
+
+        .promotion-dialog {
+          box-sizing: content-box;
+          display: flex;
+          height: 5rem;
+          justify-content: space-between;
+          max-width: 40rem;
+          padding-right: 0.25rem;
+          padding-top: 2rem;
+          position: relative;
+        }
+
+        .promotion-piece {
+          cursor: pointer;
+          display: grid;
+          height: 5rem;
+          place-content: center;
+          width: 5rem;
+          img {
+            transform: scale(1.5);
+          }
+        }
+
+        .promotion-dialog-wrapper {
+          height: 7rem;
+        }
+
+        img {
+          user-select: none;
+        }
+      }
+    }
+
+    .chessboard-fen-load-input {
+      padding: 1rem;
+      background-color: white;
+      border-radius: 1rem;
+      margin-top: 1rem;
+      // border: 3px solid pink;
+
+      .header {
+        margin-bottom: 0.5rem;
+      }
+
+      .content {
+        display: flex;
+        gap: 0.5rem;
+
+        .fen-group {
+          width: 100%;
+
+          // input {
+          //   width: 100%;
+          //   box-sizing: border-box;
+          //   border: 1px solid $border-secondary;
+          //   border-radius: 0.5rem;
+          //   height: 2.6rem;
+          //   padding-left: 0.5rem;
+          // }
+        }
+
+        button {
+          white-space: nowrap;
+        }
+      }
+    }
+
+    .loading-overlay {
+      height: calc(100vh - 13rem);
+      position: absolute;
+      width: 40rem;
+      z-index: 100;
+    }
+  }
+}
+
+@for $row from 1 through 8 {
+  @for $col from 1 through 8 {
+    .chessboard {
+      .chessboard-field:nth-child(#{$col+($row - 1) * 8}) {
+        background-color: if(
+          ($row + $col) % 2 == 0,
+          $white-square-background,
+          $black-square-background
+        );
+
+        .selected-square,
+        .last-move {
+          background-color: if(
+            ($row + $col) % 2 == 0,
+            $white-square-selected-background,
+            $black-square-selected-background
+          );
+        }
+
+        .safe-square {
+          background-color: if(
+            ($row + $col) % 2 == 0,
+            $white-square-valid-move-circle-color,
+            $black-square-valid-move-circle-color
+          );
+        }
+
+        .piece-square {
+          .safe-square {
+            background-color: transparent;
+            border: if(
+              ($row + $col) % 2 == 0,
+              0.5rem solid $white-square-valid-move-circle-color,
+              0.5rem solid $black-square-valid-move-circle-color
+            );
+            border-radius: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            width: 100%;
+          }
+        }
+
+        .chessboard-file,
+        .chessboard-rank {
+          color: if(
+            ($row + $col) % 2 == 0,
+            $black-square-background,
+            $white-square-background
+          );
+        }
+      }
+    }
+  }
+}
