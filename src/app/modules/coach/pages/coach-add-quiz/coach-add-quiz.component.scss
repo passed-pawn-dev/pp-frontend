@@ -381,3 +381,13 @@
 .include-chessboard-input {
   accent-color: $primary;
 }
+
+.elephant-tile {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  min-width: 34rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
