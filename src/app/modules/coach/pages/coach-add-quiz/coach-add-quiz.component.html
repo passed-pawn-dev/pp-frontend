@@ -89,10 +89,15 @@
 
           @if (includeChessboard) {
             <app-chessboard-editor
-              [showElephant]="true"
               [useArrowsAndHighlights]="false"
               (newFenEvent)="onNewFen($event)"
-            ></app-chessboard-editor>
+            >
+              <div class="elephant-tile">
+                <app-talking-bob
+                  text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio sunt laborum numquam rerum soluta vel, aperiam enim cupiditate fugiat repellendus."
+                />
+              </div>
+            </app-chessboard-editor>
           }
         </div>
         <!-- step 3 -->
@@ -146,7 +151,6 @@
                   [touched]="quizForm.controls.question.touched"
                 />
               </div>
-
 
               <div>
                 <div class="label">Answers (2 - 10)</div>
