@@ -1,0 +1,32 @@
+<!-- TODO - do more styling -->
+<div class="file-upload-container">
+  <div class="flex justify-c-center">
+    <input
+      #inputFile
+      type="file"
+      [accept]="acceptedFileTypes"
+      (change)="onFileChange($event)"
+    />
+    <!-- TODO - replace with fileupload icon -->
+    <button type="button" (click)="inputFile.click()">
+      <img src="icons/upload-icon.png" alt="File upload icon" />
+    </button>
+  </div>
+  @if (filePreviewSrc !== null) {
+    <div class="flex justify-c-center align-i-center space-top-2">
+      <span class="space-right-1">Filename:</span>
+      <span class="font-XS bold space-right-4">{{ file!.name }}</span>
+      <span class="space-right-1">Filesize:</span>
+      <span class="font-XS bold">{{ file!.size | fileSize }}</span>
+    </div>
+    @if (file!.type.startsWith('video')) {
+      <div class="file-preview-frame">
+        <video alt="Selected video preview" controls [src]="filePreviewSrc"></video>
+      </div>
+    } @else if (file!.type.startsWith('image')) {
+      <div class="file-preview-frame">
+        <img alt="Selected image preview" [src]="filePreviewSrc" />
+      </div>
+    }
+  }
+</div>

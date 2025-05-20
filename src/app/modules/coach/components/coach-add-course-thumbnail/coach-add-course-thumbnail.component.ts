@@ -5,12 +5,12 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CourseService } from '../../service/course.service';
-import { CoachUploadImageComponent } from '../coach-upload-image/coach-upload-image.component';
+import { FileUploadComponent } from '../../../shared/components/file-upload/file-upload.component';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 
 @Component({
   selector: 'app-coach-add-course-thumbnail',
-  imports: [CoachUploadImageComponent, ValidationErrorsComponent, ReactiveFormsModule],
+  imports: [FileUploadComponent, ValidationErrorsComponent, ReactiveFormsModule],
   templateUrl: './coach-add-course-thumbnail.component.html',
   styleUrl: './coach-add-course-thumbnail.component.scss'
 })

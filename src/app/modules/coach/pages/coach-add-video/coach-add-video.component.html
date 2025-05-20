@@ -1,14 +1,14 @@
 <article class="form-wrapper">
   <form class="vertical-form vertical-form-fields" [formGroup]="addVideoForm">
     <div>
-      <app-coach-upload-image
+      <app-file-upload
         [acceptedFileTypes]="acceptedFileTypes"
         (fileSelected)="fileSelected($event)"
       />
       <app-validation-errors
-        [errors]="addVideoForm.controls['video'].errors"
-        [dirty]="addVideoForm.dirty"
-        [touched]="addVideoForm.touched"
+        [errors]="addVideoForm.controls.video.errors"
+        [dirty]="addVideoForm.controls.video.dirty"
+        [touched]="addVideoForm.controls.video.touched"
       />
     </div>
     <div>

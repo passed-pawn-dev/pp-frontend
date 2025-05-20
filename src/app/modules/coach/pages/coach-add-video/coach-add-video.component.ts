@@ -1,7 +1,6 @@
 import { Component, DestroyRef, inject, Input } from '@angular/core';
-import { CoachUploadImageComponent } from '../../components/coach-upload-image/coach-upload-image.component';
+import { FileUploadComponent } from '../../../shared/components/file-upload/file-upload.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CourseService } from '../../service/course.service';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
@@ -11,7 +10,7 @@ import { fileTypeValidator } from '../../../shared/validators/file-type-validato
 @Component({
   selector: 'app-coach-add-video',
   standalone: true,
-  imports: [CoachUploadImageComponent, ValidationErrorsComponent, ReactiveFormsModule],
+  imports: [FileUploadComponent, ValidationErrorsComponent, ReactiveFormsModule],
   templateUrl: './coach-add-video.component.html',
   styleUrl: './coach-add-video.component.scss'
 })
@@ -21,7 +20,6 @@ export class CoachAddVideoComponent {
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
   private courseService = inject(CourseService);
-  private readonly route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
   protected acceptedFileTypes = ['video/*'];
   protected addVideoForm = this.fb.group({
@@ -79,8 +77,8 @@ export class CoachAddVideoComponent {
   }
 
   protected fileSelected(file: any): void {
-    this.addVideoForm.markAsDirty();
-    this.addVideoForm.markAsTouched();
+    this.addVideoForm.controls.video.markAsDirty();
+    this.addVideoForm.controls.video.markAsTouched();
 
     this.addVideoForm.patchValue({
       video: file
