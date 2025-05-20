@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { QuizDetails } from '../../models/QuizDetails';
 import { QuizComponent } from '../../../shared/components/quiz/quiz.component';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-student-solve-quiz',
@@ -11,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class StudentSolveQuizComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private location = inject(Location);
 
   protected quiz = signal<QuizDetails>({
     id: '',
@@ -24,6 +26,11 @@ export class StudentSolveQuizComponent implements OnInit {
     const quiz = this.route.snapshot.data['quiz'];
     this.quiz.set(quiz);
   }
+
+  protected back(): void {
+    this.location.back();
+  }
+
   // protected quiz = signal<QuizDetails>({
   //   id: '2',
   //   title: 'Szewczyk',
