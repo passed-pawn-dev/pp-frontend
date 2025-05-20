@@ -22,7 +22,11 @@
     </div>
     <div>
       <label for="description">Description</label>
-      <input type="text" class="standard-input" formControlName="description" />
+      <textarea
+        type="text"
+        class="standard-textarea video-description"
+        formControlName="description"
+      ></textarea>
       <app-validation-errors
         [errors]="addVideoForm.controls.description.errors"
         [dirty]="addVideoForm.controls.description.dirty"
@@ -44,7 +48,7 @@
     <button
       type="button"
       class="primary-btn small"
-      [disabled]="!addVideoForm.valid"
+      [disabled]="!addVideoForm.valid || submitting"
       (click)="onSubmit()"
     >
       Submit

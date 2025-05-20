@@ -6,6 +6,8 @@ import { CourseService } from '../../service/course.service';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { fileTypeValidator } from '../../../shared/validators/file-type-validator';
+import { fileSizeValidator } from '../../../shared/validators/file-size-validator';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-coach-add-video',
@@ -17,11 +19,14 @@ import { fileTypeValidator } from '../../../shared/validators/file-type-validato
 export class CoachAddVideoComponent {
   @Input({ required: true }) public lessonId!: string;
 
+  protected submitting = false;
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
   private courseService = inject(CourseService);
   private destroyRef = inject(DestroyRef);
-  protected acceptedFileTypes = ['video/*'];
+  private ref = inject(DynamicDialogRef);
+  // supported video types in html5
+  protected acceptedFileTypes = ['video/mp4', 'video/webm', 'video/ogg'];
   protected addVideoForm = this.fb.group({
     video: [
       null,
@@ -29,8 +34,9 @@ export class CoachAddVideoComponent {
         Validators.required,
         fileTypeValidator(
           this.acceptedFileTypes,
-          'Please provide a valid video file type, e.g. mp4, mkv'
-        )
+          'Please provide a valid video file type, e.g. mp4, webm or ogg'
+        ),
+        fileSizeValidator(100 * 1024 * 1024)
       ]
     ],
     title: [
@@ -54,6 +60,8 @@ export class CoachAddVideoComponent {
       formData.append('title', this.addVideoForm.controls.title.value!);
       formData.append('description', this.addVideoForm.controls.description.value!);
 
+      this.submitting = true;
+
       this.courseService
         .addVideo(this.lessonId, formData)
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -64,6 +72,9 @@ export class CoachAddVideoComponent {
               summary: 'Success',
               detail: 'Thumbnail updated successfully'
             });
+
+            this.submitting = false;
+            this.ref.close();
           },
           error: () => {
             this.messageService.add({
@@ -71,6 +82,8 @@ export class CoachAddVideoComponent {
               summary: 'Fail',
               detail: 'Failed to update thumbnail'
             });
+
+            this.submitting = false;
           }
         });
     }

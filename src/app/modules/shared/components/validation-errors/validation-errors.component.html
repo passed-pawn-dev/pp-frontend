@@ -21,5 +21,11 @@
     @if (state.fileTypeError()) {
       <div>{{ this.errors()!.fileType!.message }}</div>
     }
+    @if (state.fileSizeError()) {
+      <div>
+        File provided ({{ this.errors()!.fileSize!.actualSize | fileSize }}) exceeds
+        allowed size of {{ this.errors()!.fileSize!.requiredSize | fileSize }}
+      </div>
+    }
   </div>
 }
