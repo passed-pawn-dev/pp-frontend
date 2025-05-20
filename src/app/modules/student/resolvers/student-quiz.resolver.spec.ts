@@ -2,9 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
 import { studentQuizResolver } from './student-quiz.resolver';
+import { QuizDetails } from '../models/QuizDetails';
 
 describe('studentQuizResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) =>
+  const executeResolver: ResolveFn<QuizDetails> = (...resolverParameters) =>
     TestBed.runInInjectionContext(() => studentQuizResolver(...resolverParameters));
 
   beforeEach(() => {
