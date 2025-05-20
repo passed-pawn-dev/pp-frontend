@@ -27,6 +27,7 @@ export class AiChatComponent {
   });
 
   protected onSubmit(): void {
+    if (this.questionForm.invalid) return;
     const question: string = this.questionForm.getRawValue().question!;
     this.questionForm.get('question')?.disable();
     this.questionForm.reset();
