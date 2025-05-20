@@ -8,6 +8,8 @@
 
 .top {
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .container {
@@ -19,9 +21,6 @@
   background-color: white;
   border-radius: 1rem;
   padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .right {

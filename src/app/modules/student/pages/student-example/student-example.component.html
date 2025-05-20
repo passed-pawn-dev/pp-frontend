@@ -1,7 +1,12 @@
 <div class="page">
   <div class="tile top">
-    <h3>{{ example.title }}</h3>
-    <div>{{ example.initialDescription }}</div>
+    <div>
+      <h3>{{ example.title }}</h3>
+      <div>{{ example.initialDescription }}</div>
+    </div>
+    <div>
+      <button class="secondary-btn" type="button" (click)="back()">Back</button>
+    </div>
   </div>
   <div class="container">
     <app-display-chessboard

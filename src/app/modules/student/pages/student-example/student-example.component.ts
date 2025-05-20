@@ -3,6 +3,7 @@ import { DisplayChessboardComponent } from '../../../shared/components/display-c
 import { ExampleDetails } from '../../models/ExampleDetails';
 import { ActivatedRoute } from '@angular/router';
 import { Severity } from '../../../shared/enums/severities.enum';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-student-example',
@@ -12,6 +13,7 @@ import { Severity } from '../../../shared/enums/severities.enum';
 })
 export class StudentExampleComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private location = inject(Location);
 
   protected example: ExampleDetails = {
     id: '1',
@@ -50,6 +52,10 @@ export class StudentExampleComponent implements OnInit {
       });
       this.hightlights.push(newHighlights);
     });
+  }
+
+  protected back(): void {
+    this.location.back();
   }
 
   @HostListener('window:keydown', ['$event'])
