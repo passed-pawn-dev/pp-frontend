@@ -1,7 +1,6 @@
 import { Route } from '@angular/router';
 import { CoachComponent } from './coach/coach.component';
 import { CoachCoursesListComponent } from './pages/coach-courses-list/coach-courses-list.component';
-import { CoachMyProfileComponent } from './pages/coach-my-profile/coach-my-profile.component';
 import { CoachCourseDetailsComponent } from './pages/coach-course-details/coach-course-details.component';
 import { CoachCourseFormComponent } from './pages/coach-course-form/coach-course-form.component';
 import { CoachLessonFormComponent } from './pages/coach-lesson-form/coach-lesson-form.component';
@@ -32,41 +31,41 @@ export const COACH_ROUTES: Route[] = [
         component: CoachCourseFormComponent
       },
       {
-        path: 'courses/:id',
+        path: 'courses/:courseId',
         component: CoachCourseDetailsComponent,
         resolve: {
           course: coachCourseResolver
         }
       },
       {
-        path: 'courses/:id/lesson/:lessonId/exercise/add',
+        path: 'courses/:courseId/lesson/:lessonId/exercise/add',
         component: CoachAddExerciseComponent
       },
       {
-        path: 'courses/:id/lesson/:lessonId/quiz/add',
+        path: 'courses/:courseId/lesson/:lessonId/quiz/add',
         component: CoachAddQuizComponent
       },
       {
-        path: 'courses/:id/lesson/:lessonId/example/add',
+        path: 'courses/:courseId/lesson/:lessonId/example/add',
         component: CoachAddExampleComponent
       },
       {
-        path: 'courses/:id/lesson/:lessonId/video/add',
+        path: 'courses/:courseId/lesson/:lessonId/video/add',
         component: CoachAddVideoComponent
       },
       {
-        path: 'courses/:id/lesson/:lessonId/exercise/:exerciseId',
+        path: 'courses/:courseId/lesson/:lessonId/exercise/:exerciseId',
         component: CoachExercisePreviewComponent,
         resolve: {
           exercise: coachExerciseResolver
         }
       },
       {
-        path: 'courses/:id/lessons/new',
+        path: 'courses/:courseId/lessons/new',
         component: CoachLessonFormComponent
       },
       {
-        path: 'courses/:id/edit',
+        path: 'courses/:courseId/edit',
         component: CoachCourseFormComponent,
         resolve: {
           course: coachCourseResolver

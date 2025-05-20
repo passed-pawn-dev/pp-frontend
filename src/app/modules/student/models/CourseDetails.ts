@@ -1,5 +1,4 @@
 import { Coach } from './Coach';
-import { CourseReview } from './CourseReview';
 import { Lesson } from './Lesson';
 
 export interface CourseDetails {

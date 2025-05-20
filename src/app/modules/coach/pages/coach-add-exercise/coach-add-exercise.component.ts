@@ -15,7 +15,6 @@ import { ValidationErrorsComponent } from '../../../shared/components/validation
 import { PreviewMode } from '../../../shared/enums/preview-mode.enum';
 import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-coach-add-exercise',
@@ -86,13 +85,12 @@ export class CoachAddExerciseComponent implements OnInit {
           });
           this.back();
         },
-        error: (err) => {
+        error: (_) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Failure',
             detail: 'Puzzle could not be created'
           });
-          // console.log(err);
         }
       });
   }

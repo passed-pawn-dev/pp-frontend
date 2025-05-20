@@ -1,18 +1,12 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Gender, genderToLabelMapping } from '../../../shared/enums/gender.enum';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { enumToObjectArray } from '../../../shared/utils/enum-to-object-array';
 import { DatePickerModule } from 'primeng/datepicker';
-import {
-  AutoCompleteCompleteEvent,
-  AutoCompleteModule,
-  AutoCompleteSelectEvent
-} from 'primeng/autocomplete';
-import countries from '../../../../../../public/countries.json';
+import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { Nationality } from '../../../shared/models/Nationality';
 import { NationalityService } from '../../../shared/service/nationality.service';
 import { Coach } from '../../models/Coach';

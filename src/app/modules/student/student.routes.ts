@@ -1,15 +1,9 @@
 import { Route } from '@angular/router';
 import { StudentComponent } from './student.component';
-import { StudentMyCoachesComponent } from './pages/student-my-coaches/student-my-coaches.component';
 import { StudentMyCoursesComponent } from './pages/student-my-courses/student-my-courses.component';
-import { StudentMyGamesComponent } from './pages/student-my-games/student-my-games.component';
 import { StudentMyCourseComponent } from './pages/student-my-course/student-my-course.component';
-import { StudentLessonDetailsComponent } from './pages/student-lesson-details/student-lesson-details.component';
-import { StudentLessonsComponent } from './pages/student-lessons/student-lessons.component';
-import { StudentMyCoachComponent } from './pages/student-my-coach/student-my-coach.component';
 import { StudentCoursesComponent } from './pages/student-courses/student-courses.component';
 import { StudentCourseComponent } from './pages/student-course/student-course.component';
-import { StudentMyProfileComponent } from './pages/student-my-profile/student-my-profile.component';
 import { StudentSolveExerciseComponent } from './pages/student-solve-exercise/student-solve-exercise.component';
 import { studentExerciseResolver } from './resolvers/student-exercise.resolver';
 import { StudentSolveQuizComponent } from './pages/student-solve-quiz/student-solve-quiz.component';
@@ -31,71 +25,44 @@ export const STUDENT_ROUTES: Route[] = [
         redirectTo: 'my-courses',
         pathMatch: 'full'
       },
-      // {
-      //   path: 'my-coaches',
-      //   component: StudentMyCoachesComponent
-      // },
-      // {
-      //   path: 'my-coaches/:id',
-      //   component: StudentMyCoachComponent
-      // },
       {
         path: 'my-courses',
         component: StudentMyCoursesComponent
       },
       {
-        path: 'my-courses/:id',
+        path: 'my-courses/:courseId',
         component: StudentMyCourseComponent,
         resolve: {
           course: studentBoughtCourseResolver
         }
       },
-      // {
-      //   path: 'my-courses/:id/lessons',
-      //   component: StudentLessonsComponent,
-      //   children: [
-      //     {
-      //       path: '',
-      //       redirectTo: '1',
-      //       pathMatch: 'full'
-      //     },
-      //     {
-      //       path: ':id',
-      //       component: StudentLessonDetailsComponent
-      //     }
-      //   ]
-      // },
       {
-        path: 'my-courses/:id/lesson/:lessonId/puzzle/:exerciseId',
+        path: 'my-courses/:courseId/lesson/:lessonId/puzzle/:exerciseId',
         component: StudentSolveExerciseComponent,
         resolve: {
           exercise: studentExerciseResolver
         }
       },
       {
-        path: 'my-courses/:id/lesson/:lessonId/quiz/:quizId',
+        path: 'my-courses/:courseId/lesson/:lessonId/quiz/:quizId',
         component: StudentSolveQuizComponent,
         resolve: {
           quiz: studentQuizResolver
         }
       },
       {
-        path: 'my-courses/:id/lesson/:lessonId/example/:exampleId',
+        path: 'my-courses/:courseId/lesson/:lessonId/example/:exampleId',
         component: StudentExampleComponent,
         resolve: {
           example: studentExampleResolver
         }
       },
-      // {
-      //   path: 'my-games',
-      //   component: StudentMyGamesComponent
-      // },
       {
         path: 'courses',
         component: StudentCoursesComponent
       },
       {
-        path: 'courses/:id',
+        path: 'courses/:courseId',
         component: StudentCourseComponent,
         resolve: {
           course: studentCourseResolver
@@ -108,10 +75,6 @@ export const STUDENT_ROUTES: Route[] = [
           coachProfile: studentCoachProfileResolver
         }
       }
-      // {
-      //   path: 'profile',
-      //   component: StudentMyProfileComponent
-      // }
     ]
   }
 ];

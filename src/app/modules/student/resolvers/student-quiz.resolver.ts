@@ -1,17 +1,11 @@
-import {
-  ActivatedRouteSnapshot,
-  ResolveFn,
-  Router,
-  RouterStateSnapshot
-} from '@angular/router';
+import { ActivatedRouteSnapshot, ResolveFn, Router } from '@angular/router';
 import { QuizDetails } from '../models/QuizDetails';
 import { Observable, catchError, of } from 'rxjs';
 import { inject } from '@angular/core';
 import { CourseService } from '../service/course.service';
 
 export const studentQuizResolver: ResolveFn<QuizDetails> = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  route: ActivatedRouteSnapshot
 ): Observable<QuizDetails> => {
   const courseService = inject(CourseService);
   const router = inject(Router);

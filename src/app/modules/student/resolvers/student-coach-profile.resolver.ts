@@ -16,7 +16,7 @@ export const studentCoachProfileResolver: ResolveFn<CoachProfile> = (
   const coachService = inject(CoachService);
   const router = inject(Router);
 
-  const coachId = route.paramMap.get('id')!;
+  const coachId = route.paramMap.get('courseId')!;
   return coachService.getProfile(coachId).pipe(
     catchError((_) => {
       router.navigate(['/404']);

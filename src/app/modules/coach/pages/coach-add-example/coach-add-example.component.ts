@@ -1,17 +1,9 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  OnInit,
-  computed,
-  inject
-} from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { ChessboardEditorComponent } from '../../../shared/components/chessboard-editor/chessboard-editor.component';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
@@ -158,7 +150,7 @@ export class CoachAddExampleComponent implements OnInit {
           });
           this.location.back();
         },
-        error: (err) => {
+        error: (_) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Failure',

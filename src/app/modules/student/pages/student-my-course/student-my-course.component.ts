@@ -2,13 +2,12 @@ import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { MyCourseDetails } from '../../models/MyCourseDetails';
 import { StudentCourseReviewFormComponent } from '../../components/student-course-review-form/student-course-review-form.component';
 import { CourseService } from '../../service/course.service';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Exercise } from '../../models/Exercise';
 import { ButtonModule } from 'primeng/button';
 import { Quiz } from '../../models/Quiz';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
 import { DialogModule } from 'primeng/dialog';
 import { StudentLessonComponent } from '../../components/student-lesson/student-lesson.component';
 import { LessonStatus } from '../../enums/LessonStatus';
@@ -93,7 +92,7 @@ export class StudentMyCourseComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((params) => {
             this.courseService
-              .signOut(params.get('id')!)
+              .signOut(params.get('courseId')!)
               .pipe(takeUntilDestroyed(this.destroyRef))
               .subscribe({
                 next: (_) =>

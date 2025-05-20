@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Button } from 'primeng/button';
 import {
   Color,
   TCheckState,
@@ -51,7 +50,7 @@ export class DisplayChessboardComponent implements OnInit, OnChanges {
 
   protected pieceImagePaths = pieceImagePaths;
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(_changes: SimpleChanges): void {
     const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
     this.chessboard.setBoard({
       board: boardFromFen,
@@ -65,12 +64,12 @@ export class DisplayChessboardComponent implements OnInit, OnChanges {
   public ngOnInit(): void {
     this.chessboardView = this.chessboard.chessboardView;
     const [
-      position,
+      _position,
       activeColor,
-      castling,
-      enPassantSquare,
-      halfMoveClock,
-      fullMoveNumber
+      _castling,
+      _enPassantSquare,
+      _halfMoveClock,
+      _fullMoveNumber
     ] = this.startingFen.split(' ');
     const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
     this.chessboard.setBoard({

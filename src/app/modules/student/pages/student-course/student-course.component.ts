@@ -2,18 +2,16 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  Input,
   OnInit,
   Signal,
   computed,
-  input,
   signal
 } from '@angular/core';
 import { CourseDetails } from '../../models/CourseDetails';
 import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Button, ButtonModule } from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -134,14 +132,14 @@ export class StudentCourseComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         this.courseService
-          .getById(params.get('id')!)
+          .getById(params.get('courseId')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             this.course.set(res);
             this.cdRef.detectChanges();
           });
         this.courseService
-          .getReviews(params.get('id')!)
+          .getReviews(params.get('courseId')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             this.reviews = res;
@@ -167,7 +165,7 @@ export class StudentCourseComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         this.courseService
-          .getPaymentIntent(params.get('id')!)
+          .getPaymentIntent(params.get('courseId')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: (clientSecret) => {

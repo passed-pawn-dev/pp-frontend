@@ -1,6 +1,5 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { CourseService } from '../../service/course.service';
@@ -40,7 +39,7 @@ export class CoachLessonFormComponent {
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
-        this.lessonId = params.get('id')!;
+        this.lessonId = params.get('courseId')!;
         this.courseService
           .addLesson(this.lessonId, this.lessonForm.getRawValue())
           .pipe(takeUntilDestroyed(this.destroyRef))

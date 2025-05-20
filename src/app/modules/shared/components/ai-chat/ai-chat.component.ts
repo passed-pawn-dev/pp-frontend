@@ -1,22 +1,5 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  DestroyRef,
-  ElementRef,
-  OnChanges,
-  OnInit,
-  QueryList,
-  SimpleChanges,
-  ViewChild,
-  inject
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { Component, DestroyRef, ElementRef, ViewChild, inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidationErrorsComponent } from '../validation-errors/validation-errors.component';
 import { AiChatService } from '../../services/ai-chat.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

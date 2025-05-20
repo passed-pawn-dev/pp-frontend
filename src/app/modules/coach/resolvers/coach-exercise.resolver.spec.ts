@@ -2,10 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
 import { coachExerciseResolver } from './coach-exercise.resolver';
+import { Puzzle } from '../models/Puzzle';
 
 describe('coachExerciseResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) => 
-      TestBed.runInInjectionContext(() => coachExerciseResolver(...resolverParameters));
+  const executeResolver: ResolveFn<Puzzle> = (...resolverParameters) =>
+    TestBed.runInInjectionContext(() => coachExerciseResolver(...resolverParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

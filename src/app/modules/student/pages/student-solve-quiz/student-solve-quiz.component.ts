@@ -1,11 +1,5 @@
-import { Component, OnInit, Signal, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { QuizDetails } from '../../models/QuizDetails';
-import { DisplayChessboardComponent } from '../../../shared/components/display-chessboard/display-chessboard.component';
-import { Pawn } from '../../../../chess-logic/pieces/pawn';
-import { Color, MoveType } from '../../../../chess-logic/models';
-import { Bishop } from '../../../../chess-logic/pieces/bishop';
-import { Queen } from '../../../../chess-logic/pieces/queen';
-import { Knight } from '../../../../chess-logic/pieces/knight';
 import { QuizComponent } from '../../../shared/components/quiz/quiz.component';
 import { ActivatedRoute } from '@angular/router';
 

@@ -160,7 +160,7 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
     }
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(_changes: SimpleChanges): void {
     if (this.startingPositionInput()) {
       this.resetToInputtedStartingPosition();
     } else {

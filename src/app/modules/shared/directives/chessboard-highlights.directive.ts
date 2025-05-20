@@ -28,7 +28,7 @@ export class ChessboardHighlightsDirective implements AfterViewInit, OnChanges {
     this.setHighlights();
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(_changes: SimpleChanges): void {
     if (this.appChessboardHighlights == null) {
       this.appChessboardHighlights = new Map([]);
     }

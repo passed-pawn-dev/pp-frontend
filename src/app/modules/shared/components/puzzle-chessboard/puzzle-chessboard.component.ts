@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Button } from 'primeng/button';
 import {
   Color,
   FenChar,
@@ -144,12 +143,12 @@ export class PuzzleChessboardComponent implements OnInit {
   public ngOnInit(): void {
     this.chessboardView = this.chessboard.chessboardView;
     const [
-      position,
+      _position,
       activeColor,
-      castling,
-      enPassantSquare,
-      halfMoveClock,
-      fullMoveNumber
+      _castling,
+      _enPassantSquare,
+      _halfMoveClock,
+      _fullMoveNumber
     ] = this.startingFen.split(' ');
     const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
     this.chessboard.setBoard({
