@@ -29,13 +29,15 @@ export class FileUploadComponent {
 
     this.fileSelected.emit(file);
 
-    if (file.type.startsWith('video') || file.type.startsWith('image')) {
+    if (
+      file.type.startsWith('video') ||
+      (file.type.startsWith('image') &&
+        validateFileAgainstAcceptTypes(file, this.acceptedFileTypes))
+    ) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (event) => {
-        if (validateFileAgainstAcceptTypes(file, this.acceptedFileTypes)) {
-          this.filePreviewSrc = event.target!.result;
-        }
+        this.filePreviewSrc = event.target!.result;
       };
     }
   }
