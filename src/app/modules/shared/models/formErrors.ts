@@ -6,4 +6,5 @@ export interface FormErrors {
   min?: { min: number; actual: number };
   max?: { min: number; actual: number };
   fileType?: { requiredTypes: string[]; actualType: string; message: string };
+  fileSize?: { requiredSize: number; actualSize: number };
 }

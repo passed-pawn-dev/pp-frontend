@@ -1,10 +1,11 @@
 import { Component, computed, input } from '@angular/core';
 import { FormErrors } from '../../models/formErrors';
+import { FileSizePipe } from '../../pipes/file-size.pipe';
 
 @Component({
   selector: 'app-validation-errors',
   standalone: true,
-  imports: [],
+  imports: [FileSizePipe],
   templateUrl: './validation-errors.component.html',
   styleUrl: './validation-errors.component.scss'
 })
@@ -24,6 +25,7 @@ export class ValidationErrorsComponent {
   private minValueError = computed(() => this.errors()?.min);
   private maxValueError = computed(() => this.errors()?.max);
   private fileTypeError = computed(() => this.errors()?.fileType);
+  private fileSizeError = computed(() => this.errors()?.fileSize);
 
   protected state = {
     markedForCheck: this.markedForCheck,
@@ -33,6 +35,7 @@ export class ValidationErrorsComponent {
     minLengthError: this.minLengthError,
     minValueError: this.minValueError,
     maxValueError: this.maxValueError,
-    fileTypeError: this.fileTypeError
+    fileTypeError: this.fileTypeError,
+    fileSizeError: this.fileSizeError
   };
 }

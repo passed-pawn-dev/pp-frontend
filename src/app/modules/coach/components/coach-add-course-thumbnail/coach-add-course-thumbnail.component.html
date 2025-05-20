@@ -1,6 +1,6 @@
 <article class="form-wrapper">
   <form [formGroup]="uploadForm">
-    <app-coach-upload-image
+    <app-file-upload
       [acceptedFileTypes]="acceptedFileTypes"
       (fileSelected)="fileSelected($event)"
     />

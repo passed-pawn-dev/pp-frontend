@@ -1,14 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FileSizePipe } from '../../pipes/file-size.pipe';
+import { validateFileAgainstAcceptTypes } from '../../validators/file-type-validator';
 
 @Component({
-  selector: 'app-coach-upload-image',
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './coach-upload-image.component.html',
-  styleUrl: './coach-upload-image.component.scss'
+  selector: 'app-file-upload',
+  imports: [CommonModule, ReactiveFormsModule, FileSizePipe],
+  templateUrl: './file-upload.component.html',
+  styleUrl: './file-upload.component.scss'
 })
-export class CoachUploadImageComponent {
+export class FileUploadComponent {
   @Output() public fileSelected = new EventEmitter<any>();
   @Input({ required: true }) public acceptedFileTypes!: string[];
 
@@ -27,7 +29,11 @@ export class CoachUploadImageComponent {
 
     this.fileSelected.emit(file);
 
-    if (file.type.startsWith('video') || file.type.startsWith('image')) {
+    if (
+      file.type.startsWith('video') ||
+      (file.type.startsWith('image') &&
+        validateFileAgainstAcceptTypes(file, this.acceptedFileTypes))
+    ) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (event) => {
