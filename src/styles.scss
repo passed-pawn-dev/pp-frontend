@@ -100,6 +100,25 @@ input {
   }
 }
 
+.icon-btn {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  border-radius: 0.25rem;
+
+  &:hover {
+    background-color: $primary-lighter;
+  }
+
+  img {
+    height: 1.5rem;
+  }
+}
+
 .secondary-btn {
   display: flex;
   align-items: center;
