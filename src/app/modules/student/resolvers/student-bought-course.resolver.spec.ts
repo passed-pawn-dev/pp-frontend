@@ -2,9 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
 import { studentBoughtCourseResolver } from './student-bought-course.resolver';
+import { MyCourseDetails } from '../models/MyCourseDetails';
 
 describe('studentBoughtCourseResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) =>
+  const executeResolver: ResolveFn<MyCourseDetails> = (...resolverParameters) =>
     TestBed.runInInjectionContext(() =>
       studentBoughtCourseResolver(...resolverParameters)
     );

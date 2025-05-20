@@ -96,7 +96,14 @@
         @for (element of elements(); track $index) {
           <a
             class="lesson-element"
-            [routerLink]="'lesson/' + lesson.id + '/quiz/' + element.id"
+            [routerLink]="
+              'lesson/' +
+              lesson.id +
+              '/' +
+              element.kind.toLowerCase() +
+              '/' +
+              element.id
+            "
           >
             <div class="lesson-element-label">
               <img [src]="kindToIcon.get(element.kind)" [alt]="element.kind" />

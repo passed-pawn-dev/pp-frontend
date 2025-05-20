@@ -9,7 +9,7 @@ export const studentExerciseResolver: ResolveFn<Exercise> = (
 ): Observable<Exercise> => {
   const courseService = inject(CourseService);
   const router = inject(Router);
-  const exerciseId = route.paramMap.get('excerciseId')!;
+  const exerciseId = route.paramMap.get('exerciseId')!;
 
   return courseService.getExerciseById(exerciseId).pipe(
     catchError((_) => {
