@@ -15,6 +15,6 @@ export class CarouselDirective {
 
   public left(): void {
     this.shift = { percentage: this.shift.percentage + 100, rem: this.shift.rem + 3 };
-    this.el.nativeElement.style.transform = `translateX(calc(${this.shift.percentage}% + ${this.shift.rem}rem)`;
+    this.el.nativeElement.style.transform = `translateX(calc(${this.shift.percentage}% + ${this.shift.rem}rem))`;
   }
 }
