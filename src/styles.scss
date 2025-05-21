@@ -64,16 +64,30 @@ input {
 }
 
 .standard-input,
-.standard-textarea {
+.standard-textarea,
+.standard-select {
+  background-color: white;
   border-radius: 0.5rem;
   border: 0.0625rem solid $border-secondary;
   font-family: 'Poppins', sans-serif;
   font-size: $font-S;
   font-style: normal;
   height: 2.5rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   width: 100%;
   resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &:focus-visible {
+    border: 0.0625rem solid $primary;
+  }
+
+  &.input-small {
+    box-sizing: border-box;
+    height: 2rem;
+    padding-top: 0.25rem;
+  }
 }
 
 .primary-btn {
@@ -147,17 +161,6 @@ input {
   &:hover {
     background-color: color.adjust($primary, $lightness: 40%);
   }
-}
-
-.calendar .p-calendar,
-.dropdown .p-dropdown {
-  width: 100%;
-}
-
-.inputNumber .p-inputNumber,
-.autoComplete .p-autoComplete {
-  width: 100%;
-  // nie działa
 }
 
 .paginator .p-paginator-page.p-paginator-page-selected {
@@ -302,4 +305,50 @@ input {
 
 .align-i-center {
   align-items: center;
+}
+
+.pg-autocomplete,
+.pg-input,
+.pg-inputnumber {
+  input.p-inputtext {
+    border-radius: 0.5rem;
+    border: 0.0625rem solid $border-secondary;
+    height: 2.5rem;
+
+    &:hover,
+    &:focus,
+    &:active {
+      box-shadow: none;
+    }
+  }
+  .p-inputnumber-button {
+    &.p-inputnumber-increment-button {
+      border-top-right-radius: 0.5rem;
+    }
+
+    &.p-inputnumber-decrement-button {
+      border-bottom-right-radius: 0.5rem;
+    }
+  }
+
+  &.w-small {
+    input.p-inputtext {
+      width: 6.5rem;
+    }
+  }
+
+  &.h-small {
+    input.p-inputtext {
+      height: 2rem;
+    }
+    .p-inputnumber-button {
+      &.p-inputnumber-increment-button {
+        height: 0.7188rem;
+      }
+
+      &.p-inputnumber-decrement-button {
+        height: 0.7188rem;
+      }
+    }
+  }
 }

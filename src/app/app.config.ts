@@ -15,13 +15,32 @@ import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
 import { environment } from '../../environment/environment';
+import { definePreset } from '@primeng/themes';
+
+const customPrimengPreset = definePreset(Lara, {
+  semantic: {
+    primary: {
+      0: '#ffffff',
+      50: '#f5f1ff',
+      100: '#e8ddfe',
+      200: '#d2bafe',
+      300: '#b68afe',
+      400: '#8a52fd',
+      500: '#6015f4',
+      600: '#5513d9',
+      700: '#4610b5',
+      800: '#360d8a',
+      900: '#270964'
+    }
+  }
+});
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimations(),
     providePrimeNG({
       theme: {
-        preset: Lara,
+        preset: customPrimengPreset,
         options: {
           prefix: 'p',
           darkModeSelector: '.dark-theme'

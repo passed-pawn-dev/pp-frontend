@@ -12,13 +12,14 @@ import {
 } from '../../../shared/enums/chess-titles.enum';
 import { Student } from '../../models/Student';
 import { StudentService } from '../../service/student.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NationalityService } from '../../../shared/service/nationality.service';
 import { Nationality } from '../../../shared/models/Nationality';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { StepIndicatorComponent } from '../../../shared/components/step-indicator/step-indicator.component';
+import { CarouselDirective } from '../../../shared/carousel.directive';
 
 @Component({
   selector: 'app-student-register-form',
@@ -32,7 +33,9 @@ import { StepIndicatorComponent } from '../../../shared/components/step-indicato
     AutoCompleteModule,
     DatePickerModule,
     ValidationErrorsComponent,
-    StepIndicatorComponent
+    StepIndicatorComponent,
+    RouterLink,
+    CarouselDirective
   ],
   templateUrl: './student-register-form.component.html',
   styleUrl: './student-register-form.component.scss'
@@ -59,30 +62,8 @@ export class StudentRegisterFormComponent implements OnInit {
     phoneNumber: ['', [Validators.required]],
     dateOfBirth: [Date.now()],
     elo: [0, [Validators.min(1000)]],
-    // chessTitle: [null],
     nationalityId: ['']
   });
-
-  // protected registerForm = this.fb.group({
-  //   step1: this.fb.group({
-  //     username: ['', Validators.required],
-  //     firstName: ['', Validators.required],
-  //     lastName: ['', Validators.required]
-  //   }),
-  //   step2: this.fb.group({
-  //     email: ['', Validators.required, Validators.email],
-  //     phoneNumber: ['', Validators.required],
-  //     dateOfBirth: [Date.now()]
-  //   }),
-  //   step3: this.fb.group({
-  //     nationalityId: ['', Validators.required],
-  //     chessTitle: [null],
-  //     elo: [0]
-  //   }),
-  //   step4: this.fb.group({
-  //     password: ['', Validators.required]
-  //   }),
-  // });
 
   public ngOnInit(): void {
     this.nationalityService
@@ -120,16 +101,6 @@ export class StudentRegisterFormComponent implements OnInit {
 
   protected prevStep(): void {
     this.step--;
-  }
-
-  protected getStepClass(stepNumber: number): string {
-    if (this.step === stepNumber) {
-      return 'step-active';
-    } else if (this.step > stepNumber) {
-      return 'step-left';
-    } else {
-      return 'step-hidden';
-    }
   }
 
   protected onSubmit(): void {

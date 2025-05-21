@@ -3,8 +3,13 @@
     <div class="">
       <label class="label" for="search">Search</label>
       <div class="search-group">
-        <input type="text" formControlName="search" id="search" />
-        <select formControlName="searchBy">
+        <input
+          type="text"
+          formControlName="search"
+          id="search"
+          class="standard-input"
+        />
+        <select formControlName="searchBy" class="standard-select">
           <option [value]="SearchBy.Title">Title</option>
           <option [value]="SearchBy.CoachName">Coach Name</option>
         </select>
@@ -76,7 +81,6 @@
               <span class="checkmark"></span>
             </label>
             <label for="courseSizeSmall">Small</label>
-            <!-- <input type="checkbox" formControlName="courseSizeSmall" id="courseSizeSmall" /> -->
           </div>
 
           <div class="chechbox-group">
@@ -89,7 +93,6 @@
               <span class="checkmark"></span>
             </label>
             <label for="courseSizeMedium">Medium</label>
-            <!-- <input type="checkbox" formControlName="courseSizeMedium" id="courseSizeMedium" /> -->
           </div>
 
           <div class="chechbox-group">
@@ -102,7 +105,6 @@
               <span class="checkmark"></span>
             </label>
             <label for="courseSizeBig">Big</label>
-            <!-- <input type="checkbox" formControlName="courseSizeBig" id="courseSizeSmall" /> -->
           </div>
         </div>
       </div>
@@ -110,16 +112,32 @@
       <div class="price-group">
         <div class="label">Price</div>
         <div class="price-input-group">
-          <input type="number" name="minPrice" formControlName="minPrice" /> -
-          <input type="number" name="maxPrice" formControlName="maxPrice" />
+          <p-inputNumber
+            type="number"
+            name="minPrice"
+            formControlName="minPrice"
+            class="pg-inputnumber w-small h-small"
+            [showButtons]="true"
+          />
+          -
+          <p-inputNumber
+            type="number"
+            name="maxPrice"
+            class="pg-inputnumber w-small h-small"
+            formControlName="maxPrice"
+            [showButtons]="true"
+          />
         </div>
       </div>
 
       <div class="sort-group">
-        <!-- <label class="label" for="sortBy">Sort by</label> -->
-        <div class="label">Sort by</div>
+        <div class="label" for="sortBy">Sort by</div>
         <div class="input-group">
-          <select id="sortBy" formControlName="sortBy">
+          <select
+            id="sortBy"
+            formControlName="sortBy"
+            class="standard-select input-small"
+          >
             <option [value]="SortBy.Popularity">Popularity</option>
             <option [value]="SortBy.Price">Price</option>
             <option [value]="SortBy.AverageScore">Score</option>
@@ -139,7 +157,6 @@
               <span class="checkmark"></span>
             </label>
             <label for="showOwned">owned</label>
-            <!-- <input type="checkbox" id="showOwned" formControlName="showOwned" /> -->
           </div>
         </div>
       </div>

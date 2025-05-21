@@ -11,7 +11,7 @@ import { Nationality } from '../../../shared/models/Nationality';
 import { NationalityService } from '../../../shared/service/nationality.service';
 import { Coach } from '../../models/Coach';
 import { CoachService } from '../../service/coach.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   ChessTitle,
   chessTitleToLabelMapping
@@ -31,7 +31,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     InputNumberModule,
     AutoCompleteModule,
     DatePickerModule,
-    ValidationErrorsComponent
+    ValidationErrorsComponent,
+    RouterLink
   ],
   templateUrl: './coach-register-form.component.html',
   styleUrl: './coach-register-form.component.scss'
