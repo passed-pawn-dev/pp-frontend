@@ -3,14 +3,14 @@
   [formGroup]="courseForm"
   (ngSubmit)="onSubmit()"
 >
+  @if (courseId) {
+    <h2>Edit course</h2>
+  } @else {
+    <h2>Add new course</h2>
+  }
   <div class="form-control-field">
-    @if (courseId) {
-      <h2>Edit course</h2>
-    } @else {
-      <h2>Add new course</h2>
-    }
     <label for="title">Title</label>
-    <input pInputText="title" formControlName="title" type="text" required />
+    <input class="standard-input" formControlName="title" type="text" required />
     <app-validation-errors
       [errors]="courseForm.controls.title.errors"
       [dirty]="courseForm.controls.title.dirty"
@@ -20,12 +20,7 @@
 
   <div class="form-control-field">
     <label for="description">Description</label>
-    <input
-      pInputText="description"
-      formControlName="description"
-      type="text"
-      required
-    />
+    <input class="standard-input" formControlName="description" type="text" required />
     <app-validation-errors
       [errors]="courseForm.controls.description.errors"
       [dirty]="courseForm.controls.description.dirty"
@@ -35,7 +30,12 @@
 
   <div class="form-control-field">
     <label for="price">Price</label>
-    <p-inputNumber id="price" formControlName="price" type="number" />
+    <p-inputNumber
+      id="price"
+      formControlName="price"
+      type="number"
+      class="pg-inputnumber"
+    />
     <app-validation-errors
       [errors]="courseForm.controls.price.errors"
       [dirty]="courseForm.controls.price.dirty"
@@ -45,7 +45,12 @@
 
   <div class="form-control-field">
     <label for="price">Elo range start</label>
-    <p-inputNumber id="eloRangeStart" formControlName="eloRangeStart" type="number" />
+    <p-inputNumber
+      id="eloRangeStart"
+      formControlName="eloRangeStart"
+      type="number"
+      class="pg-inputnumber"
+    />
     <app-validation-errors
       [errors]="courseForm.controls.eloRangeStart.errors"
       [dirty]="courseForm.controls.eloRangeStart.dirty"
@@ -55,7 +60,12 @@
 
   <div class="form-control-field">
     <label for="price">Elo range end</label>
-    <p-inputNumber id="eloRangeEnd" formControlName="eloRangeEnd" type="number" />
+    <p-inputNumber
+      id="eloRangeEnd"
+      formControlName="eloRangeEnd"
+      type="number"
+      class="pg-inputnumber"
+    />
     <app-validation-errors
       [errors]="courseForm.controls.eloRangeEnd.errors"
       [dirty]="courseForm.controls.eloRangeEnd.dirty"
@@ -65,7 +75,7 @@
 
   <div class="btn-group">
     <a class="secondary-btn" [routerLink]="'/coach/courses'">Cancel</a>
-    <button class="primary-button" type="submit" [disabled]="courseForm.invalid">
+    <button class="primary-btn" type="submit" [disabled]="courseForm.invalid">
       Submit
     </button>
   </div>

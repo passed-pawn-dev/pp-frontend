@@ -3,9 +3,10 @@
   [formGroup]="lessonForm"
   (ngSubmit)="onSubmit()"
 >
+  <h2>Add new lesson</h2>
   <div class="form-control-field">
     <label for="title">Lesson title</label>
-    <input id="title" formControlName="title" type="text" />
+    <input id="title" formControlName="title" type="text" class="standard-input" />
     <app-validation-errors
       [errors]="lessonForm.controls.title.errors"
       [dirty]="lessonForm.controls.title.dirty"
@@ -15,7 +16,12 @@
 
   <div class="form-control-field">
     <label for="lessonNumber">Lesson number</label>
-    <p-inputNumber id="lessonNumber" formControlName="lessonNumber" type="number" />
+    <p-inputNumber
+      id="lessonNumber"
+      formControlName="lessonNumber"
+      type="number"
+      class="pg-inputnumber"
+    />
     <app-validation-errors
       [errors]="lessonForm.controls.lessonNumber.errors"
       [dirty]="lessonForm.controls.lessonNumber.dirty"

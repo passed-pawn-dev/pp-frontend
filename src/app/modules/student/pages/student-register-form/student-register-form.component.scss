@@ -47,23 +47,22 @@
     margin: auto;
     position: relative;
     overflow: hidden;
-    // border: 1px solid;
 
     .step-container {
+      display: grid;
+      grid-template-columns: repeat(5, 100%);
+      gap: 3rem;
       width: 25rem;
-      height: 20rem;
-      // border: 1px solid red;
+      padding-bottom: 2rem;
+      transition: transform 0.5s ease-in-out;
 
       .step {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
-        position: absolute;
-        transition:
-          transform 0.5s ease-in-out,
-          opacity 0.3s ease-in-out;
         opacity: 0;
         visibility: hidden;
+        transition: opacity 0.2s ease-in-out;
 
         .form-control-field {
           label {
@@ -73,7 +72,6 @@
 
         .text {
           text-align: center;
-          // border: 1px solid;
         }
 
         img {
@@ -82,18 +80,9 @@
         }
       }
 
-      .step-hidden {
-        transform: translateX(120%);
-      }
-
       .step-active {
         opacity: 1;
         visibility: visible;
-        transform: translateX(0);
-      }
-
-      .step-left {
-        transform: translateX(-120%);
       }
     }
 
@@ -106,8 +95,6 @@
 
 .primary-btn,
 .secondary-btn {
-  // padding: 0.5rem 2rem;
-
   img {
     height: 0.75rem;
   }
@@ -129,4 +116,15 @@
   &:hover {
     background-color: $border-secondary;
   }
+}
+
+.page-wrapper {
+  width: fit-content;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1rem;
 }

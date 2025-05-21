@@ -271,7 +271,7 @@
         <form [formGroup]="fenForm">
           <div class="form-input">
             <div class="label">Side to move</div>
-            <select formControlName="sideToMove">
+            <select formControlName="sideToMove" class="standard-select">
               <option value="White">White</option>
               <option value="Black">Black</option>
             </select>
@@ -321,29 +321,31 @@
 
           <div class="form-input">
             <div class="label">Half move clock</div>
-            <input
-              class="short-input"
+            <p-inputNumber
+              class="pg-inputnumber w-small"
               formControlName="halfMoveClock"
               id="halfMoveClock"
               type="number"
+              [showButtons]="true"
               [min]="0"
             />
           </div>
 
           <div class="form-input">
             <div class="label">Full move number</div>
-            <input
-              class="short-input"
+            <p-inputNumber
+              class="pg-inputnumber w-small"
               formControlName="fullMoveNumber"
               id="fullMoveNumber"
               type="number"
+              [showButtons]="true"
               [min]="1"
             />
           </div>
         </form>
 
         <input
-          class="fen-input"
+          class="standard-input"
           type="text"
           name="fen-input"
           id="fen-input"

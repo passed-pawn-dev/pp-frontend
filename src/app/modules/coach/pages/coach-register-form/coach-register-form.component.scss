@@ -8,7 +8,7 @@ select {
 
 .btn-group {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .row {
@@ -18,4 +18,17 @@ select {
 
 form {
   margin-top: 3rem;
+}
+
+.detailed-description {
+  height: 8rem;
+}
+
+.short-description {
+  height: 4rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
 }
