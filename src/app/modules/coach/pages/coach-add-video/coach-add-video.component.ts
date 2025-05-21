@@ -19,14 +19,15 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 export class CoachAddVideoComponent {
   @Input({ required: true }) public lessonId!: string;
 
-  protected submitting = false;
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
   private courseService = inject(CourseService);
   private destroyRef = inject(DestroyRef);
   private ref = inject(DynamicDialogRef);
+
   // supported video types in html5
   protected acceptedFileTypes = ['video/mp4', 'video/webm', 'video/ogg'];
+  protected submitting = false;
   protected addVideoForm = this.fb.group({
     video: [
       null,
@@ -70,17 +71,16 @@ export class CoachAddVideoComponent {
             this.messageService.add({
               severity: 'success',
               summary: 'Success',
-              detail: 'Thumbnail updated successfully'
+              detail: 'Video element added successfully'
             });
 
-            this.submitting = false;
             this.ref.close();
           },
           error: () => {
             this.messageService.add({
               severity: 'error',
               summary: 'Fail',
-              detail: 'Failed to update thumbnail'
+              detail: 'Failed to add video element'
             });
 
             this.submitting = false;

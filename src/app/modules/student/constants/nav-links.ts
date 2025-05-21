@@ -6,7 +6,7 @@ export const NAV_LINKS: NavLink[] = [
     path: 'my-courses'
   },
   {
-    name: 'Avalaible Courses',
+    name: 'Available Courses',
     path: 'courses'
   }
 ];

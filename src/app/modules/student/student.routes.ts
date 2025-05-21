@@ -69,7 +69,7 @@ export const STUDENT_ROUTES: Route[] = [
         }
       },
       {
-        path: 'coach/:id/profile',
+        path: 'coach/:coachId/profile',
         component: StudentCoachProfileComponent,
         resolve: {
           coachProfile: studentCoachProfileResolver
