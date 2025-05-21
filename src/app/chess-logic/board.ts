@@ -811,7 +811,7 @@ export class ChessBoard {
   }
 
   public startFromMove(moveIndex: number): void {
-    if (moveIndex > this.gameHistory.length)
+    if (moveIndex >= this.gameHistory.length)
       throw new Error(
         'Cannot start from move number thats bigger than game history length'
       );
