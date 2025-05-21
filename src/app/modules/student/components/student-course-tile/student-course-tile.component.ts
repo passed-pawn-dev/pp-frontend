@@ -6,7 +6,6 @@ import { StarRatingComponent } from '../../../shared/components/star-rating/star
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CourseService } from '../../service/course.service';
 import { MessageService } from 'primeng/api';
-import { difficultyRanges } from '../../../shared/constants/difficulty-ranges';
 import { SseService } from '../../service/sse.service';
 import { Dialog } from 'primeng/dialog';
 import { PaymentComponent } from '../payment/payment.component';
@@ -72,14 +71,6 @@ export class StudentCourseTileComponent {
     this.clientSecret = undefined;
     this.courseBought = true;
 
-    this.sseService.connect('/api/sse').subscribe({
-      next: (_) =>
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Course has been added to list'
-        })
-    });
-
     this.messageService.add({
       severity: 'success',
       summary: 'Success',
@@ -87,7 +78,19 @@ export class StudentCourseTileComponent {
     });
   }
 
+  protected paymentAttempted(): void {
+    this.sseService.connect('/api/sse').subscribe({
+      next: (_) =>
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Course has been added to list'
+        })
+    });
+  }
+
   protected paymentFailed(details: string): void {
+    this.sseService.disconnect();
+
     this.messageService.add({
       severity: 'error',
       summary: 'Failure',
