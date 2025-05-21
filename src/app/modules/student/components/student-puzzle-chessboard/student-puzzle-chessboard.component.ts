@@ -45,6 +45,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
   private pieceSafeSquares: string[] = [];
   private lastMove: TLastMove | undefined = this.chessboard.lastMove;
   private checkState: TCheckState = this.chessboard.checkState;
+  private _expectedMoves: string[] | null = null;
   protected loading = false;
   public fen: string = '';
 
@@ -94,11 +95,18 @@ export class StudentPuzzleChessboardComponent implements OnInit {
     this.lastMove = this.chessboard.lastMove;
     this.unmarkingPreviouslySelectedAndSafeSquares();
 
-    if (this.expectedMoves) {
+    if (this._expectedMoves) {
       const moveList = this.moveList.flatMap((move) => move);
-      if (moveList[moveList.length - 1] === this.expectedMoves[moveList.length - 1]) {
-        this.expectedMoves = this.expectedMoves.slice(moveList.length);
-        if (this.expectedMoves.length === 0) {
+      console.log(
+        moveList,
+
+        moveList[moveList.length - 1],
+        this._expectedMoves[moveList.length - 1],
+        moveList[moveList.length - 1] === this._expectedMoves[moveList.length - 1]
+      );
+      if (moveList[moveList.length - 1] === this._expectedMoves[0]) {
+        this._expectedMoves = this._expectedMoves.slice(moveList.length);
+        if (this._expectedMoves.length === 0) {
           this.solved.emit();
         }
       } else {
@@ -110,6 +118,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
         }, 1000);
       }
     }
+    console.log(this._expectedMoves, this.moveList);
     this.gameHistoryPointer++;
   }
 
@@ -144,6 +153,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.setPuzzle();
+    console.log(this._expectedMoves, this.moveList);
   }
 
   public setPuzzle(): void {
@@ -163,7 +173,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
       lastMove: undefined
     });
     this.chessboardView = this.chessboard.chessboardView;
-
+    this._expectedMoves = this.expectedMoves;
     if (this.chessboard.playerColor === Color.Black) {
       this.reverseChessboard();
     }

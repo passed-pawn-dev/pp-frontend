@@ -28,7 +28,7 @@
   #chessboardRef
   [startingFen]="fen"
   [previewMode]="PreviewMode.Student"
-  [expectedMoves]="solutionArray().slice(1)"
+  [expectedMoves]="solutionArray()"
   (solved)="showSolvedMessage()"
 >
 </app-student-puzzle-chessboard>

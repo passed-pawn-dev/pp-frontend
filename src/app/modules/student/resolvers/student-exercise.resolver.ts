@@ -10,9 +10,10 @@ export const studentExerciseResolver: ResolveFn<Exercise> = (
   const courseService = inject(CourseService);
   const router = inject(Router);
   const exerciseId = route.paramMap.get('exerciseId')!;
-
+  console.log('test');
   return courseService.getExerciseById(exerciseId).pipe(
-    catchError((_) => {
+    catchError((err) => {
+      console.log(exerciseId, err);
       router.navigate(['/404']);
       return of(null as any);
     })
