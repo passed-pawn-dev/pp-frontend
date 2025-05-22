@@ -1,6 +1,122 @@
-@use 'variables' as *;
+/* stylelint-disable at-rule-empty-line-before */
 
+@use 'variables' as *;
 @use 'sass:color';
+
+.chessboard {
+  aspect-ratio: 1/1;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  // max-width: 40rem;
+  position: relative;
+  // width: 100%;
+  // width: 40rem;
+  width: 32rem;
+  // border: 1px solid red;
+  border-radius: 1rem;
+  overflow: hidden;
+  // border: 3px solid purple;
+
+  .chessboard-rank {
+    bottom: 0.25rem;
+    font-weight: 600;
+    position: absolute;
+    right: 0.25rem;
+  }
+
+  .chessboard-file {
+    font-weight: 600;
+    left: 0.25rem;
+    position: absolute;
+    top: 0.25rem;
+  }
+
+  .chessboard-field {
+    aspect-ratio: 1/1;
+    height: 100%;
+    max-height: 5rem;
+    max-width: 5rem;
+    position: relative;
+    width: 100%;
+
+    .chessboard-field-content {
+      display: grid;
+      height: 100%;
+      padding-bottom: 0.25rem;
+      place-content: center;
+
+      &:has(.safe-square) {
+        cursor: pointer;
+      }
+
+      &:has(.chessboard-chess-piece) {
+        cursor: pointer;
+      }
+
+      .selected-square {
+        height: 100%;
+        width: 100%;
+      }
+
+      img {
+        transform: scale(1.5);
+      }
+    }
+
+    .king-in-check {
+      background-color: $king-in-check-background;
+    }
+  }
+
+  .safe-square {
+    border-radius: 50%;
+    height: 1.625rem;
+    left: calc(50% - 0.8125rem);
+    pointer-events: none;
+    position: absolute;
+    top: calc(50% - 0.8125rem);
+    width: 1.625rem;
+    z-index: 100;
+  }
+
+  .close-promotion-dialog {
+    cursor: pointer;
+    left: calc(50% - 0.875rem);
+    position: absolute;
+    top: 0;
+    transform: scale(3);
+  }
+
+  .promotion-dialog {
+    box-sizing: content-box;
+    display: flex;
+    height: 5rem;
+    justify-content: space-between;
+    max-width: 40rem;
+    padding-right: 0.25rem;
+    padding-top: 2rem;
+    position: relative;
+  }
+
+  .promotion-piece {
+    cursor: pointer;
+    display: grid;
+    height: 5rem;
+    place-content: center;
+    width: 5rem;
+    img {
+      transform: scale(1.5);
+    }
+  }
+
+  .promotion-dialog-wrapper {
+    height: 7rem;
+  }
+
+  img {
+    user-select: none;
+  }
+}
 
 .content-container {
   display: flex;
@@ -169,121 +285,6 @@
               }
             }
           }
-        }
-      }
-
-      .chessboard {
-        aspect-ratio: 1/1;
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        // max-width: 40rem;
-        position: relative;
-        // width: 100%;
-        // width: 40rem;
-        width: 32rem;
-        // border: 1px solid red;
-        border-radius: 1rem;
-        overflow: hidden;
-        // border: 3px solid purple;
-
-        .chessboard-rank {
-          bottom: 0.25rem;
-          font-weight: 600;
-          position: absolute;
-          right: 0.25rem;
-        }
-
-        .chessboard-file {
-          font-weight: 600;
-          left: 0.25rem;
-          position: absolute;
-          top: 0.25rem;
-        }
-
-        .chessboard-field {
-          aspect-ratio: 1/1;
-          height: 100%;
-          max-height: 5rem;
-          max-width: 5rem;
-          position: relative;
-          width: 100%;
-
-          .chessboard-field-content {
-            display: grid;
-            height: 100%;
-            padding-bottom: 0.25rem;
-            place-content: center;
-
-            &:has(.safe-square) {
-              cursor: pointer;
-            }
-
-            &:has(.chessboard-chess-piece) {
-              cursor: pointer;
-            }
-
-            .selected-square {
-              height: 100%;
-              width: 100%;
-            }
-
-            img {
-              transform: scale(1.5);
-            }
-          }
-
-          .king-in-check {
-            background-color: $king-in-check-background;
-          }
-        }
-
-        .safe-square {
-          border-radius: 50%;
-          height: 1.625rem;
-          left: calc(50% - 0.8125rem);
-          pointer-events: none;
-          position: absolute;
-          top: calc(50% - 0.8125rem);
-          width: 1.625rem;
-          z-index: 100;
-        }
-
-        .close-promotion-dialog {
-          cursor: pointer;
-          left: calc(50% - 0.875rem);
-          position: absolute;
-          top: 0;
-          transform: scale(3);
-        }
-
-        .promotion-dialog {
-          box-sizing: content-box;
-          display: flex;
-          height: 5rem;
-          justify-content: space-between;
-          max-width: 40rem;
-          padding-right: 0.25rem;
-          padding-top: 2rem;
-          position: relative;
-        }
-
-        .promotion-piece {
-          cursor: pointer;
-          display: grid;
-          height: 5rem;
-          place-content: center;
-          width: 5rem;
-          img {
-            transform: scale(1.5);
-          }
-        }
-
-        .promotion-dialog-wrapper {
-          height: 7rem;
-        }
-
-        img {
-          user-select: none;
         }
       }
     }

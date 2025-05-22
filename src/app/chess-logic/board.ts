@@ -811,12 +811,14 @@ export class ChessBoard {
   }
 
   public startFromMove(moveIndex: number): void {
-    if (moveIndex + 1 > this.gameHistory.length)
+    if (moveIndex > this.gameHistory.length)
       throw new Error(
         'Cannot start from move number thats bigger than game history length'
       );
+
     const fullMoveIndex = Math.floor(moveIndex / 2);
     const moveSideIndex = moveIndex - fullMoveIndex * 2;
+
     if (moveSideIndex === 1) {
       const moveList = this._moveList.slice(fullMoveIndex);
 
@@ -832,12 +834,15 @@ export class ChessBoard {
     } else {
       this._moveList = this._moveList.slice(fullMoveIndex);
     }
+
     this._playerColor = this._gameHistory[this._gameHistory.length - 1].playerColor;
     this._gameHistory = this._gameHistory.slice(moveIndex);
     this.fullNumberOfMoves = 0;
     this.fiftyMoveRuleCounter = 0;
     this.threeFoldRepetitionDictionary = new Map();
     this._safeSquares = this.findSafeSquares();
+
+    console.log(fullMoveIndex, this._playerColor, this._gameHistory);
   }
 
   private updateGameHistory(): void {

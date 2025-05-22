@@ -13,6 +13,19 @@ export class FenConverter {
     return !isNaN(str as number) && !isNaN(parseFloat(str as string));
   }
 
+  public static getPlayerColorFromFEN(fen: string): 'b' | 'w' {
+    const [
+      _position,
+      activeColor,
+      _castling,
+      _enPassantSquare,
+      _halfMoveClock,
+      _fullMoveNumber
+    ] = fen.split(' ');
+
+    return activeColor as 'b' | 'w';
+  }
+
   public static createLastMoveFromFEN(fen: string): TLastMove | undefined {
     // Split the FEN string into its components
     const [

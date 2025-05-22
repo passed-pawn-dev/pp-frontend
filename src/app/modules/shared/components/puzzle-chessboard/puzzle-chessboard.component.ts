@@ -48,6 +48,7 @@ export class PuzzleChessboardComponent implements OnInit {
   private checkState: TCheckState = this.chessboard.checkState;
   protected loading = false;
   public fen: string = '';
+  private _initialFen: string = this.startingFen;
 
   public get moveList(): TMoveList {
     return this.chessboard.moveList;
@@ -157,6 +158,8 @@ export class PuzzleChessboardComponent implements OnInit {
       lastMove: undefined
     });
     this.chessboardView = this.chessboard.chessboardView;
+
+    this._initialFen = this.startingFen;
   }
 
   protected fenValid(): boolean {
@@ -167,10 +170,12 @@ export class PuzzleChessboardComponent implements OnInit {
     if (validateFEN(this.fen)) {
       const boardFromFen = FenConverter.convertFenToBoard(this.fen);
       const lastMove = FenConverter.createLastMoveFromFEN(this.fen);
+      const playerColor = FenConverter.getPlayerColorFromFEN(this.fen);
+      this._initialFen = this.fen;
       this.lastMove = lastMove;
       this.chessboard.setBoard({
         board: boardFromFen,
-        playerToMove: Color.White,
+        playerToMove: playerColor === 'w' ? Color.White : Color.Black,
         lastMove
       });
       this.chessboardView = this.chessboard.chessboardView;
@@ -295,7 +300,17 @@ export class PuzzleChessboardComponent implements OnInit {
   }
 
   public setCurrentPositionAsStartingPosition(): void {
-    this.chessboard.startFromMove(this.gameHistoryPointer);
+    this._initialFen = FenConverter.convertBoardToFen(
+      ChessBoard.boardViewToBoard(
+        this.chessboard.gameHistory[this.gameHistoryPointer].board
+      ),
+      this.playerColor,
+      this.lastMove,
+      0,
+      0
+    );
+
+    this.chessboard.startFromMove(this.gameHistoryPointer + 1);
     this.showingPastPosition = false;
     this.displayingStartingMove = true;
     this.gameHistoryPointer = 0;
@@ -303,17 +318,12 @@ export class PuzzleChessboardComponent implements OnInit {
   }
 
   protected onSavePuzzle(): void {
-    const fenBoard = FenConverter.convertBoardToFen(
-      ChessBoard.boardViewToBoard(this.chessboard.gameHistory[0].board),
-      this.playerColor,
-      this.lastMove,
-      0,
-      0
-    );
+    const fenBoard = this._initialFen;
 
     const moveListString = this.moveList.flatMap((move) => move).join(',');
-
+    console.log(this.gameHistory);
     this.savePuzzle.emit({ fenBoard: fenBoard, moveListString });
+    console.log(fenBoard, moveListString);
     this.setSequence = true;
   }
 }

@@ -58,6 +58,27 @@ export const STUDENT_ROUTES: Route[] = [
         }
       },
       {
+        path: 'courses/:courseId/lesson/:lessonId/puzzle/:exerciseId',
+        component: StudentSolveExerciseComponent,
+        resolve: {
+          exercise: studentExerciseResolver
+        }
+      },
+      {
+        path: 'courses/:courseId/lesson/:lessonId/quiz/:quizId',
+        component: StudentSolveQuizComponent,
+        resolve: {
+          quiz: studentQuizResolver
+        }
+      },
+      {
+        path: 'courses/:courseId/lesson/:lessonId/example/:exampleId',
+        component: StudentExampleComponent,
+        resolve: {
+          example: studentExampleResolver
+        }
+      },
+      {
         path: 'courses',
         component: StudentCoursesComponent
       },

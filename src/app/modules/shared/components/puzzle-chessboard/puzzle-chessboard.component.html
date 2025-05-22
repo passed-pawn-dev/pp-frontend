@@ -1,121 +1,17 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<!-- @if (gameOverMessage) {
-  <h2 class="game-over-message">{{ gameOverMessage }}</h2>
-}
-<div class="chess-content">
-  <div class="promotion-dialog-wrapper">
-    @if (isPromotionActive) {
-      <div class="promotion-dialog">
-        @for (piece of promotionPieces(); track $index) {
-          <div class="promotion-piece">
-            <img
-              alt="promotion-piece"
-              [src]="pieceImagePaths[piece]"
-              (click)="promotePiece(piece)"
-            />
-          </div>
-        }
-        <span class="close-promotion-dialog" (click)="closePawnPromotionDialog()">
-          &times;
-        </span>
-      </div>
-    }
-  </div>
-  <div class="main-game-content">
-    @if (loading) {
-      <div class="loading-overlay"></div>
-    }
-    <div class="chessboard">
-      
-      @for (field of chessboardView; track $index) {
-        <div class="chessboard-field" (click)="move(field[0])">
-          @if ($index % 8 === 0) {
-            <div class="chessboard-file">{{ field[0][1] }}</div>
-          }
-
-          @if ($index > 55) {
-            <div class="chessboard-rank">{{ field[0][0] }}</div>
-          }
-
-          <div
-            class="chessboard-field-content"
-            [ngClass]="{
-              'selected-square': isSquareSelected(field[0]),
-              'piece-square': field[1] !== null,
-              'last-move': isSquareLastMove(field[0]),
-              'king-in-check': isSquareChecked(field[0]),
-              'promotion-square': isSquarePromotionSquare(field[0])
-            }"
-          >
-            <div
-              [ngClass]="{ 'safe-square': isSquareSafeForSelectedPiece(field[0]) }"
-            ></div>
-            @if (field[1] !== null) {
-              <div class="chessboard-chess-piece">
-                <img
-                  [alt]="'chess-piece-' + field[1]"
-                  [src]="pieceImagePaths[field[1]]"
-                />
-              </div>
-            }
-          </div>
-        </div>
-      }
-    </div>
-    <div class="move-list">
-      <app-move-list
-        [moveList]="moveList"
-        [gameHistoryPointer]="gameHistoryPointer"
-        [gameHistoryLength]="gameHistory.length"
-        (showPreviousPositionEvent)="showPreviousPosition($event)"
-      >
-      </app-move-list>
-    </div>
-  </div>
-</div>
-@if (previewMode === PreviewMode.NoPreview) {
-  <div class="chessboard-controls">
-    <div><p-button (onClick)="reverseChessboard()">Reverse side</p-button></div>
-    <div>
-      <p-button
-        [disabled]="displayingStartingMove"
-        (onClick)="setCurrentPositionAsStartingPosition()"
-        >Start from this move</p-button
-      >
-    </div>
-    <div class="chessboard-fen-load-input">
-      <div>
-        <input pInputText type="text" [(ngModel)]="fen" />
-        <div *ngIf="!fenValid()" class="p-error">Please enter a valid FEN string.</div>
-      </div>
-      <div>
-        <p-button [disabled]="!fenValid()" (onClick)="setBoardFromFen()"
-          >Load fen</p-button
-        >
-      </div>
-    </div>
-    <div>
-      <p-button [disabled]="gameHistory.length === 0" (onClick)="onSavePuzzle()"
-        >Save puzzle</p-button
-      >
-    </div>
-  </div>
-} -->
 
 @if (gameOverMessage) {
   <h2 class="game-over-message">{{ gameOverMessage }}</h2>
 }
 
 <div class="content-container">
-  @if (previewMode === PreviewMode.NoPreview) {
-    <div class="chessboard-controls">
-      <div class="header">Board Operations</div>
+  <div class="chessboard-controls">
+    <div class="header">Board Operations</div>
 
-      <button type="button" class="operation-btn" (click)="reverseChessboard()">
-        Reverse side
-      </button>
-    </div>
-  }
+    <button type="button" class="operation-btn" (click)="reverseChessboard()">
+      Reverse side
+    </button>
+  </div>
 
   <div class="chess-content">
     <!-- <div class="promotion-dialog-wrapper">
@@ -201,7 +97,6 @@
             <button
               type="button"
               class="primary-btn"
-              [disabled]="displayingStartingMove"
               (click)="setCurrentPositionAsStartingPosition()"
             >
               Start from this position
@@ -237,7 +132,7 @@
             <button
               type="button"
               class="primary-btn"
-              [disabled]="gameHistory.length === 0"
+              [disabled]="gameHistory.length === 0 || gameHistory.length % 2 === 0"
               (click)="onSavePuzzle()"
             >
               Save Puzzle
@@ -251,7 +146,7 @@
       <div class="header">FEN</div>
       <div class="content">
         <div class="fen-group">
-          <input type="text" [(ngModel)]="fen" />
+          <input type="text" class="standard-input" [(ngModel)]="fen" />
           <div *ngIf="!fenValid()" class="p-error">
             Please enter a valid FEN string.
           </div>
