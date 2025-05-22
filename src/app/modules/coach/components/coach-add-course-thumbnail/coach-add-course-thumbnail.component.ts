@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 import { CourseService } from '../../service/course.service';
 import { FileUploadComponent } from '../../../shared/components/file-upload/file-upload.component';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-coach-add-course-thumbnail',
@@ -20,6 +21,10 @@ export class CoachAddCourseThumbnailComponent {
   private courseService = inject(CourseService);
   private readonly route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
+  private ref = inject(DynamicDialogRef);
+
+  protected submitting = false;
+
   protected acceptedFileTypes = ['image/*'];
   protected uploadForm = this.fb.group({
     thumbnail: [
@@ -55,6 +60,8 @@ export class CoachAddCourseThumbnailComponent {
                   summary: 'Success',
                   detail: 'Thumbnail updated successfully'
                 });
+
+                this.ref.close();
               },
               error: () => {
                 this.messageService.add({
@@ -62,6 +69,8 @@ export class CoachAddCourseThumbnailComponent {
                   summary: 'Fail',
                   detail: 'Failed to update thumbnail'
                 });
+
+                this.submitting = false;
               }
             });
         });

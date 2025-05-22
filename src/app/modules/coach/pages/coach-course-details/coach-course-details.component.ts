@@ -36,7 +36,8 @@ export class CoachCourseDetailsComponent implements OnInit {
     enrolledStudentsCount: 0,
     price: 0,
     reviews: [],
-    lessons: []
+    lessons: [],
+    thumbnailUrl: null
   });
 
   protected lessons = signal<LessonDetails[]>([]);
@@ -81,6 +82,8 @@ export class CoachCourseDetailsComponent implements OnInit {
                     summary: 'Success',
                     detail: 'Thumbnail deleted successfully'
                   });
+
+                  this.course.set({ ...this.course(), thumbnailUrl: null });
                 },
                 error: (_) =>
                   this.messageService.add({
@@ -144,10 +147,16 @@ export class CoachCourseDetailsComponent implements OnInit {
   }
 
   protected openAddCourseThumbnailDialog(): void {
-    this.dialogService.open(CoachAddCourseThumbnailComponent, {
-      header: 'Add course thumbnail',
-      closable: true,
-      modal: true
-    });
+    this.dialogService
+      .open(CoachAddCourseThumbnailComponent, {
+        header: 'Add course thumbnail',
+        closable: true,
+        modal: true
+      })
+      .onClose.subscribe({
+        next: (thumbnailUrl: string) => {
+          this.course.set({ ...this.course(), thumbnailUrl });
+        }
+      });
   }
 }

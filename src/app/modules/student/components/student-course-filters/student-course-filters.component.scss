@@ -190,3 +190,13 @@ form {
     transform: rotate(180deg);
   }
 }
+
+.owned-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .label {
+    width: fit-content;
+  }
+}

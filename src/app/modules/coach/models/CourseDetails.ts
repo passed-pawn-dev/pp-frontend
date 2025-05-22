@@ -9,5 +9,5 @@ export interface CourseDetails {
   price: number;
   reviews: CourseReview[];
   lessons: [];
-  thumbnailUrl?: string;
+  thumbnailUrl: string | null;
 }
