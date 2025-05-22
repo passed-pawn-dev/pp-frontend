@@ -9,6 +9,7 @@
     <div class="buy-course-container">
       <app-payment
         [clientSecret]="clientSecret"
+        (paymentStarted)="paymentAttempted()"
         (paymentSuccess)="paymentSuccessful()"
         (paymentFailure)="paymentFailed($event)"
       />

@@ -7,32 +7,43 @@ import { EventSourcePolyfill } from 'event-source-polyfill';
   providedIn: 'root'
 })
 export class SseService {
+  private eventSource: EventSourcePolyfill | null = null;
+
   public constructor(private authService: AuthService) {}
 
   public connect(url: string): Observable<string> {
+    this.disconnect();
+
     return new Observable<string>((observer) => {
       const jwtToken = this.authService.getToken();
-      const eventSource = new EventSourcePolyfill(url, {
+      this.eventSource = new EventSourcePolyfill(url, {
         headers: {
           Authorization: `Bearer ${jwtToken}`
         },
         withCredentials: false
       });
 
-      eventSource.onmessage = (event) => {
+      this.eventSource.onmessage = (event) => {
         observer.next(event.data);
         observer.complete();
-        eventSource.close();
+        this.disconnect();
       };
 
-      eventSource.onerror = (error) => {
+      this.eventSource.onerror = (error) => {
         observer.error(error);
-        eventSource.close();
+        this.disconnect();
       };
 
       return () => {
-        eventSource.close();
+        this.disconnect();
       };
     });
+  }
+
+  public disconnect(): void {
+    if (this.eventSource) {
+      this.eventSource.close();
+      this.eventSource = null;
+    }
   }
 }

@@ -187,11 +187,7 @@ export class StudentCourseComponent implements OnInit {
     this.clientSecret = undefined;
   }
 
-  protected paymentSuccessful(): void {
-    this.showPaymentModal = false;
-    this.clientSecret = undefined;
-    this.courseBought = true;
-
+  protected paymentAttempted(): void {
     this.sseService.connect('/api/sse').subscribe({
       next: (_) =>
         this.messageService.add({
@@ -199,6 +195,12 @@ export class StudentCourseComponent implements OnInit {
           summary: 'Course has been added to list'
         })
     });
+  }
+
+  protected paymentSuccessful(): void {
+    this.showPaymentModal = false;
+    this.clientSecret = undefined;
+    this.courseBought = true;
 
     this.messageService.add({
       severity: 'success',
@@ -208,6 +210,8 @@ export class StudentCourseComponent implements OnInit {
   }
 
   protected paymentFailed(details: string): void {
+    this.sseService.disconnect();
+
     this.messageService.add({
       severity: 'error',
       summary: 'Failure',

@@ -15,6 +15,7 @@ export class PaymentComponent implements OnInit {
 
   @Input({ required: true }) public clientSecret!: string;
 
+  @Output() public paymentStarted = new EventEmitter<void>();
   @Output() public paymentSuccess = new EventEmitter<void>();
   @Output() public paymentFailure = new EventEmitter<string>();
 
@@ -27,6 +28,8 @@ export class PaymentComponent implements OnInit {
   }
 
   protected async pay(): Promise<void> {
+    this.paymentStarted.emit();
+
     const result = await this.stripe.confirmCardPayment(this.clientSecret, {
       payment_method: {
         card: this.cardElement
