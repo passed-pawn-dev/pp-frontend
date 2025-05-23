@@ -841,8 +841,6 @@ export class ChessBoard {
     this.fiftyMoveRuleCounter = 0;
     this.threeFoldRepetitionDictionary = new Map();
     this._safeSquares = this.findSafeSquares();
-
-    console.log(fullMoveIndex, this._playerColor, this._gameHistory);
   }
 
   private updateGameHistory(): void {

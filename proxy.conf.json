@@ -1,6 +1,6 @@
 {
   "/api/**": {
-    "target": "https://pp-dev.passed-pawn.com/api",
+    "target": "https://pp-dev.passed-pawn.com",
     "secure": true,
     "changeOrigin": true
   }

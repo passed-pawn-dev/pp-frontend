@@ -97,13 +97,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
 
     if (this._expectedMoves) {
       const moveList = this.moveList.flatMap((move) => move);
-      console.log(
-        moveList,
 
-        moveList[moveList.length - 1],
-        this._expectedMoves[moveList.length - 1],
-        moveList[moveList.length - 1] === this._expectedMoves[moveList.length - 1]
-      );
       if (moveList[moveList.length - 1] === this._expectedMoves[0]) {
         this._expectedMoves = this._expectedMoves.slice(moveList.length);
         if (this._expectedMoves.length === 0) {
@@ -118,7 +112,6 @@ export class StudentPuzzleChessboardComponent implements OnInit {
         }, 1000);
       }
     }
-    console.log(this._expectedMoves, this.moveList);
     this.gameHistoryPointer++;
   }
 
@@ -153,7 +146,6 @@ export class StudentPuzzleChessboardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.setPuzzle();
-    console.log(this._expectedMoves, this.moveList);
   }
 
   public setPuzzle(): void {
