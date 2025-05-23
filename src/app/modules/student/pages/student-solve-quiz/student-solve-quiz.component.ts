@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { QuizDetails } from '../../models/QuizDetails';
+import { QuizDetails } from '../../models/quiz-details.model';
 import { QuizComponent } from '../../../shared/components/quiz/quiz.component';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';

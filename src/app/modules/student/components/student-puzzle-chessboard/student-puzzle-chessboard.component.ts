@@ -14,7 +14,7 @@ import { pieceImagePaths } from '../../../../chess-logic/models';
 import { ChessBoard } from '../../../../chess-logic/board';
 import { FenConverter } from '../../../../chess-logic/FenConverter';
 import { cloneDeep } from 'lodash';
-import { TSelectedSquare } from '../../../shared/models/chessboardViewModels';
+import { TSelectedSquare } from '../../../shared/models/chessboard-view-model.model';
 import { PreviewMode } from '../../../shared/enums/preview-mode.enum';
 import { CommonModule } from '@angular/common';
 import { MoveListComponent } from '../../../shared/components/move-list/move-list.component';

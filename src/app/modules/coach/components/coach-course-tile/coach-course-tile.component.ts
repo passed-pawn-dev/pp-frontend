@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { RouterLink } from '@angular/router';
-import { Course } from '../../models/Course';
+import { Course } from '../../models/course.model';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 
 @Component({

@@ -1,0 +1,19 @@
+<div class="navbar">
+  <div class="left">
+    <ul class="navigation">
+      <div class="logo">
+        <img src="icons/logo.png" alt="logo" />
+        <div class="text">Passed Pawn</div>
+      </div>
+      @for (link of navLinks; track $index) {
+        <li class="nav-link">
+          <a [routerLink]="link.path">{{ link.name }}</a>
+        </li>
+      }
+    </ul>
+  </div>
+  <div class="right">
+    <div class="mode">Coach Account</div>
+    <button type="button" class="secondary-btn" (click)="logOut()">Log out</button>
+  </div>
+</div>

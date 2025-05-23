@@ -2,7 +2,6 @@ import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { ChessboardEditorComponent } from '../../../shared/components/chessboard-editor/chessboard-editor.component';
 import { StepIndicatorComponent } from '../../../shared/components/step-indicator/step-indicator.component';
 import {
-  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
@@ -12,12 +11,12 @@ import {
   Validators
 } from '@angular/forms';
 import { TextareaModule } from 'primeng/textarea';
-import { QuizDetails } from '../../../student/models/QuizDetails';
+import { QuizDetails } from '../../../student/models/quiz-details.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { QuizComponent } from '../../../shared/components/quiz/quiz.component';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Location } from '@angular/common';

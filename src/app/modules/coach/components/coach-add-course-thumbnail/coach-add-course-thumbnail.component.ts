@@ -4,7 +4,7 @@ import { fileTypeValidator } from '../../../shared/validators/file-type-validato
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { FileUploadComponent } from '../../../shared/components/file-upload/file-upload.component';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';

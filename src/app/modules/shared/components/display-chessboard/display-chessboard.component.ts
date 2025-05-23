@@ -12,7 +12,7 @@ import { FenConverter } from '../../../../chess-logic/FenConverter';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { PreviewMode } from '../../enums/preview-mode.enum';
-import { Arrow } from '../../models/Arrow';
+import { Arrow } from '../../models/arrow.model';
 import { Severity } from '../../enums/severities.enum';
 import { ChessboardArrowsDirective } from '../../directives/chessboard-arrows.directive';
 import { ChessboardHighlightsDirective } from '../../directives/chessboard-highlights.directive';

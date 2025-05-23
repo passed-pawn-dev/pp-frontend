@@ -10,11 +10,11 @@ import {
   ChessTitle,
   chessTitleToLabelMapping
 } from '../../../shared/enums/chess-titles.enum';
-import { Student } from '../../models/Student';
-import { StudentService } from '../../service/student.service';
+import { Student } from '../../models/student.model';
+import { StudentService } from '../../services/student.service';
 import { Router, RouterLink } from '@angular/router';
 import { NationalityService } from '../../../shared/service/nationality.service';
-import { Nationality } from '../../../shared/models/Nationality';
+import { Nationality } from '../../../shared/models/nationality.model';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

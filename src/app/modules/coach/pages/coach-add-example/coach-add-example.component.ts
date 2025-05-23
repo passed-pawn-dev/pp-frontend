@@ -9,13 +9,13 @@ import {
 } from '@angular/forms';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { StepIndicatorComponent } from '../../../shared/components/step-indicator/step-indicator.component';
-import { Arrow } from '../../../shared/models/Arrow';
+import { Arrow } from '../../../shared/models/arrow.model';
 import { Severity } from '../../../shared/enums/severities.enum';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Location } from '@angular/common';
-import { NewExample } from '../../models/NewExample';
+import { NewExample } from '../../models/new-example.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

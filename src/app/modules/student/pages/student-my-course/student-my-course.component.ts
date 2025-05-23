@@ -1,16 +1,16 @@
 import { Component, DestroyRef, OnInit, signal } from '@angular/core';
-import { MyCourseDetails } from '../../models/MyCourseDetails';
+import { MyCourseDetails } from '../../models/my-course-details.model';
 import { StudentCourseReviewFormComponent } from '../../components/student-course-review-form/student-course-review-form.component';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Exercise } from '../../models/Exercise';
+import { Exercise } from '../../models/exercise.model';
 import { ButtonModule } from 'primeng/button';
-import { Quiz } from '../../models/Quiz';
+import { Quiz } from '../../models/quiz.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DialogModule } from 'primeng/dialog';
 import { StudentLessonComponent } from '../../components/student-lesson/student-lesson.component';
-import { LessonStatus } from '../../enums/LessonStatus';
+import { LessonStatus } from '../../enums/lesson-status.enum';
 
 @Component({
   selector: 'app-student-my-course',

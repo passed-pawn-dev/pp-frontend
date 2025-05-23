@@ -1,8 +1,8 @@
 import { ActivatedRouteSnapshot, ResolveFn, Router } from '@angular/router';
-import { QuizDetails } from '../models/QuizDetails';
+import { QuizDetails } from '../models/quiz-details.model';
 import { Observable, catchError, of } from 'rxjs';
 import { inject } from '@angular/core';
-import { CourseService } from '../service/course.service';
+import { CourseService } from '../services/course.service';
 
 export const studentQuizResolver: ResolveFn<QuizDetails> = (
   route: ActivatedRouteSnapshot

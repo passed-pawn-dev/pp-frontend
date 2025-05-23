@@ -7,9 +7,9 @@ import {
   computed,
   signal
 } from '@angular/core';
-import { CourseDetails } from '../../models/CourseDetails';
+import { CourseDetails } from '../../models/course-details.model';
 import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
@@ -21,12 +21,9 @@ import {
 } from '../../../shared/components/course-details-diagram/course-details-diagram.component';
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { ChessTitle } from '../../../shared/enums/chess-titles.enum';
-import { CourseReview } from '../../models/CourseReview';
+import { CourseReview } from '../../models/course-review.model';
 import { StudentLessonComponent } from '../../components/student-lesson/student-lesson.component';
-import { LessonStatus } from '../../enums/LessonStatus';
-import { Dialog } from 'primeng/dialog';
-import { PaymentComponent } from '../../components/payment/payment.component';
-import { SseService } from '../../service/sse.service';
+import { LessonStatus } from '../../enums/lesson-status.enum';
 
 @Component({
   selector: 'app-student-course',
@@ -38,9 +35,7 @@ import { SseService } from '../../service/sse.service';
     CourseDifficultyComponent,
     CourseReviewComponent,
     StudentLessonComponent,
-    RouterLink,
-    Dialog,
-    PaymentComponent
+    RouterLink
   ],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
@@ -77,15 +72,10 @@ export class StudentCourseComponent implements OnInit {
   });
 
   protected reviews: CourseReview[] = [];
-
   protected LessonStatus = LessonStatus;
-
   protected showCoachDetails: boolean = false;
-
   protected showInpactDetails: boolean = false;
-
   protected showLessons: boolean = false;
-
   protected clientSecret: string | undefined;
   protected showPaymentModal: boolean = false;
   protected courseBought: boolean = false;
@@ -99,7 +89,6 @@ export class StudentCourseComponent implements OnInit {
 
   public constructor(
     private courseService: CourseService,
-    private readonly sseService: SseService,
     private readonly route: ActivatedRoute,
     private messageService: MessageService,
     private readonly destroyRef: DestroyRef,
@@ -187,15 +176,7 @@ export class StudentCourseComponent implements OnInit {
     this.clientSecret = undefined;
   }
 
-  protected paymentAttempted(): void {
-    this.sseService.connect('/api/sse').subscribe({
-      next: (_) =>
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Course has been added to list'
-        })
-    });
-  }
+  protected paymentAttempted(): void {}
 
   protected paymentSuccessful(): void {
     this.showPaymentModal = false;
@@ -210,8 +191,6 @@ export class StudentCourseComponent implements OnInit {
   }
 
   protected paymentFailed(details: string): void {
-    this.sseService.disconnect();
-
     this.messageService.add({
       severity: 'error',
       summary: 'Failure',

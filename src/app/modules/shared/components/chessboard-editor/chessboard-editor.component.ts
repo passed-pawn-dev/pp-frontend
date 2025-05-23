@@ -41,7 +41,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChessboardHighlightsDirective } from '../../directives/chessboard-highlights.directive';
 import { Severity } from '../../enums/severities.enum';
-import { Arrow } from '../../models/Arrow';
+import { Arrow } from '../../models/arrow.model';
 import { ChessboardArrowsDirective } from '../../directives/chessboard-arrows.directive';
 
 enum Mode {

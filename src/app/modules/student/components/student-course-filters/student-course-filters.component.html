@@ -9,10 +9,10 @@
           id="search"
           class="standard-input"
         />
-        <select formControlName="searchBy" class="standard-select">
-          <option [value]="SearchBy.Title">Title</option>
-          <option [value]="SearchBy.CoachName">Coach Name</option>
-        </select>
+        <p-select formControlName="searchBy" class="standard-select">
+          <option [value]="SearchBy.Title">Course title</option>
+          <option [value]="SearchBy.CoachName">Coach name</option>
+        </p-select>
       </div>
     </div>
 
@@ -116,6 +116,7 @@
             type="number"
             name="minPrice"
             formControlName="minPrice"
+            min="0"
             class="pg-inputnumber w-small h-small"
             [showButtons]="true"
           />
@@ -124,6 +125,7 @@
             type="number"
             name="maxPrice"
             class="pg-inputnumber w-small h-small"
+            min="0"
             formControlName="maxPrice"
             [showButtons]="true"
           />
@@ -133,7 +135,7 @@
       <div class="sort-group">
         <div class="label" for="sortBy">Sort by</div>
         <div class="input-group">
-          <select
+          <p-select
             id="sortBy"
             formControlName="sortBy"
             class="standard-select input-small"
@@ -141,7 +143,7 @@
             <option [value]="SortBy.Popularity">Popularity</option>
             <option [value]="SortBy.Price">Price</option>
             <option [value]="SortBy.AverageScore">Score</option>
-          </select>
+          </p-select>
           <button class="sort-btn" type="button" (click)="toggleSortDesc()">
             <img src="icons/sort-arrow.png" alt="sort-arrow" [class.desc]="!sortDesc" />
           </button>

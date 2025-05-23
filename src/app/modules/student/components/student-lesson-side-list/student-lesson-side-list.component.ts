@@ -1,7 +1,7 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { CourseService } from '../../service/course.service';
-import { Lesson } from '../../models/Lesson';
+import { CourseService } from '../../services/course.service';
+import { Lesson } from '../../models/lesson.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

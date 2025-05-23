@@ -1,8 +1,8 @@
 import { ActivatedRouteSnapshot, ResolveFn, Router } from '@angular/router';
-import { Exercise } from '../models/Exercise';
+import { Exercise } from '../models/exercise.model';
 import { Observable, catchError, of } from 'rxjs';
 import { inject } from '@angular/core';
-import { CourseService } from '../service/course.service';
+import { CourseService } from '../services/course.service';
 
 export const studentExerciseResolver: ResolveFn<Exercise> = (
   route: ActivatedRouteSnapshot

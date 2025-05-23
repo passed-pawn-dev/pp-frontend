@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, Input } from '@angular/core';
 import { FileUploadComponent } from '../../../shared/components/file-upload/file-upload.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MessageService } from 'primeng/api';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { fileTypeValidator } from '../../../shared/validators/file-type-validator';

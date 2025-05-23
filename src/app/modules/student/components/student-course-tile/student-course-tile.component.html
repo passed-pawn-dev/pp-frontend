@@ -63,4 +63,21 @@
       </div>
     </div>
   </a>
+  @if (!course().isBought && course().price > 0) {
+    <button
+      type="button"
+      class="primary-btn get-course-button"
+      (click)="openBuyCourseDialog()"
+    >
+      Buy
+    </button>
+  } @else if (!course().isBought && course().price === 0) {
+    <button
+      type="button"
+      class="primary-btn get-course-button"
+      (click)="acquireFreeCourse()"
+    >
+      Obtain for free
+    </button>
+  }
 </li>

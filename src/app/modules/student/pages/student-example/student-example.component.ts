@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { DisplayChessboardComponent } from '../../../shared/components/display-chessboard/display-chessboard.component';
-import { ExampleDetails } from '../../models/ExampleDetails';
+import { ExampleDetails } from '../../models/example-details.model';
 import { ActivatedRoute } from '@angular/router';
 import { Severity } from '../../../shared/enums/severities.enum';
 import { Location } from '@angular/common';

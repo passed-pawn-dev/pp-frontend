@@ -2,8 +2,8 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { PuzzleChessboardComponent } from '../../../shared/components/puzzle-chessboard/puzzle-chessboard.component';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { PuzzleData } from '../../../shared/models/puzzleData';
-import { CourseService } from '../../service/course.service';
+import { PuzzleData } from '../../../shared/models/puzzle-data.model';
+import { CourseService } from '../../services/course.service';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,

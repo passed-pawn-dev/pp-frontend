@@ -12,7 +12,7 @@ import {
 } from '../../../../chess-logic/models';
 import { pieceImagePaths } from '../../../../chess-logic/models';
 import { ChessBoard } from '../../../../chess-logic/board';
-import { TSelectedSquare } from '../../models/chessboardViewModels';
+import { TSelectedSquare } from '../../models/chessboard-view-model.model';
 import { CommonModule } from '@angular/common';
 import { MoveListComponent } from '../move-list/move-list.component';
 import { FenConverter } from '../../../../chess-logic/FenConverter';

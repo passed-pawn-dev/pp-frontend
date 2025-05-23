@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { CoachComponent } from './coach/coach.component';
+import { CoachComponent } from './coach.component';
 import { CoachCoursesListComponent } from './pages/coach-courses-list/coach-courses-list.component';
 import { CoachCourseDetailsComponent } from './pages/coach-course-details/coach-course-details.component';
 import { CoachCourseFormComponent } from './pages/coach-course-form/coach-course-form.component';

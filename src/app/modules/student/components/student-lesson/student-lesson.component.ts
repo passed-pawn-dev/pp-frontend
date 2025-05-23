@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
-import { Lesson } from '../../models/Lesson';
+import { Lesson } from '../../models/lesson.model';
 import { RouterLink } from '@angular/router';
 import { ElementKind } from '../../../shared/enums/element-kind.enum';
-import { Element } from '../../../coach/models/Element';
-import { LessonStatus } from '../../enums/LessonStatus';
+import { Element } from '../../../coach/models/element.model';
+import { LessonStatus } from '../../enums/lesson-status.enum';
 
 @Component({
   selector: 'app-student-lesson',

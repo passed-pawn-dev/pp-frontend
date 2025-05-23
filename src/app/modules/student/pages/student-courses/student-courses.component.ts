@@ -1,18 +1,12 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  OnInit,
-  inject
-} from '@angular/core';
-import { Course } from '../../models/Course';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Course } from '../../models/course.model';
 import { StudentCourseTileComponent } from '../../components/student-course-tile/student-course-tile.component';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { StudentCourseFiltersComponent } from '../../components/student-course-filters/student-course-filters.component';
-import { CoursesQueryParams } from '../../models/CoursesQueryParams';
+import { CoursesQueryParams } from '../../models/course-query-params.model';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { Pagination } from '../../../shared/models/Pagination';
+import { Pagination } from '../../../shared/models/pagination.model';
 
 @Component({
   selector: 'app-student-courses',

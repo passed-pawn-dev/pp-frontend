@@ -1,10 +1,11 @@
-import { Component, DestroyRef, inject, input } from '@angular/core';
-import { Course } from '../../models/Course';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, inject, input } from '@angular/core';
+import { Course } from '../../models/course.model';
+import { RouterLink } from '@angular/router';
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CourseService } from '../../service/course.service';
+import { StudentPaymentComponent } from '../payment/student-payment.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CourseService } from '../../services/course.service';
 import { MessageService } from 'primeng/api';
 import { SseService } from '../../service/sse.service';
 import { Dialog } from 'primeng/dialog';
