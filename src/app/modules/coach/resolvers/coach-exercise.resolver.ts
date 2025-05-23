@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, ResolveFn, Router } from '@angular/router';
-import { CourseService } from '../service/course.service';
+import { CourseService } from '../services/course.service';
 import { Observable, catchError, of } from 'rxjs';
-import { Puzzle } from '../models/Puzzle';
+import { Puzzle } from '../models/puzzle.model';
 
 export const coachExerciseResolver: ResolveFn<Puzzle> = (
   route: ActivatedRouteSnapshot

@@ -7,10 +7,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { enumToObjectArray } from '../../../shared/utils/enum-to-object-array';
 import { DatePickerModule } from 'primeng/datepicker';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
-import { Nationality } from '../../../shared/models/Nationality';
+import { Nationality } from '../../../shared/models/nationality.model';
 import { NationalityService } from '../../../shared/service/nationality.service';
-import { Coach } from '../../models/Coach';
-import { CoachService } from '../../service/coach.service';
+import { Coach } from '../../models/coach.model';
+import { CoachService } from '../../services/coach.service';
 import { Router, RouterLink } from '@angular/router';
 import {
   ChessTitle,

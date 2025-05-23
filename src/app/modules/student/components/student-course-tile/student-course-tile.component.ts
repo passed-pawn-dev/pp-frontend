@@ -1,12 +1,12 @@
 import { Component, inject, input } from '@angular/core';
-import { Course } from '../../models/Course';
+import { Course } from '../../models/course.model';
 import { RouterLink } from '@angular/router';
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
-import { StudentPaymentComponent } from '../payment/student-payment.component';
 import { DialogService } from 'primeng/dynamicdialog';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { MessageService } from 'primeng/api';
+import { StudentPaymentComponent } from '../payment/student-payment.component';
 
 @Component({
   selector: 'app-student-course-tile',

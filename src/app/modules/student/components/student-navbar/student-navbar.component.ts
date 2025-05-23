@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { NAV_LINKS } from '../../constants/nav-links';
 import { RouterLink } from '@angular/router';
-import { NavLink } from '../../models/NavLink';
-import { AuthService } from '../../../../auth/services/auth.service';
+import { NavLink } from '../../models/nav-link.model';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-student-navbar',

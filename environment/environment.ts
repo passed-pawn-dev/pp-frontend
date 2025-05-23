@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   keycloak: {
-    authority: 'http://localhost:8081',
+    authority: 'https://auth-dev.passed-pawn.com',
     redirectUri: 'http://localhost:4200',
     postLogoutRedirectUri: 'http://localhost:4200',
     realm: 'passed-pawn',

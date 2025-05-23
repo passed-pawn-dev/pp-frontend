@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CoursesQueryParams } from '../../models/CoursesQueryParams';
+import { CoursesQueryParams } from '../../models/course-query-params.model';
 import { SortBy } from '../../../shared/enums/sort-by.enum';
 import { difficultyRanges } from '../../../shared/constants/difficulty-ranges';
 import { InputNumber } from 'primeng/inputnumber';
+import { SelectModule } from 'primeng/select';
 
 enum SearchBy {
   Title = 'Title',
@@ -12,7 +13,7 @@ enum SearchBy {
 
 @Component({
   selector: 'app-student-course-filters',
-  imports: [ReactiveFormsModule, InputNumber],
+  imports: [ReactiveFormsModule, InputNumber, SelectModule],
   templateUrl: './student-course-filters.component.html',
   styleUrl: './student-course-filters.component.scss'
 })

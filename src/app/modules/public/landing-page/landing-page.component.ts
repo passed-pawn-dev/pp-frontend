@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { JwtDecoded } from '../../shared/models/JwtDecoded';
+import { JwtDecoded } from '../../shared/models/jwt-decoded.model';
 import { jwtDecode } from 'jwt-decode';
 import { QuestionTileComponent } from '../question-tile/question-tile.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
-import { AuthService } from '../../../auth/services/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 import { environment } from '../../../../../environment/environment';
 
 @Component({

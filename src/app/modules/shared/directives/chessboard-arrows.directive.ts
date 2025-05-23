@@ -9,7 +9,7 @@ import {
   inject
 } from '@angular/core';
 import { Severity } from '../enums/severities.enum';
-import { Arrow } from '../models/Arrow';
+import { Arrow } from '../models/arrow.model';
 
 interface Vector {
   x: number;

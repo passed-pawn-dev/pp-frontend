@@ -9,11 +9,11 @@ import {
   signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { LessonDetails } from '../../models/LessonDetails';
-import { Element } from '../../models/Element';
+import { LessonDetails } from '../../models/lesson-details.model';
+import { Element } from '../../models/element.model';
 import { ElementKind } from '../../../shared/enums/element-kind.enum';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CoachAddVideoComponent } from '../../pages/coach-add-video/coach-add-video.component';

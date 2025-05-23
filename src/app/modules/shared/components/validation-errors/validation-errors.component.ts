@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { FormErrors } from '../../models/formErrors';
+import { FormErrors } from '../../models/form-errors.model';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
 
 @Component({

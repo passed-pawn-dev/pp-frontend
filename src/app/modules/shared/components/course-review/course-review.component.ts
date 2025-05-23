@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { CourseReview } from '../../../student/models/CourseReview';
+import { CourseReview } from '../../../student/models/course-review.model';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 
 @Component({

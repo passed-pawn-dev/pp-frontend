@@ -1,7 +1,7 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Course } from '../../models/Course';
-import { CourseService } from '../../service/course.service';
+import { Course } from '../../models/course.model';
+import { CourseService } from '../../services/course.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CoachCourseTileComponent } from '../../components/coach-course-tile/coach-course-tile.component';

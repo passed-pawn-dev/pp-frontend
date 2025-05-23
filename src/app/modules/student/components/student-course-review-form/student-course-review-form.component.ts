@@ -4,7 +4,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { ButtonModule } from 'primeng/button';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { Textarea } from 'primeng/inputtextarea';
 import { MessageService } from 'primeng/api';

@@ -4,8 +4,8 @@ import {
   Router,
   RouterStateSnapshot
 } from '@angular/router';
-import { CoachProfile } from '../models/CoachProfile';
-import { CoachService } from '../service/coach.service';
+import { CoachProfile } from '../models/coach-profile.model';
+import { CoachService } from '../services/coach.service';
 import { inject } from '@angular/core';
 import { catchError, of } from 'rxjs';
 

@@ -1,9 +1,9 @@
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CourseDetails } from '../../models/CourseDetails';
-import { Puzzle } from '../../models/Puzzle';
-import { LessonDetails } from '../../models/LessonDetails';
+import { CourseDetails } from '../../models/course-details.model';
+import { Puzzle } from '../../models/puzzle.model';
+import { LessonDetails } from '../../models/lesson-details.model';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CoachLessonComponent } from '../../components/coach-lesson/coach-lesson.component';

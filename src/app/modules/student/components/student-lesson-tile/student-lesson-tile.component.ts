@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Lesson } from '../../models/Lesson';
+import { Lesson } from '../../models/lesson.model';
 
 @Component({
   selector: 'app-student-lesson-tile',

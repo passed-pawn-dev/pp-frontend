@@ -6,8 +6,8 @@ import {
 } from '@angular/router';
 import { Observable, catchError, of } from 'rxjs';
 import { inject } from '@angular/core';
-import { CourseService } from '../service/course.service';
-import { CourseDetails } from '../models/CourseDetails';
+import { CourseService } from '../services/course.service';
+import { CourseDetails } from '../models/course-details.model';
 
 export const studentCourseResolver: ResolveFn<CourseDetails> = (
   route: ActivatedRouteSnapshot,

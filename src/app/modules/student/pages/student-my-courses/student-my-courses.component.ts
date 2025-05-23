@@ -1,7 +1,7 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
-import { MyCourse } from '../../models/MyCourse';
+import { MyCourse } from '../../models/my-course.model';
 
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { StudentMyCourseTileComponent } from '../../components/student-my-course-tile/student-my-course-tile.component';
 

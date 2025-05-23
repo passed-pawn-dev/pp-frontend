@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
 import { studentCourseResolver } from './student-course.resolver';
-import { CourseDetails } from '../models/CourseDetails';
+import { CourseDetails } from '../models/course-details.model';
 
 describe('studentCourseResolver', () => {
   const executeResolver: ResolveFn<CourseDetails> = (...resolverParameters) =>

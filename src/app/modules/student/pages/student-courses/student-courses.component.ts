@@ -1,12 +1,12 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
-import { Course } from '../../models/Course';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Course } from '../../models/course.model';
 import { StudentCourseTileComponent } from '../../components/student-course-tile/student-course-tile.component';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { StudentCourseFiltersComponent } from '../../components/student-course-filters/student-course-filters.component';
-import { CoursesQueryParams } from '../../models/CoursesQueryParams';
+import { CoursesQueryParams } from '../../models/course-query-params.model';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { Pagination } from '../../../shared/models/Pagination';
+import { Pagination } from '../../../shared/models/pagination.model';
 
 @Component({
   selector: 'app-student-courses',
@@ -17,6 +17,8 @@ import { Pagination } from '../../../shared/models/Pagination';
 })
 export class StudentCoursesComponent implements OnInit {
   protected courses: Course[] = [];
+  private courseService: CourseService = inject(CourseService);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   protected totalRecords: number = 0;
   protected first: number = 1;
@@ -35,10 +37,7 @@ export class StudentCoursesComponent implements OnInit {
     courseSizeBig: true
   };
 
-  public constructor(
-    private courseService: CourseService,
-    private readonly destroyRef: DestroyRef
-  ) {}
+  public constructor() {}
 
   public ngOnInit(): void {
     this.fetchCourses(this.currentQueryParams);

@@ -8,9 +8,9 @@ import {
   inject,
   signal
 } from '@angular/core';
-import { CourseDetails } from '../../models/CourseDetails';
+import { CourseDetails } from '../../models/course-details.model';
 import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
-import { CourseService } from '../../service/course.service';
+import { CourseService } from '../../services/course.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
@@ -21,9 +21,9 @@ import {
 } from '../../../shared/components/course-details-diagram/course-details-diagram.component';
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { ChessTitle } from '../../../shared/enums/chess-titles.enum';
-import { CourseReview } from '../../models/CourseReview';
+import { CourseReview } from '../../models/course-review.model';
 import { StudentLessonComponent } from '../../components/student-lesson/student-lesson.component';
-import { LessonStatus } from '../../enums/LessonStatus';
+import { LessonStatus } from '../../enums/lesson-status.enum';
 import { StudentPaymentComponent } from '../../components/payment/student-payment.component';
 import { DialogService } from 'primeng/dynamicdialog';
 
@@ -131,14 +131,12 @@ export class StudentCourseComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             this.course.set(res);
-            this.cdRef.detectChanges();
           });
         this.courseService
           .getReviews(params.get('courseId')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             this.reviews = res;
-            this.cdRef.detectChanges();
           });
       });
   }

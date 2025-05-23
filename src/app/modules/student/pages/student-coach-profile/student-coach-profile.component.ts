@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { CoachProfile } from '../../models/CoachProfile';
+import { CoachProfile } from '../../models/coach-profile.model';
 import { ActivatedRoute } from '@angular/router';
 import { StudentCourseTileComponent } from '../../components/student-course-tile/student-course-tile.component';
 

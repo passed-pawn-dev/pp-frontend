@@ -1,9 +1,9 @@
 export const environment = {
-  production: true,
+  production: false,
   keycloak: {
-    authority: 'https://auth-local.passed-pawn.com',
-    redirectUri: 'https://pp-local.passed-pawn.com',
-    postLogoutRedirectUri: 'https://pp-local.passed-pawn.com',
+    authority: 'https://localhost:8081',
+    redirectUri: 'http://localhost:4200',
+    postLogoutRedirectUri: 'http://localhost:4200',
     realm: 'passed-pawn',
     clientId: 'pp-frontend',
     apiClientId: 'pp-api'
