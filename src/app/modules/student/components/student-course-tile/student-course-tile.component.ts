@@ -1,100 +1,58 @@
-import { Component, DestroyRef, inject, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Course } from '../../models/Course';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { StudentPaymentComponent } from '../payment/student-payment.component';
+import { DialogService } from 'primeng/dynamicdialog';
 import { CourseService } from '../../service/course.service';
 import { MessageService } from 'primeng/api';
-import { SseService } from '../../service/sse.service';
-import { Dialog } from 'primeng/dialog';
-import { PaymentComponent } from '../payment/payment.component';
 
 @Component({
   selector: 'app-student-course-tile',
   standalone: true,
-  imports: [
-    RouterLink,
-    StarRatingComponent,
-    CourseDifficultyComponent,
-    Dialog,
-    PaymentComponent
-  ],
+  imports: [RouterLink, StarRatingComponent, CourseDifficultyComponent],
+  providers: [DialogService],
   templateUrl: './student-course-tile.component.html',
   styleUrl: './student-course-tile.component.scss'
 })
 export class StudentCourseTileComponent {
-  private route: ActivatedRoute = inject(ActivatedRoute);
+  private dialogService: DialogService = inject(DialogService);
   private courseService: CourseService = inject(CourseService);
   private messageService: MessageService = inject(MessageService);
-  private destroyRef: DestroyRef = inject(DestroyRef);
-  private sseService: SseService = inject(SseService);
 
   public course = input.required<Course>();
 
   protected clientSecret: string | undefined;
   protected showPaymentModal: boolean = false;
-  protected courseBought: boolean = false;
 
-  protected buyCourse(event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
-
-    this.route.paramMap
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((_params) => {
-        this.courseService
-          .getPaymentIntent(this.course().id)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: (clientSecret) => {
-              this.clientSecret = clientSecret;
-              this.showPaymentModal = true;
-            },
-            error: (_) =>
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Failure',
-                detail: 'Course could not be bought'
-              })
-          });
-      });
-  }
-
-  protected paymentModalClosed(): void {
-    this.showPaymentModal = false;
-    this.clientSecret = undefined;
-  }
-
-  protected paymentSuccessful(): void {
-    this.showPaymentModal = false;
-    this.clientSecret = undefined;
-    this.courseBought = true;
-
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Payment successful! Course will be added to your list shortly'
+  protected openBuyCourseDialog(): void {
+    this.dialogService.open(StudentPaymentComponent, {
+      header: `Buy course '${this.course().title}'`,
+      closable: true,
+      modal: true,
+      inputValues: {
+        courseId: this.course().id
+      }
     });
   }
 
-  protected paymentAttempted(): void {
-    this.sseService.connect('/api/sse').subscribe({
-      next: (_) =>
+  protected acquireFreeCourse(): void {
+    this.courseService.acquireFreeCourse(this.course().id).subscribe({
+      next: () => {
         this.messageService.add({
-          severity: 'info',
-          summary: 'Course has been added to list'
-        })
-    });
-  }
-
-  protected paymentFailed(details: string): void {
-    this.sseService.disconnect();
-
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Failure',
-      detail: details
+          severity: 'success',
+          summary: 'Success',
+          detail: 'You have been granted access to this course!'
+        });
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Failure',
+          detail: 'There was a problem obtaining the course'
+        });
+      }
     });
   }
 }

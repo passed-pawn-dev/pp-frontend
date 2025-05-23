@@ -321,9 +321,7 @@ export class PuzzleChessboardComponent implements OnInit {
     const fenBoard = this._initialFen;
 
     const moveListString = this.moveList.flatMap((move) => move).join(',');
-    console.log(this.gameHistory);
     this.savePuzzle.emit({ fenBoard: fenBoard, moveListString });
-    console.log(fenBoard, moveListString);
     this.setSequence = true;
   }
 }

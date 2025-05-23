@@ -84,6 +84,7 @@ input {
   }
 
   &.input-small {
+    border-radius: 0.25rem;
     box-sizing: border-box;
     height: 2rem;
     padding-top: 0.25rem;
@@ -339,15 +340,18 @@ input {
 
   &.h-small {
     input.p-inputtext {
+      border-radius: 0.25rem;
       height: 2rem;
     }
     .p-inputnumber-button {
       &.p-inputnumber-increment-button {
         height: 0.7188rem;
+        border-top-right-radius: 0.25rem;
       }
 
       &.p-inputnumber-decrement-button {
         height: 0.7188rem;
+        border-bottom-right-radius: 0.25rem;
       }
     }
   }
