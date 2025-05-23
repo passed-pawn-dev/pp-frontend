@@ -6,91 +6,89 @@
 
 .tile {
   list-style-type: none;
+  position: relative;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 
-  a {
-    display: flex;
-    gap: 1rem;
-    background-color: white;
-    padding: 1rem;
+  &:hover {
+    box-shadow: 0 0.5rem 0.5rem #dcdbdb;
+    transform: translateY(-0.25rem);
+  }
+}
+
+a {
+  display: flex;
+  gap: 1rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: black;
+  border: 1px solid white;
+
+  img {
+    aspect-ratio: 1/1;
+    width: 12rem;
+    height: 12rem;
+    object-fit: cover;
     border-radius: 0.5rem;
-    text-decoration: none;
-    color: black;
-    border: 1px solid white;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
+  }
 
-    &:hover {
-      // border: 1px solid $text-secondary;
-      // transform: translateY(-0.5rem);
-      // box-shadow: 0 0.5rem 0 $text-secondary;
-      box-shadow: 0 0.5rem 0.5rem #dcdbdb;
-      transform: translateY(-0.25rem);
-    }
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
 
-    img {
-      aspect-ratio: 1/1;
-      width: 12rem;
-      height: 12rem;
-      object-fit: cover;
-      border-radius: 0.5rem;
-    }
-
-    .content {
+    .main {
       display: flex;
-      flex-direction: column;
       justify-content: space-between;
-      width: 100%;
+      // align-items: center;
+      // border: 1px solid;
 
-      .main {
-        display: flex;
-        justify-content: space-between;
-        // align-items: center;
-        // border: 1px solid;
+      .header {
+        // border: 1px solid red;
 
-        .header {
-          // border: 1px solid red;
-
-          h3 {
-            // border: 1px solid;
-          }
-
-          .flex {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-          }
-
-          .desc {
-            color: $text-secondary;
-          }
+        h3 {
+          // border: 1px solid;
         }
 
-        .price {
-          font-size: $font-L;
-          // line-height: 2rem;
-          white-space: nowrap;
-          // border: 1px solid blue;
+        .flex {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
         }
 
-        .free {
-          color: $free;
+        .desc {
+          color: $text-secondary;
         }
       }
 
-      .footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        // border: 1px solid;
+      .price {
+        font-size: $font-L;
+        // line-height: 2rem;
+        white-space: nowrap;
+        // border: 1px solid blue;
+      }
 
-        .coach {
-          margin-top: 1rem;
-        }
+      .free {
+        color: $free;
+      }
+    }
 
-        button {
-          // padding: 0.5rem 1.5rem;
-        }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      // border: 1px solid;
+
+      .coach {
+        margin-top: 1rem;
+      }
+
+      button {
+        // padding: 0.5rem 1.5rem;
       }
     }
   }
@@ -98,4 +96,11 @@
 
 .owned {
   color: $primary;
+}
+
+.get-course-button {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1000;
 }

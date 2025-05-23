@@ -5,6 +5,7 @@ import {
   OnInit,
   Signal,
   computed,
+  inject,
   signal
 } from '@angular/core';
 import { CourseDetails } from '../../models/CourseDetails';
@@ -12,7 +13,6 @@ import { CourseReviewComponent } from '../../../shared/components/course-review/
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -24,9 +24,8 @@ import { ChessTitle } from '../../../shared/enums/chess-titles.enum';
 import { CourseReview } from '../../models/CourseReview';
 import { StudentLessonComponent } from '../../components/student-lesson/student-lesson.component';
 import { LessonStatus } from '../../enums/LessonStatus';
-import { Dialog } from 'primeng/dialog';
-import { PaymentComponent } from '../../components/payment/payment.component';
-import { SseService } from '../../service/sse.service';
+import { StudentPaymentComponent } from '../../components/payment/student-payment.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-student-course',
@@ -38,14 +37,19 @@ import { SseService } from '../../service/sse.service';
     CourseDifficultyComponent,
     CourseReviewComponent,
     StudentLessonComponent,
-    RouterLink,
-    Dialog,
-    PaymentComponent
+    RouterLink
   ],
+  providers: [DialogService],
   templateUrl: './student-course.component.html',
   styleUrl: './student-course.component.scss'
 })
 export class StudentCourseComponent implements OnInit {
+  private dialogService: DialogService = inject(DialogService);
+  private courseService: CourseService = inject(CourseService);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private cdRef: ChangeDetectorRef = inject(ChangeDetectorRef);
+
   protected course = signal<CourseDetails>({
     id: '',
     title: '',
@@ -96,15 +100,6 @@ export class StudentCourseComponent implements OnInit {
     { title: 'Videos', amount: this.course().videoCount },
     { title: 'Examples', amount: this.course().exampleCount }
   ]);
-
-  public constructor(
-    private courseService: CourseService,
-    private readonly sseService: SseService,
-    private readonly route: ActivatedRoute,
-    private messageService: MessageService,
-    private readonly destroyRef: DestroyRef,
-    private cdRef: ChangeDetectorRef
-  ) {}
 
   protected get lessonsAvailableForPreview(): number {
     return this.course().lessons.filter((lesson) => lesson.preview).length;
@@ -160,62 +155,14 @@ export class StudentCourseComponent implements OnInit {
     this.showLessons = !this.showLessons;
   }
 
-  protected buyCourse(): void {
-    this.route.paramMap
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((params) => {
-        this.courseService
-          .getPaymentIntent(params.get('courseId')!)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: (clientSecret) => {
-              this.clientSecret = clientSecret;
-              this.showPaymentModal = true;
-            },
-            error: (_) =>
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Failure',
-                detail: 'Course could not be bought'
-              })
-          });
-      });
-  }
-
-  protected paymentModalClosed(): void {
-    this.showPaymentModal = false;
-    this.clientSecret = undefined;
-  }
-
-  protected paymentAttempted(): void {
-    this.sseService.connect('/api/sse').subscribe({
-      next: (_) =>
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Course has been added to list'
-        })
-    });
-  }
-
-  protected paymentSuccessful(): void {
-    this.showPaymentModal = false;
-    this.clientSecret = undefined;
-    this.courseBought = true;
-
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Payment successful! Course will be added to your list shortly'
-    });
-  }
-
-  protected paymentFailed(details: string): void {
-    this.sseService.disconnect();
-
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Failure',
-      detail: details
+  protected openBuyCourseDialog(): void {
+    this.dialogService.open(StudentPaymentComponent, {
+      header: `Buy course '${this.course().title}'`,
+      closable: true,
+      modal: true,
+      inputValues: {
+        courseId: this.course().id
+      }
     });
   }
 }

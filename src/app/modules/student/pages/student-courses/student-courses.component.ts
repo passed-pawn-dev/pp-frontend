@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  OnInit,
-  inject
-} from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { Course } from '../../models/Course';
 import { StudentCourseTileComponent } from '../../components/student-course-tile/student-course-tile.component';
 import { CourseService } from '../../service/course.service';
@@ -22,7 +16,6 @@ import { Pagination } from '../../../shared/models/Pagination';
   styleUrl: './student-courses.component.scss'
 })
 export class StudentCoursesComponent implements OnInit {
-  private cdRef = inject(ChangeDetectorRef);
   protected courses: Course[] = [];
 
   protected totalRecords: number = 0;
@@ -69,8 +62,6 @@ export class StudentCoursesComponent implements OnInit {
       .getAll(queryParams)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {
-        this.courses = [];
-        this.cdRef.detectChanges();
         this.courses = res.body!;
         const pagination: Pagination = JSON.parse(res.headers.get('pagination')!);
         this.totalRecords = pagination.totalItems;

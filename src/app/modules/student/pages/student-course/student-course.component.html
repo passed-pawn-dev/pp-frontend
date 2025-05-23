@@ -1,22 +1,3 @@
-<p-dialog
-  header="Buy course"
-  [modal]="true"
-  [draggable]="false"
-  [(visible)]="showPaymentModal"
-  (close)="paymentModalClosed()"
->
-  @if (clientSecret) {
-    <div class="buy-course-container">
-      <app-payment
-        [clientSecret]="clientSecret"
-        (paymentStarted)="paymentAttempted()"
-        (paymentSuccess)="paymentSuccessful()"
-        (paymentFailure)="paymentFailed($event)"
-      />
-    </div>
-  }
-</p-dialog>
-
 <div class="page">
   <h2>Course Details</h2>
   <section class="main-section">
@@ -187,7 +168,7 @@
         class="primary-btn"
         type="submit"
         [disabled]="courseBought || course().isBought"
-        (click)="buyCourse()"
+        (click)="openBuyCourseDialog()"
       >
         {{ course().isBought ? 'Owned' : 'Buy Course' }}
       </button>
