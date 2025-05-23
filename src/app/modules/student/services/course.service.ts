@@ -41,7 +41,7 @@ export class CourseService {
     return this.httpClient.get<CourseReview[]>(`/api/Course/${id}/review`);
   }
 
-  public buy(id: string): Observable<Object> {
+  public acquireFreeCourse(id: string): Observable<Object> {
     return this.httpClient.post(`/api/Course/Student/${id}/course-list`, {});
   }
 

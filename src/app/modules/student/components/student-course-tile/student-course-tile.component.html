@@ -1,22 +1,3 @@
-<p-dialog
-  header="Buy course"
-  [modal]="true"
-  [draggable]="false"
-  [(visible)]="showPaymentModal"
-  (close)="paymentModalClosed()"
->
-  @if (clientSecret) {
-    <div class="buy-course-container">
-      <app-payment
-        [clientSecret]="clientSecret"
-        (paymentStarted)="paymentAttempted()"
-        (paymentSuccess)="paymentSuccessful()"
-        (paymentFailure)="paymentFailed($event)"
-      />
-    </div>
-  }
-</p-dialog>
-
 <li class="tile">
   <a [routerLink]="['/student', 'courses', course().id]">
     <img alt="" [src]="course().thumbnailUrl ?? 'images/hat.png'" />
@@ -50,20 +31,10 @@
           <div class="coach">{{ course().coachName }}</div>
           <!-- [coach name and surname] -->
         </div>
-        @if (!course().isBought) {
-          <button
-            type="button"
-            class="primary-btn"
-            [disabled]="courseBought"
-            (click)="buyCourse($event)"
-          >
-            Buy
-          </button>
-        }
       </div>
     </div>
   </a>
-  @if (!course().isBought && course().price > 0) {
+  @if (!course().isBought && this.course().price > 0) {
     <button
       type="button"
       class="primary-btn get-course-button"
@@ -71,7 +42,7 @@
     >
       Buy
     </button>
-  } @else if (!course().isBought && course().price === 0) {
+  } @else if (!course().isBought && this.course().price === 0) {
     <button
       type="button"
       class="primary-btn get-course-button"
