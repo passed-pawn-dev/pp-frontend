@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   keycloak: {
-    authority: 'https://localhost:8081',
+    authority: 'http://localhost:8081',
     redirectUri: 'http://localhost:4200',
     postLogoutRedirectUri: 'http://localhost:4200',
     realm: 'passed-pawn',
@@ -10,6 +10,6 @@ export const environment = {
   },
   stripe: {
     publishableKey:
-      'pk_test_51MikJiIzKdUh2PVUJDwuSn4OthMvaRFoSgqyIW5UNBoUJn4q6Y7lKPzCSEnK5Hv2SV1wBz6w8UY92oJ0h94NMmU700sDgO95Gf'
+      'pk_test_51RQVAE8unQpRs68U54iASrcVaJLAe1nhzY7mzTTJ3qwKw1wtrnWUePSeAlAjltKHz1MWv8wrUwNREBYn7ezTY7lZ00pnePUMbv'
   }
 };

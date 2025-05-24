@@ -62,7 +62,7 @@
               "extractLicenses": false,
               "sourceMap": true
             },
-            "local": {
+            "fullstack-local": {
               "budgets": [
                 {
                   "type": "initial",
@@ -78,7 +78,7 @@
               "fileReplacements": [
                 {
                   "replace": "environment/environment.ts",
-                  "with": "environment/environment.local.ts"
+                  "with": "environment/environment.fullstack-local.ts"
                 }
               ],
               "outputHashing": "all"
@@ -99,7 +99,7 @@
               "fileReplacements": [
                 {
                   "replace": "environment/environment.ts",
-                  "with": "environment/environment.local.ts"
+                  "with": "environment/environment.local-k8s.ts"
                 }
               ],
               "outputHashing": "all"
@@ -118,6 +118,9 @@
             },
             "development": {
               "buildTarget": "pp-frontend:build:development"
+            },
+            "fullstack-local": {
+              "buildTarget": "pp-frontend:build:fullstack-local"
             }
           },
           "defaultConfiguration": "development"

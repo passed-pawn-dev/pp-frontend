@@ -1,12 +1,11 @@
 import { Component, DestroyRef, ElementRef, ViewChild, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ValidationErrorsComponent } from '../validation-errors/validation-errors.component';
 import { AiChatService } from '../../services/ai-chat.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-ai-chat',
-  imports: [ReactiveFormsModule, ValidationErrorsComponent],
+  imports: [ReactiveFormsModule],
   templateUrl: './ai-chat.component.html',
   styleUrl: './ai-chat.component.scss'
 })
@@ -51,7 +50,7 @@ export class AiChatComponent {
   }
 
   protected scrollToBottom(): void {
-    // TODO: change to primeng virtual scroll
+    // TODO: change to primeng virtual scroll [MAYBE]
     setTimeout(() => {
       const container: ElementRef | null = this.messagesContainer;
       if (container) {
