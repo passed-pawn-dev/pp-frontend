@@ -70,12 +70,6 @@
         <button type="button" class="show-button" (click)="hide()">
           <img class="hide-icon" src="icons/xmark-black.svg" alt="close" />
         </button>
-        <app-validation-errors
-          class="error"
-          [errors]="questionForm.controls.question.errors"
-          [dirty]="questionForm.controls.question.dirty"
-          [touched]="questionForm.controls.question.touched"
-        />
       </form>
     </div>
   }
