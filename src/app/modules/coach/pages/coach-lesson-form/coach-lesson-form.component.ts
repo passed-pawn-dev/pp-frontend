@@ -1,5 +1,11 @@
-import { Component, DestroyRef, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { CourseService } from '../../services/course.service';
@@ -19,7 +25,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './coach-lesson-form.component.html',
   styleUrl: './coach-lesson-form.component.scss'
 })
-export class CoachLessonFormComponent {
+export class CoachLessonFormComponent implements OnInit {
   private fb: FormBuilder = inject(FormBuilder);
   private courseService: CourseService = inject(CourseService);
   private route = inject(ActivatedRoute);
@@ -27,39 +33,65 @@ export class CoachLessonFormComponent {
   private messageService = inject(MessageService);
   private destroyRef = inject(DestroyRef);
 
-  protected lessonId: string = '';
+  protected courseId: string = '';
+  protected lessonCount: number = 0;
 
-  protected lessonForm = this.fb.group({
-    lessonNumber: [0, [Validators.required, Validators.min(1)]],
-    title: ['', [Validators.required, Validators.min(1)]],
-    preview: [false]
-  });
+  protected lessonForm?: FormGroup<{
+    lessonNumber: FormControl<number>;
+    title: FormControl<string>;
+    preview: FormControl<boolean>;
+  }>;
 
-  protected onSubmit(): void {
+  public ngOnInit(): void {
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
-        this.lessonId = params.get('courseId')!;
-        this.courseService
-          .addLesson(this.lessonId, this.lessonForm.getRawValue())
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: (_) => {
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Lesson created successfully'
-              });
-              this.router.navigate(['../..'], { relativeTo: this.route });
-            },
-            error: (_) => {
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Failure',
-                detail: 'Lesson could not be created. Ensure lesson number is correct.'
-              });
-            }
+        this.courseId = params.get('courseId')!;
+        this.courseService.getLessonCount(this.courseId).subscribe({
+          next: (lessonCount) => {
+            this.lessonCount = lessonCount;
+            this.lessonForm = this.fb.nonNullable.group({
+              lessonNumber: [
+                0,
+                [
+                  Validators.required,
+                  Validators.min(0),
+                  Validators.max(this.lessonCount)
+                ]
+              ],
+              title: ['', [Validators.required, Validators.min(1)]],
+              preview: [false]
+            });
+          },
+          error: () => {
+            this.router.navigateByUrl('/404');
+          }
+        });
+      });
+  }
+
+  protected onSubmit(): void {
+    if (!this.lessonForm) return;
+
+    this.courseService
+      .addLesson(this.courseId, this.lessonForm.getRawValue())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (_) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Lesson created successfully'
           });
+          this.router.navigate(['../..'], { relativeTo: this.route });
+        },
+        error: (_) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Failure',
+            detail: 'Lesson could not be created. Ensure lesson number is correct.'
+          });
+        }
       });
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Course } from '../models/course.model';
 import { CourseDetails } from '../models/course-details.model';
 import { NewCourse } from '../models/new-course.model';
@@ -121,5 +121,11 @@ export class CourseService {
 
   public deleteThumbnail(courseId: string): Observable<Object> {
     return this.httpClient.delete(`api/Course/Coach/${courseId}/thumbnail`);
+  }
+
+  public getLessonCount(courseId: string): Observable<number> {
+    return this.httpClient
+      .get<{ lessonCount: number }>(`api/Course/Coach/${courseId}/lesson-count`)
+      .pipe(map((response) => response.lessonCount));
   }
 }

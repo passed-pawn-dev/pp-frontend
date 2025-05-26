@@ -106,7 +106,7 @@ input {
   text-decoration: none;
   cursor: pointer;
 
-  &:hover {
+  &:hover:not([disabled]) {
     background-color: color.adjust($primary, $lightness: -10%);
   }
 
