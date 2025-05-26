@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { difficultyRanges } from '../../constants/difficulty-ranges';
 
 @Component({
@@ -8,14 +8,14 @@ import { difficultyRanges } from '../../constants/difficulty-ranges';
   templateUrl: './course-difficulty.component.html',
   styleUrl: './course-difficulty.component.scss'
 })
-export class CourseDifficultyComponent implements OnInit {
+export class CourseDifficultyComponent implements OnChanges {
   @Input({ required: true }) public eloRangeStart!: number | null;
   @Input({ required: true }) public eloRangeEnd!: number | null;
 
   protected minDifficulty!: number;
   protected maxDifficulty!: number;
 
-  public ngOnInit(): void {
+  public ngOnChanges(): void {
     this.minDifficulty =
       this.eloRangeStart == null ? 0 : this.findRangeIndex(this.eloRangeStart);
     this.maxDifficulty =
