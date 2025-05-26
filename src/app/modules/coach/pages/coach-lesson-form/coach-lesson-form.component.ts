@@ -49,13 +49,13 @@ export class CoachLessonFormComponent implements OnInit {
         this.courseId = params.get('courseId')!;
         this.courseService.getLessonCount(this.courseId).subscribe({
           next: (lessonCount) => {
-            this.lessonCount = lessonCount;
+            this.lessonCount = lessonCount + 1;
             this.lessonForm = this.fb.nonNullable.group({
               lessonNumber: [
                 0,
                 [
                   Validators.required,
-                  Validators.min(0),
+                  Validators.min(1),
                   Validators.max(this.lessonCount)
                 ]
               ],
