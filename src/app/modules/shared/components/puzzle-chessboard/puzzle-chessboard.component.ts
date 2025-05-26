@@ -21,11 +21,18 @@ import { FormsModule } from '@angular/forms';
 import validateFEN from 'fen-validator';
 import { PreviewMode } from '../../enums/preview-mode.enum';
 import { cloneDeep } from 'lodash';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-puzzle-chessboard',
   standalone: true,
-  imports: [CommonModule, MoveListComponent, InputTextModule, FormsModule],
+  imports: [
+    CommonModule,
+    MoveListComponent,
+    InputTextModule,
+    FormsModule,
+    DialogModule
+  ],
   templateUrl: './puzzle-chessboard.component.html',
   styleUrl: './puzzle-chessboard.component.scss'
 })
@@ -235,7 +242,7 @@ export class PuzzleChessboardComponent implements OnInit {
       this.selectedSquare.piece === FenChar.WhitePawn ||
       this.selectedSquare.piece === FenChar.BlackPawn;
     const isPawnOnlastRank: boolean =
-      isPawnSelected && (targetX === 7 || targetY === 0);
+      isPawnSelected && (targetX === 7 || targetX === 0);
     const shouldOpenPromotionDialog: boolean =
       !this.isPromotionActive && isPawnOnlastRank;
 

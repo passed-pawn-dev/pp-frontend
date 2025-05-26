@@ -99,7 +99,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
       const moveList = this.moveList.flatMap((move) => move);
 
       if (moveList[moveList.length - 1] === this._expectedMoves[0]) {
-        this._expectedMoves = this._expectedMoves.slice(moveList.length);
+        this._expectedMoves = this._expectedMoves.slice(1);
         if (this._expectedMoves.length === 0) {
           this.solved.emit();
         }
@@ -238,6 +238,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
 
     const { square: currentSquare } = this.selectedSquare;
     this.updateBoard(currentSquare, targetSquare, this.promotedPiece);
+    this.playEnemyMove();
   }
 
   protected move(square: string): void {
@@ -286,5 +287,33 @@ export class StudentPuzzleChessboardComponent implements OnInit {
     } else {
       this.displayingStartingMove = false;
     }
+  }
+
+  private playEnemyMove(): void {
+    this.chessboard.safeSquares.forEach(
+      (possibleSquares: string[], pieceSquare: string) => {
+        possibleSquares.forEach((possibleSquare) => {
+          const currentGameState = cloneDeep(this.chessboard.gameState);
+          this.chessboard.move(pieceSquare, possibleSquare, this.promotedPiece);
+          this.chessboardView = this.chessboard.chessboardView;
+          this.checkState = this.chessboard.checkState;
+          this.lastMove = this.chessboard.lastMove;
+          this.unmarkingPreviouslySelectedAndSafeSquares();
+
+          if (this._expectedMoves) {
+            const moveList = this.moveList.flatMap((move) => move);
+
+            if (moveList[moveList.length - 1] === this._expectedMoves[0]) {
+              this._expectedMoves = this._expectedMoves.slice(1);
+            } else {
+              this.chessboard.setBoard(currentGameState);
+              this.chessboardView = this.chessboard.chessboardView;
+              this.loading = false;
+            }
+          }
+          this.gameHistoryPointer++;
+        });
+      }
+    );
   }
 }
