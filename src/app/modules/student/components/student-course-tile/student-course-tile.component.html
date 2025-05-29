@@ -28,7 +28,14 @@
             [eloRangeEnd]="course().eloRangeEnd"
           />
           <!-- [course difficulty 1-5] -->
-          <div class="coach">{{ course().coachName }}</div>
+          <div class="coach">
+            <span class="coach-pfp-wrapper"
+              ><img
+                alt="coach-pfp"
+                class="coach-pfp"
+                [src]="course().coachPfpUrl ?? 'images/hat.png'" /></span
+            >&nbsp;{{ course().coachName }}
+          </div>
           <!-- [coach name and surname] -->
         </div>
       </div>
