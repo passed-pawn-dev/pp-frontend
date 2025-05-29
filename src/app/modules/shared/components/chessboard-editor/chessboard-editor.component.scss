@@ -42,13 +42,18 @@
   width: 100%;
 
   .chessboard-field-content {
-    display: grid;
     height: 100%;
-    padding-bottom: 0.25rem;
-    place-content: center;
+    position: relative;
+
+    .chessboard-chess-piece {
+      height: 100%;
+      position: absolute;
+      width: 100%;
+    }
 
     img {
-      transform: scale(1.2);
+      width: 100%;
+      height: 100%;
     }
   }
 
