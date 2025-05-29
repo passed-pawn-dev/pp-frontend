@@ -75,7 +75,7 @@ export class StudentCourseComponent implements OnInit {
     averageScore: 0,
     thumbnailUrl: null,
     price: 0,
-    studentNumber: 0,
+    enrolledStudentsCount: 0,
     isBought: false,
     lessons: []
   });
@@ -106,6 +106,12 @@ export class StudentCourseComponent implements OnInit {
   }
 
   protected formattedPrice = computed(() => `${this.course().price.toFixed(2)} PLN`);
+
+  protected coachInitials = computed(
+    () =>
+      (this.course().coach.name.split(' ')[0]?.[0] ?? '') +
+      (this.course().coach.name.split(' ')[1]?.[0] ?? '')
+  );
 
   protected formattedDate: Signal<string> = computed(() => {
     const date: Date = new Date(this.course().releaseDate);
