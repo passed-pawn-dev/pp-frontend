@@ -12,6 +12,7 @@ import { QuizDetails } from '../../student/models/quiz-details.model';
 import { CourseReview } from '../models/course-review.model';
 import { ElementKind } from '../../shared/enums/element-kind.enum';
 import { NewExample } from '../models/new-example.model';
+import { CloudinarySecureUrlResponse } from '../../shared/models/cloudinary-secure-url-response';
 
 @Injectable({
   providedIn: 'root'
@@ -50,11 +51,11 @@ export class CoachCourseService {
   }
 
   public addLesson(id: string, lesson: NewLesson): Observable<Lesson> {
-    return this.httpClient.post<Lesson>(`api/Course/Coach/${id}/lesson`, lesson);
+    return this.httpClient.post<Lesson>(`/api/Course/Coach/${id}/lesson`, lesson);
   }
 
   public deleteLesson(id: string): Observable<object> {
-    return this.httpClient.delete(`api/Lesson/${id}`);
+    return this.httpClient.delete(`/api/Lesson/${id}`);
   }
 
   public deleteElement(id: string, kind: ElementKind): Observable<object> {
@@ -71,20 +72,20 @@ export class CoachCourseService {
   }
 
   public deleteQuiz(id: string): Observable<object> {
-    return this.httpClient.delete(`api/CourseQuiz/${id}`);
+    return this.httpClient.delete(`/api/CourseQuiz/${id}`);
   }
   public deleteExample(id: string): Observable<object> {
-    return this.httpClient.delete(`api/CourseExample/${id}`);
+    return this.httpClient.delete(`/api/CourseExample/${id}`);
   }
   public deleteVideo(id: string): Observable<object> {
-    return this.httpClient.delete(`api/CourseVideo/${id}`);
+    return this.httpClient.delete(`/api/CourseVideo/${id}`);
   }
   public deletePuzzle(id: string): Observable<object> {
-    return this.httpClient.delete(`api/CoursePuzzle/${id}`);
+    return this.httpClient.delete(`/api/CoursePuzzle/${id}`);
   }
 
   public getExerciseById(id: string): Observable<Puzzle> {
-    return this.httpClient.get<Puzzle>(`api/CoursePuzzle/${id}`);
+    return this.httpClient.get<Puzzle>(`/api/CoursePuzzle/${id}`);
   }
 
   public addPuzzle(
@@ -94,7 +95,7 @@ export class CoachCourseService {
     fen: string,
     solution: string
   ): Observable<Object> {
-    return this.httpClient.post(`api/Lesson/${lessonId}/puzzle`, {
+    return this.httpClient.post(`/api/Lesson/${lessonId}/puzzle`, {
       title,
       description,
       fen,
@@ -104,28 +105,34 @@ export class CoachCourseService {
   }
 
   public addQuiz(lessonId: string, quiz: QuizDetails): Observable<Object> {
-    return this.httpClient.post(`api/Lesson/${lessonId}/quiz`, quiz);
+    return this.httpClient.post(`/api/Lesson/${lessonId}/quiz`, quiz);
   }
 
   public addExample(lessonId: string, example: NewExample): Observable<Object> {
-    return this.httpClient.post(`api/Lesson/${lessonId}/example`, example);
+    return this.httpClient.post(`/api/Lesson/${lessonId}/example`, example);
   }
 
   public addVideo(courseId: string, payload: FormData): Observable<Object> {
-    return this.httpClient.post(`api/Lesson/${courseId}/video`, payload);
+    return this.httpClient.post(`/api/Lesson/${courseId}/video`, payload);
+  }
+
+  public getSecureUploadUrl(): Observable<CloudinarySecureUrlResponse> {
+    return this.httpClient.get<CloudinarySecureUrlResponse>(
+      `/api/CourseVideo/signature`
+    );
   }
 
   public updateThumbnail(courseId: string, thumbnail: FormData): Observable<Object> {
-    return this.httpClient.patch(`api/Course/Coach/${courseId}/thumbnail`, thumbnail);
+    return this.httpClient.patch(`/api/Course/Coach/${courseId}/thumbnail`, thumbnail);
   }
 
   public deleteThumbnail(courseId: string): Observable<Object> {
-    return this.httpClient.delete(`api/Course/Coach/${courseId}/thumbnail`);
+    return this.httpClient.delete(`/api/Course/Coach/${courseId}/thumbnail`);
   }
 
   public getLessonCount(courseId: string): Observable<number> {
     return this.httpClient
-      .get<{ lessonCount: number }>(`api/Course/Coach/${courseId}/lesson-count`)
+      .get<{ lessonCount: number }>(`/api/Course/Coach/${courseId}/lesson-count`)
       .pipe(map((response) => response.lessonCount));
   }
 }

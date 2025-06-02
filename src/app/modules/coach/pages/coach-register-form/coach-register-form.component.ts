@@ -8,7 +8,7 @@ import { enumToObjectArray } from '../../../shared/utils/enum-to-object-array';
 import { DatePickerModule } from 'primeng/datepicker';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { Nationality } from '../../../shared/models/nationality.model';
-import { NationalityService } from '../../../shared/service/nationality.service';
+import { NationalityService } from '../../../shared/services/nationality.service';
 import { Coach } from '../../models/coach.model';
 import { CoachService } from '../../services/coach.service';
 import { Router, RouterLink } from '@angular/router';
