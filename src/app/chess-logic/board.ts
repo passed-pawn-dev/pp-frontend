@@ -234,6 +234,10 @@ export class ChessBoard {
     this._safeSquares = this.findSafeSquares();
   }
 
+  public setInitialMoveListForBlack(): void {
+    this._moveList = [[null]];
+  }
+
   public move(
     currentSquare: string,
     targetSquare: string,
@@ -687,10 +691,13 @@ export class ChessBoard {
     if (moveType.has(MoveType.Check)) move += '+';
     else if (moveType.has(MoveType.CheckMate)) move += '#';
 
-    if (!this._moveList[Math.floor(this.gameHistory.length / 2)]) {
-      this._moveList[Math.floor(this.gameHistory.length / 2)] = [move];
+    if (
+      this.moveList.length === 0 ||
+      this.moveList[this.moveList.length - 1].length == 2
+    ) {
+      this._moveList.push([move]);
     } else {
-      this._moveList[Math.floor(this.gameHistory.length / 2)].push(move);
+      this._moveList[this.moveList.length - 1].push(move);
     }
   }
 

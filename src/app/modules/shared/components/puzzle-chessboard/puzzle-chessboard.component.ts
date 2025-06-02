@@ -186,6 +186,10 @@ export class PuzzleChessboardComponent implements OnInit {
         lastMove
       });
       this.chessboardView = this.chessboard.chessboardView;
+      this.checkState = this.chessboard.checkState;
+    }
+    if (this.chessboard.playerColor === Color.Black) {
+      this.chessboard.setInitialMoveListForBlack();
     }
   }
 

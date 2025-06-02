@@ -20,10 +20,17 @@ import { CommonModule } from '@angular/common';
 import { MoveListComponent } from '../../../shared/components/move-list/move-list.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-student-puzzle-chessboard',
-  imports: [CommonModule, MoveListComponent, InputTextModule, FormsModule],
+  imports: [
+    CommonModule,
+    MoveListComponent,
+    InputTextModule,
+    FormsModule,
+    DialogModule
+  ],
   templateUrl: './student-puzzle-chessboard.component.html',
   styleUrl: './student-puzzle-chessboard.component.scss'
 })
@@ -108,6 +115,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
         setTimeout(() => {
           this.chessboard.setBoard(currentGameState);
           this.chessboardView = this.chessboard.chessboardView;
+          this.lastMove = this.chessboard.lastMove;
           this.loading = false;
         }, 1000);
       }
@@ -165,8 +173,11 @@ export class StudentPuzzleChessboardComponent implements OnInit {
       lastMove: undefined
     });
     this.chessboardView = this.chessboard.chessboardView;
+    this.lastMove = this.chessboard.lastMove;
+    this.checkState = this.chessboard.checkState;
     this._expectedMoves = this.expectedMoves;
     if (this.chessboard.playerColor === Color.Black) {
+      this.chessboard.setInitialMoveListForBlack();
       this.reverseChessboard();
     }
   }
@@ -224,7 +235,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
       this.selectedSquare.piece === FenChar.WhitePawn ||
       this.selectedSquare.piece === FenChar.BlackPawn;
     const isPawnOnlastRank: boolean =
-      isPawnSelected && (targetX === 7 || targetY === 0);
+      isPawnSelected && (targetX === 7 || targetX === 0);
     const shouldOpenPromotionDialog: boolean =
       !this.isPromotionActive && isPawnOnlastRank;
 
@@ -238,7 +249,9 @@ export class StudentPuzzleChessboardComponent implements OnInit {
 
     const { square: currentSquare } = this.selectedSquare;
     this.updateBoard(currentSquare, targetSquare, this.promotedPiece);
-    this.playEnemyMove();
+    setTimeout(() => {
+      this.playEnemyMove();
+    }, 500);
   }
 
   protected move(square: string): void {
@@ -293,25 +306,31 @@ export class StudentPuzzleChessboardComponent implements OnInit {
     this.chessboard.safeSquares.forEach(
       (possibleSquares: string[], pieceSquare: string) => {
         possibleSquares.forEach((possibleSquare) => {
-          const currentGameState = cloneDeep(this.chessboard.gameState);
-          this.chessboard.move(pieceSquare, possibleSquare, this.promotedPiece);
-          this.chessboardView = this.chessboard.chessboardView;
-          this.checkState = this.chessboard.checkState;
-          this.lastMove = this.chessboard.lastMove;
-          this.unmarkingPreviouslySelectedAndSafeSquares();
+          this.loading = true;
+          const allPieces: (FenChar | null)[] = [...Object.values(FenChar), null];
 
-          if (this._expectedMoves) {
-            const moveList = this.moveList.flatMap((move) => move);
+          allPieces.forEach((promotionPiece) => {
+            const currentGameState = cloneDeep(this.chessboard.gameState);
+            this.chessboard.move(pieceSquare, possibleSquare, promotionPiece);
 
-            if (moveList[moveList.length - 1] === this._expectedMoves[0]) {
-              this._expectedMoves = this._expectedMoves.slice(1);
-            } else {
-              this.chessboard.setBoard(currentGameState);
-              this.chessboardView = this.chessboard.chessboardView;
-              this.loading = false;
+            if (this._expectedMoves) {
+              const moveList = this.moveList.flatMap((move) => move);
+
+              if (moveList[moveList.length - 1] === this._expectedMoves[0]) {
+                this._expectedMoves = this._expectedMoves.slice(1);
+                this.lastMove = this.chessboard.lastMove;
+                this.chessboardView = this.chessboard.chessboardView;
+                this.checkState = this.chessboard.checkState;
+                this.lastMove = this.chessboard.lastMove;
+                this.unmarkingPreviouslySelectedAndSafeSquares();
+              } else {
+                this.chessboard.setBoard(currentGameState);
+                this.chessboardView = this.chessboard.chessboardView;
+                this.loading = false;
+              }
             }
-          }
-          this.gameHistoryPointer++;
+            this.gameHistoryPointer++;
+          });
         });
       }
     );
