@@ -13,7 +13,7 @@ import { LessonDetails } from '../../models/lesson-details.model';
 import { Element } from '../../models/element.model';
 import { ElementKind } from '../../../shared/enums/element-kind.enum';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CoachAddVideoComponent } from '../../pages/coach-add-video/coach-add-video.component';
@@ -26,7 +26,7 @@ import { CoachAddVideoComponent } from '../../pages/coach-add-video/coach-add-vi
   styleUrl: './coach-lesson.component.scss'
 })
 export class CoachLessonComponent implements OnInit {
-  private courseService: CourseService = inject(CourseService);
+  private coachCourseService: CoachCourseService = inject(CoachCourseService);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
   private destroyRef: DestroyRef = inject(DestroyRef);
@@ -105,7 +105,7 @@ export class CoachLessonComponent implements OnInit {
       message: 'Are you sure you want to delete this element?',
       header: 'Confirm',
       accept: () => {
-        this.courseService
+        this.coachCourseService
           .deleteElement(elementId, elementKind)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({

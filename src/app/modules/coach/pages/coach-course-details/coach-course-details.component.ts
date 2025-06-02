@@ -1,5 +1,5 @@
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CourseDetails } from '../../models/course-details.model';
 import { Puzzle } from '../../models/puzzle.model';
@@ -24,7 +24,7 @@ export class CoachCourseDetailsComponent implements OnInit {
   private messageService = inject(MessageService);
   private destroyRef = inject(DestroyRef);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
-  private courseService = inject(CourseService);
+  private coachCourseService = inject(CoachCourseService);
   private readonly route = inject(ActivatedRoute);
   private dialogService: DialogService = inject(DialogService);
 
@@ -72,7 +72,7 @@ export class CoachCourseDetailsComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((params) => {
             const courseId = params.get('courseId')!;
-            this.courseService
+            this.coachCourseService
               .deleteThumbnail(courseId)
               .pipe(takeUntilDestroyed(this.destroyRef))
               .subscribe({
@@ -115,7 +115,7 @@ export class CoachCourseDetailsComponent implements OnInit {
       message: 'Are you sure you want to delete this lesson?',
       header: 'Confirm',
       accept: () => {
-        this.courseService
+        this.coachCourseService
           .deleteLesson(lessonNumber)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({

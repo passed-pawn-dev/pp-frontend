@@ -2,8 +2,8 @@ import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import { environment } from '../../../../../../environment/environment';
 import { ActivatedRoute } from '@angular/router';
-import { CourseService } from '../../services/course.service';
-import { SseService } from '../../services/sse.service';
+import { StudentCourseService } from '../../services/student-course.service';
+import { StudentSseService } from '../../services/student-sse.service';
 import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -20,9 +20,9 @@ export class StudentPaymentComponent implements OnInit {
   @Input({ required: true }) public courseId!: string;
   private destroyRef: DestroyRef = inject(DestroyRef);
   private route: ActivatedRoute = inject(ActivatedRoute);
-  private courseService: CourseService = inject(CourseService);
+  private studentCourseService: StudentCourseService = inject(StudentCourseService);
   private messageService: MessageService = inject(MessageService);
-  private sseService: SseService = inject(SseService);
+  private studentSseService: StudentSseService = inject(StudentSseService);
   private ref = inject(DynamicDialogRef);
 
   private clientSecret: string | null = null;
@@ -33,7 +33,7 @@ export class StudentPaymentComponent implements OnInit {
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((_params) => {
-        this.courseService
+        this.studentCourseService
           .getPaymentIntent(this.courseId)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
@@ -68,7 +68,7 @@ export class StudentPaymentComponent implements OnInit {
       });
 
       if (result.error) {
-        this.sseService.disconnect();
+        this.studentSseService.disconnect();
 
         this.messageService.add({
           severity: 'error',
@@ -86,7 +86,7 @@ export class StudentPaymentComponent implements OnInit {
   }
 
   private listenForCourseObtainmentNotification(): void {
-    this.sseService.connect('/api/sse').subscribe({
+    this.studentSseService.connect('/api/sse').subscribe({
       next: (_) =>
         this.messageService.add({
           severity: 'info',

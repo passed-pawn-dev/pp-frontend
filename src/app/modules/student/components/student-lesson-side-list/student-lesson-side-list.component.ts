@@ -1,6 +1,6 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { CourseService } from '../../services/course.service';
+import { StudentCourseService } from '../../services/student-course.service';
 import { Lesson } from '../../models/lesson.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -15,7 +15,7 @@ export class StudentLessonSideListComponent implements OnInit {
   protected lessons: Lesson[] = [];
 
   public constructor(
-    private courseService: CourseService,
+    private studentCourseService: StudentCourseService,
     private readonly route: ActivatedRoute,
     private readonly destroyRef: DestroyRef
   ) {}
@@ -24,7 +24,7 @@ export class StudentLessonSideListComponent implements OnInit {
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
-        this.courseService
+        this.studentCourseService
           .getLessons(params.get('courseId')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {

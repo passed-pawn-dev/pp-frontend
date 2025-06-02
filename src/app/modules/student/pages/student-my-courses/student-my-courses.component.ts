@@ -1,7 +1,7 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { MyCourse } from '../../models/my-course.model';
 
-import { CourseService } from '../../services/course.service';
+import { StudentCourseService } from '../../services/student-course.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { StudentMyCourseTileComponent } from '../../components/student-my-course-tile/student-my-course-tile.component';
 
@@ -16,12 +16,12 @@ export class StudentMyCoursesComponent implements OnInit {
   protected courses: MyCourse[] = [];
 
   public constructor(
-    private courseService: CourseService,
+    private studentCourseService: StudentCourseService,
     private destroyRef: DestroyRef
   ) {}
 
   public ngOnInit(): void {
-    this.courseService
+    this.studentCourseService
       .getAllBought()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {

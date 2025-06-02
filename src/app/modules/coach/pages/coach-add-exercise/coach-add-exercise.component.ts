@@ -3,7 +3,7 @@ import { PuzzleChessboardComponent } from '../../../shared/components/puzzle-che
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { PuzzleData } from '../../../shared/models/puzzle-data.model';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
@@ -32,7 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class CoachAddExerciseComponent implements OnInit {
   private location = inject(Location);
   private route = inject(ActivatedRoute);
-  private courseService = inject(CourseService);
+  private coachCourseService = inject(CoachCourseService);
   private fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
   private messageService = inject(MessageService);
   private destroyRef = inject(DestroyRef);
@@ -67,7 +67,7 @@ export class CoachAddExerciseComponent implements OnInit {
       return;
     }
 
-    this.courseService
+    this.coachCourseService
       .addPuzzle(
         this.lessonId,
         this.exerciseForm.value.title!,

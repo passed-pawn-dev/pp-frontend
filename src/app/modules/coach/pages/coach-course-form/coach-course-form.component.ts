@@ -11,7 +11,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { ButtonModule } from 'primeng/button';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -32,7 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class CoachCourseFormComponent implements OnInit {
   private fb: FormBuilder = inject(FormBuilder);
-  private courseService = inject(CourseService);
+  private coachCourseService = inject(CoachCourseService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private messageService = inject(MessageService);
@@ -82,7 +82,7 @@ export class CoachCourseFormComponent implements OnInit {
 
   protected onSubmit(): void {
     if (this.courseId === null) {
-      this.courseService
+      this.coachCourseService
         .create(this.courseForm.getRawValue())
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
@@ -102,7 +102,7 @@ export class CoachCourseFormComponent implements OnInit {
             })
         });
     } else {
-      this.courseService
+      this.coachCourseService
         .update(this.courseId, this.courseForm.getRawValue())
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({

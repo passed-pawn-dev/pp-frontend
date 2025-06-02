@@ -16,7 +16,7 @@ import { NewExample } from '../models/new-example.model';
 @Injectable({
   providedIn: 'root'
 })
-export class CourseService {
+export class CoachCourseService {
   public constructor(private httpClient: HttpClient) {}
 
   public getAll(): Observable<Course[]> {

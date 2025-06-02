@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, Input } from '@angular/core';
 import { FileUploadComponent } from '../../../shared/components/file-upload/file-upload.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MessageService } from 'primeng/api';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { fileTypeValidator } from '../../../shared/validators/file-type-validator';
@@ -21,7 +21,7 @@ export class CoachAddVideoComponent {
 
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
-  private courseService = inject(CourseService);
+  private coachCourseService = inject(CoachCourseService);
   private destroyRef = inject(DestroyRef);
   private ref = inject(DynamicDialogRef);
 
@@ -51,6 +51,8 @@ export class CoachAddVideoComponent {
     order: [null, [Validators.required, Validators.min(1)]]
   });
 
+  protected startFileUpload(): void {}
+
   protected onSubmit(): void {
     const video = this.addVideoForm.controls.video.value;
 
@@ -63,7 +65,7 @@ export class CoachAddVideoComponent {
 
       this.submitting = true;
 
-      this.courseService
+      this.coachCourseService
         .addVideo(this.lessonId, formData)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
