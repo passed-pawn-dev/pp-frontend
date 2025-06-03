@@ -5,7 +5,12 @@
 
   <div class="lesson">
     <div class="lesson-header">
-      <div class="bold">{{ lesson.title }}</div>
+      <div class="name">
+        @if (lesson.preview) {
+          <span class="preview">PREVIEW</span>
+        }
+        <span class="bold">{{ lesson.title }}</span>
+      </div>
       <div class="lesson-controls">
         <!-- <div class="progress-bar-container">
             <div class="percent">{{ progress }} / {{ all }}</div>

@@ -166,6 +166,14 @@
   }
 }
 
+.preview {
+  color: $primary;
+  font-weight: 700;
+  border: 2px solid $primary;
+  padding: 0.2rem;
+  margin-right: 1rem;
+}
+
 .circle {
   position: relative;
   top: 1rem;
