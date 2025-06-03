@@ -107,7 +107,6 @@ export class StudentMyCourseComponent implements OnInit {
       message: 'Are you sure you want to delete your review?',
       header: 'Confirm',
       accept: () => {
-        this.courseService;
         this.courseService
           .deleteReview(this.givenReview()!.id)
           .pipe(takeUntilDestroyed(this.destroyRef))
