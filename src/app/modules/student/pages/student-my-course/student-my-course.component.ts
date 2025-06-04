@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, signal } from '@angular/core';
 import { MyCourseDetails } from '../../models/my-course-details.model';
 import { StudentCourseReviewFormComponent } from '../../components/student-course-review-form/student-course-review-form.component';
 import { StudentCourseService } from '../../services/student-course.service';
@@ -11,6 +11,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DialogModule } from 'primeng/dialog';
 import { StudentLessonComponent } from '../../components/student-lesson/student-lesson.component';
 import { LessonStatus } from '../../enums/lesson-status.enum';
+import { CourseReview } from '../../models/course-review.model';
+import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 
 @Component({
   selector: 'app-student-my-course',
@@ -19,7 +21,8 @@ import { LessonStatus } from '../../enums/lesson-status.enum';
     ButtonModule,
     StudentLessonComponent,
     StudentCourseReviewFormComponent,
-    DialogModule
+    DialogModule,
+    StarRatingComponent
   ],
   providers: [],
   templateUrl: './student-my-course.component.html',
@@ -35,10 +38,20 @@ export class StudentMyCourseComponent implements OnInit {
     lessons: []
   });
 
+  protected givenReview = signal<CourseReview | null>(null);
+
   protected quiz = signal<Quiz>({
     id: '1',
     title: 'quiz',
     order: 1
+  });
+
+  protected shortenedReview = computed(() => {
+    if (this.givenReview() && this.givenReview()!.content) {
+      return this.givenReview()!.content!.length < 20
+        ? this.givenReview()!.content
+        : this.givenReview()!.content?.slice(0, 20) + '...';
+    } else return '';
   });
 
   protected LessonStatus = LessonStatus;
@@ -77,10 +90,44 @@ export class StudentMyCourseComponent implements OnInit {
   public ngOnInit(): void {
     const course = this.route.snapshot.data['course'];
     this.course.set(course);
+    this.givenReview.set(course.givenReview);
   }
 
   protected getSortedExercises(exerciseList: Exercise[]): Exercise[] {
     return exerciseList.sort((a, b) => (a.id > b.id ? 1 : -1));
+  }
+
+  protected newReview(review: CourseReview): void {
+    this.hideReviewForm();
+    this.givenReview.set(review);
+  }
+
+  protected deleteReview(): void {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete your review?',
+      header: 'Confirm',
+      accept: () => {
+        this.studentCourseService
+          .deleteReview(this.givenReview()!.id)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe({
+            next: () => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Review deleted successfully'
+              });
+              this.givenReview.set(null);
+            },
+            error: () =>
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Failure',
+                detail: 'Could not delete review'
+              })
+          });
+      }
+    });
   }
 
   protected signOut(): void {
@@ -110,8 +157,7 @@ export class StudentMyCourseComponent implements OnInit {
               });
           });
         this.router.navigate(['../'], { relativeTo: this.route });
-      },
-      reject: () => {}
+      }
     });
   }
 }

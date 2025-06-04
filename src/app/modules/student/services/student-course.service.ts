@@ -62,6 +62,14 @@ export class StudentCourseService {
     );
   }
 
+  public updateReview(id: string, review: NewCourseReview): Observable<CourseReview> {
+    return this.httpClient.put<CourseReview>(`/api/CourseReview/${id}`, review);
+  }
+
+  public deleteReview(id: string): Observable<Object> {
+    return this.httpClient.delete(`/api/CourseReview/${id}`);
+  }
+
   public getAllBought(): Observable<MyCourse[]> {
     return this.httpClient.get<MyCourse[]>('/api/Course/Student/bought');
   }

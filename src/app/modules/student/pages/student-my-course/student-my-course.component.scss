@@ -37,10 +37,6 @@
         flex-direction: column;
         justify-content: space-between;
         // border: 1px solid;
-
-        .desc {
-          // color: $text-secondary;
-        }
       }
     }
   }
@@ -59,6 +55,12 @@
   justify-content: flex-end;
 }
 
+.review-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.5rem;
+}
+
 .review-btn {
   margin: 0;
   padding: 0;
@@ -66,4 +68,17 @@
   background-color: transparent;
   color: $primary;
   cursor: pointer;
+}
+
+.delete-review-btn {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: red;
+  cursor: pointer;
+}
+
+.review-text {
+  color: $text-secondary;
 }

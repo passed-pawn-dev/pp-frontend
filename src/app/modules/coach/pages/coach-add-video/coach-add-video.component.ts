@@ -134,7 +134,7 @@ export class CoachAddVideoComponent {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: 'The video element has been added succesfully!'
+            detail: 'The video element has been added successfully!'
           });
 
           this.ref.close();

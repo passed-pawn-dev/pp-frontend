@@ -7,6 +7,7 @@ export interface LessonDetails {
   id: string;
   title: string;
   lessonNumber?: number;
+  preview: boolean;
   videos: Video[];
   puzzles: Puzzle[];
   examples: Example[];
