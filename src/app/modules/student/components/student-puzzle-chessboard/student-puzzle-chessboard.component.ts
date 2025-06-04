@@ -155,11 +155,13 @@ export class StudentPuzzleChessboardComponent implements OnInit {
       _halfMoveClock,
       _fullMoveNumber
     ] = this.startingFen.split(' ');
+
     const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
+    const lastMove = FenConverter.createLastMoveFromFEN(this.startingFen);
     this.chessboard.setBoard({
       board: boardFromFen,
       playerToMove: activeColor === 'w' ? Color.White : Color.Black,
-      lastMove: undefined
+      lastMove: lastMove
     });
     this.chessboardView = this.chessboard.chessboardView;
     this.lastMove = this.chessboard.lastMove;
