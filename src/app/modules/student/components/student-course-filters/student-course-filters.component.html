@@ -138,12 +138,14 @@
       <div class="sort-group">
         <div class="label" for="sortBy">Sort by</div>
         <div class="input-group">
-          <p-select
-            id="sortBy"
-            formControlName="sortBy"
-            class="pg-select h-small"
-            [options]="sortOptions"
-          />
+          <div class="select-wrapper">
+            <p-select
+              id="sortBy"
+              formControlName="sortBy"
+              class="pg-select w-full h-small"
+              [options]="sortOptions"
+            />
+          </div>
           <button class="sort-btn" type="button" (click)="toggleSortDesc()">
             <img src="icons/sort-arrow.png" alt="sort-arrow" [class.desc]="!sortDesc" />
           </button>
