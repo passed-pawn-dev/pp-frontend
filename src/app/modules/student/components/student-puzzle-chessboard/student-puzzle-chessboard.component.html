@@ -3,29 +3,6 @@
 <div class="content-container">
   <div class="chess-content">
     <div class="chess-content">
-      <p-dialog
-        header="Choose promotion piece"
-        [modal]="true"
-        [draggable]="false"
-        [(visible)]="isPromotionActive"
-      >
-        <div class="promotion-dialog-wrapper">
-          @if (isPromotionActive) {
-            <div class="promotion-dialog">
-              @for (piece of promotionPieces(); track $index) {
-                <div class="promotion-piece">
-                  <img
-                    alt="promotion-piece"
-                    [src]="pieceImagePaths[piece]"
-                    (click)="promotePiece(piece)"
-                  />
-                </div>
-              }
-            </div>
-          }
-        </div>
-      </p-dialog>
-
       <!-- Chess board with moves -->
       <div class="main-game-content">
         @if (loading) {

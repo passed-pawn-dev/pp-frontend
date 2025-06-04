@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import {
   Color,
   FenChar,
@@ -21,6 +21,8 @@ import { MoveListComponent } from '../../../shared/components/move-list/move-lis
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
+import { DialogService } from 'primeng/dynamicdialog';
+import { PromotionDialogComponent } from '../../../shared/components/promotion-dialog/promotion-dialog.component';
 
 @Component({
   selector: 'app-student-puzzle-chessboard',
@@ -31,6 +33,7 @@ import { DialogModule } from 'primeng/dialog';
     FormsModule,
     DialogModule
   ],
+  providers: [DialogService],
   templateUrl: './student-puzzle-chessboard.component.html',
   styleUrl: './student-puzzle-chessboard.component.scss'
 })
@@ -41,6 +44,8 @@ export class StudentPuzzleChessboardComponent implements OnInit {
   @Input({ required: false }) public expectedMoves: string[] | null = null;
   @Output() public savePuzzle = new EventEmitter<any>();
   @Output() public solved = new EventEmitter<void>();
+
+  private dialogService: DialogService = inject(DialogService);
 
   protected PreviewMode = PreviewMode;
   protected FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
@@ -73,22 +78,6 @@ export class StudentPuzzleChessboardComponent implements OnInit {
 
   protected setPosition: boolean = false;
   protected setSequence: boolean = false;
-
-  public promotionPieces(): FenChar[] {
-    return this.playerColor === Color.White
-      ? [
-          FenChar.WhiteKnight,
-          FenChar.WhiteBishop,
-          FenChar.WhiteRook,
-          FenChar.WhiteQueen
-        ]
-      : [
-          FenChar.BlackKnight,
-          FenChar.BlackBishop,
-          FenChar.BlackRook,
-          FenChar.BlackQueen
-        ];
-  }
 
   protected updateBoard(
     currentSquare: string,
@@ -242,6 +231,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
     if (shouldOpenPromotionDialog) {
       this.pieceSafeSquares = [];
       this.isPromotionActive = true;
+      this.openPromotionDialog();
       this.promotionCoords = { x: targetX, y: targetY };
       // because now we wait for player to choose promoted piece
       return;
@@ -249,6 +239,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
 
     const { square: currentSquare } = this.selectedSquare;
     this.updateBoard(currentSquare, targetSquare, this.promotedPiece);
+    this.loading = true;
     setTimeout(() => {
       this.playEnemyMove();
     }, 500);
@@ -306,7 +297,6 @@ export class StudentPuzzleChessboardComponent implements OnInit {
     this.chessboard.safeSquares.forEach(
       (possibleSquares: string[], pieceSquare: string) => {
         possibleSquares.forEach((possibleSquare) => {
-          this.loading = true;
           const allPieces: (FenChar | null)[] = [...Object.values(FenChar), null];
 
           allPieces.forEach((promotionPiece) => {
@@ -334,5 +324,20 @@ export class StudentPuzzleChessboardComponent implements OnInit {
         });
       }
     );
+  }
+
+  protected openPromotionDialog(): void {
+    const dialog = this.dialogService.open(PromotionDialogComponent, {
+      header: 'Choose promotion piece',
+      closable: true,
+      modal: true,
+      data: {
+        playerColor: this.playerColor
+      }
+    });
+
+    dialog.onClose.subscribe((piece: FenChar) => {
+      this.promotePiece(piece);
+    });
   }
 }
