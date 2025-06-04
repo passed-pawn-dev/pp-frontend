@@ -10,17 +10,8 @@ export class FileUploadService {
   private fileStorageBaseUrl = 'https://api.cloudinary.com/v1_1';
 
   public uploadVideo(formData: FormData, cloudName: string): Observable<any> {
-    console.log(
-      formData.get('api_key'),
-      formData.get('timestamp'),
-      formData.get('signature'),
-      formData.get('resource_type'),
-      formData.get('folder'),
-      formData.get('file'),
-      cloudName
-    );
     return this.httpClient.post(
-      `${this.fileStorageBaseUrl}/${cloudName}/auto/upload`,
+      `${this.fileStorageBaseUrl}/${cloudName}/upload`,
       formData
     );
   }

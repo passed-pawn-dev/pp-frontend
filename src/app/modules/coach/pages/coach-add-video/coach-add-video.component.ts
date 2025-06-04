@@ -90,16 +90,20 @@ export class CoachAddVideoComponent {
 
     if (video) {
       const formData = new FormData();
+
       formData.append('file', video);
       formData.append('api_key', res.apiKey);
       formData.append('timestamp', res.timestamp);
       formData.append('signature', res.signature);
       formData.append('resource_type', res.resourceType);
       formData.append('folder', res.folder);
+      formData.append('access_control', res.accessControl);
+      formData.append('invalidate', res.invalidate);
+      formData.append('type', res.accessType);
 
       this.fileUploadService.uploadVideo(formData, res.cloudName).subscribe({
         next: (res: any) => {
-          this.uploadForm(res.url, res.public_id);
+          this.uploadForm(res.secure_url, res.public_id);
         },
         error: () => {
           this.displayVideoUploadErrorMessage(
@@ -112,17 +116,18 @@ export class CoachAddVideoComponent {
   }
 
   private uploadForm(videoUrl: string, videoPublicId: string): void {
-    const formData = new FormData();
-    formData.append('order', this.addVideoForm.controls.order.value!);
-    formData.append('title', this.addVideoForm.controls.title.value!);
-    formData.append('description', this.addVideoForm.controls.description.value!);
-    formData.append('videoUrl', videoUrl);
-    formData.append('videoPublicId', videoPublicId);
-
     this.submitting = true;
 
+    const playload = {
+      order: this.addVideoForm.controls.order.value!,
+      title: this.addVideoForm.controls.title.value!,
+      description: this.addVideoForm.controls.description.value!,
+      videoUrl,
+      videoPublicId
+    };
+
     this.coachCourseService
-      .addVideo(this.lessonId, formData)
+      .addVideo(this.lessonId, playload)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {

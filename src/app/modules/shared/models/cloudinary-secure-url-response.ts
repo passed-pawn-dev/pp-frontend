@@ -5,4 +5,7 @@ export interface CloudinarySecureUrlResponse {
   readonly cloudName: string;
   readonly folder: string;
   readonly resourceType: string;
+  readonly accessType: string;
+  readonly accessControl: string;
+  readonly invalidate: string;
 }

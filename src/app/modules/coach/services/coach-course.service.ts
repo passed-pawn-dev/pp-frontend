@@ -13,6 +13,7 @@ import { CourseReview } from '../models/course-review.model';
 import { ElementKind } from '../../shared/enums/element-kind.enum';
 import { NewExample } from '../models/new-example.model';
 import { CloudinarySecureUrlResponse } from '../../shared/models/cloudinary-secure-url-response';
+import { AddVideoRequestPayload } from '../models/add-video-request-payload.model';
 
 @Injectable({
   providedIn: 'root'
@@ -112,7 +113,10 @@ export class CoachCourseService {
     return this.httpClient.post(`/api/Lesson/${lessonId}/example`, example);
   }
 
-  public addVideo(courseId: string, payload: FormData): Observable<Object> {
+  public addVideo(
+    courseId: string,
+    payload: AddVideoRequestPayload
+  ): Observable<Object> {
     return this.httpClient.post(`/api/Lesson/${courseId}/video`, payload);
   }
 
