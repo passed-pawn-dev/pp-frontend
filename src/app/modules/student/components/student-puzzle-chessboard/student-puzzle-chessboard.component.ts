@@ -244,6 +244,7 @@ export class StudentPuzzleChessboardComponent implements OnInit {
     this.loading = true;
     setTimeout(() => {
       this.playEnemyMove();
+      this.loading = false;
     }, 500);
   }
 
@@ -318,7 +319,6 @@ export class StudentPuzzleChessboardComponent implements OnInit {
               } else {
                 this.chessboard.setBoard(currentGameState);
                 this.chessboardView = this.chessboard.chessboardView;
-                this.loading = false;
               }
             }
             this.gameHistoryPointer++;
