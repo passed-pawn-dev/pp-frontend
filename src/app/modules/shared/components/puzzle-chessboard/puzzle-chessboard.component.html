@@ -81,7 +81,7 @@
               class="primary-btn"
               (click)="setCurrentPositionAsStartingPosition()"
             >
-              Start from this position
+              Set as starting position
             </button>
           </div>
           <div class="move-list">
@@ -129,7 +129,7 @@
       <div class="content">
         <div class="fen-group">
           <input type="text" class="standard-input" [(ngModel)]="fen" />
-          <div *ngIf="!fenValid()" class="p-error">
+          <div *ngIf="!fenValid()" class="validation-errors">
             Please enter a valid FEN string.
           </div>
         </div>

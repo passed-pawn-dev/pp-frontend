@@ -178,7 +178,9 @@ export class PuzzleChessboardComponent implements OnInit {
       this.checkState = this.chessboard.checkState;
     }
     if (this.chessboard.playerColor === Color.Black) {
+      console.log('test');
       this.chessboard.setInitialMoveListForBlack();
+      console.log(this.moveList, this.chessboard.moveList);
     }
   }
 
@@ -316,6 +318,8 @@ export class PuzzleChessboardComponent implements OnInit {
     this.displayingStartingMove = true;
     this.gameHistoryPointer = 0;
     this.setPosition = true;
+
+    console.log(this.moveList);
   }
 
   protected onSavePuzzle(): void {

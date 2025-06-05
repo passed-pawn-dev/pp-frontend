@@ -699,6 +699,8 @@ export class ChessBoard {
     } else {
       this._moveList[this.moveList.length - 1].push(move);
     }
+
+    console.log(this.gameState);
   }
 
   private startingPieceCoordsNotation(): string {
