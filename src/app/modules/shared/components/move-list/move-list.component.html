@@ -2,15 +2,27 @@
 <div class="move-list">
   <div>
     <div class="row">
-      <div class="move-number"></div>
-      <div class="white">
-        White
-        <div class="circle"></div>
-      </div>
-      <div class="black">
-        Black
-        <div class="circle"></div>
-      </div>
+      @if (startingPlayer === Color.White) {
+        <div class="move-number"></div>
+        <div class="white">
+          White
+          <div class="circle"></div>
+        </div>
+        <div class="black">
+          Black
+          <div class="circle"></div>
+        </div>
+      } @else {
+        <div class="move-number"></div>
+        <div class="black">
+          Black
+          <div class="circle"></div>
+        </div>
+        <div class="white">
+          White
+          <div class="circle"></div>
+        </div>
+      }
     </div>
     @for (move of moveList; track $index) {
       <div class="row">

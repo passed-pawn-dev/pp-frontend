@@ -79,6 +79,8 @@ export class StudentPuzzleChessboardComponent implements OnInit {
   protected setPosition: boolean = false;
   protected setSequence: boolean = false;
 
+  protected FenConverter = FenConverter;
+
   protected updateBoard(
     currentSquare: string,
     targetSquare: string,
@@ -98,7 +100,13 @@ export class StudentPuzzleChessboardComponent implements OnInit {
         this._expectedMoves = this._expectedMoves.slice(1);
         if (this._expectedMoves.length === 0) {
           this.solved.emit();
+          return;
         }
+        this.loading = true;
+        setTimeout(() => {
+          this.playEnemyMove();
+          this.loading = false;
+        }, 500);
       } else {
         this.loading = true;
         setTimeout(() => {
@@ -167,10 +175,6 @@ export class StudentPuzzleChessboardComponent implements OnInit {
     this.lastMove = this.chessboard.lastMove;
     this.checkState = this.chessboard.checkState;
     this._expectedMoves = this.expectedMoves;
-    if (this.chessboard.playerColor === Color.Black) {
-      this.chessboard.setInitialMoveListForBlack();
-      this.reverseChessboard();
-    }
   }
 
   public isSquarePromotionSquare(square: string): boolean {
@@ -241,11 +245,6 @@ export class StudentPuzzleChessboardComponent implements OnInit {
 
     const { square: currentSquare } = this.selectedSquare;
     this.updateBoard(currentSquare, targetSquare, this.promotedPiece);
-    this.loading = true;
-    setTimeout(() => {
-      this.playEnemyMove();
-      this.loading = false;
-    }, 500);
   }
 
   protected move(square: string): void {

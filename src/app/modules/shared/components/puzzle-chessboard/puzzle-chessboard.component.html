@@ -94,6 +94,11 @@
                 [moveList]="moveList"
                 [gameHistoryPointer]="gameHistoryPointer"
                 [gameHistoryLength]="gameHistory.length"
+                [startingPlayer]="
+                  FenConverter.getPlayerColorFromFEN(initialFen) === 'w'
+                    ? Color.White
+                    : Color.Black
+                "
                 (showPreviousPositionEvent)="showPreviousPosition($event)"
               >
               </app-move-list>

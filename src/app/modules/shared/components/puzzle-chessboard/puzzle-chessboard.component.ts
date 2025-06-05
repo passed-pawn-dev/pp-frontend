@@ -60,7 +60,7 @@ export class PuzzleChessboardComponent implements OnInit {
   private checkState: TCheckState = this.chessboard.checkState;
   protected loading = false;
   public fen: string = '';
-  private _initialFen: string = this.startingFen;
+  protected initialFen: string = this.startingFen;
 
   public get moveList(): TMoveList {
     return this.chessboard.moveList;
@@ -79,6 +79,8 @@ export class PuzzleChessboardComponent implements OnInit {
 
   protected setPosition: boolean = false;
   protected setSequence: boolean = false;
+
+  protected FenConverter = FenConverter;
 
   protected updateBoard(
     currentSquare: string,
@@ -155,7 +157,7 @@ export class PuzzleChessboardComponent implements OnInit {
     });
     this.chessboardView = this.chessboard.chessboardView;
 
-    this._initialFen = this.startingFen;
+    this.initialFen = this.startingFen;
   }
 
   protected fenValid(): boolean {
@@ -167,7 +169,7 @@ export class PuzzleChessboardComponent implements OnInit {
       const boardFromFen = FenConverter.convertFenToBoard(this.fen);
       const lastMove = FenConverter.createLastMoveFromFEN(this.fen);
       const playerColor = FenConverter.getPlayerColorFromFEN(this.fen);
-      this._initialFen = this.fen;
+      this.initialFen = this.fen;
       this.lastMove = lastMove;
       this.chessboard.setBoard({
         board: boardFromFen,
@@ -176,11 +178,6 @@ export class PuzzleChessboardComponent implements OnInit {
       });
       this.chessboardView = this.chessboard.chessboardView;
       this.checkState = this.chessboard.checkState;
-    }
-    if (this.chessboard.playerColor === Color.Black) {
-      console.log('test');
-      this.chessboard.setInitialMoveListForBlack();
-      console.log(this.moveList, this.chessboard.moveList);
     }
   }
 
@@ -303,11 +300,11 @@ export class PuzzleChessboardComponent implements OnInit {
   }
 
   public setCurrentPositionAsStartingPosition(): void {
-    this._initialFen = FenConverter.convertBoardToFen(
+    this.initialFen = FenConverter.convertBoardToFen(
       ChessBoard.boardViewToBoard(
         this.chessboard.gameHistory[this.gameHistoryPointer].board
       ),
-      this.playerColor,
+      this.playerColor === Color.Black ? Color.White : Color.Black,
       this.lastMove,
       0,
       0
@@ -318,12 +315,10 @@ export class PuzzleChessboardComponent implements OnInit {
     this.displayingStartingMove = true;
     this.gameHistoryPointer = 0;
     this.setPosition = true;
-
-    console.log(this.moveList);
   }
 
   protected onSavePuzzle(): void {
-    const fenBoard = this._initialFen;
+    const fenBoard = this.initialFen;
 
     const moveListString = this.moveList.flatMap((move) => move).join(',');
     this.savePuzzle.emit({ fenBoard: fenBoard, moveListString });

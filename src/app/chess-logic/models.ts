@@ -69,7 +69,7 @@ type TKingNotChecked = {
 
 export type TCheckState = TKingChecked | TKingNotChecked;
 
-export type TMoveList = [string | null, string?][];
+export type TMoveList = [string, string?][];
 
 export type TGameHistory = {
   lastMove: TLastMove | undefined;
