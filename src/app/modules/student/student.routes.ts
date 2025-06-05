@@ -14,6 +14,7 @@ import { StudentExampleComponent } from './pages/student-example/student-example
 import { studentExampleResolver } from './resolvers/student-example.resolver';
 import { StudentCoachProfileComponent } from './pages/student-coach-profile/student-coach-profile.component';
 import { studentCoachProfileResolver } from './resolvers/student-coach-profile.resolver';
+import { studentVideoResolver } from './resolvers/student-video.resolver';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -55,6 +56,13 @@ export const STUDENT_ROUTES: Route[] = [
         component: StudentExampleComponent,
         resolve: {
           example: studentExampleResolver
+        }
+      },
+      {
+        path: 'my-courses/:courseId/lesson/:lessonId/video/:videoId',
+        component: StudentExampleComponent,
+        resolve: {
+          video: studentVideoResolver
         }
       },
       {

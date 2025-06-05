@@ -72,7 +72,7 @@ export class CoachAddVideoComponent {
   }
 
   protected onSubmit(): void {
-    this.coachCourseService.getSecureUploadUrl().subscribe({
+    this.coachCourseService.getVideoUploadSignature().subscribe({
       next: (res: CloudinarySecureUrlResponse) => {
         this.uploadVideo(res);
       },
@@ -103,7 +103,7 @@ export class CoachAddVideoComponent {
 
       this.fileUploadService.uploadVideo(formData, res.cloudName).subscribe({
         next: (res: any) => {
-          this.uploadForm(res.secure_url, res.public_id);
+          this.uploadForm(res.public_id);
         },
         error: () => {
           this.displayVideoUploadErrorMessage(
@@ -115,14 +115,13 @@ export class CoachAddVideoComponent {
     }
   }
 
-  private uploadForm(videoUrl: string, videoPublicId: string): void {
+  private uploadForm(videoPublicId: string): void {
     this.submitting = true;
 
     const playload = {
       order: this.addVideoForm.controls.order.value!,
       title: this.addVideoForm.controls.title.value!,
       description: this.addVideoForm.controls.description.value!,
-      videoUrl,
       videoPublicId
     };
 

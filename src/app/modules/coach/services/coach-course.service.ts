@@ -120,9 +120,9 @@ export class CoachCourseService {
     return this.httpClient.post(`/api/Lesson/${courseId}/video`, payload);
   }
 
-  public getSecureUploadUrl(): Observable<CloudinarySecureUrlResponse> {
+  public getVideoUploadSignature(): Observable<CloudinarySecureUrlResponse> {
     return this.httpClient.get<CloudinarySecureUrlResponse>(
-      `/api/CourseVideo/signature`
+      `/api/CourseVideo/upload-signature`
     );
   }
 
