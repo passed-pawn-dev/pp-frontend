@@ -31,6 +31,9 @@ export class StudentCourseFiltersComponent {
   private readonly difficultyRanges: { min: number | null; max: number | null }[] =
     difficultyRanges;
 
+  protected searchOptions = [SearchBy.CoachName, SearchBy.Title];
+  protected sortOptions = [SortBy.Popularity, SortBy.Price, SortBy.AverageScore];
+
   protected searchForm = this.fb.group({
     search: [''],
     searchBy: [SearchBy.Title],

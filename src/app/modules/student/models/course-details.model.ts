@@ -19,7 +19,7 @@ export interface CourseDetails {
   averageScore: 0;
   thumbnailUrl: null;
   price: number;
-  studentNumber: number;
+  enrolledStudentsCount: number;
   isBought: boolean;
   lessons: Lesson[];
 }

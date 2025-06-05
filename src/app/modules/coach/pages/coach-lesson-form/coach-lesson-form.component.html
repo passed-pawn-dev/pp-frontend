@@ -1,45 +1,47 @@
-<form
-  class="vertical-form lesson-form"
-  [formGroup]="lessonForm"
-  (ngSubmit)="onSubmit()"
->
-  <h2>Add new lesson</h2>
-  <div class="form-control-field">
-    <label for="title">Lesson title</label>
-    <input id="title" formControlName="title" type="text" class="standard-input" />
-    <app-validation-errors
-      [errors]="lessonForm.controls.title.errors"
-      [dirty]="lessonForm.controls.title.dirty"
-      [touched]="lessonForm.controls.title.touched"
-    />
-  </div>
+@if (lessonForm) {
+  <form
+    class="vertical-form lesson-form"
+    [formGroup]="lessonForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <h2>Add new lesson</h2>
+    <div class="form-control-field">
+      <label for="title">Lesson title</label>
+      <input id="title" formControlName="title" type="text" class="standard-input" />
+      <app-validation-errors
+        [errors]="lessonForm.controls.title.errors"
+        [dirty]="lessonForm.controls.title.dirty"
+        [touched]="lessonForm.controls.title.touched"
+      />
+    </div>
 
-  <div class="form-control-field">
-    <label for="lessonNumber">Lesson number</label>
-    <p-inputNumber
-      id="lessonNumber"
-      formControlName="lessonNumber"
-      type="number"
-      class="pg-inputnumber"
-    />
-    <app-validation-errors
-      [errors]="lessonForm.controls.lessonNumber.errors"
-      [dirty]="lessonForm.controls.lessonNumber.dirty"
-      [touched]="lessonForm.controls.lessonNumber.touched"
-    />
-  </div>
+    <div class="form-control-field">
+      <label for="lessonNumber">Lesson number (min: 1, max: {{ lessonCount }})</label>
+      <p-inputNumber
+        id="lessonNumber"
+        formControlName="lessonNumber"
+        type="number"
+        class="pg-inputnumber"
+      />
+      <app-validation-errors
+        [errors]="lessonForm.controls.lessonNumber.errors"
+        [dirty]="lessonForm.controls.lessonNumber.dirty"
+        [touched]="lessonForm.controls.lessonNumber.touched"
+      />
+    </div>
 
-  <div class="form-control-field">
-    <label for="preview"
-      >Include in preview (this lesson will be available for free to all users)</label
-    >
-    <input type="checkbox" formControlName="preview" id="preview" />
-  </div>
+    <div class="form-control-field">
+      <label for="preview"
+        >Include in preview (this lesson will be available for free to all users)</label
+      >
+      <input type="checkbox" formControlName="preview" id="preview" />
+    </div>
 
-  <div class="btn-group">
-    <a class="secondary-btn" [routerLink]="'/coach/courses/' + lessonId">Cancel</a>
-    <button class="primary-btn" type="submit" [disabled]="lessonForm.invalid">
-      Submit
-    </button>
-  </div>
-</form>
+    <div class="btn-group">
+      <a class="secondary-btn" [routerLink]="'/coach/courses/' + courseId">Cancel</a>
+      <button class="primary-btn" type="submit" [disabled]="lessonForm.invalid">
+        Submit
+      </button>
+    </div>
+  </form>
+}

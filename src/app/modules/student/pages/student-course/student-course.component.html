@@ -35,7 +35,9 @@
       <h3>Coach</h3>
       <div class="header">
         <div class="profile">
-          <div class="circle"><span>CA</span></div>
+          <div class="circle">
+            <span>{{ coachInitials() }}</span>
+          </div>
           <a
             class="coach-link"
             [routerLink]="['/student', 'coach', course().coach.id, 'profile']"
@@ -43,9 +45,9 @@
           >
           <!-- [coach name and surname] -->
         </div>
-        <div class="chess-title">{{ course().coach.chessTitle || 'N/A' }}</div>
+        <div class="chess-title">{{ course().coach.chessTitle || 'NO TITLE' }}</div>
         <!-- [coach chess title] -->
-        <app-star-rating [rating]="2.5" [ratingsNumber]="123" />
+        <!-- <app-star-rating [rating]="2.5" [ratingsNumber]="123" /> -->
         <div class="created-courses">
           <div>{{ course().coach.createdCoursesCount }}</div>
           <!-- [numebr of created courses by coach] -->
@@ -86,7 +88,7 @@
         <div class="video">
           <span>{{ course().totalVideoCount }} h </span>of Recorded Videos
         </div>
-        <div class="interaction">Coach Interaction</div>
+        <div class="interaction">Theory & Practice</div>
       </div>
     </div>
   </section>
@@ -137,7 +139,7 @@
           [ratingsNumber]="course().reviewCount"
         />
         <div class="created-courses">
-          <div>2321</div>
+          <div>{{ course().enrolledStudentsCount }}</div>
           <!-- [numebr of created courses by coach] -->
           <img src="icons/people.png" alt="book" />
           <div>Participants</div>
@@ -164,7 +166,9 @@
   </section>
 
   <section class="payment-section">
-    <div class="text"><span>30 days</span> to return if you're not satisfied</div>
+    <div class="text">
+      <!-- <span>30 days</span> to return if you're not satisfied\ -->
+    </div>
     <div class="payment">
       <div class="price">{{ course().price }}$</div>
       <button

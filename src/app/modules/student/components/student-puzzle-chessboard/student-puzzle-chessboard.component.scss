@@ -7,15 +7,10 @@
   aspect-ratio: 1/1;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  // max-width: 40rem;
   position: relative;
-  // width: 100%;
-  // width: 40rem;
   width: 32rem;
-  // border: 1px solid red;
   border-radius: 1rem;
   overflow: hidden;
-  // border: 3px solid purple;
 
   .chessboard-rank {
     bottom: 0.25rem;
@@ -40,10 +35,8 @@
     width: 100%;
 
     .chessboard-field-content {
-      display: grid;
       height: 100%;
-      padding-bottom: 0.25rem;
-      place-content: center;
+      position: relative;
 
       &:has(.safe-square) {
         cursor: pointer;
@@ -58,8 +51,15 @@
         width: 100%;
       }
 
+      .chessboard-chess-piece {
+        height: 100%;
+        position: absolute;
+        width: 100%;
+      }
+
       img {
-        transform: scale(1.5);
+        width: 100%;
+        height: 100%;
       }
     }
 
@@ -121,7 +121,6 @@
     border-radius: 1rem;
     min-width: 20rem;
     padding-top: 20rem;
-    // border: 3px solid blue;
 
     .operation-btn {
       border: none;
@@ -132,7 +131,6 @@
       width: fit-content;
       padding: 0.5rem 1rem;
       cursor: pointer;
-      // border: 1px solid;
 
       &:hover {
         background-color: color.adjust($primary, $lightness: 40%);
@@ -142,26 +140,19 @@
 
   .chess-content {
     width: 100%;
-    // border: 1px solid red;
 
     .main-game-content {
       display: flex;
-      // gap: 1rem;
-      // margin-left: calc(50% - 26.5rem);
-      // max-width: 53rem;
       width: 100%;
       gap: 1rem;
-      // border: 3px solid red;
 
       .moves-group {
         flex: 1;
         display: flex;
         flex-direction: column;
-        // justify-content: space-between;
         padding: 1rem;
         background-color: white;
         border-radius: 1rem;
-        // border: 3px solid green;
 
         .nav {
           display: flex;
@@ -197,7 +188,6 @@
           .btn-group {
             display: flex;
             justify-content: space-between;
-            // border: 1px solid;
 
             .square-flex {
               display: flex;
@@ -212,7 +202,6 @@
                 justify-content: center;
                 align-items: center;
                 border-radius: 0.25rem;
-                // border: 1px solid;
               }
 
               .desc {
@@ -222,11 +211,9 @@
           }
 
           .move-list {
-            // height: 100%;
             flex: 1;
             display: flex;
             gap: 0.5rem;
-            // border: 1px solid;
 
             .down-arrow {
               height: inherit;
@@ -260,7 +247,6 @@
       background-color: white;
       border-radius: 1rem;
       margin-top: 1rem;
-      // border: 3px solid pink;
 
       .header {
         margin-bottom: 0.5rem;
@@ -272,15 +258,6 @@
 
         .fen-group {
           width: 100%;
-
-          // input {
-          //   width: 100%;
-          //   box-sizing: border-box;
-          //   border: 1px solid $border-secondary;
-          //   border-radius: 0.5rem;
-          //   height: 2.6rem;
-          //   padding-left: 0.5rem;
-          // }
         }
 
         button {

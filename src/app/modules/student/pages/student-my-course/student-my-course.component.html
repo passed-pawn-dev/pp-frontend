@@ -81,13 +81,16 @@
 </div> -->
 
 <p-dialog
-  header="Add course review"
+  [header]="this.givenReview() ? 'Edit course review' : 'Add course review'"
   [modal]="true"
   [draggable]="false"
   [(visible)]="reviewFormVisible"
 >
   <div class="review-form-container">
-    <app-student-course-review-form (reviewSubmitted)="hideReviewForm()" />
+    <app-student-course-review-form
+      [existingReview]="givenReview() ?? null"
+      (reviewSubmitted)="newReview($event)"
+    />
   </div>
 </p-dialog>
 
@@ -106,9 +109,24 @@
       </div>
       <div class="footer"></div>
       <div class="review-btn-container">
-        <button class="review-btn" type="button" (click)="showReviewForm()">
-          Add review
-        </button>
+        @if (this.givenReview()) {
+          <div>
+            <app-star-rating [rating]="this.givenReview()!.value" />
+            <div class="review-text">{{ shortenedReview() }}</div>
+            <div class="review-buttons">
+              <button class="review-btn" type="button" (click)="showReviewForm()">
+                Edit
+              </button>
+              <button class="delete-review-btn" type="button" (click)="deleteReview()">
+                Delete
+              </button>
+            </div>
+          </div>
+        } @else {
+          <button class="review-btn" type="button" (click)="showReviewForm()">
+            Add Review
+          </button>
+        }
       </div>
     </div>
   </section>
