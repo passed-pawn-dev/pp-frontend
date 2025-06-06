@@ -167,7 +167,7 @@ export class CoachEditVideoDialogComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: 'The video element has been added successfully!'
+            detail: 'The video element has been updated successfully!'
           });
 
           this.ref.close('success');

@@ -118,7 +118,7 @@ export class CoachAddVideoDialogComponent {
   private uploadForm(videoPublicId: string): void {
     this.submitting = true;
 
-    const playload = {
+    const payload = {
       order: this.addVideoForm.controls.order.value!,
       title: this.addVideoForm.controls.title.value!,
       description: this.addVideoForm.controls.description.value!,
@@ -126,7 +126,7 @@ export class CoachAddVideoDialogComponent {
     };
 
     this.coachCourseService
-      .addVideo(this.lessonId, playload)
+      .addVideo(this.lessonId, payload)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
