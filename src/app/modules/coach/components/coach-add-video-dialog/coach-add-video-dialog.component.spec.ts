@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CoachAddVideoComponent } from './coach-add-video.component';
+import { CoachAddVideoComponent } from './coach-add-video-dialog.component';
 
 describe('CoachAddVideoComponent', () => {
   let component: CoachAddVideoComponent;

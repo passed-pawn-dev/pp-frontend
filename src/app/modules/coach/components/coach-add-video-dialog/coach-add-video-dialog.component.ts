@@ -12,13 +12,13 @@ import { CloudinarySecureUrlResponse } from '../../../shared/models/cloudinary-s
 import { FileHandlingService } from '../../../shared/services/file-handling.service';
 
 @Component({
-  selector: 'app-coach-add-video',
+  selector: 'app-coach-add-video-dialog',
   standalone: true,
   imports: [FileUploadComponent, ValidationErrorsComponent, ReactiveFormsModule],
-  templateUrl: './coach-add-video.component.html',
-  styleUrl: './coach-add-video.component.scss'
+  templateUrl: './coach-add-video-dialog.component.html',
+  styleUrl: './coach-add-video-dialog.component.scss'
 })
-export class CoachAddVideoComponent {
+export class CoachAddVideoDialogComponent {
   @Input({ required: true }) public lessonId!: string;
 
   private fb = inject(FormBuilder);
@@ -118,7 +118,7 @@ export class CoachAddVideoComponent {
   private uploadForm(videoPublicId: string): void {
     this.submitting = true;
 
-    const playload = {
+    const payload = {
       order: this.addVideoForm.controls.order.value!,
       title: this.addVideoForm.controls.title.value!,
       description: this.addVideoForm.controls.description.value!,
@@ -126,7 +126,7 @@ export class CoachAddVideoComponent {
     };
 
     this.coachCourseService
-      .addVideo(this.lessonId, playload)
+      .addVideo(this.lessonId, payload)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {

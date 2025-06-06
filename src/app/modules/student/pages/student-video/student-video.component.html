@@ -4,9 +4,7 @@
     <div><a class="secondary-btn" routerLink="../../../../">Back</a></div>
   </div>
   <div class="standard-tile">
-    <app-student-video-player
-      [temporaryVideoDownloadUrl]="videoElementData.temporaryVideoDownloadUrl"
-    />
+    <app-private-video-player [videoPlayUrl]="videoPlayUrl" />
   </div>
   <div class="standard-tile">
     <p class="video-description">{{ videoElementData.description }}</p>

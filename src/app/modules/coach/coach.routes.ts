@@ -10,7 +10,8 @@ import { coachExerciseResolver } from './resolvers/coach-exercise.resolver';
 import { CoachAddQuizComponent } from './pages/coach-add-quiz/coach-add-quiz.component';
 import { coachCourseResolver } from './resolvers/coach-course.resolver';
 import { CoachAddExampleComponent } from './pages/coach-add-example/coach-add-example.component';
-import { CoachAddVideoComponent } from './pages/coach-add-video/coach-add-video.component';
+import { CoachVideoPreviewComponent } from './pages/coach-video-preview/coach-video-preview.component';
+import { privateVideoPreviewResolver } from '../shared/resolvers/private-video-preview.resolver';
 
 export const COACH_ROUTES: Route[] = [
   {
@@ -50,14 +51,17 @@ export const COACH_ROUTES: Route[] = [
         component: CoachAddExampleComponent
       },
       {
-        path: 'courses/:courseId/lesson/:lessonId/video/add',
-        component: CoachAddVideoComponent
-      },
-      {
         path: 'courses/:courseId/lesson/:lessonId/exercise/:exerciseId',
         component: CoachExercisePreviewComponent,
         resolve: {
           exercise: coachExerciseResolver
+        }
+      },
+      {
+        path: 'courses/:courseId/lesson/:lessonId/video/:videoId',
+        component: CoachVideoPreviewComponent,
+        resolve: {
+          video: privateVideoPreviewResolver
         }
       },
       {

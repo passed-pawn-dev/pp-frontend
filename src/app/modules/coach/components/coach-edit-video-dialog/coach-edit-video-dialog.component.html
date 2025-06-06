@@ -1,0 +1,71 @@
+<article class="form-wrapper">
+  @if (editVideoForm) {
+    <form class="vertical-form vertical-form-fields" [formGroup]="editVideoForm">
+      <div>
+        <div class="file-upload-wrapper">
+          <app-file-upload
+            [acceptedFileTypes]="acceptedFileTypes"
+            (fileSelected)="fileSelected($event)"
+          />
+        </div>
+        @if (editVideoForm.controls.video.value === null) {
+          <app-private-video-player
+            [videoPlayUrl]="lessonVideoElementData.videoPlayUrl"
+          ></app-private-video-player>
+        }
+        <app-validation-errors
+          [errors]="editVideoForm.controls.video.errors"
+          [dirty]="editVideoForm.controls.video.dirty"
+          [touched]="editVideoForm.controls.video.touched"
+        />
+      </div>
+      <div>
+        <label for="title">Title</label>
+        <input id="title" type="text" class="standard-input" formControlName="title" />
+        <app-validation-errors
+          [errors]="editVideoForm.controls.title.errors"
+          [dirty]="editVideoForm.controls.title.dirty"
+          [touched]="editVideoForm.controls.title.touched"
+        />
+      </div>
+      <div>
+        <label for="description">Description</label>
+        <textarea
+          type="text"
+          class="standard-textarea video-description"
+          formControlName="description"
+        ></textarea>
+        <app-validation-errors
+          [errors]="editVideoForm.controls.description.errors"
+          [dirty]="editVideoForm.controls.description.dirty"
+          [touched]="editVideoForm.controls.description.touched"
+        />
+      </div>
+      <div class="vertical-form-fields">
+        <label for="order">Order</label>
+        <p-inputNumber
+          type="number"
+          class="pg-inputnumber"
+          formControlName="order"
+          [showButtons]="true"
+        />
+        <app-validation-errors
+          [errors]="editVideoForm.controls.order.errors"
+          [dirty]="editVideoForm.controls.order.dirty"
+          [touched]="editVideoForm.controls.order.touched"
+        />
+      </div>
+    </form>
+
+    <div class="dialog-buttons">
+      <button
+        type="button"
+        class="primary-btn"
+        [disabled]="!editVideoForm.valid || submitting"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+    </div>
+  }
+</article>

@@ -120,6 +120,13 @@ export class CoachCourseService {
     return this.httpClient.post(`/api/Lesson/${courseId}/video`, payload);
   }
 
+  public editVideo(
+    videoElementId: string,
+    payload: AddVideoRequestPayload
+  ): Observable<Object> {
+    return this.httpClient.put(`/api/CourseVideo/${videoElementId}`, payload);
+  }
+
   public getVideoUploadSignature(): Observable<CloudinarySecureUrlResponse> {
     return this.httpClient.get<CloudinarySecureUrlResponse>(
       `/api/CourseVideo/upload-signature`

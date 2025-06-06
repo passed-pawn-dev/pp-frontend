@@ -1,0 +1,30 @@
+@use 'variables' as *;
+
+.video-title {
+  font-size: $font-L;
+  margin: 0;
+}
+
+.video-description {
+  margin: 0;
+}
+
+.page-wrapper {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  margin: auto;
+  width: 87.5rem;
+  padding: 2rem;
+}
+
+.page-controls {
+  align-items: center;
+  display: flex;
+  grid-column: span 2;
+  justify-content: space-between;
+}
+
+.video-player-wrapper {
+  width: 56.25rem;
+}
