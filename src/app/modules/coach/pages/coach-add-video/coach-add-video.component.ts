@@ -9,7 +9,7 @@ import { fileTypeValidator } from '../../../shared/validators/file-type-validato
 import { fileSizeValidator } from '../../../shared/validators/file-size-validator';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CloudinarySecureUrlResponse } from '../../../shared/models/cloudinary-secure-url-response';
-import { FileUploadService } from '../../../shared/services/file-upload.service';
+import { FileHandlingService } from '../../../shared/services/file-handling.service';
 
 @Component({
   selector: 'app-coach-add-video',
@@ -24,7 +24,7 @@ export class CoachAddVideoComponent {
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
   private coachCourseService = inject(CoachCourseService);
-  private fileUploadService = inject(FileUploadService);
+  private fileHandlingService = inject(FileHandlingService);
   private destroyRef = inject(DestroyRef);
   private ref = inject(DynamicDialogRef);
 
@@ -101,7 +101,7 @@ export class CoachAddVideoComponent {
       formData.append('invalidate', res.invalidate);
       formData.append('type', res.accessType);
 
-      this.fileUploadService.uploadVideo(formData, res.cloudName).subscribe({
+      this.fileHandlingService.uploadVideo(formData, res.cloudName).subscribe({
         next: (res: any) => {
           this.uploadForm(res.public_id);
         },

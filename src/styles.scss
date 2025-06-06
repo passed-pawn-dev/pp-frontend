@@ -312,6 +312,12 @@ input {
   align-items: center;
 }
 
+.standard-tile {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
 .pg-autocomplete,
 .pg-input,
 .pg-inputnumber {

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class FileUploadService {
+export class FileHandlingService {
   private httpClient = inject(HttpClient);
   private fileStorageBaseUrl = 'https://api.cloudinary.com/v1_1';
 
@@ -14,5 +14,11 @@ export class FileUploadService {
       `${this.fileStorageBaseUrl}/${cloudName}/upload`,
       formData
     );
+  }
+
+  public downloadPrivateVideo(temporaryVideoDownloadUrl: string): Observable<Blob> {
+    return this.httpClient.get(temporaryVideoDownloadUrl, {
+      responseType: 'blob'
+    });
   }
 }

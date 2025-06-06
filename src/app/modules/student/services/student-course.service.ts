@@ -96,8 +96,6 @@ export class StudentCourseService {
   }
 
   public getVideoById(id: string): Observable<StudentVideoElementRequestDto> {
-    return this.httpClient.get<StudentVideoElementRequestDto>(
-      `/api/CourseExample/${id}`
-    );
+    return this.httpClient.get<StudentVideoElementRequestDto>(`/api/CourseVideo/${id}`);
   }
 }
