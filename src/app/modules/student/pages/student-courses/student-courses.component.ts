@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Course } from '../../models/course.model';
 import { StudentCourseTileComponent } from '../../components/student-course-tile/student-course-tile.component';
-import { CourseService } from '../../services/course.service';
+import { StudentCourseService } from '../../services/student-course.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { StudentCourseFiltersComponent } from '../../components/student-course-filters/student-course-filters.component';
 import { CoursesQueryParams } from '../../models/course-query-params.model';
@@ -17,7 +17,7 @@ import { Pagination } from '../../../shared/models/pagination.model';
 })
 export class StudentCoursesComponent implements OnInit {
   protected courses: Course[] = [];
-  private courseService: CourseService = inject(CourseService);
+  private studentCourseService: StudentCourseService = inject(StudentCourseService);
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   protected totalRecords: number = 0;
@@ -57,7 +57,7 @@ export class StudentCoursesComponent implements OnInit {
   }
 
   protected fetchCourses(queryParams: CoursesQueryParams): void {
-    this.courseService
+    this.studentCourseService
       .getAll(queryParams)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {

@@ -12,7 +12,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { ButtonModule } from 'primeng/button';
-import { CourseService } from '../../services/course.service';
+import { StudentCourseService } from '../../services/student-course.service';
 import { ActivatedRoute } from '@angular/router';
 import { Textarea } from 'primeng/inputtextarea';
 import { MessageService } from 'primeng/api';
@@ -35,7 +35,7 @@ import { CourseReview } from '../../models/course-review.model';
 })
 export class StudentCourseReviewFormComponent implements OnChanges {
   private fb: FormBuilder = inject(FormBuilder);
-  private courseService: CourseService = inject(CourseService);
+  private studentCourseService: StudentCourseService = inject(StudentCourseService);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private messageService = inject(MessageService);
   private destroyRef = inject(DestroyRef);
@@ -71,7 +71,7 @@ export class StudentCourseReviewFormComponent implements OnChanges {
 
   protected onSubmit(): void {
     if (this.existingReview()) {
-      this.courseService
+      this.studentCourseService
         .updateReview(this.existingReview()!.id, this.reviewForm.getRawValue())
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
@@ -95,7 +95,7 @@ export class StudentCourseReviewFormComponent implements OnChanges {
       this.route.paramMap
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((params) => {
-          this.courseService
+          this.studentCourseService
             .review(params.get('courseId')!, this.reviewForm.getRawValue())
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({

@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CourseDifficultyComponent } from '../../../shared/components/course-difficulty/course-difficulty.component';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
 import { DialogService } from 'primeng/dynamicdialog';
-import { CourseService } from '../../services/course.service';
+import { StudentCourseService } from '../../services/student-course.service';
 import { MessageService } from 'primeng/api';
 import { StudentPaymentComponent } from '../payment/student-payment.component';
 
@@ -18,7 +18,7 @@ import { StudentPaymentComponent } from '../payment/student-payment.component';
 })
 export class StudentCourseTileComponent {
   private dialogService: DialogService = inject(DialogService);
-  private courseService: CourseService = inject(CourseService);
+  private studentCourseService: StudentCourseService = inject(StudentCourseService);
   private messageService: MessageService = inject(MessageService);
 
   public course = input.required<Course>();
@@ -38,7 +38,7 @@ export class StudentCourseTileComponent {
   }
 
   protected acquireFreeCourse(): void {
-    this.courseService.acquireFreeCourse(this.course().id).subscribe({
+    this.studentCourseService.acquireFreeCourse(this.course().id).subscribe({
       next: () => {
         this.messageService.add({
           severity: 'success',

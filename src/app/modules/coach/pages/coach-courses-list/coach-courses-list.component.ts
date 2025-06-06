@@ -1,7 +1,7 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Course } from '../../models/course.model';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CoachCourseTileComponent } from '../../components/coach-course-tile/coach-course-tile.component';
@@ -18,7 +18,7 @@ export class CoachCoursesListComponent implements OnInit {
   protected courses: Course[] = [];
 
   public constructor(
-    private courseService: CourseService,
+    private coachCourseService: CoachCourseService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private destroyRef: DestroyRef
@@ -29,7 +29,7 @@ export class CoachCoursesListComponent implements OnInit {
   }
 
   protected getAll(): void {
-    this.courseService
+    this.coachCourseService
       .getAll()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -50,7 +50,7 @@ export class CoachCoursesListComponent implements OnInit {
       message: 'Are you sure you want to delete this course?',
       header: 'Confirm',
       accept: () => {
-        this.courseService
+        this.coachCourseService
           .delete(id)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({

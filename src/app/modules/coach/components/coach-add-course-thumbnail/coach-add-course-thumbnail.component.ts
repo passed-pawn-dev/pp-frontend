@@ -4,7 +4,7 @@ import { fileTypeValidator } from '../../../shared/validators/file-type-validato
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { FileUploadComponent } from '../../../shared/components/file-upload/file-upload.component';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -18,7 +18,7 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 export class CoachAddCourseThumbnailComponent {
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
-  private courseService = inject(CourseService);
+  private coachCourseService = inject(CoachCourseService);
   private readonly route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
   private ref = inject(DynamicDialogRef);
@@ -50,7 +50,7 @@ export class CoachAddCourseThumbnailComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((params) => {
           const courseId = params.get('courseId')!;
-          this.courseService
+          this.coachCourseService
             .updateThumbnail(courseId, formData)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({

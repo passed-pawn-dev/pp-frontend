@@ -83,7 +83,7 @@
               ],
               "outputHashing": "all"
             },
-            "local-k8s": {
+            "k8s-local": {
               "budgets": [
                 {
                   "type": "initial",
@@ -99,7 +99,7 @@
               "fileReplacements": [
                 {
                   "replace": "environment/environment.ts",
-                  "with": "environment/environment.local-k8s.ts"
+                  "with": "environment/environment.k8s-local.ts"
                 }
               ],
               "outputHashing": "all"
@@ -120,7 +120,8 @@
               "buildTarget": "pp-frontend:build:development"
             },
             "fullstack-local": {
-              "buildTarget": "pp-frontend:build:fullstack-local"
+              "buildTarget": "pp-frontend:build:fullstack-local",
+              "proxyConfig": "proxy.fullstack-local.json"
             }
           },
           "defaultConfiguration": "development"

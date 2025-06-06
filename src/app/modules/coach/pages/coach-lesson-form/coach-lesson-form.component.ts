@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -27,7 +27,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class CoachLessonFormComponent implements OnInit {
   private fb: FormBuilder = inject(FormBuilder);
-  private courseService: CourseService = inject(CourseService);
+  private coachCourseService: CoachCourseService = inject(CoachCourseService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private messageService = inject(MessageService);
@@ -47,7 +47,7 @@ export class CoachLessonFormComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         this.courseId = params.get('courseId')!;
-        this.courseService.getLessonCount(this.courseId).subscribe({
+        this.coachCourseService.getLessonCount(this.courseId).subscribe({
           next: (lessonCount) => {
             this.lessonCount = lessonCount + 1;
             this.lessonForm = this.fb.nonNullable.group({
@@ -73,7 +73,7 @@ export class CoachLessonFormComponent implements OnInit {
   protected onSubmit(): void {
     if (!this.lessonForm) return;
 
-    this.courseService
+    this.coachCourseService
       .addLesson(this.courseId, this.lessonForm.getRawValue())
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({

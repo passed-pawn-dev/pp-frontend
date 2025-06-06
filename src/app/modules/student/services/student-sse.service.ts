@@ -6,7 +6,7 @@ import { EventSourcePolyfill } from 'event-source-polyfill';
 @Injectable({
   providedIn: 'root'
 })
-export class SseService {
+export class StudentSseService {
   private eventSource: EventSourcePolyfill | null = null;
 
   public constructor(private authService: AuthService) {}

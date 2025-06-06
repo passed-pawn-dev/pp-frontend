@@ -2,12 +2,14 @@ import { Component, DestroyRef, inject, Input } from '@angular/core';
 import { FileUploadComponent } from '../../../shared/components/file-upload/file-upload.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MessageService } from 'primeng/api';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { fileTypeValidator } from '../../../shared/validators/file-type-validator';
 import { fileSizeValidator } from '../../../shared/validators/file-size-validator';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CloudinarySecureUrlResponse } from '../../../shared/models/cloudinary-secure-url-response';
+import { FileHandlingService } from '../../../shared/services/file-handling.service';
 
 @Component({
   selector: 'app-coach-add-video',
@@ -21,7 +23,8 @@ export class CoachAddVideoComponent {
 
   private fb = inject(FormBuilder);
   private messageService = inject(MessageService);
-  private courseService = inject(CourseService);
+  private coachCourseService = inject(CoachCourseService);
+  private fileHandlingService = inject(FileHandlingService);
   private destroyRef = inject(DestroyRef);
   private ref = inject(DynamicDialogRef);
 
@@ -51,42 +54,12 @@ export class CoachAddVideoComponent {
     order: [null, [Validators.required, Validators.min(1)]]
   });
 
-  protected onSubmit(): void {
-    const video = this.addVideoForm.controls.video.value;
-
-    if (video) {
-      const formData = new FormData();
-      formData.append('order', this.addVideoForm.controls.order.value!);
-      formData.append('video', video);
-      formData.append('title', this.addVideoForm.controls.title.value!);
-      formData.append('description', this.addVideoForm.controls.description.value!);
-
-      this.submitting = true;
-
-      this.courseService
-        .addVideo(this.lessonId, formData)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: () => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: 'Video element added successfully'
-            });
-
-            this.ref.close();
-          },
-          error: () => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Fail',
-              detail: 'Failed to add video element'
-            });
-
-            this.submitting = false;
-          }
-        });
-    }
+  private displayVideoUploadErrorMessage(message: string): void {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Fail',
+      detail: message
+    });
   }
 
   protected fileSelected(file: any): void {
@@ -96,5 +69,81 @@ export class CoachAddVideoComponent {
     this.addVideoForm.patchValue({
       video: file
     });
+  }
+
+  protected onSubmit(): void {
+    this.coachCourseService.getVideoUploadSignature().subscribe({
+      next: (res: CloudinarySecureUrlResponse) => {
+        this.uploadVideo(res);
+      },
+      error: () => {
+        this.displayVideoUploadErrorMessage(
+          'There was a problem initializing video upload. Please try again later.'
+        );
+        this.submitting = false;
+      }
+    });
+  }
+
+  private uploadVideo(res: CloudinarySecureUrlResponse): void {
+    const video = this.addVideoForm.controls.video.value;
+
+    if (video) {
+      const formData = new FormData();
+
+      formData.append('file', video);
+      formData.append('api_key', res.apiKey);
+      formData.append('timestamp', res.timestamp);
+      formData.append('signature', res.signature);
+      formData.append('resource_type', res.resourceType);
+      formData.append('folder', res.folder);
+      formData.append('access_control', res.accessControl);
+      formData.append('invalidate', res.invalidate);
+      formData.append('type', res.accessType);
+
+      this.fileHandlingService.uploadVideo(formData, res.cloudName).subscribe({
+        next: (res: any) => {
+          this.uploadForm(res.public_id);
+        },
+        error: () => {
+          this.displayVideoUploadErrorMessage(
+            'There was a problem uploading the video. Please try again later.'
+          );
+          this.submitting = false;
+        }
+      });
+    }
+  }
+
+  private uploadForm(videoPublicId: string): void {
+    this.submitting = true;
+
+    const playload = {
+      order: this.addVideoForm.controls.order.value!,
+      title: this.addVideoForm.controls.title.value!,
+      description: this.addVideoForm.controls.description.value!,
+      videoPublicId
+    };
+
+    this.coachCourseService
+      .addVideo(this.lessonId, playload)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'The video element has been added successfully!'
+          });
+
+          this.ref.close();
+        },
+        error: () => {
+          this.displayVideoUploadErrorMessage(
+            'There was a problem uploading the video element form.'
+          );
+          this.submitting = false;
+        }
+      });
   }
 }

@@ -13,7 +13,7 @@ import {
 import { Student } from '../../models/student.model';
 import { StudentService } from '../../services/student.service';
 import { Router, RouterLink } from '@angular/router';
-import { NationalityService } from '../../../shared/service/nationality.service';
+import { NationalityService } from '../../../shared/services/nationality.service';
 import { Nationality } from '../../../shared/models/nationality.model';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';

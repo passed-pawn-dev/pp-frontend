@@ -11,7 +11,7 @@ import { ValidationErrorsComponent } from '../../../shared/components/validation
 import { StepIndicatorComponent } from '../../../shared/components/step-indicator/step-indicator.component';
 import { Arrow } from '../../../shared/models/arrow.model';
 import { Severity } from '../../../shared/enums/severities.enum';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Location } from '@angular/common';
@@ -31,7 +31,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CoachAddExampleComponent implements OnInit {
   private fb = inject(FormBuilder);
-  protected courseService = inject(CourseService);
+  protected coachCourseService = inject(CoachCourseService);
   private destroyRef = inject(DestroyRef);
   private location = inject(Location);
   private messageService = inject(MessageService);
@@ -138,7 +138,7 @@ export class CoachAddExampleComponent implements OnInit {
       });
     });
 
-    this.courseService
+    this.coachCourseService
       .addExample(this.lessonId!, example)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
