@@ -1,0 +1,21 @@
+<div class="page-wrapper">
+  <div class="standard-tile page-controls">
+    <h1 class="video-title">{{ videoElementData.title }}</h1>
+    <div class="flex">
+      <div class="space-right-2">
+        <button class="primary-btn" type="button" (click)="openEditVideoDialog()">
+          Edit
+        </button>
+      </div>
+      <div>
+        <a class="secondary-btn" routerLink="../../../../">Back</a>
+      </div>
+    </div>
+  </div>
+  <div class="standard-tile video-player-wrapper">
+    <app-private-video-player [videoPlayUrl]="videoPlayUrl" />
+  </div>
+  <div class="standard-tile">
+    <p class="video-description">{{ videoElementData.description }}</p>
+  </div>
+</div>

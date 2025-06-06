@@ -12,13 +12,13 @@ import { CloudinarySecureUrlResponse } from '../../../shared/models/cloudinary-s
 import { FileHandlingService } from '../../../shared/services/file-handling.service';
 
 @Component({
-  selector: 'app-coach-add-video',
+  selector: 'app-coach-add-video-dialog',
   standalone: true,
   imports: [FileUploadComponent, ValidationErrorsComponent, ReactiveFormsModule],
-  templateUrl: './coach-add-video.component.html',
-  styleUrl: './coach-add-video.component.scss'
+  templateUrl: './coach-add-video-dialog.component.html',
+  styleUrl: './coach-add-video-dialog.component.scss'
 })
-export class CoachAddVideoComponent {
+export class CoachAddVideoDialogComponent {
   @Input({ required: true }) public lessonId!: string;
 
   private fb = inject(FormBuilder);

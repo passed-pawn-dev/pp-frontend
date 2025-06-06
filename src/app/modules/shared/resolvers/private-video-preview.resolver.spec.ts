@@ -1,11 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
-import { studentVideoResolver } from './student-video.resolver';
+import { privateVideoPreviewResolver } from './private-video-preview.resolver';
 
-describe('studentVideoResolver', () => {
+describe('privateVideoPreviewResolver', () => {
   const executeResolver: ResolveFn<boolean> = (...resolverParameters) =>
-    TestBed.runInInjectionContext(() => studentVideoResolver(...resolverParameters));
+    TestBed.runInInjectionContext(() =>
+      privateVideoPreviewResolver(...resolverParameters)
+    );
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

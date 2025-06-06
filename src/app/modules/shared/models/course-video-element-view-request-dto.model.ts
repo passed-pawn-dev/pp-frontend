@@ -1,8 +1,8 @@
-export interface StudentVideoElementRequestDto {
+export interface CourseVideoElementViewRequestDto {
   readonly id: string;
   readonly title: string;
   readonly description: string;
   readonly order: number;
-  readonly publicId: string;
+  readonly videoPublicId: string;
   readonly temporaryVideoDownloadUrl: string;
 }
