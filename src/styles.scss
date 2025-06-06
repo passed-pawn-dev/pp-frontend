@@ -362,6 +362,10 @@ input {
   }
 }
 
+.validation-errors {
+  color: red;
+  padding: 0.5rem 0;
+
 .pg-select {
   &.p-select {
     border-radius: 0.5rem;
