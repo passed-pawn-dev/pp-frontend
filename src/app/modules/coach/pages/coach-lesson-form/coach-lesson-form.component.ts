@@ -68,7 +68,7 @@ export class CoachLessonFormComponent implements OnInit {
             this.messageService.add({
               severity: 'error',
               summary: 'Failure',
-              detail: 'Lesson could not edited.'
+              detail: 'Lesson could not be edited.'
             });
           }
         });
