@@ -9,7 +9,6 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
   styleUrl: './promotion-dialog.component.scss'
 })
 export class PromotionDialogComponent {
-  [x: string]: any;
   private ref = inject(DynamicDialogRef);
   private config = inject(DynamicDialogConfig);
 

@@ -9,19 +9,15 @@ import {
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { CourseService } from '../../services/course.service';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-coach-lesson-form',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    InputNumberModule,
-    ValidationErrorsComponent,
-    RouterLink
-  ],
+  imports: [ReactiveFormsModule, InputNumberModule, ValidationErrorsComponent],
   templateUrl: './coach-lesson-form.component.html',
   styleUrl: './coach-lesson-form.component.scss'
 })
@@ -29,9 +25,11 @@ export class CoachLessonFormComponent implements OnInit {
   private fb: FormBuilder = inject(FormBuilder);
   private courseService: CourseService = inject(CourseService);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private messageService = inject(MessageService);
   private destroyRef = inject(DestroyRef);
+
+  private ref = inject(DynamicDialogRef);
+  private config = inject(DynamicDialogConfig);
 
   protected courseId: string = '';
   protected lessonCount: number = 0;
@@ -52,19 +50,26 @@ export class CoachLessonFormComponent implements OnInit {
             this.lessonCount = lessonCount + 1;
             this.lessonForm = this.fb.nonNullable.group({
               lessonNumber: [
-                0,
+                this.config.data?.lesson.lessonNumber ?? 0,
                 [
                   Validators.required,
                   Validators.min(1),
                   Validators.max(this.lessonCount)
                 ]
               ],
-              title: ['', [Validators.required, Validators.min(1)]],
-              preview: [false]
+              title: [
+                this.config.data?.lesson.title ?? '',
+                [Validators.required, Validators.min(1)]
+              ],
+              preview: [this.config.data?.lesson.preview ?? false]
             });
           },
           error: () => {
-            this.router.navigateByUrl('/404');
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Failure',
+              detail: 'Lesson could not edited.'
+            });
           }
         });
       });
@@ -73,25 +78,10 @@ export class CoachLessonFormComponent implements OnInit {
   protected onSubmit(): void {
     if (!this.lessonForm) return;
 
-    this.courseService
-      .addLesson(this.courseId, this.lessonForm.getRawValue())
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (_) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Lesson created successfully'
-          });
-          this.router.navigate(['../..'], { relativeTo: this.route });
-        },
-        error: (_) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Failure',
-            detail: 'Lesson could not be created. Ensure lesson number is correct.'
-          });
-        }
-      });
+    this.ref.close(this.lessonForm.getRawValue());
+  }
+
+  protected onCancel(): void {
+    this.ref.close();
   }
 }

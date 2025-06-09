@@ -17,6 +17,7 @@ import { CourseService } from '../../services/course.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CoachAddVideoComponent } from '../../pages/coach-add-video/coach-add-video.component';
+import { NewLesson } from '../../models/new-lesson.model';
 
 @Component({
   selector: 'app-coach-lesson',
@@ -43,6 +44,7 @@ export class CoachLessonComponent implements OnInit {
   @Input({ required: true }) public last!: boolean;
 
   @Output() public deleteLessonEvent = new EventEmitter<string>();
+  @Output() public editLessonEvent = new EventEmitter<NewLesson>();
 
   protected progress: number = 5;
   protected all: number = 8;
@@ -100,7 +102,18 @@ export class CoachLessonComponent implements OnInit {
     this.deleteLessonEvent.emit(this.lesson.id);
   }
 
+  protected editLesson(): void {
+    this.editLessonEvent.emit({
+      title: this.lesson.title,
+      lessonNumber: this.lesson.lessonNumber!,
+      preview: this.lesson.preview
+    });
+  }
+
   protected deleteElement(e: Event, elementId: string, elementKind: ElementKind): void {
+    e.preventDefault();
+    e.stopPropagation();
+
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this element?',
       header: 'Confirm',
