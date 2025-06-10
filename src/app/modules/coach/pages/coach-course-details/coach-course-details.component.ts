@@ -156,7 +156,7 @@ export class CoachCourseDetailsComponent implements OnInit {
         next: (lesson: NewLesson) => {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (!lesson) return;
-          this.courseService
+          this.coachCourseService
             .addLesson(this.course().id, lesson)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
@@ -197,7 +197,7 @@ export class CoachCourseDetailsComponent implements OnInit {
         next: (lesson: NewLesson) => {
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (!lesson) return;
-          this.courseService
+          this.coachCourseService
             .editLesson(lessonId, lesson)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
