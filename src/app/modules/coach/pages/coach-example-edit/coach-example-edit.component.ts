@@ -176,7 +176,7 @@ export class CoachExampleEditComponent {
           this.messageService.add({
             severity: 'error',
             summary: 'Failure',
-            detail: 'Example could not be created'
+            detail: 'Example could not be edited'
           });
         }
       });
