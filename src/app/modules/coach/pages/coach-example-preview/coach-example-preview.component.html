@@ -1,1 +1,48 @@
-<p>coach-example-preview works!</p>
+<div class="page">
+  <div class="tile top">
+    <div>
+      <h3>{{ example.title }}</h3>
+      <div>{{ example.initialDescription }}</div>
+    </div>
+    <div>
+      <button class="secondary-btn" type="button" (click)="back()">Back</button>
+    </div>
+  </div>
+  <div class="container">
+    <app-display-chessboard
+      [startingFen]="example.steps[currentStep].fen"
+      [arrows]="example.steps[currentStep].arrows"
+      [highlights]="hightlights[currentStep]"
+    />
+    <div class="tile right">
+      <div class="description">{{ example.steps[currentStep].description }}</div>
+      <div class="buttons">
+        <button
+          class="icon-btn"
+          type="button"
+          [disabled]="currentStep < 1"
+          (click)="prevStep()"
+        >
+          <img src="icons/arrow-left-purple.png" alt="arrow-left" />
+        </button>
+        <span class="step-info">
+          <div>
+            {{ currentStep + 1 }}
+          </div>
+          /
+          <div>
+            {{ example.steps.length }}
+          </div>
+        </span>
+        <button
+          class="icon-btn reverse"
+          type="button"
+          [disabled]="currentStep >= example.steps.length - 1"
+          (click)="nextStep()"
+        >
+          <img src="icons/arrow-left-purple.png" alt="arrow-right" />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

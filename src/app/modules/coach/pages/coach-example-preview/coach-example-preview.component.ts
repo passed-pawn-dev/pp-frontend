@@ -1,16 +1,84 @@
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
+import { DisplayChessboardComponent } from '../../../shared/components/display-chessboard/display-chessboard.component';
 import { CourseExampleDto } from '../../../shared/models/course-example-dto.model';
+import { ActivatedRoute } from '@angular/router';
+import { Severity } from '../../../shared/enums/severities.enum';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-coach-example-preview',
-  imports: [],
+  imports: [DisplayChessboardComponent],
   templateUrl: './coach-example-preview.component.html',
   styleUrl: './coach-example-preview.component.scss'
 })
-export class CoachExamplePreviewComponent {
+export class CoachExamplePreviewComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private messageService = inject(MessageService);
-  private exampleElementData: CourseExampleDto = this.route.snapshot.data['exampleId'];
+  private location = inject(Location);
+
+  protected example: CourseExampleDto = {
+    id: '1',
+    title: 'example',
+    initialDescription: 'description',
+    order: 1,
+    steps: [
+      {
+        fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+        description:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae inventore quasi ex alias velit porro nemo sequi ipsam corporis, animi architecto, adipisci aliquam natus quam laboriosam ab nostrum aliquid magnam culpa. Soluta ducimus, ullam dolores ut laboriosam repellendus odio fuga neque? Atque laborum tenetur dignissimos modi cumque distinctio commodi voluptas.',
+        arrows: [],
+        highlights: []
+      },
+      {
+        fen: 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1',
+        description:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae inventore quasi ex alias velit porro nemo sequi ipsam corporis, animi architecto, adipisci aliquam natus quam laboriosam ab nostrum aliquid magnam culpa. Soluta ducimus, ullam dolores ut laboriosam repellendus odio fuga neque? Atque laborum tenetur dignissimos modi cumque distinctio commodi voluptas. AAAAAaaaaaaaaaaaaaaaaaaaaaa',
+        arrows: [],
+        highlights: []
+      }
+    ]
+  };
+
+  protected hightlights: Map<number, Severity>[] = [];
+
+  protected currentStep: number = 0;
+
+  public ngOnInit(): void {
+    const example = this.route.snapshot.data['example'];
+    this.example = example;
+    this.example.steps.forEach((step) => {
+      const newHighlights: Map<number, Severity> = new Map([]);
+      step.highlights.forEach((highlight) => {
+        newHighlights.set(highlight.position, highlight.severity);
+      });
+      this.hightlights.push(newHighlights);
+    });
+  }
+
+  protected back(): void {
+    this.location.back();
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  private handleKeyboardEvent(event: KeyboardEvent): void {
+    switch (event.key) {
+      case 'ArrowLeft':
+        this.prevStep();
+        break;
+      case 'ArrowRight':
+        this.nextStep();
+        break;
+    }
+  }
+
+  protected nextStep(): void {
+    if (this.currentStep < this.example.steps.length - 1) {
+      this.currentStep++;
+    }
+  }
+
+  protected prevStep(): void {
+    if (this.currentStep >= 1) {
+      this.currentStep--;
+    }
+  }
 }
