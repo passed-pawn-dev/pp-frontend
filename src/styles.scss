@@ -372,36 +372,37 @@ input {
   color: red;
   padding: 0.5rem 0;
 
-.pg-select {
-  &.p-select {
-    border-radius: 0.5rem;
-    border: 0.0625rem solid $border-secondary;
-    height: 2.6rem;
-    line-height: 1.25rem;
+  .pg-select {
+    &.p-select {
+      border-radius: 0.5rem;
+      border: 0.0625rem solid $border-secondary;
+      height: 2.6rem;
+      line-height: 1.25rem;
 
-    &:hover,
-    &:focus,
-    &:active {
+      &:hover,
+      &:focus,
+      &:active {
+        box-shadow: none;
+      }
+    }
+
+    &.p-select:not(.p-disabled).p-focus {
+      border: 0.0625rem solid $primary;
       box-shadow: none;
     }
-  }
 
-  &.p-select:not(.p-disabled).p-focus {
-    border: 0.0625rem solid $primary;
-    box-shadow: none;
-  }
+    &.w-small {
+      width: 6.5rem;
+    }
 
-  &.w-small {
-    width: 6.5rem;
-  }
+    &.w-full {
+      width: 100%;
+    }
 
-  &.w-full {
-    width: 100%;
-  }
-
-  &.h-small {
-    border-radius: 0.25rem;
-    height: 2rem;
-    line-height: 0.6rem;
+    &.h-small {
+      border-radius: 0.25rem;
+      height: 2rem;
+      line-height: 0.6rem;
+    }
   }
 }

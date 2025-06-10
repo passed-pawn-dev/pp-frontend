@@ -4,7 +4,6 @@
     [formGroup]="lessonForm"
     (ngSubmit)="onSubmit()"
   >
-    <h2>Add new lesson</h2>
     <div class="form-control-field">
       <label for="title">Lesson title</label>
       <input id="title" formControlName="title" type="text" class="standard-input" />
@@ -38,7 +37,7 @@
     </div>
 
     <div class="btn-group">
-      <a class="secondary-btn" [routerLink]="'/coach/courses/' + courseId">Cancel</a>
+      <button class="secondary-btn" type="button" (click)="onCancel()">Cancel</button>
       <button class="primary-btn" type="submit" [disabled]="lessonForm.invalid">
         Submit
       </button>

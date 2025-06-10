@@ -42,7 +42,9 @@
   <div class="lessons-section">
     <div class="header">
       <h3>Lessons</h3>
-      <a class="btn" [routerLink]="'lessons/new'">Add lesson</a>
+      <button class="primary-btn" type="button" (click)="addLesson()">
+        Add lesson
+      </button>
     </div>
     <div class="lessons-group">
       @for (lesson of lessons(); track $index) {
@@ -52,6 +54,7 @@
           [first]="$first"
           [last]="$last"
           (deleteLessonEvent)="deleteLesson($event)"
+          (editLessonEvent)="editLesson(lesson.id, $event, $index)"
         />
       }
     </div>
