@@ -49,11 +49,11 @@ h3 {
   gap: 1rem;
 
   &.vertical-form-fields {
-    label + input {
+    label {
       display: block;
     }
 
-    textarea + input {
+    textarea {
       display: block;
     }
   }
@@ -310,6 +310,12 @@ input {
 
 .align-i-center {
   align-items: center;
+}
+
+.standard-tile {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1rem;
 }
 
 .pg-autocomplete,

@@ -11,5 +11,6 @@ export const environment = {
   stripe: {
     publishableKey:
       'pk_test_51RQVAE8unQpRs68U54iASrcVaJLAe1nhzY7mzTTJ3qwKw1wtrnWUePSeAlAjltKHz1MWv8wrUwNREBYn7ezTY7lZ00pnePUMbv'
-  }
+  },
+  apiUrl: '/api'
 };

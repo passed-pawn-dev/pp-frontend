@@ -13,11 +13,11 @@ import { LessonDetails } from '../../models/lesson-details.model';
 import { Element } from '../../models/element.model';
 import { ElementKind } from '../../../shared/enums/element-kind.enum';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DialogService } from 'primeng/dynamicdialog';
-import { CoachAddVideoComponent } from '../../pages/coach-add-video/coach-add-video.component';
 import { NewLesson } from '../../models/new-lesson.model';
+import { CoachAddVideoDialogComponent } from '../coach-add-video-dialog/coach-add-video-dialog.component';
 
 @Component({
   selector: 'app-coach-lesson',
@@ -27,7 +27,7 @@ import { NewLesson } from '../../models/new-lesson.model';
   styleUrl: './coach-lesson.component.scss'
 })
 export class CoachLessonComponent implements OnInit {
-  private courseService: CourseService = inject(CourseService);
+  private coachCourseService: CoachCourseService = inject(CoachCourseService);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
   private destroyRef: DestroyRef = inject(DestroyRef);
@@ -118,7 +118,7 @@ export class CoachLessonComponent implements OnInit {
       message: 'Are you sure you want to delete this element?',
       header: 'Confirm',
       accept: () => {
-        this.courseService
+        this.coachCourseService
           .deleteElement(elementId, elementKind)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
@@ -144,7 +144,7 @@ export class CoachLessonComponent implements OnInit {
   }
 
   protected openAddVideoDialog(): void {
-    this.dialogService.open(CoachAddVideoComponent, {
+    this.dialogService.open(CoachAddVideoDialogComponent, {
       header: 'Add video',
       closable: true,
       modal: true,

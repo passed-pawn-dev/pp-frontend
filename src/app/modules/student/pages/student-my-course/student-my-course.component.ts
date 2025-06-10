@@ -1,7 +1,7 @@
 import { Component, DestroyRef, OnInit, computed, signal } from '@angular/core';
 import { MyCourseDetails } from '../../models/my-course-details.model';
 import { StudentCourseReviewFormComponent } from '../../components/student-course-review-form/student-course-review-form.component';
-import { CourseService } from '../../services/course.service';
+import { StudentCourseService } from '../../services/student-course.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Exercise } from '../../models/exercise.model';
@@ -57,7 +57,7 @@ export class StudentMyCourseComponent implements OnInit {
   protected LessonStatus = LessonStatus;
 
   public constructor(
-    private courseService: CourseService,
+    private studentCourseService: StudentCourseService,
     private readonly route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private router: Router,
@@ -107,11 +107,11 @@ export class StudentMyCourseComponent implements OnInit {
       message: 'Are you sure you want to delete your review?',
       header: 'Confirm',
       accept: () => {
-        this.courseService
+        this.studentCourseService
           .deleteReview(this.givenReview()!.id)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
-            next: (_) => {
+            next: () => {
               this.messageService.add({
                 severity: 'success',
                 summary: 'Success',
@@ -119,15 +119,14 @@ export class StudentMyCourseComponent implements OnInit {
               });
               this.givenReview.set(null);
             },
-            error: (_) =>
+            error: () =>
               this.messageService.add({
                 severity: 'error',
                 summary: 'Failure',
                 detail: 'Could not delete review'
               })
           });
-      },
-      reject: () => {}
+      }
     });
   }
 
@@ -139,7 +138,7 @@ export class StudentMyCourseComponent implements OnInit {
         this.route.paramMap
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((params) => {
-            this.courseService
+            this.studentCourseService
               .signOut(params.get('courseId')!)
               .pipe(takeUntilDestroyed(this.destroyRef))
               .subscribe({
@@ -158,8 +157,7 @@ export class StudentMyCourseComponent implements OnInit {
               });
           });
         this.router.navigate(['../'], { relativeTo: this.route });
-      },
-      reject: () => {}
+      }
     });
   }
 }

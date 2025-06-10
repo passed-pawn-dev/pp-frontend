@@ -16,7 +16,7 @@ import { CoursesQueryParams } from '../models/course-query-params.model';
 @Injectable({
   providedIn: 'root'
 })
-export class CourseService {
+export class StudentCourseService {
   public constructor(private httpClient: HttpClient) {}
 
   public getAll(coursesParams: CoursesQueryParams): Observable<HttpResponse<Course[]>> {

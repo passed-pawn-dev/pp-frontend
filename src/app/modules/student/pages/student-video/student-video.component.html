@@ -1,0 +1,12 @@
+<div class="page-wrapper">
+  <div class="standard-tile page-controls">
+    <h1 class="video-title">{{ videoElementData.title }}</h1>
+    <div><a class="secondary-btn" routerLink="../../../../">Back</a></div>
+  </div>
+  <div class="standard-tile">
+    <app-private-video-player [videoPlayUrl]="videoPlayUrl" />
+  </div>
+  <div class="standard-tile">
+    <p class="video-description">{{ videoElementData.description }}</p>
+  </div>
+</div>

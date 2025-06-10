@@ -16,7 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { QuizComponent } from '../../../shared/components/quiz/quiz.component';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
-import { CourseService } from '../../services/course.service';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Location } from '@angular/common';
@@ -41,7 +41,7 @@ import { TalkingBobComponent } from '../../../shared/components/talking-bob/talk
 export class CoachAddQuizComponent implements OnInit {
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
-  private courseService = inject(CourseService);
+  private coachCourseService = inject(CoachCourseService);
   private route = inject(ActivatedRoute);
   private location = inject(Location);
   private messageService = inject(MessageService);
@@ -175,7 +175,7 @@ export class CoachAddQuizComponent implements OnInit {
   }
 
   protected submit(): void {
-    this.courseService
+    this.coachCourseService
       .addQuiz(this.lessonId!, this.quiz)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({

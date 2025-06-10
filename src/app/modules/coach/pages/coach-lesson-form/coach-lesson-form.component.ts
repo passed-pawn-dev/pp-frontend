@@ -8,8 +8,8 @@ import {
 } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
-import { CourseService } from '../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
+import { CoachCourseService } from '../../services/coach-course.service';
 import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -23,7 +23,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class CoachLessonFormComponent implements OnInit {
   private fb: FormBuilder = inject(FormBuilder);
-  private courseService: CourseService = inject(CourseService);
+  private coachCourseService: CoachCourseService = inject(CoachCourseService);
   private route = inject(ActivatedRoute);
   private messageService = inject(MessageService);
   private destroyRef = inject(DestroyRef);
@@ -45,7 +45,7 @@ export class CoachLessonFormComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         this.courseId = params.get('courseId')!;
-        this.courseService.getLessonCount(this.courseId).subscribe({
+        this.coachCourseService.getLessonCount(this.courseId).subscribe({
           next: (lessonCount) => {
             this.lessonCount = lessonCount + 1;
             this.lessonForm = this.fb.nonNullable.group({

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { CourseDetails } from '../../models/course-details.model';
 import { CourseReviewComponent } from '../../../shared/components/course-review/course-review.component';
-import { CourseService } from '../../services/course.service';
+import { StudentCourseService } from '../../services/student-course.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { StarRatingComponent } from '../../../shared/components/star-rating/star-rating.component';
@@ -45,7 +45,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 })
 export class StudentCourseComponent implements OnInit {
   private dialogService: DialogService = inject(DialogService);
-  private courseService: CourseService = inject(CourseService);
+  private studentCourseService: StudentCourseService = inject(StudentCourseService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private cdRef: ChangeDetectorRef = inject(ChangeDetectorRef);
@@ -132,13 +132,13 @@ export class StudentCourseComponent implements OnInit {
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
-        this.courseService
+        this.studentCourseService
           .getById(params.get('courseId')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
             this.course.set(res);
           });
-        this.courseService
+        this.studentCourseService
           .getReviews(params.get('courseId')!)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((res) => {
