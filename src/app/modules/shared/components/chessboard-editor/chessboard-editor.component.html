@@ -271,10 +271,13 @@
         <form [formGroup]="fenForm">
           <div class="form-input">
             <div class="label">Side to move</div>
-            <select formControlName="sideToMove" class="standard-select">
-              <option value="White">White</option>
-              <option value="Black">Black</option>
-            </select>
+            <p-select
+              formControlName="sideToMove"
+              placeholder="Search by"
+              class="pg-select w-full"
+              [options]="colors"
+            >
+            </p-select>
           </div>
 
           <!-- <div>

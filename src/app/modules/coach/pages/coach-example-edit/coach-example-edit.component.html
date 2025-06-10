@@ -1,0 +1,121 @@
+<div class="page">
+  <form class="example-form" [formGroup]="exampleForm">
+    <div class="top tile">
+      <div class="example">
+        <img src="icons/example-complete.png" alt="example" />
+      </div>
+      <div class="top-right">
+        <div class="buttons">
+          <button
+            class="primary-btn"
+            type="button"
+            [disabled]="steps.length < 2"
+            (click)="removeStep(currentStep)"
+          >
+            Remove
+          </button>
+          <button
+            class="primary-btn"
+            type="button"
+            [disabled]="steps.length > 100"
+            (click)="addStep()"
+          >
+            Add Step
+          </button>
+        </div>
+        <app-step-indicator
+          [stepNumber]="steps.controls.length"
+          [currentStep]="currentStep"
+        ></app-step-indicator>
+        <div class="buttons">
+          <button
+            type="button"
+            class="secondary-btn"
+            [disabled]="currentStep < 2"
+            (click)="prevStep()"
+          >
+            Back
+          </button>
+          <button
+            type="button"
+            class="primary-btn"
+            [disabled]="currentStep >= steps.controls.length"
+            (click)="nextStep()"
+          >
+            Next <img src="icons/thick-arrow-right.png" alt="arrow" />
+          </button>
+          <button type="button" class="primary-btn" (click)="submit()">Save</button>
+          <!-- <button type="button" class="primary-btn">Save</button> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="tile main-inputs">
+      <div class="form-control-field title-control">
+        <label for="title">Title</label>
+        <input
+          placeholder="Enter example's title"
+          pInputText
+          class="standard-input"
+          id="title"
+          formControlName="title"
+          type="text"
+        />
+        <app-validation-errors
+          [errors]="exampleForm.controls.title.errors"
+          [dirty]="exampleForm.controls.title.dirty"
+          [touched]="exampleForm.controls.title.touched"
+        />
+      </div>
+      <div class="form-control-field desc-control">
+        <label for="initialDescription">Description</label>
+        <textarea
+          placeholder="Enter initial description"
+          class="standard-textarea main-desc-textarea"
+          id="initialDescription"
+          formControlName="initialDescription"
+        ></textarea>
+        <app-validation-errors
+          [errors]="exampleForm.controls.initialDescription.errors"
+          [dirty]="exampleForm.controls.initialDescription.dirty"
+          [touched]="exampleForm.controls.initialDescription.touched"
+        />
+      </div>
+    </div>
+
+    <div formArrayName="steps">
+      @for (step of steps.controls; track $index) {
+        <div
+          class="step"
+          [class.step-active]="currentStep === $index + 1"
+          [class.step-left]="currentStep > $index + 1"
+          [class.step-hidden]="currentStep < $index + 1"
+        >
+          <div [formGroupName]="$index">
+            <app-chessboard-editor
+              [initialHighlights]="initialHighlights[$index]"
+              [initialArrows]="initialArrows[$index]"
+              [startingPositionInput]="stepPositions[$index]"
+              [useArrowsAndHighlights]="true"
+              (newFenEvent)="addPositionToStep($event, $index)"
+              (newArrowsEvent)="addArrowsToStep($event, $index)"
+              (newHighlightsEvent)="addHighlightsToStep($event, $index)"
+            >
+              <div class="right tile">
+                <label for="description">Step description</label>
+                <textarea
+                  class="desc-input standard-textarea"
+                  placeholder="Enter step's description"
+                  formControlName="description"
+                  type="description"
+                  id="description"
+                  required
+                ></textarea>
+              </div>
+            </app-chessboard-editor>
+          </div>
+        </div>
+      }
+    </div>
+  </form>
+</div>

@@ -1,8 +1,8 @@
-import { Severity } from '../../shared/enums/severities.enum';
-import { Arrow } from '../../shared/models/arrow.model';
+import { Severity } from '../enums/severities.enum';
+import { Arrow } from './arrow.model';
 
 interface Highlight {
-  position: string;
+  position: number;
   severity: Severity;
 }
 
@@ -13,7 +13,7 @@ interface Step {
   highlights: Highlight[];
 }
 
-export interface ExampleDetails {
+export interface CourseExampleDto {
   id: string;
   title: string;
   initialDescription: string;

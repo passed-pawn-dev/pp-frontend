@@ -5,3 +5,7 @@ export interface Arrow {
   destination: number;
   severity: Severity;
 }
+
+export interface ExampleArrowDto extends Arrow {
+  id: string;
+}

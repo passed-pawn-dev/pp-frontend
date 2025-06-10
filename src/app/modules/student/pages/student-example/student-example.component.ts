@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { DisplayChessboardComponent } from '../../../shared/components/display-chessboard/display-chessboard.component';
-import { ExampleDetails } from '../../models/example-details.model';
+import { CourseExampleDto } from '../../../shared/models/course-example-dto.model';
 import { ActivatedRoute } from '@angular/router';
 import { Severity } from '../../../shared/enums/severities.enum';
 import { Location } from '@angular/common';
@@ -15,7 +15,7 @@ export class StudentExampleComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private location = inject(Location);
 
-  protected example: ExampleDetails = {
+  protected example: CourseExampleDto = {
     id: '1',
     title: 'example',
     initialDescription: 'description',
@@ -48,7 +48,7 @@ export class StudentExampleComponent implements OnInit {
     this.example.steps.forEach((step) => {
       const newHighlights: Map<number, Severity> = new Map([]);
       step.highlights.forEach((highlight) => {
-        newHighlights.set(parseInt(highlight.position), highlight.severity);
+        newHighlights.set(highlight.position, highlight.severity);
       });
       this.hightlights.push(newHighlights);
     });
