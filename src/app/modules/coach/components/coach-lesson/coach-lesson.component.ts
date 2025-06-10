@@ -16,7 +16,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { CoachCourseService } from '../../services/coach-course.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DialogService } from 'primeng/dynamicdialog';
-import { CoachAddVideoComponent } from '../../pages/coach-add-video/coach-add-video.component';
+import { CoachAddVideoDialogComponent } from '../coach-add-video-dialog/coach-add-video-dialog.component';
 
 @Component({
   selector: 'app-coach-lesson',
@@ -131,7 +131,7 @@ export class CoachLessonComponent implements OnInit {
   }
 
   protected openAddVideoDialog(): void {
-    this.dialogService.open(CoachAddVideoComponent, {
+    this.dialogService.open(CoachAddVideoDialogComponent, {
       header: 'Add video',
       closable: true,
       modal: true,

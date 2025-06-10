@@ -12,7 +12,6 @@ import { Exercise } from '../models/exercise.model';
 import { QuizDetails } from '../models/quiz-details.model';
 import { ExampleDetails } from '../models/example-details.model';
 import { CoursesQueryParams } from '../models/course-query-params.model';
-import { StudentVideoElementRequestDto } from '../models/student-video-element-request-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -93,9 +92,5 @@ export class StudentCourseService {
 
   public getExampleById(id: string): Observable<ExampleDetails> {
     return this.httpClient.get<ExampleDetails>(`/api/CourseExample/${id}`);
-  }
-
-  public getVideoById(id: string): Observable<StudentVideoElementRequestDto> {
-    return this.httpClient.get<StudentVideoElementRequestDto>(`/api/CourseVideo/${id}`);
   }
 }
