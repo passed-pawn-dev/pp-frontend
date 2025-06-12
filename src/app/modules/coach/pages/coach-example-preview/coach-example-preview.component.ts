@@ -1,19 +1,17 @@
 import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { DisplayChessboardComponent } from '../../../shared/components/display-chessboard/display-chessboard.component';
 import { CourseExampleDto } from '../../../shared/models/course-example-dto.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Severity } from '../../../shared/enums/severities.enum';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-coach-example-preview',
-  imports: [DisplayChessboardComponent],
+  imports: [DisplayChessboardComponent, RouterLink],
   templateUrl: './coach-example-preview.component.html',
   styleUrl: './coach-example-preview.component.scss'
 })
 export class CoachExamplePreviewComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private location = inject(Location);
 
   protected example: CourseExampleDto = {
     id: '1',
@@ -52,10 +50,6 @@ export class CoachExamplePreviewComponent implements OnInit {
       });
       this.hightlights.push(newHighlights);
     });
-  }
-
-  protected back(): void {
-    this.location.back();
   }
 
   @HostListener('window:keydown', ['$event'])
