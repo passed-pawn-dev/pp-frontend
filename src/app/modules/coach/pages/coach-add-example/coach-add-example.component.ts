@@ -15,7 +15,7 @@ import { CoachCourseService } from '../../services/coach-course.service';
 import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Location } from '@angular/common';
-import { NewExample } from '../../models/new-example.model';
+import { CoachExampleUpsertDto } from '../../models/new-example.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -117,7 +117,7 @@ export class CoachAddExampleComponent implements OnInit {
   protected submit(): void {
     const exampleForm = this.exampleForm.getRawValue();
 
-    const example: NewExample = {
+    const example: CoachExampleUpsertDto = {
       title: exampleForm.title!,
       initialDescription: exampleForm.initialDescription!,
       order: null,

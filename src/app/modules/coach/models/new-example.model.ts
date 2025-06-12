@@ -1,8 +1,8 @@
 import { Severity } from '../../shared/enums/severities.enum';
 import { Arrow } from '../../shared/models/arrow.model';
 
-interface Highlight {
-  position: string;
+export interface Highlight {
+  position: number;
   severity: Severity;
 }
 
@@ -14,7 +14,11 @@ interface Step {
   highlights: Highlight[];
 }
 
-export interface NewExample {
+export interface ExampleHighlight extends Highlight {
+  id: string;
+}
+
+export interface CoachExampleUpsertDto {
   title: string;
   initialDescription: string;
   order: number | null;

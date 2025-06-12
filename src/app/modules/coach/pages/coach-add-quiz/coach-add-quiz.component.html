@@ -109,7 +109,6 @@
         >
           @if (includeChessboard) {
             <app-chessboard-editor
-              [startingPositionInput]="quiz.fen"
               [useArrowsAndHighlights]="false"
               (newFenEvent)="newPositionForAnswer($event)"
             >

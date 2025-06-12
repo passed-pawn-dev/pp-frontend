@@ -6,12 +6,12 @@ import { Severity } from '../../../shared/enums/severities.enum';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-student-example',
+  selector: 'app-coach-example-preview',
   imports: [DisplayChessboardComponent],
-  templateUrl: './student-example.component.html',
-  styleUrl: './student-example.component.scss'
+  templateUrl: './coach-example-preview.component.html',
+  styleUrl: './coach-example-preview.component.scss'
 })
-export class StudentExampleComponent implements OnInit {
+export class CoachExamplePreviewComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private location = inject(Location);
 

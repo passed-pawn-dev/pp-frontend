@@ -10,7 +10,6 @@ import { CourseReview } from '../models/course-review.model';
 import { NewCourseReview } from '../models/new-course-review.model';
 import { Exercise } from '../models/exercise.model';
 import { QuizDetails } from '../models/quiz-details.model';
-import { ExampleDetails } from '../models/example-details.model';
 import { CoursesQueryParams } from '../models/course-query-params.model';
 
 @Injectable({
@@ -88,9 +87,5 @@ export class StudentCourseService {
 
   public getQuizById(id: string): Observable<QuizDetails> {
     return this.httpClient.get<QuizDetails>(`/api/CourseQuiz/${id}`);
-  }
-
-  public getExampleById(id: string): Observable<ExampleDetails> {
-    return this.httpClient.get<ExampleDetails>(`/api/CourseExample/${id}`);
   }
 }

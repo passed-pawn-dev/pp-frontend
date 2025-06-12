@@ -10,7 +10,7 @@ import { Puzzle } from '../models/puzzle.model';
 import { QuizDetails } from '../../student/models/quiz-details.model';
 import { CourseReview } from '../models/course-review.model';
 import { ElementKind } from '../../shared/enums/element-kind.enum';
-import { NewExample } from '../models/new-example.model';
+import { CoachExampleUpsertDto } from '../models/new-example.model';
 import { CloudinarySecureUrlResponse } from '../../shared/models/cloudinary-secure-url-response';
 import { AddVideoRequestPayload } from '../models/add-video-request-payload.model';
 
@@ -112,8 +112,18 @@ export class CoachCourseService {
     return this.httpClient.post(`/api/Lesson/${lessonId}/quiz`, quiz);
   }
 
-  public addExample(lessonId: string, example: NewExample): Observable<Object> {
+  public addExample(
+    lessonId: string,
+    example: CoachExampleUpsertDto
+  ): Observable<Object> {
     return this.httpClient.post(`/api/Lesson/${lessonId}/example`, example);
+  }
+
+  public editExample(
+    lessonId: string,
+    example: CoachExampleUpsertDto
+  ): Observable<Object> {
+    return this.httpClient.put(`/api/CourseExample/${lessonId}`, example);
   }
 
   public addVideo(

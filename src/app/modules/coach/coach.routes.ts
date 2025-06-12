@@ -12,6 +12,9 @@ import { coachCourseResolver } from './resolvers/coach-course.resolver';
 import { CoachAddExampleComponent } from './pages/coach-add-example/coach-add-example.component';
 import { CoachVideoPreviewComponent } from './pages/coach-video-preview/coach-video-preview.component';
 import { privateVideoPreviewResolver } from '../shared/resolvers/private-video-preview.resolver';
+import { examplePreviewResolver } from '../shared/resolvers/example-preview.resolver';
+import { CoachExampleEditComponent } from './pages/coach-example-edit/coach-example-edit.component';
+import { CoachExamplePreviewComponent } from './pages/coach-example-preview/coach-example-preview.component';
 
 export const COACH_ROUTES: Route[] = [
   {
@@ -58,12 +61,27 @@ export const COACH_ROUTES: Route[] = [
         }
       },
       {
+        path: 'courses/:courseId/lesson/:lessonId/example/:exampleId',
+        component: CoachExamplePreviewComponent,
+        resolve: {
+          example: examplePreviewResolver
+        }
+      },
+      {
         path: 'courses/:courseId/lesson/:lessonId/video/:videoId',
         component: CoachVideoPreviewComponent,
         resolve: {
           video: privateVideoPreviewResolver
         }
       },
+      {
+        path: 'courses/:courseId/lesson/:lessonId/example/:exampleId/edit',
+        component: CoachExampleEditComponent,
+        resolve: {
+          example: examplePreviewResolver
+        }
+      },
+
       {
         path: 'courses/:courseId/lessons/new',
         component: CoachLessonFormComponent

@@ -68,11 +68,15 @@ enum Mode {
 })
 export class ChessboardEditorComponent implements OnInit, OnChanges {
   @Input({ required: true }) public useArrowsAndHighlights: boolean = true;
+  public initialHighlights = input<Map<number, Severity>>(new Map([]));
+  public initialArrows = input<Arrow[]>([]);
 
   private fb: FormBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
 
-  public startingPositionInput = input<string | undefined>();
+  public startingPositionInput = input<string>(
+    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+  );
 
   @Output() public newFenEvent = new EventEmitter<string>();
   @Output() public newHighlightsEvent = new EventEmitter<Map<number, Severity>>();
@@ -97,9 +101,8 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   protected currentSeverity = Severity.Info;
   protected arrowStartField = 0;
 
-  protected highlights = signal<Map<number, Severity>>(new Map([]));
-
-  protected arrows = signal<Arrow[]>([]);
+  protected highlights = signal(this.initialHighlights());
+  protected arrows = signal(this.initialArrows());
 
   protected fenForm = this.fb.group({
     sideToMove: [Color.White],
@@ -158,17 +161,13 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   }
 
   public ngOnChanges(_changes: SimpleChanges): void {
-    if (this.startingPositionInput()) {
-      this.resetToInputtedStartingPosition();
-    } else {
-      this.resetToStartingPosition();
-    }
+    this.setHighlightsAndArrows();
+    this.resetToInputtedStartingPosition();
+
     this.updateFenAndSave();
   }
 
   public ngOnInit(): void {
-    // this.resetToStartingPosition();
-
     this.updateFenAndSave();
     this.updateArrows();
     this.updateHighlights();
@@ -370,9 +369,14 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   protected resetToInputtedStartingPosition(): void {
     this.fen = this.startingPositionInput()!;
     this.updateFenForm();
-    const boardFromFen = FenConverter.convertFenToBoard(this.startingPositionInput()!);
+    const boardFromFen = FenConverter.convertFenToBoard(this.startingPositionInput());
     this.chessboard = boardFromFen;
     this.updateFenAndSave();
+  }
+
+  private setHighlightsAndArrows(): void {
+    this.highlights.set(this.initialHighlights());
+    this.arrows.set(this.initialArrows());
   }
 
   protected onPieceDragStart(square: string): void {

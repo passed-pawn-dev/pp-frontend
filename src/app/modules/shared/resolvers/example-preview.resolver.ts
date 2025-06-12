@@ -1,12 +1,12 @@
 import { ActivatedRouteSnapshot, ResolveFn, Router } from '@angular/router';
-import { CourseExampleDto } from '../../shared/models/course-example-dto.model';
 import { Observable, catchError, of } from 'rxjs';
 import { inject } from '@angular/core';
-import { CourseService } from '../../shared/services/course.service';
+import { CourseService } from '../services/course.service';
+import { CourseVideoElementViewRequestDto } from '../models/course-video-element-view-request-dto.model';
 
-export const studentExampleResolver: ResolveFn<CourseExampleDto> = (
+export const examplePreviewResolver: ResolveFn<CourseVideoElementViewRequestDto> = (
   route: ActivatedRouteSnapshot
-): Observable<CourseExampleDto> => {
+): Observable<CourseVideoElementViewRequestDto> => {
   const courseService = inject(CourseService);
   const router = inject(Router);
 
