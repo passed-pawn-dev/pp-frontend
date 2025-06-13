@@ -51,7 +51,10 @@ export class CoachCourseService {
   }
 
   public addLesson(id: string, lesson: NewLesson): Observable<LessonDetails> {
-    return this.httpClient.post<LessonDetails>(`api/Course/Coach/${id}/lesson`, lesson);
+    return this.httpClient.post<LessonDetails>(
+      `/api/Course/Coach/${id}/lesson`,
+      lesson
+    );
   }
 
   public deleteLesson(id: string): Observable<object> {
@@ -59,7 +62,7 @@ export class CoachCourseService {
   }
 
   public editLesson(id: string, lesson: NewLesson): Observable<LessonDetails> {
-    return this.httpClient.put<LessonDetails>(`api/Lesson/${id}`, lesson);
+    return this.httpClient.put<LessonDetails>(`/api/Lesson/${id}`, lesson);
   }
 
   public deleteElement(id: string, kind: ElementKind): Observable<object> {
