@@ -7,7 +7,7 @@ import { NewCourse } from '../models/new-course.model';
 import { NewLesson } from '../models/new-lesson.model';
 import { LessonDetails } from '../models/lesson-details.model';
 import { Puzzle } from '../models/puzzle.model';
-import { QuizDetails } from '../../student/models/quiz-details.model';
+import { QuizDetails } from '../../shared/models/quiz-details.model';
 import { CourseReview } from '../models/course-review.model';
 import { ElementKind } from '../../shared/enums/element-kind.enum';
 import { CoachExampleUpsertDto } from '../models/new-example.model';
@@ -113,6 +113,10 @@ export class CoachCourseService {
 
   public addQuiz(lessonId: string, quiz: QuizDetails): Observable<Object> {
     return this.httpClient.post(`/api/Lesson/${lessonId}/quiz`, quiz);
+  }
+
+  public editQuiz(quizId: string, quiz: QuizDetails): Observable<Object> {
+    return this.httpClient.put(`/api/CourseQuiz/${quizId}`, quiz);
   }
 
   public addExample(

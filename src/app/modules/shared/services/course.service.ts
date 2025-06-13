@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CourseVideoElementViewRequestDto } from '../models/course-video-element-view-request-dto.model';
 import { CourseExampleDto } from '../models/course-example-dto.model';
+import { QuizDetails } from '../models/quiz-details.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,9 @@ export class CourseService {
 
   public getExampleById(id: string): Observable<CourseExampleDto> {
     return this.httpClient.get<CourseExampleDto>(`/api/CourseExample/${id}`);
+  }
+
+  public getQuizById(id: string): Observable<QuizDetails> {
+    return this.httpClient.get<QuizDetails>(`/api/CourseQuiz/${id}`);
   }
 }

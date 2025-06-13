@@ -1,0 +1,276 @@
+<div class="page">
+  <div class="main-content">
+    <div class="top-section panel">
+      <div class="left">
+        <div class="quiz">
+          <img src="icons/quiz-complete.png" alt="quiz" />
+        </div>
+        <app-step-indicator
+          [stepNumber]="stepNumber"
+          [currentStep]="step"
+        ></app-step-indicator>
+      </div>
+      <div class="step-header">
+        {{ stepHeaders[step - 1] }}
+      </div>
+      <div class="nav-buttons">
+        <button
+          type="button"
+          class="secondary-btn"
+          [disabled]="step < 2"
+          (click)="prevStep()"
+        >
+          Back
+        </button>
+        @if (step === stepNumber) {
+          <button type="button" class="primary-btn" (click)="submit()">Save</button>
+        } @else {
+          <button
+            type="button"
+            class="primary-btn"
+            [disabled]="!isStepValid(step)"
+            (click)="nextStep()"
+          >
+            Next <img src="icons/thick-arrow-right.png" alt="arrow" />
+          </button>
+        }
+      </div>
+    </div>
+
+    <form class="quiz-form" [formGroup]="quizForm">
+      <div class="step-container">
+        <!-- step 1 -->
+        <div
+          class="step step-1"
+          [class.step-active]="step === 1"
+          [class.step-left]="step > 1"
+          [class.step-hidden]="step < 1"
+        >
+          <div class="tile">
+            <div class="header">Basic Info</div>
+            <div>
+              <label for="title">Title</label>
+              <input
+                class="standard-input"
+                id="title"
+                formControlName="title"
+                type="text"
+              />
+              <app-validation-errors
+                [errors]="quizForm.controls.title.errors"
+                [dirty]="quizForm.controls.title.dirty"
+                [touched]="quizForm.controls.title.touched"
+              />
+            </div>
+          </div>
+          <div class="elephant-tile">
+            <app-talking-bob
+              text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, maiores a! Odio minima quis repellat eius assumenda optio natus impedit eligendi rerum amet eveniet quae numquam praesentium ut ipsam officia nisi dolorem sunt qui, dolore atque similique! Ratione, sequi doloremque!"
+            />
+          </div>
+        </div>
+        <!-- step 2 -->
+        <div
+          class="step step-2"
+          [class.step-active]="step === 2"
+          [class.step-left]="step > 2"
+          [class.step-hidden]="step < 2"
+        >
+          <div class="show-chessboard-tile">
+            <label for="includeChessboard">Include chessboard</label>
+            <input
+              class="include-chessboard-input"
+              type="checkbox"
+              id="includeChessboard"
+              [checked]="includeChessboard"
+              (change)="toggleIncludeChessboard($event)"
+            />
+          </div>
+
+          @if (includeChessboard) {
+            <app-chessboard-editor
+              [useArrowsAndHighlights]="false"
+              [startingPositionInput]="quiz.fen!"
+              (newFenEvent)="onNewFen($event)"
+            >
+              <div class="elephant-tile">
+                <app-talking-bob
+                  text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio sunt laborum numquam rerum soluta vel, aperiam enim cupiditate fugiat repellendus."
+                />
+              </div>
+            </app-chessboard-editor>
+          }
+        </div>
+        <!-- step 3 -->
+        <div
+          class="step step-3"
+          [class.step-active]="step === 3"
+          [class.step-left]="step > 3"
+          [class.step-hidden]="step < 3"
+        >
+          @if (includeChessboard) {
+            <app-chessboard-editor
+              [startingPositionInput]="quiz.fen!"
+              [useArrowsAndHighlights]="false"
+              (newFenEvent)="newPositionForAnswer($event)"
+            >
+              <div class="quiz-container" [class.no-chessboard]="!includeChessboard">
+                <div class="nav">
+                  <button
+                    type="button"
+                    class="header"
+                    [class.selected]="tab === 1"
+                    (click)="showQuizTab()"
+                  >
+                    Quiz
+                  </button>
+                  <button
+                    type="button"
+                    class="header"
+                    [class.selected]="tab === 2"
+                    (click)="showAddingsTab()"
+                  >
+                    Addings
+                  </button>
+                </div>
+
+                @if (tab === 1) {
+                  <div class="first">
+                    <div class="label">Question</div>
+                    <textarea
+                      id="question"
+                      class="question-input standard-textarea"
+                      formControlName="question"
+                      required
+                    >
+                    </textarea>
+                    <app-validation-errors
+                      [errors]="quizForm.controls.question.errors"
+                      [dirty]="quizForm.controls.question.dirty"
+                      [touched]="quizForm.controls.question.touched"
+                    />
+                  </div>
+
+                  <div>
+                    <div class="label">Answers (2 - 10)</div>
+                    <div class="answers-nav">
+                      <div>
+                        Correct<br />
+                        Answer
+                      </div>
+                      @if (includeChessboard) {
+                        <div>
+                          Applied<br />
+                          Board
+                        </div>
+                      }
+                    </div>
+                    <div formArrayName="answers" class="answers">
+                      @for (answer of answers.controls; track answer) {
+                        <div class="answer-tile" [formGroupName]="$index">
+                          <!-- <p-radiobutton [formControl]="solutionControl" [value]="$index" /> -->
+                          <label [for]="'radio' + $index">
+                            <input
+                              type="radio"
+                              name="solution"
+                              [id]="'radio' + $index"
+                              [formControl]="solutionControl"
+                              [value]="$index"
+                            />
+                          </label>
+
+                          <input
+                            class="standard-input"
+                            formControlName="text"
+                            placeholder="Enter answer text"
+                            type="text"
+                            required
+                          />
+
+                          <button
+                            type="button"
+                            class="delete-btn"
+                            [disabled]="answers.length < 3"
+                            (click)="removeAnswer($index)"
+                          >
+                            <img src="icons/delete.png" alt="delete" />
+                          </button>
+
+                          @if (includeChessboard) {
+                            <button type="button" (click)="addPositionToAnswer($index)">
+                              <img src="icons/link-purple.png" alt="link" />
+                            </button>
+                            <div class="square">
+                              @if (answerBoardAppliedArray[$index]) {
+                                <img src="icons/chessboard.png" alt="chessboard" />
+                              }
+                            </div>
+                          }
+                        </div>
+                        <app-validation-errors
+                          [errors]="answer.get('text')!.errors"
+                          [dirty]="answer.get('text')!.dirty"
+                          [touched]="answer.get('text')!.touched"
+                        />
+                      }
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="add-btn"
+                    [disabled]="answers.length > 9"
+                    (click)="addAnswer()"
+                  >
+                    + Add Answer
+                  </button>
+                } @else if (tab === 2) {
+                  <div class="first">
+                    <div class="label">Hint (optional)</div>
+                    <!-- <input id="hint" class="" formControlName="hint" type="text" /> -->
+                    <textarea
+                      id="hint"
+                      class="question-input standard-textarea"
+                      formControlName="hint"
+                    >
+                    </textarea>
+                    <app-validation-errors
+                      [errors]="quizForm.controls.hint.errors"
+                      [dirty]="quizForm.controls.hint.dirty"
+                      [touched]="quizForm.controls.hint.touched"
+                    />
+                  </div>
+
+                  <div class="">
+                    <div class="label">Explanation (optional)</div>
+                    <!-- <input id="explanation" class="" formControlName="explanation" type="text" /> -->
+                    <textarea
+                      id="explanation"
+                      class="explanation-input standard-textarea"
+                      formControlName="explanation"
+                    >
+                    </textarea>
+                    <app-validation-errors
+                      [errors]="quizForm.controls.explanation.errors"
+                      [dirty]="quizForm.controls.explanation.dirty"
+                      [touched]="quizForm.controls.explanation.touched"
+                    />
+                  </div>
+                }
+              </div>
+            </app-chessboard-editor>
+          }
+        </div>
+        <!-- step 4 -->
+        <div
+          class="step"
+          [class.step-active]="step === 4"
+          [class.step-left]="step > 4"
+          [class.step-hidden]="step < 4"
+        >
+          <app-quiz [quiz]="quiz"></app-quiz>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
