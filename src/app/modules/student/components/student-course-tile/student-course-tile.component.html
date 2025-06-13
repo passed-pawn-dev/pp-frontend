@@ -14,7 +14,7 @@
         @if (course().isBought) {
           <div class="price owned">Owned</div>
         } @else {
-          @if (this.course().price > 0) {
+          @if (course().price > 0) {
             <div class="price">{{ course().price }} PLN</div>
           } @else {
             <div class="price free">Free</div>
@@ -41,7 +41,7 @@
       </div>
     </div>
   </a>
-  @if (!course().isBought && this.course().price > 0) {
+  @if (!course().isBought && course().price > 0) {
     <button
       type="button"
       class="primary-btn get-course-button"
@@ -49,7 +49,7 @@
     >
       Buy
     </button>
-  } @else if (!course().isBought && this.course().price === 0) {
+  } @else if (!course().isBought && course().price === 0) {
     <button
       type="button"
       class="primary-btn get-course-button"

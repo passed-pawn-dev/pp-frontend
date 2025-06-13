@@ -7,7 +7,6 @@ import { StudentCourseComponent } from './pages/student-course/student-course.co
 import { StudentSolveExerciseComponent } from './pages/student-solve-exercise/student-solve-exercise.component';
 import { studentExerciseResolver } from './resolvers/student-exercise.resolver';
 import { StudentSolveQuizComponent } from './pages/student-solve-quiz/student-solve-quiz.component';
-import { studentQuizResolver } from './resolvers/student-quiz.resolver';
 import { studentBoughtCourseResolver } from './resolvers/student-bought-course.resolver';
 import { studentCourseResolver } from './resolvers/student-course.resolver';
 import { StudentExampleComponent } from './pages/student-example/student-example.component';
@@ -16,6 +15,7 @@ import { StudentCoachProfileComponent } from './pages/student-coach-profile/stud
 import { studentCoachProfileResolver } from './resolvers/student-coach-profile.resolver';
 import { StudentVideoComponent } from './pages/student-video/student-video.component';
 import { privateVideoPreviewResolver } from '../shared/resolvers/private-video-preview.resolver';
+import { quizPreviewResolver } from '../shared/resolvers/quiz-preview.resolver';
 
 export const STUDENT_ROUTES: Route[] = [
   {
@@ -49,7 +49,7 @@ export const STUDENT_ROUTES: Route[] = [
         path: 'my-courses/:courseId/lesson/:lessonId/quiz/:quizId',
         component: StudentSolveQuizComponent,
         resolve: {
-          quiz: studentQuizResolver
+          quiz: quizPreviewResolver
         }
       },
       {
@@ -77,7 +77,7 @@ export const STUDENT_ROUTES: Route[] = [
         path: 'courses/:courseId/lesson/:lessonId/quiz/:quizId',
         component: StudentSolveQuizComponent,
         resolve: {
-          quiz: studentQuizResolver
+          quiz: quizPreviewResolver
         }
       },
       {

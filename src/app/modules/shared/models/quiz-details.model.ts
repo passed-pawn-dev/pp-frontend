@@ -12,7 +12,7 @@ export interface QuizDetails {
   explanation?: string;
 }
 
-interface QuizAnswer {
+export interface QuizAnswer {
   text: string;
   lastMove?: TLastMove;
   newPosition?: string;

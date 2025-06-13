@@ -1,19 +1,13 @@
 <!-- eslint-disable @angular-eslint/template/no-inline-styles -->
 <li class="tile">
   <a [routerLink]="course.id">
-    <img alt="" [src]="course.thumbnailUrl ?? 'images/hat.png'" />
-    <!-- [course image] -->
+    <img alt="course-thumbnail" [src]="course.thumbnailUrl ?? 'images/hat.png'" />
     <div class="content">
       <div class="main">
         <div class="header">
           <h3>{{ course.title }}</h3>
           <div class="desc">{{ course.description }}</div>
         </div>
-        <!-- @if (this.course().price > 0) {
-            <div class="price">{{ formattedPrice() }}</div>
-          } @else {
-            <div class="price free">Free</div>
-          } -->
       </div>
       <div class="footer">
         <div>

@@ -11,7 +11,7 @@ import {
   Validators
 } from '@angular/forms';
 import { TextareaModule } from 'primeng/textarea';
-import { QuizDetails } from '../../../shared/models/quiz-details.model';
+import { QuizAnswer, QuizDetails } from '../../../shared/models/quiz-details.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { QuizComponent } from '../../../shared/components/quiz/quiz.component';
@@ -23,7 +23,7 @@ import { Location } from '@angular/common';
 import { TalkingBobComponent } from '../../../shared/components/talking-bob/talking-bob.component';
 
 @Component({
-  selector: 'app-coach-add-quiz',
+  selector: 'app-coach-quiz-edit',
   imports: [
     ChessboardEditorComponent,
     StepIndicatorComponent,
@@ -35,10 +35,10 @@ import { TalkingBobComponent } from '../../../shared/components/talking-bob/talk
     FormsModule,
     TalkingBobComponent
   ],
-  templateUrl: './coach-add-quiz.component.html',
-  styleUrl: './coach-add-quiz.component.scss'
+  templateUrl: './coach-quiz-edit.component.html',
+  styleUrl: './coach-quiz-edit.component.scss'
 })
-export class CoachAddQuizComponent implements OnInit {
+export class CoachQuizEditComponent implements OnInit {
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
   private coachCourseService = inject(CoachCourseService);
@@ -46,7 +46,7 @@ export class CoachAddQuizComponent implements OnInit {
   private location = inject(Location);
   private messageService = inject(MessageService);
 
-  protected lessonId: string | null = null;
+  protected quizId: string = this.route.snapshot.paramMap.get('quizId')!;
   protected includeChessboard: boolean = true;
   protected step: number = 1;
   protected stepNumber: number = 4;
@@ -57,27 +57,24 @@ export class CoachAddQuizComponent implements OnInit {
     '3. Question and answers',
     '4. Preview'
   ];
-  protected quiz: QuizDetails = {
-    title: '',
-    order: 1,
-    question: '',
-    answers: [
-      { text: '', newPosition: '' },
-      { text: '', newPosition: '' }
-    ],
-    solution: 0
-  };
+  protected quiz: QuizDetails = this.route.snapshot.data['quiz'];
 
   protected quizForm = this.fb.group({
-    title: ['', Validators.required],
-    question: ['', Validators.required],
-    answers: this.fb.array([this.createAnswer(), this.createAnswer()]),
-    solution: [0],
-    hint: [''],
-    explanation: ['']
+    title: [this.quiz.title, Validators.required],
+    question: [this.quiz.question, Validators.required],
+    answers: this.fb.array(
+      this.quiz.answers.map((answer) =>
+        this.fb.group({ text: answer.text, newPosition: answer.newPosition })
+      )
+    ),
+    solution: [this.quiz.solution, Validators.required],
+    hint: [this.quiz.hint],
+    explanation: [this.quiz.explanation]
   });
 
-  protected answerBoardAppliedArray: boolean[] = [false, false];
+  protected answerBoardAppliedArray: boolean[] = this.quiz.answers.map((answer) =>
+    answer.newPosition ? true : false
+  );
 
   protected addAnswerToBoardAppliedArray(): void {
     this.answerBoardAppliedArray = [...this.answerBoardAppliedArray, false];
@@ -125,23 +122,17 @@ export class CoachAddQuizComponent implements OnInit {
       .subscribe((changes) => {
         this.quiz.title = changes.title!;
         this.quiz.question = changes.question!;
-        this.quiz.answers = changes.answers!;
+        this.quiz.answers = changes.answers! as QuizAnswer[];
         this.quiz.solution = changes.solution!;
         this.quiz.hint = changes.hint!;
         this.quiz.explanation = changes.explanation!;
-      });
-
-    this.route.paramMap
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((params) => {
-        this.lessonId = params.get('lessonId')!;
       });
   }
 
   private createAnswer(): FormGroup {
     return this.fb.group({
       text: ['', Validators.required],
-      newPosition: ['']
+      newPosition: [null]
     });
   }
 
@@ -176,14 +167,14 @@ export class CoachAddQuizComponent implements OnInit {
 
   protected submit(): void {
     this.coachCourseService
-      .addQuiz(this.lessonId!, this.quiz)
+      .editQuiz(this.quizId, this.quiz)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (_) => {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: 'Quiz created successfully'
+            detail: 'Quiz edited successfully'
           });
           this.location.back();
         },
@@ -191,7 +182,7 @@ export class CoachAddQuizComponent implements OnInit {
           this.messageService.add({
             severity: 'error',
             summary: 'Failure',
-            detail: 'Quiz could not be created'
+            detail: 'Quiz could not be edited'
           });
         }
       });
