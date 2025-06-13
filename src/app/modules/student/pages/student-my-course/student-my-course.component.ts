@@ -4,7 +4,6 @@ import { StudentCourseReviewFormComponent } from '../../components/student-cours
 import { StudentCourseService } from '../../services/student-course.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Exercise } from '../../models/exercise.model';
 import { ButtonModule } from 'primeng/button';
 import { Quiz } from '../../models/quiz.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -91,10 +90,6 @@ export class StudentMyCourseComponent implements OnInit {
     const course = this.route.snapshot.data['course'];
     this.course.set(course);
     this.givenReview.set(course.givenReview);
-  }
-
-  protected getSortedExercises(exerciseList: Exercise[]): Exercise[] {
-    return exerciseList.sort((a, b) => (a.id > b.id ? 1 : -1));
   }
 
   protected newReview(review: CourseReview): void {
