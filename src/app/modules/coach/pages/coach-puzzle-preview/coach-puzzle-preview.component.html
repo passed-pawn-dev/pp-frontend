@@ -1,0 +1,34 @@
+<p-dialog
+  header="Solved!"
+  [modal]="true"
+  [draggable]="false"
+  [(visible)]="solvedMessage"
+  (close)="hideSolvedMessage()"
+>
+  <div>Congratulations, you solved the puzzle</div>
+  <button
+    class="primary-btn"
+    type="button"
+    (click)="chessboardRef.setPuzzle(); hideSolvedMessage()"
+  >
+    Reset
+  </button>
+</p-dialog>
+
+<div class="tile top">
+  <div>
+    <h3>{{ puzzle.title }}</h3>
+    <div>{{ puzzle.description }}</div>
+  </div>
+  <div>
+    <button class="secondary-btn" type="button" (click)="back()">Back</button>
+  </div>
+</div>
+<app-student-puzzle-chessboard
+  #chessboardRef
+  [startingFen]="puzzle.fen"
+  [previewMode]="PreviewMode.Student"
+  [expectedMoves]="solutionArray()"
+  (solved)="showSolvedMessage()"
+>
+</app-student-puzzle-chessboard>

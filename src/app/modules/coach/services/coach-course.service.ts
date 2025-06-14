@@ -7,7 +7,7 @@ import { NewCourse } from '../models/new-course.model';
 import { Lesson } from '../models/lesson.model';
 import { NewLesson } from '../models/new-lesson.model';
 import { LessonDetails } from '../../student/models/lesson-details.model';
-import { Puzzle } from '../models/puzzle.model';
+import { Puzzle } from '../../shared/models/puzzle.model';
 import { QuizDetails } from '../../student/models/quiz-details.model';
 import { CourseReview } from '../models/course-review.model';
 import { ElementKind } from '../../shared/enums/element-kind.enum';

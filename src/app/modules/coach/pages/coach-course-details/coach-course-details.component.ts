@@ -2,7 +2,7 @@ import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angula
 import { CoachCourseService } from '../../services/coach-course.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CourseDetails } from '../../models/course-details.model';
-import { Puzzle } from '../../models/puzzle.model';
+import { Puzzle } from '../../../shared/models/puzzle.model';
 import { LessonDetails } from '../../models/lesson-details.model';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -100,7 +100,7 @@ export class CoachCourseDetailsComponent implements OnInit {
 
   protected navigateAddExercise(lessonNumber: string): void {
     this.router.navigate([
-      `/coach/courses/${this.course().id}/lesson/${lessonNumber}/exercise/add`
+      `/coach/courses/${this.course().id}/lesson/${lessonNumber}/puzzle/add`
     ]);
   }
 

@@ -1,4 +1,4 @@
-import { Puzzle } from './puzzle.model';
+import { Puzzle } from '../../shared/models/puzzle.model';
 
 export interface Lesson {
   id: string | null;
