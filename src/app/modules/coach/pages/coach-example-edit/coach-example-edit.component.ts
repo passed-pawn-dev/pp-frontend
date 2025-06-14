@@ -76,11 +76,17 @@ export class CoachExampleEditComponent {
   );
 
   private createStep(): FormGroup {
+    const previousStepPosition: string | null =
+      this.steps.length > 0 ? this.steps.value[this.steps.length - 1].fen : null;
     return this.nnfb.group({
       description: ['', Validators.required],
-      fen: ['', Validators.required],
-      arrows: [[]],
-      highlights: [[]]
+      fen: [
+        previousStepPosition ??
+          'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+        Validators.required
+      ],
+      arrows: this.nnfb.array([]),
+      highlights: this.nnfb.array([])
     });
   }
 
