@@ -77,6 +77,8 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   public startingPositionInput = input<string>(
     'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
   );
+  private _startingPosition =
+    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
   @Output() public newFenEvent = new EventEmitter<string>();
   @Output() public newHighlightsEvent = new EventEmitter<Map<number, Severity>>();
@@ -162,7 +164,10 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
 
   public ngOnChanges(_changes: SimpleChanges): void {
     this.setHighlightsAndArrows();
-    this.resetToInputtedStartingPosition();
+    if (this.fen === '') {
+      this._startingPosition = this.startingPositionInput();
+      this.resetToInputtedStartingPosition();
+    }
 
     this.updateFenAndSave();
   }
@@ -367,9 +372,9 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   }
 
   protected resetToInputtedStartingPosition(): void {
-    this.fen = this.startingPositionInput()!;
+    this.fen = this._startingPosition;
     this.updateFenForm();
-    const boardFromFen = FenConverter.convertFenToBoard(this.startingPositionInput());
+    const boardFromFen = FenConverter.convertFenToBoard(this._startingPosition);
     this.chessboard = boardFromFen;
     this.updateFenAndSave();
   }

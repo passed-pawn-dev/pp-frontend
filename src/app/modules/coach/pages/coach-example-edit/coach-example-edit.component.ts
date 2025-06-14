@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CourseExampleDto } from '../../../shared/models/course-example-dto.model';
 import {
@@ -38,6 +38,7 @@ export class CoachExampleEditComponent {
   private route = inject(ActivatedRoute);
   private messageService = inject(MessageService);
   private nnfb = inject(NonNullableFormBuilder);
+  private router = inject(Router);
   protected coachCourseService = inject(CoachCourseService);
   protected currentStep: number = 1;
   private exampleElementData: CourseExampleDto = this.route.snapshot.data['example'];
@@ -75,11 +76,17 @@ export class CoachExampleEditComponent {
   );
 
   private createStep(): FormGroup {
+    const previousStepPosition: string | null =
+      this.steps.length > 0 ? this.steps.value[this.steps.length - 1].fen : null;
     return this.nnfb.group({
       description: ['', Validators.required],
-      fen: ['', Validators.required],
-      arrows: [[]],
-      highlights: [[]]
+      fen: [
+        previousStepPosition ??
+          'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+        Validators.required
+      ],
+      arrows: this.nnfb.array([]),
+      highlights: this.nnfb.array([])
     });
   }
 
@@ -171,6 +178,7 @@ export class CoachExampleEditComponent {
             summary: 'Success',
             detail: 'Example edited successfully'
           });
+          this.router.navigate(['../'], { relativeTo: this.route });
         },
         error: (_) => {
           this.messageService.add({
