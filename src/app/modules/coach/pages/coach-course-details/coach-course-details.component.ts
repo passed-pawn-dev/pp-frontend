@@ -10,6 +10,8 @@ import { CoachLessonComponent } from '../../components/coach-lesson/coach-lesson
 import { DialogModule } from 'primeng/dialog';
 import { CoachAddCourseThumbnailComponent } from '../../components/coach-add-course-thumbnail/coach-add-course-thumbnail.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { CoachLessonFormComponent } from '../coach-lesson-form/coach-lesson-form.component';
+import { NewLesson } from '../../models/new-lesson.model';
 
 @Component({
   selector: 'app-coach-course-details',
@@ -140,6 +142,85 @@ export class CoachCourseDetailsComponent implements OnInit {
       },
       reject: () => {}
     });
+  }
+
+  protected addLesson(): void {
+    this.dialogService
+      .open(CoachLessonFormComponent, {
+        header: 'Add Lesson',
+        closable: true,
+        modal: true
+      })
+      .onClose.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (lesson: NewLesson) => {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (!lesson) return;
+          this.coachCourseService
+            .addLesson(this.course().id, lesson)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+              next: (newLesson: LessonDetails) => {
+                this.lessons.set([...this.lessons(), newLesson]);
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Success',
+                  detail: 'Lesson created successfully'
+                });
+              },
+              error: (_) => {
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Failure',
+                  detail:
+                    'Lesson could not be created. Ensure lesson number is correct.'
+                });
+              }
+            });
+        }
+      });
+  }
+
+  protected editLesson(lessonId: string, lesson: NewLesson, lessonIndex: number): void {
+    this.dialogService
+      .open(CoachLessonFormComponent, {
+        header: 'Edit Lesson',
+        closable: true,
+        modal: true,
+        data: {
+          lessonId: lessonId,
+          lesson: { ...lesson, lessonNumber: lessonIndex + 1 }
+        }
+      })
+      .onClose.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (lesson: NewLesson) => {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (!lesson) return;
+          this.coachCourseService
+            .editLesson(lessonId, lesson)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+              next: (updatedLesson: LessonDetails) => {
+                const updatedLessons: LessonDetails[] = this.lessons().map((lesson) => {
+                  return lesson.id === updatedLesson.id ? updatedLesson : lesson;
+                });
+                this.lessons.set(updatedLessons);
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Success',
+                  detail: 'Lesson updated successfully'
+                });
+              },
+              error: (_) =>
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Fail',
+                  detail: 'Failed to update lesson'
+                })
+            });
+        }
+      });
   }
 
   protected getSortedExercises(exerciseList: Puzzle[]): Puzzle[] {

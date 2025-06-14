@@ -4,7 +4,6 @@ import { map, Observable } from 'rxjs';
 import { Course } from '../models/course.model';
 import { CourseDetails } from '../models/course-details.model';
 import { NewCourse } from '../models/new-course.model';
-import { Lesson } from '../models/lesson.model';
 import { NewLesson } from '../models/new-lesson.model';
 import { LessonDetails } from '../../student/models/lesson-details.model';
 import { Puzzle } from '../../shared/models/puzzle.model';
@@ -51,12 +50,16 @@ export class CoachCourseService {
     });
   }
 
-  public addLesson(id: string, lesson: NewLesson): Observable<Lesson> {
-    return this.httpClient.post<Lesson>(`/api/Course/Coach/${id}/lesson`, lesson);
+  public addLesson(id: string, lesson: NewLesson): Observable<LessonDetails> {
+    return this.httpClient.post<LessonDetails>(`api/Course/Coach/${id}/lesson`, lesson);
   }
 
   public deleteLesson(id: string): Observable<object> {
     return this.httpClient.delete(`/api/Lesson/${id}`);
+  }
+
+  public editLesson(id: string, lesson: NewLesson): Observable<LessonDetails> {
+    return this.httpClient.put<LessonDetails>(`api/Lesson/${id}`, lesson);
   }
 
   public deleteElement(id: string, kind: ElementKind): Observable<object> {

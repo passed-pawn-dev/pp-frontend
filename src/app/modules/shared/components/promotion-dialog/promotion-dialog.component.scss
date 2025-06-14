@@ -1,0 +1,25 @@
+.promotion-dialog {
+  box-sizing: content-box;
+  display: flex;
+  height: 5rem;
+  justify-content: space-between;
+  max-width: 40rem;
+  padding-right: 0.25rem;
+  position: relative;
+}
+
+.promotion-piece {
+  cursor: pointer;
+  display: grid;
+  height: 5rem;
+  place-content: center;
+  width: 5rem;
+  img {
+    transform: scale(1.5);
+  }
+}
+
+.promotion-dialog-wrapper {
+  height: 7rem;
+  display: flex;
+}

@@ -1,0 +1,14 @@
+<div class="promotion-dialog-wrapper">
+  <div class="promotion-dialog">
+    @for (piece of promotionPieces(); track $index) {
+      <div class="promotion-piece">
+        <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -->
+        <img
+          alt="promotion-piece"
+          [src]="pieceImagePaths[piece]"
+          (click)="promotePiece(piece)"
+        />
+      </div>
+    }
+  </div>
+</div>
