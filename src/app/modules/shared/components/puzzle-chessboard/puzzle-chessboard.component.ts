@@ -77,9 +77,6 @@ export class PuzzleChessboardComponent implements OnInit {
   protected showingPastPosition: boolean = false;
   protected displayingStartingMove: boolean = true;
 
-  protected setPosition: boolean = false;
-  protected setSequence: boolean = false;
-
   protected FenConverter = FenConverter;
 
   protected updateBoard(
@@ -314,7 +311,6 @@ export class PuzzleChessboardComponent implements OnInit {
     this.showingPastPosition = false;
     this.displayingStartingMove = true;
     this.gameHistoryPointer = 0;
-    this.setPosition = true;
   }
 
   protected onSavePuzzle(): void {
@@ -322,7 +318,6 @@ export class PuzzleChessboardComponent implements OnInit {
 
     const moveListString = this.moveList.flatMap((move) => move).join(',');
     this.savePuzzle.emit({ fenBoard: fenBoard, moveListString });
-    this.setSequence = true;
   }
 
   protected openPromotionDialog(): void {

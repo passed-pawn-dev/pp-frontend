@@ -19,20 +19,11 @@ export class CoachPuzzlePreviewComponent {
 
   protected solvedMessage: boolean = false;
 
-  protected back(): void {
-    // this.location.back();
-  }
-
   protected showSolvedMessage(): void {
     this.solvedMessage = true;
   }
 
   protected hideSolvedMessage(): void {
     this.solvedMessage = false;
-  }
-
-  protected reset(): void {
-    // const puzzle = this.route.snapshot.data['exercise'];
-    // this.puzzle
   }
 }

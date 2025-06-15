@@ -15,6 +15,7 @@ import { CoachExampleEditComponent } from './pages/coach-example-edit/coach-exam
 import { CoachExamplePreviewComponent } from './pages/coach-example-preview/coach-example-preview.component';
 import { puzzlePreviewResolver } from '../shared/resolvers/puzzle-preview.resolver';
 import { CoachPuzzlePreviewComponent } from './pages/coach-puzzle-preview/coach-puzzle-preview.component';
+import { CoachPuzzleEditComponent } from './coach-puzzle-edit/coach-puzzle-edit.component';
 
 export const COACH_ROUTES: Route[] = [
   {
@@ -56,6 +57,13 @@ export const COACH_ROUTES: Route[] = [
       {
         path: 'courses/:courseId/lesson/:lessonId/puzzle/:puzzleId',
         component: CoachPuzzlePreviewComponent,
+        resolve: {
+          puzzle: puzzlePreviewResolver
+        }
+      },
+      {
+        path: 'courses/:courseId/lesson/:lessonId/puzzle/:puzzleId/edit',
+        component: CoachPuzzleEditComponent,
         resolve: {
           puzzle: puzzlePreviewResolver
         }

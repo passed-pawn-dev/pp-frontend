@@ -3,7 +3,6 @@
 .page {
   max-width: $page-width;
   margin: auto;
-  // border: 1px solid;
 
   .puzzle-description {
     resize: none;
@@ -18,7 +17,6 @@
     height: 4rem;
     border-radius: 1rem;
     margin-bottom: 1rem;
-    // border: 1px solid;
 
     .puzzle {
       display: flex;
@@ -55,7 +53,6 @@
       background-color: white;
       width: 20rem;
       position: absolute;
-      // border: 1px solid;
 
       .header {
         font-size: $font-M;
