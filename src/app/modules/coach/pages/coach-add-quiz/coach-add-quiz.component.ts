@@ -11,7 +11,7 @@ import {
   Validators
 } from '@angular/forms';
 import { TextareaModule } from 'primeng/textarea';
-import { QuizDetails } from '../../../student/models/quiz-details.model';
+import { QuizDetails } from '../../../shared/models/quiz-details.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { QuizComponent } from '../../../shared/components/quiz/quiz.component';

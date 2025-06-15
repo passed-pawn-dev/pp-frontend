@@ -5,7 +5,7 @@
   [(visible)]="solvedMessage"
   (close)="hideSolvedMessage()"
 >
-  <div>Congratulations, you solved the puzzle</div>
+  <div class="space-bottom-2">Congratulations, you solved the puzzle</div>
   <button
     class="primary-btn"
     type="button"
@@ -15,13 +15,14 @@
   </button>
 </p-dialog>
 
-<div class="tile top">
+<div class="tile top align-i-center">
   <div>
     <h3>{{ puzzle.title }}</h3>
     <div>{{ puzzle.description }}</div>
   </div>
-  <div>
-    <button class="secondary-btn" type="button" (click)="back()">Back</button>
+  <div class="flex gap-2">
+    <a class="primary-btn" routerLink="./edit">Edit</a>
+    <a class="secondary-btn" routerLink="../../../">Back to course</a>
   </div>
 </div>
 <app-student-puzzle-chessboard
