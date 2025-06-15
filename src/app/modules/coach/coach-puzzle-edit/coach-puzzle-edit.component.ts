@@ -82,7 +82,7 @@ export class CoachPuzzleEditComponent implements AfterViewInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: 'Puzzle created successfully'
+            detail: 'Puzzle edited successfully'
           });
           this.router.navigate(['../'], { relativeTo: this.route });
         },
@@ -90,7 +90,7 @@ export class CoachPuzzleEditComponent implements AfterViewInit {
           this.messageService.add({
             severity: 'error',
             summary: 'Failure',
-            detail: 'Puzzle could not be created'
+            detail: 'Puzzle could not be edited'
           });
         }
       });
