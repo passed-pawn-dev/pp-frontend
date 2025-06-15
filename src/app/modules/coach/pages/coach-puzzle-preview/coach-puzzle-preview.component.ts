@@ -13,7 +13,6 @@ import { StudentPuzzleChessboardComponent } from '../../../student/components/st
 export class CoachPuzzlePreviewComponent {
   private route = inject(ActivatedRoute);
   protected PreviewMode = PreviewMode;
-  protected expectedMoves: string[] = [];
   protected puzzle = this.route.snapshot.data['puzzle'];
   protected solutionArray = computed(() => this.puzzle.solution.split(','));
 
