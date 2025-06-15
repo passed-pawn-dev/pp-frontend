@@ -6,8 +6,8 @@ import { CourseDetails } from '../models/course-details.model';
 import { NewCourse } from '../models/new-course.model';
 import { NewLesson } from '../models/new-lesson.model';
 import { LessonDetails } from '../models/lesson-details.model';
-import { Puzzle } from '../models/puzzle.model';
-import { QuizDetails } from '../../student/models/quiz-details.model';
+import { Puzzle } from '../../shared/models/puzzle.model';
+import { QuizDetails } from '../../shared/models/quiz-details.model';
 import { CourseReview } from '../models/course-review.model';
 import { ElementKind } from '../../shared/enums/element-kind.enum';
 import { CoachExampleUpsertDto } from '../models/new-example.model';
@@ -105,6 +105,23 @@ export class CoachCourseService {
       fen,
       solution,
       order: 1
+    });
+  }
+
+  public editPuzzle(
+    puzzleId: string,
+    title: string,
+    description: string,
+    fen: string,
+    solution: string,
+    order: number
+  ): Observable<Object> {
+    return this.httpClient.put(`/api/CoursePuzzle/${puzzleId}`, {
+      title,
+      description,
+      fen,
+      solution,
+      order
     });
   }
 

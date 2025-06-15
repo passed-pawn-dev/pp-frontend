@@ -175,6 +175,8 @@ export class StudentPuzzleChessboardComponent implements OnInit {
     this.lastMove = this.chessboard.lastMove;
     this.checkState = this.chessboard.checkState;
     this._expectedMoves = this.expectedMoves;
+
+    if (activeColor === 'b') this.reverseChessboard();
   }
 
   public isSquarePromotionSquare(square: string): boolean {

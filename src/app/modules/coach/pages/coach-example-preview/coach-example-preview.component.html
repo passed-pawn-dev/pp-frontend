@@ -4,8 +4,11 @@
       <h3>{{ example.title }}</h3>
       <div>{{ example.initialDescription }}</div>
     </div>
-    <div>
-      <button class="secondary-btn" type="button" (click)="back()">Back</button>
+    <div class="flex justify-c-between align-i-center gap-2">
+      <a class="primary-btn" type="button" routerLink="edit"> Edit </a>
+      <a class="secondary-btn" type="button" routerLink="../../../../">
+        Back to course
+      </a>
     </div>
   </div>
   <div class="container">

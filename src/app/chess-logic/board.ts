@@ -894,4 +894,25 @@ export class ChessBoard {
       this.threeFoldRepetitionDictionary.set(threeFoldRepetitionFenKey, 2);
     }
   }
+
+  public playMovesFromAlgebraicNotation(algebraicNotationMoves: string[]): void {
+    algebraicNotationMoves.forEach((move) => {
+      this.safeSquares.forEach((possibleSquares: string[], pieceSquare: string) => {
+        possibleSquares.forEach((possibleSquare) => {
+          const allPieces: (FenChar | null)[] = [...Object.values(FenChar), null];
+
+          allPieces.forEach((promotionPiece) => {
+            const currentGameState = cloneDeep(this.gameState);
+            this.move(pieceSquare, possibleSquare, promotionPiece);
+
+            const moveList = this.moveList.flatMap((move) => move);
+
+            if (moveList[moveList.length - 1] !== move) {
+              this.setBoard(currentGameState);
+            }
+          });
+        });
+      });
+    });
+  }
 }

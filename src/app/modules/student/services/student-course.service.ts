@@ -9,7 +9,7 @@ import { MyCourseDetails } from '../models/my-course-details.model';
 import { CourseReview } from '../models/course-review.model';
 import { NewCourseReview } from '../models/new-course-review.model';
 import { Exercise } from '../models/exercise.model';
-import { QuizDetails } from '../models/quiz-details.model';
+import { QuizDetails } from '../../shared/models/quiz-details.model';
 import { CoursesQueryParams } from '../models/course-query-params.model';
 
 @Injectable({
