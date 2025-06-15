@@ -108,6 +108,23 @@ export class CoachCourseService {
     });
   }
 
+  public editPuzzle(
+    puzzleId: string,
+    title: string,
+    description: string,
+    fen: string,
+    solution: string,
+    order: number
+  ): Observable<Object> {
+    return this.httpClient.put(`/api/CoursePuzzle/${puzzleId}`, {
+      title,
+      description,
+      fen,
+      solution,
+      order
+    });
+  }
+
   public addQuiz(lessonId: string, quiz: QuizDetails): Observable<Object> {
     return this.httpClient.post(`/api/Lesson/${lessonId}/quiz`, quiz);
   }

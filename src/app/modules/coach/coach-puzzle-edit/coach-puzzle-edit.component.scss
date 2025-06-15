@@ -1,0 +1,68 @@
+@use 'variables' as *;
+
+.page {
+  max-width: $page-width;
+  margin: auto;
+
+  .puzzle-description {
+    resize: none;
+    height: calc(1.2rem * 5 + 1rem);
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    height: 4rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+
+    .puzzle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 4rem;
+      width: 4rem;
+      border-right: 2px solid $background;
+
+      img {
+        width: 2rem;
+      }
+    }
+
+    .header {
+      font-size: $font-L;
+      font-weight: 700;
+    }
+
+    .operation-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-right: 1rem;
+    }
+  }
+
+  .content-section {
+    .form-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      background-color: white;
+      width: 20rem;
+      position: absolute;
+
+      .header {
+        font-size: $font-M;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .lable {
+        color: $text-secondary;
+      }
+    }
+  }
+}

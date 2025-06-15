@@ -41,7 +41,6 @@ import { DialogService } from 'primeng/dynamicdialog';
 })
 export class PuzzleChessboardComponent implements OnInit {
   @Input({ required: true }) public startingFen!: string;
-  // TODO - replace with enum
   @Input({ required: true }) public previewMode!: PreviewMode;
   @Input({ required: false }) public expectedMoves: string[] | null = null;
   @Output() public savePuzzle = new EventEmitter<any>();
@@ -178,6 +177,7 @@ export class PuzzleChessboardComponent implements OnInit {
     }
   }
 
+  // TODO - restrict these access modifiers
   public isSquarePromotionSquare(square: string): boolean {
     const { x, y } = ChessBoard.squareToCoords(square);
     if (!this.promotionCoords) return false;
@@ -301,7 +301,7 @@ export class PuzzleChessboardComponent implements OnInit {
       ChessBoard.boardViewToBoard(
         this.chessboard.gameHistory[this.gameHistoryPointer].board
       ),
-      this.playerColor === Color.Black ? Color.White : Color.Black,
+      this.chessboard.gameHistory[this.gameHistoryPointer].playerColor,
       this.lastMove,
       0,
       0
@@ -333,5 +333,14 @@ export class PuzzleChessboardComponent implements OnInit {
     dialog.onClose.subscribe((piece: FenChar) => {
       this.promotePiece(piece);
     });
+  }
+
+  public playMovesFromAlgebraicNotation(algebraicNotationMoves: string[]): void {
+    this.chessboard.playMovesFromAlgebraicNotation(algebraicNotationMoves);
+    this.chessboardView = this.chessboard.chessboardView;
+    this.checkState = this.chessboard.checkState;
+    this.lastMove = this.chessboard.lastMove;
+    this.unmarkingPreviouslySelectedAndSafeSquares();
+    this.gameHistoryPointer += algebraicNotationMoves.length;
   }
 }

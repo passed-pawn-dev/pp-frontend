@@ -1,1 +1,39 @@
-<p>coach-puzzle-edit works!</p>
+<div class="page">
+  <div class="nav">
+    <div class="puzzle">
+      <img src="icons/puzzle-complete.png" alt="puzzle" />
+    </div>
+    <div class="header">Puzzle Builder</div>
+    <div class="operation-group">
+      <a type="button" class="secondary-btn" routerLink="../">Back to preview</a>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="form-inputs" [formGroup]="exerciseForm">
+      <div class="header">Info</div>
+      <div>Title</div>
+      <input type="text" formControlName="title" class="standard-input" />
+      <app-validation-errors
+        [errors]="exerciseForm.controls.title.errors"
+        [dirty]="exerciseForm.controls.title.dirty"
+        [touched]="exerciseForm.controls.title.touched"
+      />
+      <div>Description</div>
+      <textarea
+        formControlName="description"
+        class="standard-input puzzle-description"
+      ></textarea>
+      <app-validation-errors
+        [errors]="exerciseForm.controls.description.errors"
+        [dirty]="exerciseForm.controls.description.dirty"
+        [touched]="exerciseForm.controls.description.touched"
+      />
+    </div>
+    <app-puzzle-chessboard
+      [startingFen]="puzzle.fen"
+      [previewMode]="PreviewMode.NoPreview"
+      (savePuzzle)="savePuzzle($event)"
+    ></app-puzzle-chessboard>
+  </div>
+</div>
