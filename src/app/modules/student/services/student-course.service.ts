@@ -8,8 +8,8 @@ import { Lesson } from '../models/lesson.model';
 import { MyCourseDetails } from '../models/my-course-details.model';
 import { CourseReview } from '../models/course-review.model';
 import { NewCourseReview } from '../models/new-course-review.model';
-import { Exercise } from '../models/exercise.model';
 import { CoursesQueryParams } from '../models/course-query-params.model';
+import { Puzzle } from '../../shared/models/puzzle.model';
 
 @Injectable({
   providedIn: 'root'
@@ -80,7 +80,7 @@ export class StudentCourseService {
     return this.httpClient.get<Lesson[]>(`/api/Course/Student/${id}/lessons`);
   }
 
-  public getExerciseById(id: string): Observable<Exercise> {
-    return this.httpClient.get<Exercise>(`/api/CoursePuzzle/${id}`);
+  public getPuzzleById(id: string): Observable<Puzzle> {
+    return this.httpClient.get<Puzzle>(`/api/CoursePuzzle/${id}`);
   }
 }

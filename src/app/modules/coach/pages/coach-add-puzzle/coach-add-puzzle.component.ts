@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { PuzzleChessboardComponent } from '../../../shared/components/puzzle-chessboard/puzzle-chessboard.component';
+import { CoachPuzzleChessboardEditorComponent } from '../../components/coach-puzzle-chessboard-editor/coach-puzzle-chessboard-editor.component';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { PuzzleData } from '../../../shared/models/puzzle-data.model';
@@ -17,19 +17,19 @@ import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-coach-add-exercise',
+  selector: 'app-coach-add-puzzle',
   standalone: true,
   imports: [
-    PuzzleChessboardComponent,
+    CoachPuzzleChessboardEditorComponent,
     ReactiveFormsModule,
     InputTextModule,
     Textarea,
     ValidationErrorsComponent
   ],
-  templateUrl: './coach-add-exercise.component.html',
-  styleUrl: './coach-add-exercise.component.scss'
+  templateUrl: './coach-add-puzzle.component.html',
+  styleUrl: './coach-add-puzzle.component.scss'
 })
-export class CoachAddExerciseComponent implements OnInit {
+export class CoachAddPuzzleComponent implements OnInit {
   private location = inject(Location);
   private route = inject(ActivatedRoute);
   private coachCourseService = inject(CoachCourseService);

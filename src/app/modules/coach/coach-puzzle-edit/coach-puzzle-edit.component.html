@@ -30,10 +30,10 @@
         [touched]="exerciseForm.controls.description.touched"
       />
     </div>
-    <app-puzzle-chessboard
+    <app-coach-puzzle-chessboard-editor
       [startingFen]="puzzle.fen"
       [previewMode]="PreviewMode.NoPreview"
       (savePuzzle)="savePuzzle($event)"
-    ></app-puzzle-chessboard>
+    ></app-coach-puzzle-chessboard-editor>
   </div>
 </div>

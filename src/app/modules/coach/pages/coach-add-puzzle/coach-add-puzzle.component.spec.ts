@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CoachAddExerciseComponent } from './coach-add-exercise.component';
+import { CoachAddExerciseComponent } from './coach-add-puzzle.component';
 
 describe('CoachAddExerciseComponent', () => {
   let component: CoachAddExerciseComponent;
@@ -9,9 +9,8 @@ describe('CoachAddExerciseComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CoachAddExerciseComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(CoachAddExerciseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

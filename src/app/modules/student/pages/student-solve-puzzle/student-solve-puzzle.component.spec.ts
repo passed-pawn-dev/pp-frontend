@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StudentSolveExerciseComponent } from './student-solve-exercise.component';
+import { StudentSolveExerciseComponent } from './student-solve-puzzle.component';
 
 describe('StudentSolveExerciseComponent', () => {
   let component: StudentSolveExerciseComponent;
@@ -9,9 +9,8 @@ describe('StudentSolveExerciseComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [StudentSolveExerciseComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(StudentSolveExerciseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

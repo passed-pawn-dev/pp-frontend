@@ -1,149 +1,86 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 
 <div class="content-container">
-  <div class="chessboard-controls">
-    <div class="header">Board Operations</div>
-
-    <button type="button" class="operation-btn" (click)="reverseChessboard()">
-      Reverse side
-    </button>
-  </div>
-
   <div class="chess-content">
-    <!-- Chess board with moves -->
-    <div class="main-game-content">
-      @if (loading) {
-        <div class="loading-overlay"></div>
-      }
-      <div class="chessboard-wrapper">
-        @if (gameOverMessage) {
-          <h2 class="game-over-message">{{ gameOverMessage }}</h2>
+    <div class="chess-content">
+      <!-- Chess board with moves -->
+      <div class="main-game-content">
+        @if (loading) {
+          <div class="loading-overlay"></div>
         }
-        <div class="chessboard">
-          <!-- field[0] -> square, for example "b2"; field[1] -> Piece fen char, for example "P" -->
-          @for (field of chessboardView; track $index) {
-            <div class="chessboard-field" (click)="move(field[0])">
-              @if ($index % 8 === 0) {
-                <div class="chessboard-file">{{ field[0][1] }}</div>
-              }
 
-              @if ($index > 55) {
-                <div class="chessboard-rank">{{ field[0][0] }}</div>
-              }
-
-              <div
-                class="chessboard-field-content"
-                [ngClass]="{
-                  'selected-square': isSquareSelected(field[0]),
-                  'piece-square': field[1] !== null,
-                  'last-move': isSquareLastMove(field[0]),
-                  'king-in-check': isSquareChecked(field[0]),
-                  'promotion-square': isSquarePromotionSquare(field[0])
-                }"
-              >
-                <div
-                  [ngClass]="{ 'safe-square': isSquareSafeForSelectedPiece(field[0]) }"
-                ></div>
-                @if (field[1] !== null) {
-                  <div class="chessboard-chess-piece">
-                    <img
-                      [alt]="'chess-piece-' + field[1]"
-                      [src]="pieceImagePaths[field[1]]"
-                    />
-                  </div>
-                }
-              </div>
-            </div>
+        <div class="chessboard-wrapper">
+          @if (gameOverMessage) {
+            <h2 class="game-over-message">{{ gameOverMessage }}</h2>
           }
-        </div>
-      </div>
-
-      <div class="moves-group">
-        <div class="nav">
-          <div class="header">Puzzle</div>
-        </div>
-        <div class="moves-container">
-          <div class="btn-group">
-            <div class="square-flex">
-              <div class="square">
-                <img src="icons/chessboard.png" alt="chessboard" />
-              </div>
-              <div class="desc">
-                Starting <br />
-                Position
-              </div>
-            </div>
-            <!-- cos nie dziala tak jak trzba displayingStartingMove??? -->
-            <button
-              type="button"
-              class="primary-btn"
-              (click)="setCurrentPositionAsStartingPosition()"
-            >
-              Set as starting position
-            </button>
-          </div>
-          <div class="move-list">
-            <div class="down-arrow">
-              <div></div>
-              <img src="icons/arrow-bottom.png" alt="arrow" />
-            </div>
-            <div>
-              <app-move-list
-                [moveList]="moveList"
-                [gameHistoryPointer]="gameHistoryPointer"
-                [gameHistoryLength]="gameHistory.length"
-                [startingPlayer]="
-                  FenConverter.getPlayerColorFromFEN(initialFen) === 'w'
-                    ? Color.White
-                    : Color.Black
-                "
-                (showPreviousPositionEvent)="showPreviousPosition($event)"
-              >
-              </app-move-list>
-            </div>
-          </div>
-          <div class="btn-group">
-            <div class="square-flex">
-              <div class="square">
-                @if (!(gameHistory.length === 0 || gameHistory.length % 2 === 0)) {
-                  <img src="icons/chessboard.png" alt="chessboard" />
+          <div class="chessboard">
+            <!-- field[0] -> square, for example "b2"; field[1] -> Piece fen char, for example "P" -->
+            @for (field of chessboardView; track $index) {
+              <div class="chessboard-field" (click)="move(field[0])">
+                @if ($index % 8 === 0) {
+                  <div class="chessboard-file">{{ field[0][1] }}</div>
                 }
+
+                @if ($index > 55) {
+                  <div class="chessboard-rank">{{ field[0][0] }}</div>
+                }
+
+                <div
+                  class="chessboard-field-content"
+                  [ngClass]="{
+                    'selected-square': isSquareSelected(field[0]),
+                    'piece-square': field[1] !== null,
+                    'last-move': isSquareLastMove(field[0]),
+                    'king-in-check': isSquareChecked(field[0]),
+                    'promotion-square': isSquarePromotionSquare(field[0])
+                  }"
+                >
+                  <div
+                    [ngClass]="{
+                      'safe-square': isSquareSafeForSelectedPiece(field[0])
+                    }"
+                  ></div>
+                  @if (field[1] !== null) {
+                    <div class="chessboard-chess-piece">
+                      <img
+                        [alt]="'chess-piece-' + field[1]"
+                        [src]="pieceImagePaths[field[1]]"
+                      />
+                    </div>
+                  }
+                </div>
               </div>
-              <div class="desc">
-                Finish <br />
-                Position
+            }
+          </div>
+        </div>
+
+        <div class="moves-group">
+          <div class="nav">
+            <div class="header">Puzzle</div>
+          </div>
+          <div class="moves-container">
+            <div class="move-list">
+              <div class="down-arrow">
+                <div></div>
+                <img src="icons/arrow-bottom.png" alt="arrow" />
+              </div>
+              <div>
+                <app-move-list
+                  [moveList]="moveList"
+                  [gameHistoryPointer]="gameHistoryPointer"
+                  [gameHistoryLength]="gameHistory.length"
+                  [startingPlayer]="
+                    FenConverter.getPlayerColorFromFEN(startingFen) === 'w'
+                      ? Color.White
+                      : Color.Black
+                  "
+                  (showPreviousPositionEvent)="showPreviousPosition($event)"
+                >
+                </app-move-list>
               </div>
             </div>
-            <button
-              type="button"
-              class="primary-btn"
-              [disabled]="gameHistory.length === 0 || gameHistory.length % 2 === 0"
-              (click)="onSavePuzzle()"
-            >
-              Save Puzzle
-            </button>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="chessboard-fen-load-input">
-      <div class="header">FEN</div>
-      <div class="content">
-        <div class="fen-group">
-          <input type="text" class="standard-input" [(ngModel)]="fen" />
-          <div *ngIf="!fenValid()" class="validation-errors">
-            Please enter a valid FEN string.
-          </div>
-        </div>
-        <button
-          type="button"
-          class="primary-btn"
-          [disabled]="!fenValid()"
-          (click)="setBoardFromFen()"
-        >
-          Load fen
-        </button>
       </div>
     </div>
   </div>

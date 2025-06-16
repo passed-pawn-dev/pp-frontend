@@ -3,7 +3,7 @@ import { CoachComponent } from './coach.component';
 import { CoachCoursesListComponent } from './pages/coach-courses-list/coach-courses-list.component';
 import { CoachCourseDetailsComponent } from './pages/coach-course-details/coach-course-details.component';
 import { CoachCourseFormComponent } from './pages/coach-course-form/coach-course-form.component';
-import { CoachAddExerciseComponent } from './pages/coach-add-exercise/coach-add-exercise.component';
+import { CoachAddPuzzleComponent } from './pages/coach-add-puzzle/coach-add-puzzle.component';
 import { CoachAddQuizComponent } from './pages/coach-add-quiz/coach-add-quiz.component';
 import { coachCourseResolver } from './resolvers/coach-course.resolver';
 import { CoachAddExampleComponent } from './pages/coach-add-example/coach-add-example.component';
@@ -46,7 +46,7 @@ export const COACH_ROUTES: Route[] = [
       },
       {
         path: 'courses/:courseId/lesson/:lessonId/puzzle/add',
-        component: CoachAddExerciseComponent
+        component: CoachAddPuzzleComponent
       },
       {
         path: 'courses/:courseId/lesson/:lessonId/quiz/add',

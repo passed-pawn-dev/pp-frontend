@@ -1,5 +1,5 @@
+import { Puzzle } from '../../shared/models/puzzle.model';
 import { Example } from './example.model';
-import { Exercise } from './exercise.model';
 import { Quiz } from './quiz.model';
 import { Video } from './video.model';
 
@@ -8,7 +8,7 @@ export interface Lesson {
   id: string;
   title: string;
   lessonNumber: number;
-  puzzles: Exercise[];
+  puzzles: Puzzle[];
   examples: Example[];
   preview: boolean;
   quizzes: Quiz[];
