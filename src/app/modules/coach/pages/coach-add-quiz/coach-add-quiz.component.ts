@@ -141,7 +141,7 @@ export class CoachAddQuizComponent implements OnInit {
   private createAnswer(): FormGroup {
     return this.fb.group({
       text: ['', Validators.required],
-      newPosition: ['']
+      newPosition: [null]
     });
   }
 
