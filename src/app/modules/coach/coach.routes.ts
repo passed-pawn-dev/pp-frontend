@@ -4,8 +4,6 @@ import { CoachCoursesListComponent } from './pages/coach-courses-list/coach-cour
 import { CoachCourseDetailsComponent } from './pages/coach-course-details/coach-course-details.component';
 import { CoachCourseFormComponent } from './pages/coach-course-form/coach-course-form.component';
 import { CoachAddExerciseComponent } from './pages/coach-add-exercise/coach-add-exercise.component';
-import { CoachExercisePreviewComponent } from './pages/coach-exercise-preview/coach-exercise-preview.component';
-import { coachExerciseResolver } from './resolvers/coach-exercise.resolver';
 import { CoachAddQuizComponent } from './pages/coach-add-quiz/coach-add-quiz.component';
 import { coachCourseResolver } from './resolvers/coach-course.resolver';
 import { CoachAddExampleComponent } from './pages/coach-add-example/coach-add-example.component';
@@ -14,6 +12,9 @@ import { privateVideoPreviewResolver } from '../shared/resolvers/private-video-p
 import { examplePreviewResolver } from '../shared/resolvers/example-preview.resolver';
 import { CoachExampleEditComponent } from './pages/coach-example-edit/coach-example-edit.component';
 import { CoachExamplePreviewComponent } from './pages/coach-example-preview/coach-example-preview.component';
+import { puzzlePreviewResolver } from '../shared/resolvers/puzzle-preview.resolver';
+import { CoachPuzzlePreviewComponent } from './pages/coach-puzzle-preview/coach-puzzle-preview.component';
+import { CoachPuzzleEditComponent } from './coach-puzzle-edit/coach-puzzle-edit.component';
 import { CoachQuizPreviewComponent } from './pages/coach-quiz-preview/coach-quiz-preview.component';
 import { CoachQuizEditComponent } from './pages/coach-quiz-edit/coach-quiz-edit.component';
 import { quizPreviewResolver } from '../shared/resolvers/quiz-preview.resolver';
@@ -44,7 +45,7 @@ export const COACH_ROUTES: Route[] = [
         }
       },
       {
-        path: 'courses/:courseId/lesson/:lessonId/exercise/add',
+        path: 'courses/:courseId/lesson/:lessonId/puzzle/add',
         component: CoachAddExerciseComponent
       },
       {
@@ -56,10 +57,17 @@ export const COACH_ROUTES: Route[] = [
         component: CoachAddExampleComponent
       },
       {
-        path: 'courses/:courseId/lesson/:lessonId/exercise/:exerciseId',
-        component: CoachExercisePreviewComponent,
+        path: 'courses/:courseId/lesson/:lessonId/puzzle/:puzzleId',
+        component: CoachPuzzlePreviewComponent,
         resolve: {
-          exercise: coachExerciseResolver
+          puzzle: puzzlePreviewResolver
+        }
+      },
+      {
+        path: 'courses/:courseId/lesson/:lessonId/puzzle/:puzzleId/edit',
+        component: CoachPuzzleEditComponent,
+        resolve: {
+          puzzle: puzzlePreviewResolver
         }
       },
       {

@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot, ResolveFn, Router } from '@angular/router';
-import { QuizDetails } from '../models/quiz-details.model';
+import { QuizDetails } from '../../shared/models/quiz-details.model';
 import { Observable, catchError, of } from 'rxjs';
 import { inject } from '@angular/core';
 import { CourseService } from '../services/course.service';

@@ -1,7 +1,7 @@
 import { Example } from '../../student/models/example.model';
 import { Quiz } from '../../student/models/quiz.model';
 import { Video } from '../../student/models/video.model';
-import { Puzzle } from './puzzle.model';
+import { Puzzle } from '../../shared/models/puzzle.model';
 
 export interface LessonDetails {
   id: string;
