@@ -4,8 +4,8 @@ import { StudentMyCoursesComponent } from './pages/student-my-courses/student-my
 import { StudentMyCourseComponent } from './pages/student-my-course/student-my-course.component';
 import { StudentCoursesComponent } from './pages/student-courses/student-courses.component';
 import { StudentCourseComponent } from './pages/student-course/student-course.component';
-import { StudentSolveExerciseComponent } from './pages/student-solve-exercise/student-solve-exercise.component';
-import { studentExerciseResolver } from './resolvers/student-exercise.resolver';
+import { StudentSolvePuzzleComponent } from './pages/student-solve-puzzle/student-solve-puzzle.component';
+import { studentPuzzleResolver } from './resolvers/student-puzzle.resolver';
 import { StudentSolveQuizComponent } from './pages/student-solve-quiz/student-solve-quiz.component';
 import { studentBoughtCourseResolver } from './resolvers/student-bought-course.resolver';
 import { studentCourseResolver } from './resolvers/student-course.resolver';
@@ -39,10 +39,10 @@ export const STUDENT_ROUTES: Route[] = [
         }
       },
       {
-        path: 'my-courses/:courseId/lesson/:lessonId/puzzle/:exerciseId',
-        component: StudentSolveExerciseComponent,
+        path: 'my-courses/:courseId/lesson/:lessonId/puzzle/:puzzleId',
+        component: StudentSolvePuzzleComponent,
         resolve: {
-          exercise: studentExerciseResolver
+          puzzle: studentPuzzleResolver
         }
       },
       {
@@ -67,10 +67,10 @@ export const STUDENT_ROUTES: Route[] = [
         }
       },
       {
-        path: 'courses/:courseId/lesson/:lessonId/puzzle/:exerciseId',
-        component: StudentSolveExerciseComponent,
+        path: 'courses/:courseId/lesson/:lessonId/puzzle/:puzzleId',
+        component: StudentSolvePuzzleComponent,
         resolve: {
-          exercise: studentExerciseResolver
+          puzzle: studentPuzzleResolver
         }
       },
       {

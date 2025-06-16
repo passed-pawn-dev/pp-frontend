@@ -12,22 +12,20 @@ import {
 } from '../../../../chess-logic/models';
 import { pieceImagePaths } from '../../../../chess-logic/models';
 import { ChessBoard } from '../../../../chess-logic/board';
+import { FenConverter } from '../../../../chess-logic/FenConverter';
+import { cloneDeep } from 'lodash';
 import { TSelectedSquare } from '../../models/chessboard-view-model.model';
+import { PreviewMode } from '../../enums/preview-mode.enum';
 import { CommonModule } from '@angular/common';
 import { MoveListComponent } from '../move-list/move-list.component';
-import { FenConverter } from '../../../../chess-logic/FenConverter';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
-import validateFEN from 'fen-validator';
-import { PreviewMode } from '../../enums/preview-mode.enum';
-import { cloneDeep } from 'lodash';
 import { DialogModule } from 'primeng/dialog';
-import { PromotionDialogComponent } from '../promotion-dialog/promotion-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { PromotionDialogComponent } from '../promotion-dialog/promotion-dialog.component';
 
 @Component({
   selector: 'app-puzzle-chessboard',
-  standalone: true,
   imports: [
     CommonModule,
     MoveListComponent,
@@ -44,6 +42,7 @@ export class PuzzleChessboardComponent implements OnInit {
   @Input({ required: true }) public previewMode!: PreviewMode;
   @Input({ required: false }) public expectedMoves: string[] | null = null;
   @Output() public savePuzzle = new EventEmitter<any>();
+  @Output() public solved = new EventEmitter<void>();
 
   private dialogService: DialogService = inject(DialogService);
 
@@ -57,9 +56,9 @@ export class PuzzleChessboardComponent implements OnInit {
   private pieceSafeSquares: string[] = [];
   private lastMove: TLastMove | undefined = this.chessboard.lastMove;
   private checkState: TCheckState = this.chessboard.checkState;
+  private _expectedMoves: string[] | null = null;
   protected loading = false;
   public fen: string = '';
-  protected initialFen: string = this.startingFen;
 
   public get moveList(): TMoveList {
     return this.chessboard.moveList;
@@ -76,6 +75,9 @@ export class PuzzleChessboardComponent implements OnInit {
   protected showingPastPosition: boolean = false;
   protected displayingStartingMove: boolean = true;
 
+  protected setPosition: boolean = false;
+  protected setSequence: boolean = false;
+
   protected FenConverter = FenConverter;
 
   protected updateBoard(
@@ -90,15 +92,26 @@ export class PuzzleChessboardComponent implements OnInit {
     this.lastMove = this.chessboard.lastMove;
     this.unmarkingPreviouslySelectedAndSafeSquares();
 
-    if (this.expectedMoves) {
+    if (this._expectedMoves) {
       const moveList = this.moveList.flatMap((move) => move);
-      if (moveList[moveList.length - 1] === this.expectedMoves[moveList.length - 1]) {
-        this.expectedMoves = this.expectedMoves.slice(moveList.length);
+
+      if (moveList[moveList.length - 1] === this._expectedMoves[0]) {
+        this._expectedMoves = this._expectedMoves.slice(1);
+        if (this._expectedMoves.length === 0) {
+          this.solved.emit();
+          return;
+        }
+        this.loading = true;
+        setTimeout(() => {
+          this.playEnemyMove();
+          this.loading = false;
+        }, 500);
       } else {
         this.loading = true;
         setTimeout(() => {
           this.chessboard.setBoard(currentGameState);
           this.chessboardView = this.chessboard.chessboardView;
+          this.lastMove = this.chessboard.lastMove;
           this.loading = false;
         }, 1000);
       }
@@ -136,6 +149,10 @@ export class PuzzleChessboardComponent implements OnInit {
   protected pieceImagePaths = pieceImagePaths;
 
   public ngOnInit(): void {
+    this.setPuzzle();
+  }
+
+  public setPuzzle(): void {
     this.chessboardView = this.chessboard.chessboardView;
     const [
       _position,
@@ -145,39 +162,24 @@ export class PuzzleChessboardComponent implements OnInit {
       _halfMoveClock,
       _fullMoveNumber
     ] = this.startingFen.split(' ');
+
     const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
+    const lastMove = FenConverter.createLastMoveFromFEN(this.startingFen);
     this.chessboard.setBoard({
       board: boardFromFen,
       playerToMove: activeColor === 'w' ? Color.White : Color.Black,
-      lastMove: undefined
+      lastMove: lastMove
     });
     this.chessboardView = this.chessboard.chessboardView;
+    this.lastMove = this.chessboard.lastMove;
+    this.checkState = this.chessboard.checkState;
+    this._expectedMoves = this.expectedMoves;
 
-    this.initialFen = this.startingFen;
+    this.detectAndMarkMovedPawns();
+
+    if (activeColor === 'b') this.reverseChessboard();
   }
 
-  protected fenValid(): boolean {
-    return validateFEN(this.fen);
-  }
-
-  protected setBoardFromFen(): void {
-    if (validateFEN(this.fen)) {
-      const boardFromFen = FenConverter.convertFenToBoard(this.fen);
-      const lastMove = FenConverter.createLastMoveFromFEN(this.fen);
-      const playerColor = FenConverter.getPlayerColorFromFEN(this.fen);
-      this.initialFen = this.fen;
-      this.lastMove = lastMove;
-      this.chessboard.setBoard({
-        board: boardFromFen,
-        playerToMove: playerColor === 'w' ? Color.White : Color.Black,
-        lastMove
-      });
-      this.chessboardView = this.chessboard.chessboardView;
-      this.checkState = this.chessboard.checkState;
-    }
-  }
-
-  // TODO - restrict these access modifiers
   public isSquarePromotionSquare(square: string): boolean {
     const { x, y } = ChessBoard.squareToCoords(square);
     if (!this.promotionCoords) return false;
@@ -296,28 +298,36 @@ export class PuzzleChessboardComponent implements OnInit {
     }
   }
 
-  public setCurrentPositionAsStartingPosition(): void {
-    this.initialFen = FenConverter.convertBoardToFen(
-      ChessBoard.boardViewToBoard(
-        this.chessboard.gameHistory[this.gameHistoryPointer].board
-      ),
-      this.chessboard.gameHistory[this.gameHistoryPointer].playerColor,
-      this.lastMove,
-      0,
-      0
+  private playEnemyMove(): void {
+    this.chessboard.safeSquares.forEach(
+      (possibleSquares: string[], pieceSquare: string) => {
+        possibleSquares.forEach((possibleSquare) => {
+          const allPieces: (FenChar | null)[] = [...Object.values(FenChar), null];
+
+          allPieces.forEach((promotionPiece) => {
+            const currentGameState = cloneDeep(this.chessboard.gameState);
+            this.chessboard.move(pieceSquare, possibleSquare, promotionPiece);
+
+            if (this._expectedMoves) {
+              const moveList = this.moveList.flatMap((move) => move);
+
+              if (moveList[moveList.length - 1] === this._expectedMoves[0]) {
+                this._expectedMoves = this._expectedMoves.slice(1);
+                this.lastMove = this.chessboard.lastMove;
+                this.chessboardView = this.chessboard.chessboardView;
+                this.checkState = this.chessboard.checkState;
+                this.lastMove = this.chessboard.lastMove;
+                this.unmarkingPreviouslySelectedAndSafeSquares();
+              } else {
+                this.chessboard.setBoard(currentGameState);
+                this.chessboardView = this.chessboard.chessboardView;
+              }
+            }
+            this.gameHistoryPointer++;
+          });
+        });
+      }
     );
-
-    this.chessboard.startFromMove(this.gameHistoryPointer + 1);
-    this.showingPastPosition = false;
-    this.displayingStartingMove = true;
-    this.gameHistoryPointer = 0;
-  }
-
-  protected onSavePuzzle(): void {
-    const fenBoard = this.initialFen;
-
-    const moveListString = this.moveList.flatMap((move) => move).join(',');
-    this.savePuzzle.emit({ fenBoard: fenBoard, moveListString });
   }
 
   protected openPromotionDialog(): void {
@@ -335,12 +345,7 @@ export class PuzzleChessboardComponent implements OnInit {
     });
   }
 
-  public playMovesFromAlgebraicNotation(algebraicNotationMoves: string[]): void {
-    this.chessboard.playMovesFromAlgebraicNotation(algebraicNotationMoves);
-    this.chessboardView = this.chessboard.chessboardView;
-    this.checkState = this.chessboard.checkState;
-    this.lastMove = this.chessboard.lastMove;
-    this.unmarkingPreviouslySelectedAndSafeSquares();
-    this.gameHistoryPointer += algebraicNotationMoves.length;
+  private detectAndMarkMovedPawns(): void {
+    this.chessboard.detectAndMarkMovedPawns();
   }
 }

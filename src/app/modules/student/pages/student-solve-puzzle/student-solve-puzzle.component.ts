@@ -1,18 +1,18 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PreviewMode } from '../../../shared/enums/preview-mode.enum';
-import { StudentPuzzleChessboardComponent } from '../../components/student-puzzle-chessboard/student-puzzle-chessboard.component';
+import { PuzzleChessboardComponent } from '../../../shared/components/puzzle-chessboard/puzzle-chessboard.component';
 import { Location } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 
 @Component({
-  selector: 'app-student-solve-exercise',
+  selector: 'app-student-solve-puzzle',
   standalone: true,
-  imports: [StudentPuzzleChessboardComponent, DialogModule],
-  templateUrl: './student-solve-exercise.component.html',
-  styleUrl: './student-solve-exercise.component.scss'
+  imports: [PuzzleChessboardComponent, DialogModule],
+  templateUrl: './student-solve-puzzle.component.html',
+  styleUrl: './student-solve-puzzle.component.scss'
 })
-export class StudentSolveExerciseComponent implements OnInit {
+export class StudentSolvePuzzleComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private location = inject(Location);
 
@@ -28,7 +28,7 @@ export class StudentSolveExerciseComponent implements OnInit {
   protected solvedMessage: boolean = false;
 
   public ngOnInit(): void {
-    const puzzle = this.route.snapshot.data['exercise'];
+    const puzzle = this.route.snapshot.data['puzzle'];
     this.fen = puzzle.fen;
     this.solution = puzzle.solution;
     this.title = puzzle.title;
@@ -48,7 +48,7 @@ export class StudentSolveExerciseComponent implements OnInit {
   }
 
   protected reset(): void {
-    const puzzle = this.route.snapshot.data['exercise'];
+    const puzzle = this.route.snapshot.data['puzzle'];
     this.fen = puzzle.fen;
     this.solution = puzzle.solution;
   }

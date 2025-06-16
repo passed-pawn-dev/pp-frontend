@@ -915,4 +915,20 @@ export class ChessBoard {
       });
     });
   }
+
+  public detectAndMarkMovedPawns(): void {
+    for (let [square, piece] of this.chessboard) {
+      console.log(square);
+
+      if (piece instanceof Pawn) {
+        if (
+          (piece.color === Color.White && square[1] !== '2') ||
+          (piece.color === Color.Black && square[1] !== '7')
+        ) {
+          piece.hasMoved = true;
+        }
+      }
+    }
+    this._safeSquares = this.findSafeSquares();
+  }
 }

@@ -24,11 +24,11 @@
     <button class="secondary-btn" type="button" (click)="back()">Back</button>
   </div>
 </div>
-<app-student-puzzle-chessboard
+<app-puzzle-chessboard
   #chessboardRef
   [startingFen]="fen"
   [previewMode]="PreviewMode.Student"
   [expectedMoves]="solutionArray()"
   (solved)="showSolvedMessage()"
 >
-</app-student-puzzle-chessboard>
+</app-puzzle-chessboard>

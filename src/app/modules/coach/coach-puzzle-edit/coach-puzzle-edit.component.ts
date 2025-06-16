@@ -12,14 +12,14 @@ import { PreviewMode } from '../../shared/enums/preview-mode.enum';
 import { PuzzleData } from '../../shared/models/puzzle-data.model';
 import { InputTextModule } from 'primeng/inputtext';
 import { Textarea } from 'primeng/inputtextarea';
-import { PuzzleChessboardComponent } from '../../shared/components/puzzle-chessboard/puzzle-chessboard.component';
+import { CoachPuzzleChessboardEditorComponent } from '../components/coach-puzzle-chessboard-editor/coach-puzzle-chessboard-editor.component';
 import { ValidationErrorsComponent } from '../../shared/components/validation-errors/validation-errors.component';
 import { Puzzle } from '../../shared/models/puzzle.model';
 
 @Component({
   selector: 'app-coach-puzzle-edit',
   imports: [
-    PuzzleChessboardComponent,
+    CoachPuzzleChessboardEditorComponent,
     ReactiveFormsModule,
     InputTextModule,
     Textarea,
@@ -30,8 +30,8 @@ import { Puzzle } from '../../shared/models/puzzle.model';
   styleUrl: './coach-puzzle-edit.component.scss'
 })
 export class CoachPuzzleEditComponent implements AfterViewInit {
-  @ViewChild(PuzzleChessboardComponent)
-  private puzzleChessboardComponent!: PuzzleChessboardComponent;
+  @ViewChild(CoachPuzzleChessboardEditorComponent)
+  private puzzleChessboardComponent!: CoachPuzzleChessboardEditorComponent;
   private route = inject(ActivatedRoute);
   private coachCourseService = inject(CoachCourseService);
   private nnfb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
