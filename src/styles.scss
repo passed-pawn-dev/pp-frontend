@@ -91,6 +91,17 @@ input {
   }
 }
 
+.standard-checkbox {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: fit-content;
+  height: 1rem;
+  cursor: pointer;
+  transform: scale(1.5);
+  accent-color: $primary;
+}
+
 .primary-btn {
   display: flex;
   align-items: center;
