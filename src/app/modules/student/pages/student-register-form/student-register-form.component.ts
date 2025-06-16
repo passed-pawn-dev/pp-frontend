@@ -19,7 +19,7 @@ import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { StepIndicatorComponent } from '../../../shared/components/step-indicator/step-indicator.component';
-import { CarouselDirective } from '../../../shared/carousel.directive';
+import { CarouselDirective } from '../../../shared/directives/carousel.directive';
 
 @Component({
   selector: 'app-student-register-form',

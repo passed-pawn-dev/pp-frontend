@@ -1,64 +1,4 @@
 <!-- eslint-disable @angular-eslint/template/no-inline-styles -->
-
-<!-- <div class="lesson">
-  <div
-    class="progress-container"
-    [class.first]="first"
-    [class.last]="last && !showElements"
-    [class.complete]="complete === 'Complete' || complete === 'InProgress'"
-    [class.in-progress]="complete === 'InProgress'"
-  >
-    <div
-      class="progress"
-      [class.complete]="complete === 'Complete'"
-      [class.in-progress]="complete === 'InProgress'"
-    ></div>
-  </div>
-  <div class="tile">
-    <button type="button" class="toggle" (click)="toggleElements()">
-      <img
-        src="icons/arrow-right.png"
-        alt="arrow"
-        [class.show-details]="showElements"
-      />
-    </button>
-    <div class="content">
-      <div class="header">
-        <div>0{{ index + 1 }}</div>
-        <div>Chess Opening</div>
-      </div>
-
-      <div class="progress-bar-container">
-        <div class="percent">{{ progress }} / {{ all }}</div>
-        <div class="progress-bar">
-          <div class="progress" [style.width]="(progress / all) * 100 + '%'"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-@if (showElements) {
-  <div class="elements-group">
-    @for (exer of lesson.quizzes; track $index) {
-      <div class="element">
-        <div class="progress-margin"[class.last]="last" [class.complete]="true" ></div>
-        <div class="progress-container" [class.complete]="true">
-          <div class="progress" [class.complete]="true"></div>
-        </div>
-        <div class="tile" [class.complete]="true">
-          <div class="content">
-            <div class="header">
-              <div>{{ $index + 1 }}</div>
-              <div>{{ exer.title }}</div>
-            </div>
-            <a type="button" class="primary-btn" [routerLink]="'lesson/' + lesson.id  + '/quiz/' + exer.id" >Learn</a>
-          </div>
-        </div>
-      </div>
-    }
-  </div>
-} -->
-
 <div class="lesson" [class.first]="first" [class.last]="last">
   <div class="progress-container">
     <div
@@ -106,7 +46,7 @@
             </div>
           } @else {
             <a
-              class="element"
+              class="element link"
               [routerLink]="
                 'lesson/' +
                 lesson.id +

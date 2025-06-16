@@ -1,6 +1,6 @@
 <div class="page">
   <header class="flex justify-c-between">
-    <h2>My Course Details</h2>
+    <h2>Course Details</h2>
     <a class="secondary-btn" [routerLink]="'/student/courses'">Back to courses</a>
   </header>
   <section class="main-section">
@@ -170,15 +170,27 @@
       <!-- <span>30 days</span> to return if you're not satisfied\ -->
     </div>
     <div class="payment">
-      <div class="price">{{ course().price }}$</div>
-      <button
-        class="primary-btn"
-        type="submit"
-        [disabled]="courseBought || course().isBought"
-        (click)="openBuyCourseDialog()"
-      >
-        {{ course().isBought ? 'Owned' : 'Buy Course' }}
-      </button>
+      @if (!course().isBought && course().price > 0) {
+        <div class="price">{{ course().price }} PLN</div>
+        <button
+          class="primary-btn"
+          type="submit"
+          [disabled]="courseBought || course().isBought"
+          (click)="openBuyCourseDialog()"
+        >
+          Buy course
+        </button>
+      } @else if (course().price === 0) {
+        <div class="price free">Free</div>
+        <button
+          class="primary-btn"
+          type="submit"
+          [disabled]="courseBought || course().isBought"
+          (click)="openBuyCourseDialog()"
+        >
+          {{ course().isBought ? 'Owned' : 'Obtain for free' }}
+        </button>
+      }
     </div>
   </section>
 </div>

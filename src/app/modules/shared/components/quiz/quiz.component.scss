@@ -5,10 +5,12 @@
 .quiz-page {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 .main-content {
-  width: 60rem;
+  max-width: 62.5rem;
+  width: 100%;
 }
 
 .top-container {
