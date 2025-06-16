@@ -1,85 +1,3 @@
-<!-- <div class="page">
-  <div class="course-data">
-    <div class="course-header">
-      <div class="course-header-left">
-        <h1 class="course-title">{{ course().title }}</h1>
-        <div class="course-lesson-count">{{ course().lessons.length }} lessons</div>
-      </div>
-      <div class="course-header-right">
-        <div>
-          <button pButton class="sign-out-button" type="button" (click)="signOut()">
-            Sign out from course
-          </button>
-        </div>
-        <div>
-          <a class="back-button" pButton [routerLink]="'../'">Back to courses</a>
-        </div>
-      </div>
-    </div>
-    <div class="course-central-content">
-      <div class="course-description">
-        <div class="dsc">Description</div>
-        <div>{{ course().description }}</div>
-      </div>
-      <div class="review-form-container">
-        <app-student-course-review-form />
-      </div>
-    </div>
-  </div>
-  <hr />
-  <ul class="course-lesson-list">
-    @for (lesson of course().lessons; track $index) {
-      <div class="course-lesson">
-        <li class="course-lesson-header">
-          <h3>Lesson {{ $index + 1 }}</h3>
-        </li>
-        <div class="course-lesson-exercises">
-          @for (exercise of getSortedExercises(lesson.exercises); track exercise) {
-            <div class="exercise-wrapper">
-              <div class="exercise-header">
-                <h4>Exercise</h4>
-                <a
-                  class="exercise-link-title"
-                  [routerLink]="
-                    '/student/my-courses/' +
-                    course().id +
-                    '/lesson/' +
-                    lesson.id +
-                    '/exercise/' +
-                    exercise.id
-                  "
-                >
-                  <i class="pi pi-chevron-left"></i>
-                  <span>{{ exercise.title }}</span
-                  ><i class="pi pi-chevron-right"></i
-                ></a>
-              </div>
-              <div class="exercise-description">
-                {{ exercise.description }}
-              </div>
-            </div>
-          }
-        </div>
-        <a
-          class="exercise-link-title"
-          [routerLink]="
-            '/student/my-courses/' +
-            course().id +
-            '/lesson/' +
-            lesson.id +
-            '/quiz/' +
-            quiz().id
-          "
-        >
-          <i class="pi pi-chevron-left"></i>
-          <span>{{ quiz().title }}</span
-          ><i class="pi pi-chevron-right"></i>
-        </a>
-      </div>
-    }
-  </ul>
-</div> -->
-
 <p-dialog
   [header]="this.givenReview() ? 'Edit course review' : 'Add course review'"
   [modal]="true"
@@ -95,7 +13,7 @@
 </p-dialog>
 
 <div class="page">
-  <h2>Your Course Details</h2>
+  <h2>My Course Details</h2>
   <section class="main-section">
     <img
       class="course-img"
