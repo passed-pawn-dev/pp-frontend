@@ -177,6 +177,8 @@ export class CoachPuzzleChessboardEditorComponent implements OnInit {
       this.chessboardView = this.chessboard.chessboardView;
       this.checkState = this.chessboard.checkState;
     }
+
+    this.detectAndMarkMovedPawns();
   }
 
   // TODO - restrict these access modifiers
