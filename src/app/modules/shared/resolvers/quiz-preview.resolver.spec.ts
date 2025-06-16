@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
-import { studentQuizResolver } from './student-quiz.resolver';
+import { quizPreviewResolver } from './quiz-preview.resolver';
 import { QuizDetails } from '../models/quiz-details.model';
 
-describe('studentQuizResolver', () => {
+describe('quizPreviewResolver', () => {
   const executeResolver: ResolveFn<QuizDetails> = (...resolverParameters) =>
-    TestBed.runInInjectionContext(() => studentQuizResolver(...resolverParameters));
+    TestBed.runInInjectionContext(() => quizPreviewResolver(...resolverParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

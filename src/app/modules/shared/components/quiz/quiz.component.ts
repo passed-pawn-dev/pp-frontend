@@ -1,5 +1,5 @@
 import { Component, computed, input, signal } from '@angular/core';
-import { QuizDetails } from '../../../student/models/quiz-details.model';
+import { QuizDetails } from '../../models/quiz-details.model';
 import { DisplayChessboardComponent } from '../display-chessboard/display-chessboard.component';
 
 @Component({
