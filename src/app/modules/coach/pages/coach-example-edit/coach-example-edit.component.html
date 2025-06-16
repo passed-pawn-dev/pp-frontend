@@ -93,9 +93,9 @@
         >
           <div [formGroupName]="$index">
             <app-chessboard-editor
-              [initialHighlights]="initialHighlights[$index]"
-              [initialArrows]="initialArrows[$index]"
-              [startingPositionInput]="stepPositions[$index]"
+              [initialHighlights]="getHighlightsMap(steps.value[$index].highlights)"
+              [initialArrows]="steps.value[$index].arrows"
+              [startingPositionInput]="steps.value[$index].fen"
               [useArrowsAndHighlights]="true"
               (newFenEvent)="addPositionToStep($event, $index)"
               (newArrowsEvent)="addArrowsToStep($event, $index)"

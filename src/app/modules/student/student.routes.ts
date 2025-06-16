@@ -88,6 +88,13 @@ export const STUDENT_ROUTES: Route[] = [
         }
       },
       {
+        path: 'courses/:courseId/lesson/:lessonId/video/:videoId',
+        component: StudentVideoComponent,
+        resolve: {
+          video: privateVideoPreviewResolver
+        }
+      },
+      {
         path: 'courses',
         component: StudentCoursesComponent
       },
