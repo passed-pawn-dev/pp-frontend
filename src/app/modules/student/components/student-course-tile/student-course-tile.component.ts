@@ -28,7 +28,7 @@ export class StudentCourseTileComponent {
 
   protected openBuyCourseDialog(): void {
     this.dialogService.open(StudentPaymentComponent, {
-      header: `Buy course '${this.course().title}'`,
+      header: `Buy course '${this.course().title}' (${this.course().price} PLN)`,
       closable: true,
       modal: true,
       inputValues: {
