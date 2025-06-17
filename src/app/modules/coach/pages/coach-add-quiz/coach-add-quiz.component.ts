@@ -171,7 +171,7 @@ export class CoachAddQuizComponent implements OnInit {
   }
 
   protected onNewFen(event: string): void {
-    this.quiz.fen = event;
+    this.quiz = { ...this.quiz, fen: event };
   }
 
   protected submit(): void {
@@ -232,6 +232,6 @@ export class CoachAddQuizComponent implements OnInit {
   protected toggleIncludeChessboard(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.includeChessboard = input.checked;
-    this.quiz.fen = undefined;
+    this.quiz = { ...this.quiz, fen: undefined };
   }
 }

@@ -70,21 +70,20 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   @Input({ required: true }) public useArrowsAndHighlights: boolean = true;
   public initialHighlights = input<Map<number, Severity>>(new Map([]));
   public initialArrows = input<Arrow[]>([]);
-
-  private fb: FormBuilder = inject(FormBuilder);
-  private destroyRef = inject(DestroyRef);
-
   public startingPositionInput = input<string>(
     'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
   );
-  private _startingPosition =
-    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
   @Output() public newFenEvent = new EventEmitter<string>();
   @Output() public newHighlightsEvent = new EventEmitter<Map<number, Severity>>();
   @Output() public newArrowsEvent = new EventEmitter<Arrow[]>();
 
-  private startingFen: string =
+  private fb: FormBuilder = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
+
+  protected startingPosition =
+    'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+  protected standardStartingFen: string =
     'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
   private FILES = ChessBoard.FILES;
   private RANKS = ChessBoard.RANKS;
@@ -165,7 +164,7 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   public ngOnChanges(_changes: SimpleChanges): void {
     this.setHighlightsAndArrows();
     if (this.fen === '') {
-      this._startingPosition = this.startingPositionInput();
+      this.startingPosition = this.startingPositionInput();
       this.resetToInputtedStartingPosition();
     }
 
@@ -364,17 +363,17 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   }
 
   protected resetToStartingPosition(): void {
-    this.fen = this.startingFen;
+    this.fen = this.standardStartingFen;
     this.updateFenForm();
-    const boardFromFen = FenConverter.convertFenToBoard(this.startingFen);
+    const boardFromFen = FenConverter.convertFenToBoard(this.standardStartingFen);
     this.chessboard = boardFromFen;
     this.updateFenAndSave();
   }
 
   protected resetToInputtedStartingPosition(): void {
-    this.fen = this._startingPosition;
+    this.fen = this.startingPosition;
     this.updateFenForm();
-    const boardFromFen = FenConverter.convertFenToBoard(this._startingPosition);
+    const boardFromFen = FenConverter.convertFenToBoard(this.startingPosition);
     this.chessboard = boardFromFen;
     this.updateFenAndSave();
   }

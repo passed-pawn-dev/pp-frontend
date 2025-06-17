@@ -65,7 +65,7 @@
           </div>
           <div class="elephant-tile">
             <app-talking-bob
-              text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, maiores a! Odio minima quis repellat eius assumenda optio natus impedit eligendi rerum amet eveniet quae numquam praesentium ut ipsam officia nisi dolorem sunt qui, dolore atque similique! Ratione, sequi doloremque!"
+              text="Welcome to the quiz editor! Here you can prepare quizzess with multiple answers and chessboards attached. It's a great way to enable your students to test their theoretical knowledge but you can use this resource as you like. Name your quizz by filling the 'Title' form field and get on with creating the question and answers!"
             />
           </div>
         </div>
@@ -79,7 +79,7 @@
           <div class="show-chessboard-tile">
             <label for="includeChessboard">Include chessboard</label>
             <input
-              class="include-chessboard-input"
+              class="standard-checkbox"
               type="checkbox"
               id="includeChessboard"
               [checked]="includeChessboard"
@@ -94,7 +94,7 @@
             >
               <div class="elephant-tile">
                 <app-talking-bob
-                  text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio sunt laborum numquam rerum soluta vel, aperiam enim cupiditate fugiat repellendus."
+                  text="You've reached the part where you decide if the question should have a chessboard attached! Right now it's included with the position you're seeing right now. If you want to change the position then feel free to mess around with the board editor. If you wish to not include a chessboard in the question then uncheck the 'Include checkbox' above. In the next step you will be able to formulate the question, answers, and optionally a hint and an explation as well as attach boards to the answers."
                 />
               </div>
             </app-chessboard-editor>
@@ -158,8 +158,8 @@
                       </div>
                       @if (includeChessboard) {
                         <div>
-                          Applied<br />
-                          Board
+                          Board<br />
+                          Applied
                         </div>
                       }
                     </div>
