@@ -13,6 +13,7 @@ import { ElementKind } from '../../shared/enums/element-kind.enum';
 import { CoachExampleUpsertDto } from '../models/new-example.model';
 import { CloudinarySecureUrlResponse } from '../../shared/models/cloudinary-secure-url-response';
 import { AddVideoRequestPayload } from '../models/add-video-request-payload.model';
+import { UpdateThumbnailPayload } from '../models/update-thumbnail-payload.model';
 
 @Injectable({
   providedIn: 'root'
@@ -170,8 +171,17 @@ export class CoachCourseService {
     );
   }
 
-  public updateThumbnail(courseId: string, thumbnail: FormData): Observable<Object> {
-    return this.httpClient.patch(`/api/Course/Coach/${courseId}/thumbnail`, thumbnail);
+  public getCourseThumbnailUploadSignature(): Observable<CloudinarySecureUrlResponse> {
+    return this.httpClient.get<CloudinarySecureUrlResponse>(
+      `/api/Course/Coach/thumbnail/signature`
+    );
+  }
+
+  public updateThumbnail(
+    courseId: string,
+    payload: UpdateThumbnailPayload
+  ): Observable<Object> {
+    return this.httpClient.patch(`/api/Course/Coach/${courseId}/thumbnail`, payload);
   }
 
   public deleteThumbnail(courseId: string): Observable<Object> {

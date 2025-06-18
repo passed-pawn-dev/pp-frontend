@@ -11,6 +11,13 @@
     [touched]="uploadForm.touched"
   />
   <div class="dialog-buttons">
-    <button type="button" class="primary-btn small" (click)="onSubmit()">Submit</button>
+    <button
+      type="button"
+      class="primary-btn small"
+      [disabled]="!uploadForm.valid || submitting"
+      (click)="onSubmit()"
+    >
+      Submit
+    </button>
   </div>
 </article>

@@ -16,6 +16,13 @@ export class FileHandlingService {
     );
   }
 
+  public uploadThumbnail(formData: FormData, cloudName: string): Observable<any> {
+    return this.httpClient.post(
+      `${this.fileStorageBaseUrl}/${cloudName}/upload`,
+      formData
+    );
+  }
+
   public downloadPrivateVideo(temporaryVideoDownloadUrl: string): Observable<Blob> {
     return this.httpClient.get(temporaryVideoDownloadUrl, {
       responseType: 'blob'
