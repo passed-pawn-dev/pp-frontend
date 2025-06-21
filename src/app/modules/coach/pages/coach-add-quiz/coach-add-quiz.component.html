@@ -5,6 +5,9 @@
         <div class="quiz">
           <img src="icons/quiz-complete.png" alt="quiz" />
         </div>
+        <a class="secondary-btn" type="button" routerLink="../../../../">
+          Back to course
+        </a>
         <app-step-indicator
           [stepNumber]="stepNumber"
           [currentStep]="step"
@@ -107,156 +110,162 @@
           [class.step-left]="step > 3"
           [class.step-hidden]="step < 3"
         >
+          <ng-template #quizcontainer>
+            <div class="quiz-container" [class.no-chessboard]="!includeChessboard">
+              <div class="nav">
+                <button
+                  type="button"
+                  class="header"
+                  [class.selected]="tab === 1"
+                  (click)="showQuizTab()"
+                >
+                  Quiz
+                </button>
+                <button
+                  type="button"
+                  class="header"
+                  [class.selected]="tab === 2"
+                  (click)="showAddingsTab()"
+                >
+                  Addings
+                </button>
+              </div>
+
+              @if (tab === 1) {
+                <div class="first">
+                  <div class="label">Question</div>
+                  <textarea
+                    id="question"
+                    class="question-input standard-textarea"
+                    formControlName="question"
+                    required
+                  >
+                  </textarea>
+                  <app-validation-errors
+                    [errors]="quizForm.controls.question.errors"
+                    [dirty]="quizForm.controls.question.dirty"
+                    [touched]="quizForm.controls.question.touched"
+                  />
+                </div>
+
+                <div>
+                  <div class="label">Answers (2 - 10)</div>
+                  <div class="answers-nav">
+                    <div>
+                      Correct<br />
+                      Answer
+                    </div>
+                    @if (includeChessboard) {
+                      <div>
+                        Board<br />
+                        Applied
+                      </div>
+                    }
+                  </div>
+                  <div formArrayName="answers" class="answers">
+                    @for (answer of answers.controls; track answer) {
+                      <div class="answer-tile" [formGroupName]="$index">
+                        <!-- <p-radiobutton [formControl]="solutionControl" [value]="$index" /> -->
+                        <label [for]="'radio' + $index">
+                          <input
+                            type="radio"
+                            name="solution"
+                            [id]="'radio' + $index"
+                            [formControl]="solutionControl"
+                            [value]="$index"
+                          />
+                        </label>
+
+                        <input
+                          class="standard-input"
+                          formControlName="text"
+                          placeholder="Enter answer text"
+                          type="text"
+                          required
+                        />
+
+                        <button
+                          type="button"
+                          class="delete-btn"
+                          [disabled]="answers.length < 3"
+                          (click)="removeAnswer($index)"
+                        >
+                          <img src="icons/delete.png" alt="delete" />
+                        </button>
+
+                        @if (includeChessboard) {
+                          <button type="button" (click)="addPositionToAnswer($index)">
+                            <img src="icons/link-purple.png" alt="link" />
+                          </button>
+                          <div class="square">
+                            @if (answerBoardAppliedArray[$index]) {
+                              <img src="icons/chessboard.png" alt="chessboard" />
+                            }
+                          </div>
+                        }
+                      </div>
+                      <app-validation-errors
+                        [errors]="answer.get('text')!.errors"
+                        [dirty]="answer.get('text')!.dirty"
+                        [touched]="answer.get('text')!.touched"
+                      />
+                    }
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  class="add-btn"
+                  [disabled]="answers.length > 9"
+                  (click)="addAnswer()"
+                >
+                  + Add Answer
+                </button>
+              } @else if (tab === 2) {
+                <div class="first">
+                  <div class="label">Hint (optional)</div>
+                  <!-- <input id="hint" class="" formControlName="hint" type="text" /> -->
+                  <textarea
+                    id="hint"
+                    class="question-input standard-textarea"
+                    formControlName="hint"
+                  >
+                  </textarea>
+                  <app-validation-errors
+                    [errors]="quizForm.controls.hint.errors"
+                    [dirty]="quizForm.controls.hint.dirty"
+                    [touched]="quizForm.controls.hint.touched"
+                  />
+                </div>
+
+                <div class="">
+                  <div class="label">Explanation (optional)</div>
+                  <!-- <input id="explanation" class="" formControlName="explanation" type="text" /> -->
+                  <textarea
+                    id="explanation"
+                    class="explanation-input standard-textarea"
+                    formControlName="explanation"
+                  >
+                  </textarea>
+                  <app-validation-errors
+                    [errors]="quizForm.controls.explanation.errors"
+                    [dirty]="quizForm.controls.explanation.dirty"
+                    [touched]="quizForm.controls.explanation.touched"
+                  />
+                </div>
+              }
+            </div>
+          </ng-template>
           @if (includeChessboard) {
             <app-chessboard-editor
+              [startingPositionInput]="this.quiz.fen!"
               [useArrowsAndHighlights]="false"
               (newFenEvent)="newPositionForAnswer($event)"
             >
-              <div class="quiz-container" [class.no-chessboard]="!includeChessboard">
-                <div class="nav">
-                  <button
-                    type="button"
-                    class="header"
-                    [class.selected]="tab === 1"
-                    (click)="showQuizTab()"
-                  >
-                    Quiz
-                  </button>
-                  <button
-                    type="button"
-                    class="header"
-                    [class.selected]="tab === 2"
-                    (click)="showAddingsTab()"
-                  >
-                    Addings
-                  </button>
-                </div>
-
-                @if (tab === 1) {
-                  <div class="first">
-                    <div class="label">Question</div>
-                    <textarea
-                      id="question"
-                      class="question-input standard-textarea"
-                      formControlName="question"
-                      required
-                    >
-                    </textarea>
-                    <app-validation-errors
-                      [errors]="quizForm.controls.question.errors"
-                      [dirty]="quizForm.controls.question.dirty"
-                      [touched]="quizForm.controls.question.touched"
-                    />
-                  </div>
-
-                  <div>
-                    <div class="label">Answers (2 - 10)</div>
-                    <div class="answers-nav">
-                      <div>
-                        Correct<br />
-                        Answer
-                      </div>
-                      @if (includeChessboard) {
-                        <div>
-                          Board<br />
-                          Applied
-                        </div>
-                      }
-                    </div>
-                    <div formArrayName="answers" class="answers">
-                      @for (answer of answers.controls; track answer) {
-                        <div class="answer-tile" [formGroupName]="$index">
-                          <!-- <p-radiobutton [formControl]="solutionControl" [value]="$index" /> -->
-                          <label [for]="'radio' + $index">
-                            <input
-                              type="radio"
-                              name="solution"
-                              [id]="'radio' + $index"
-                              [formControl]="solutionControl"
-                              [value]="$index"
-                            />
-                          </label>
-
-                          <input
-                            class="standard-input"
-                            formControlName="text"
-                            placeholder="Enter answer text"
-                            type="text"
-                            required
-                          />
-
-                          <button
-                            type="button"
-                            class="delete-btn"
-                            [disabled]="answers.length < 3"
-                            (click)="removeAnswer($index)"
-                          >
-                            <img src="icons/delete.png" alt="delete" />
-                          </button>
-
-                          @if (includeChessboard) {
-                            <button type="button" (click)="addPositionToAnswer($index)">
-                              <img src="icons/link-purple.png" alt="link" />
-                            </button>
-                            <div class="square">
-                              @if (answerBoardAppliedArray[$index]) {
-                                <img src="icons/chessboard.png" alt="chessboard" />
-                              }
-                            </div>
-                          }
-                        </div>
-                        <app-validation-errors
-                          [errors]="answer.get('text')!.errors"
-                          [dirty]="answer.get('text')!.dirty"
-                          [touched]="answer.get('text')!.touched"
-                        />
-                      }
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    class="add-btn"
-                    [disabled]="answers.length > 9"
-                    (click)="addAnswer()"
-                  >
-                    + Add Answer
-                  </button>
-                } @else if (tab === 2) {
-                  <div class="first">
-                    <div class="label">Hint (optional)</div>
-                    <!-- <input id="hint" class="" formControlName="hint" type="text" /> -->
-                    <textarea
-                      id="hint"
-                      class="question-input standard-textarea"
-                      formControlName="hint"
-                    >
-                    </textarea>
-                    <app-validation-errors
-                      [errors]="quizForm.controls.hint.errors"
-                      [dirty]="quizForm.controls.hint.dirty"
-                      [touched]="quizForm.controls.hint.touched"
-                    />
-                  </div>
-
-                  <div class="">
-                    <div class="label">Explanation (optional)</div>
-                    <!-- <input id="explanation" class="" formControlName="explanation" type="text" /> -->
-                    <textarea
-                      id="explanation"
-                      class="explanation-input standard-textarea"
-                      formControlName="explanation"
-                    >
-                    </textarea>
-                    <app-validation-errors
-                      [errors]="quizForm.controls.explanation.errors"
-                      [dirty]="quizForm.controls.explanation.dirty"
-                      [touched]="quizForm.controls.explanation.touched"
-                    />
-                  </div>
-                }
-              </div>
+              <ng-container [ngTemplateOutlet]="quizcontainer"></ng-container>
             </app-chessboard-editor>
+          } @else {
+            <ng-container [ngTemplateOutlet]="quizcontainer"></ng-container>
           }
         </div>
         <!-- step 4 -->

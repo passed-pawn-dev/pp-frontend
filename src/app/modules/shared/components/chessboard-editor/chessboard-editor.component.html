@@ -137,7 +137,7 @@
         <button class="operation-btn" type="button" (click)="resetToStartingPosition()">
           Starting position
         </button>
-        @if (startingPosition !== standardStartingFen) {
+        @if (startingPositionInput() !== standardStartingFen) {
           <button
             class="operation-btn"
             type="button"
