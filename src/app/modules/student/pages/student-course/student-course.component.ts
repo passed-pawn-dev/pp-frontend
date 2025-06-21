@@ -26,6 +26,7 @@ import { StudentLessonComponent } from '../../components/student-lesson/student-
 import { LessonStatus } from '../../enums/lesson-status.enum';
 import { StudentPaymentComponent } from '../../components/payment/student-payment.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-student-course',
@@ -49,6 +50,7 @@ export class StudentCourseComponent implements OnInit {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private cdRef: ChangeDetectorRef = inject(ChangeDetectorRef);
+  private messageService = inject(MessageService);
 
   protected course = signal<CourseDetails>({
     id: '',
@@ -166,6 +168,25 @@ export class StudentCourseComponent implements OnInit {
       modal: true,
       inputValues: {
         courseId: this.course().id
+      }
+    });
+  }
+
+  protected acquireFreeCourse(): void {
+    this.studentCourseService.acquireFreeCourse(this.course().id).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'You have been granted access to this course!'
+        });
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Failure',
+          detail: 'There was a problem obtaining the course'
+        });
       }
     });
   }
