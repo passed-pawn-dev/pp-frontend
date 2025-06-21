@@ -163,10 +163,8 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
 
   public ngOnChanges(_changes: SimpleChanges): void {
     this.setHighlightsAndArrows();
-    if (this.fen === '') {
-      this.startingPosition = this.startingPositionInput();
-      this.resetToInputtedStartingPosition();
-    }
+    this.startingPosition = this.startingPositionInput();
+    this.resetToInputtedStartingPosition();
 
     this.updateFenAndSave();
   }
@@ -371,9 +369,9 @@ export class ChessboardEditorComponent implements OnInit, OnChanges {
   }
 
   protected resetToInputtedStartingPosition(): void {
-    this.fen = this.startingPosition;
+    this.fen = this.startingPositionInput();
     this.updateFenForm();
-    const boardFromFen = FenConverter.convertFenToBoard(this.startingPosition);
+    const boardFromFen = FenConverter.convertFenToBoard(this.startingPositionInput());
     this.chessboard = boardFromFen;
     this.updateFenAndSave();
   }

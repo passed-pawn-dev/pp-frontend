@@ -6,13 +6,16 @@
       </div>
       <div class="top-right">
         <div class="buttons">
+          <a class="secondary-btn" type="button" routerLink="../../../../">
+            Back to course
+          </a>
           <button
             class="primary-btn"
             type="button"
             [disabled]="steps.length < 2"
             (click)="removeStep(currentStep)"
           >
-            Remove
+            Remove Step
           </button>
           <button
             class="primary-btn"

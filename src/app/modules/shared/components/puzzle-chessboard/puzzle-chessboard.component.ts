@@ -110,6 +110,7 @@ export class PuzzleChessboardComponent implements OnInit {
         this.loading = true;
         setTimeout(() => {
           this.chessboard.setBoard(currentGameState);
+          this.checkState = this.chessboard.checkState;
           this.chessboardView = this.chessboard.chessboardView;
           this.lastMove = this.chessboard.lastMove;
           this.loading = false;
