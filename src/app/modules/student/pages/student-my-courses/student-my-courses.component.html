@@ -11,9 +11,16 @@
 
 <div class="page">
   <h2>My Courses</h2>
-  <ul class="list">
-    @for (course of courses; track $index) {
-      <app-student-my-course-tile [course]="course" />
-    }
-  </ul>
+  @if (courses.length > 0) {
+    <ul class="list">
+      @for (course of courses; track $index) {
+        <app-student-my-course-tile [course]="course" />
+      }
+    </ul>
+  } @else {
+    <p>
+      No courses available at the moment. You can purchase or obtain free courses
+      <a routerLink="../courses">here</a>
+    </p>
+  }
 </div>
