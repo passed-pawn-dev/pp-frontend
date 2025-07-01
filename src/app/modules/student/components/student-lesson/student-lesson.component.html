@@ -15,12 +15,12 @@
         @if (locked) {
           <div class="locked"><img src="icons/lock.png" alt="locked" /></div>
         }
-        <div class="progress-bar-container">
+        <!-- <div class="progress-bar-container">
           <div class="percent">{{ progress }} / {{ all }}</div>
           <div class="progress-bar">
             <div class="progress" [style.width]="(progress / all) * 100 + '%'"></div>
           </div>
-        </div>
+        </div> -->
 
         <button type="button" class="toggle" (click)="toggleElements()">
           <img
