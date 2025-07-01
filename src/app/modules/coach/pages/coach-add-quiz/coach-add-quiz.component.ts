@@ -17,10 +17,11 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { QuizComponent } from '../../../shared/components/quiz/quiz.component';
 import { ValidationErrorsComponent } from '../../../shared/components/validation-errors/validation-errors.component';
 import { CoachCourseService } from '../../services/coach-course.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Location } from '@angular/common';
 import { TalkingBobComponent } from '../../../shared/components/talking-bob/talking-bob.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-coach-add-quiz',
@@ -33,7 +34,9 @@ import { TalkingBobComponent } from '../../../shared/components/talking-bob/talk
     QuizComponent,
     ValidationErrorsComponent,
     FormsModule,
-    TalkingBobComponent
+    TalkingBobComponent,
+    CommonModule,
+    RouterLink
   ],
   templateUrl: './coach-add-quiz.component.html',
   styleUrl: './coach-add-quiz.component.scss'

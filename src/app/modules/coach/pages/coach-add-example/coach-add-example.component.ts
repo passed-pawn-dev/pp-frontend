@@ -16,7 +16,7 @@ import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Location } from '@angular/common';
 import { CoachExampleUpsertDto } from '../../models/new-example.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-coach-add-example',
@@ -24,7 +24,8 @@ import { ActivatedRoute } from '@angular/router';
     ChessboardEditorComponent,
     ValidationErrorsComponent,
     ReactiveFormsModule,
-    StepIndicatorComponent
+    StepIndicatorComponent,
+    RouterLink
   ],
   templateUrl: './coach-add-example.component.html',
   styleUrl: './coach-add-example.component.scss'
